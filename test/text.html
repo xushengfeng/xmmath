@@ -1,0 +1,7 @@
+<script src="../dist/mmath.umd.js"></script>
+<script>
+    let l = ['a', '"a"', 'aa', "a(1)", "sin()", "()()(())(", "))"]
+    for (let i of l) {
+        mmath.toMML(i)
+    }
+</script>
