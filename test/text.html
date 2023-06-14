@@ -1,7 +1,13 @@
+<textarea name="" id="" cols="30" rows="10"></textarea>
+
 <script src="../dist/mmath.umd.js"></script>
 <script>
     let l = ['a', '"a"', 'aa', "a(1)", "sin()", "()()(())(", "))"]
     for (let i of l) {
         mmath.toMML(i)
+    }
+    let text = document.querySelector('textarea')
+    text.oninput = () => {
+        mmath.toMML(text.value)
     }
 </script>
