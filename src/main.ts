@@ -88,16 +88,18 @@ function ast(str: string) {
             continue;
         }
 
-        // 原始值（字母变量、数字、符号
+        // 原始值（字母变量、数字、符号）
         if (
             type == "" &&
             (!str[i - 1] || !str[i - 1].match(v)) &&
             (!str[i + 1] || !str[i + 1].match(v)) &&
             !t.match(kh)
         ) {
-            type = "v";
-            now_tree.push({ type, value: t });
-            type = "";
+            now_tree.push({ type: "v", value: t });
+            continue;
+        }
+        if (type == "" && !t.match(v) && !t.match(kh)) {
+            now_tree.push({ type: "v", value: t });
             continue;
         }
 
