@@ -7,7 +7,10 @@
         mmath.toMML(i)
     }
     let text = document.querySelector('textarea')
+    let div = document.createElement('div')
+    document.body.append(div)
     text.oninput = () => {
-        mmath.toMML(text.value)
+        div.innerHTML = ''
+        div.append(mmath.toMML(text.value))
     }
 </script>
