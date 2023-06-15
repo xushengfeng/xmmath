@@ -252,6 +252,10 @@ function render(tree: tree) {
                 let el = f[x.value](attr, dic, array);
                 fragment.append(el);
             }
+
+            // 不处理group
+            continue_c = 1;
+            continue;
         }
 
         if (x.type == "f" && (!tree[n + 1] || tree[n + 1].value == '"' || tree[n + 1].type == "blank")) {
