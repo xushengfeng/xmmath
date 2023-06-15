@@ -11,7 +11,7 @@ type vtype = "" | "str" | "v" | "f" | "blank" | "group";
 type tree = { type: vtype; value: string; children?: tree }[];
 
 function ast(str: string) {
-    let v = /[a-zA-Z]/;
+    let v = /[a-zA-Z.]/;
     let kh = /[\(\)]/;
     let blank = /[ \t\n\r]+/;
     let type: vtype = "";
