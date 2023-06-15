@@ -270,6 +270,12 @@ function render(tree: tree) {
                 }
             }
         }
+
+        if (x.type == "str") {
+            let el = document.createElement("ms");
+            el.innerText = x.value;
+            fragment.append(el);
+        }
     }
 
     return fragment;
