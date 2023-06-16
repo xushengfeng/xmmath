@@ -239,161 +239,61 @@ let f = {
     vec: (attr: tree[], dic: fdic) => {},
     // 额外
     //
-    arccos: (attr: tree[]) => {
-        let s = f.op([[{ type: "str", value: "arccos" }]], {});
-        return op_f(s, attr);
-    },
-    arcsin: (attr: tree[]) => {
-        let s = f.op([[{ type: "str", value: "arcsin" }]], {});
-        return op_f(s, attr);
-    },
-    arctan: (attr: tree[]) => {
-        let s = f.op([[{ type: "str", value: "arctan" }]], {});
-        return op_f(s, attr);
-    },
-    arg: (attr: tree[]) => {
-        let s = f.op([[{ type: "str", value: "arg" }]], {});
-        return op_f(s, attr);
-    },
-    cos: (attr: tree[]) => {
-        let s = f.op([[{ type: "str", value: "cos" }]], {});
-        return op_f(s, attr);
-    },
-    cosh: (attr: tree[]) => {
-        let s = f.op([[{ type: "str", value: "cosh" }]], {});
-        return op_f(s, attr);
-    },
-    cot: (attr: tree[]) => {
-        let s = f.op([[{ type: "str", value: "cot" }]], {});
-        return op_f(s, attr);
-    },
-    ctg: (attr: tree[]) => {
-        let s = f.op([[{ type: "str", value: "ctg" }]], {});
-        return op_f(s, attr);
-    },
-    coth: (attr: tree[]) => {
-        let s = f.op([[{ type: "str", value: "coth" }]], {});
-        return op_f(s, attr);
-    },
-    csc: (attr: tree[]) => {
-        let s = f.op([[{ type: "str", value: "csc" }]], {});
-        return op_f(s, attr);
-    },
-    deg: (attr: tree[]) => {
-        let s = f.op([[{ type: "str", value: "deg" }]], {});
-        return op_f(s, attr);
-    },
-    det: (attr: tree[]) => {
-        let s = f.op([[{ type: "str", value: "det" }]], {});
-        return op_f(s, attr);
-    },
-    dim: (attr: tree[]) => {
-        let s = f.op([[{ type: "str", value: "dim" }]], {});
-        return op_f(s, attr);
-    },
-    exp: (attr: tree[]) => {
-        let s = f.op([[{ type: "str", value: "exp" }]], {});
-        return op_f(s, attr);
-    },
-    gcd: (attr: tree[]) => {
-        let s = f.op([[{ type: "str", value: "gcd" }]], {});
-        return op_f(s, attr);
-    },
-    hom: (attr: tree[]) => {
-        let s = f.op([[{ type: "str", value: "hom" }]], {});
-        return op_f(s, attr);
-    },
-    mod: (attr: tree[]) => {
-        let s = f.op([[{ type: "str", value: "mod" }]], {});
-        return op_f(s, attr);
-    },
-    inf: (attr: tree[]) => {
-        let s = f.op([[{ type: "str", value: "inf" }]], {});
-        return op_f(s, attr);
-    },
-    ker: (attr: tree[]) => {
-        let s = f.op([[{ type: "str", value: "ker" }]], {});
-        return op_f(s, attr);
-    },
-    lg: (attr: tree[]) => {
-        let s = f.op([[{ type: "str", value: "lg" }]], {});
-        return op_f(s, attr);
-    },
-    lim: (attr: tree[]) => {
-        let s = f.op([[{ type: "str", value: "lim" }]], {});
-        return op_f(s, attr);
-    },
-    ln: (attr: tree[]) => {
-        let s = f.op([[{ type: "str", value: "ln" }]], {});
-        return op_f(s, attr);
-    },
-    log: (attr: tree[]) => {
-        let s = f.op([[{ type: "str", value: "log" }]], {});
-        return op_f(s, attr);
-    },
-    max: (attr: tree[]) => {
-        let s = f.op([[{ type: "str", value: "max" }]], {});
-        return op_f(s, attr);
-    },
-    min: (attr: tree[]) => {
-        let s = f.op([[{ type: "str", value: "min" }]], {});
-        return op_f(s, attr);
-    },
-    Pr: (attr: tree[]) => {
-        let s = f.op([[{ type: "str", value: "Pr" }]], {});
-        return op_f(s, attr);
-    },
-    sec: (attr: tree[]) => {
-        let s = f.op([[{ type: "str", value: "sec" }]], {});
-        return op_f(s, attr);
-    },
-    sin: (attr: tree[]) => {
-        let s = f.op([[{ type: "str", value: "sin" }]], {});
-        return op_f(s, attr);
-    },
-    sinc: (attr: tree[]) => {
-        let s = f.op([[{ type: "str", value: "sinc" }]], {});
-        return op_f(s, attr);
-    },
-    sinh: (attr: tree[]) => {
-        let s = f.op([[{ type: "str", value: "sinh" }]], {});
-        return op_f(s, attr);
-    },
-    sup: (attr: tree[]) => {
-        let s = f.op([[{ type: "str", value: "sup" }]], {});
-        return op_f(s, attr);
-    },
-    tan: (attr: tree[]) => {
-        let s = f.op([[{ type: "str", value: "tan" }]], {});
-        return op_f(s, attr);
-    },
-    tg: (attr: tree[]) => {
-        let s = f.op([[{ type: "str", value: "tg" }]], {});
-        return op_f(s, attr);
-    },
-    tanh: (attr: tree[]) => {
-        let s = f.op([[{ type: "str", value: "tanh" }]], {});
-        return op_f(s, attr);
-    },
-    liminf: (attr: tree[]) => {
-        let s = f.op([[{ type: "str", value: "liminf" }]], {});
-        return op_f(s, attr);
-    },
-    limsup: (attr: tree[]) => {
-        let s = f.op([[{ type: "str", value: "limsup" }]], {});
-        return op_f(s, attr);
-    },
 };
 
-function op_f(s: HTMLElement, attr: tree[]) {
-    if (attr) {
-        let f = document.createDocumentFragment();
-        f.append(s, kh(attr[0]));
-        return f;
-    } else {
-        return s;
+let opl: { id: string; str?: string; limits?: boolean }[] = [
+    { id: "arccos" },
+    { id: "arcsin" },
+    { id: "arctan" },
+    { id: "arg" },
+    { id: "cos" },
+    { id: "cosh" },
+    { id: "cot" },
+    { id: "ctg" },
+    { id: "coth" },
+    { id: "csc" },
+    { id: "deg" },
+    { id: "det", limits: true },
+    { id: "dim" },
+    { id: "exp" },
+    { id: "gcd", limits: true },
+    { id: "hom" },
+    { id: "mod" },
+    { id: "inf", limits: true },
+    { id: "ker" },
+    { id: "lg" },
+    { id: "lim", limits: true },
+    { id: "ln" },
+    { id: "log" },
+    { id: "max", limits: true },
+    { id: "min", limits: true },
+    { id: "Pr", limits: true },
+    { id: "sec" },
+    { id: "sin" },
+    { id: "sinc" },
+    { id: "sinh" },
+    { id: "sup", limits: true },
+    { id: "tan" },
+    { id: "tg" },
+    { id: "tanh" },
+    { id: "liminf", str: "lim inf", limits: true },
+    { id: "limsup", str: "lim sup", limits: true },
+];
+function op_f() {
+    for (let i of opl) {
+        f[i.id] = (attr: tree[]) => {
+            let s = f.op([[{ type: "str", value: i.str || i.id }]], {});
+            if (attr) {
+                let f = document.createDocumentFragment();
+                f.append(s, kh(attr[0]));
+                return f;
+            } else {
+                return s;
+            }
+        };
     }
 }
+op_f();
 
 function accent_f() {
     const l = [
