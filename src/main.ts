@@ -192,7 +192,22 @@ let f = {
         }
         return el;
     },
-    binom: (attr: tree[], dic: fdic) => {},
+    binom: (attr: tree[], dic: fdic) => {
+        let row = document.createElement("mrow");
+        let a = document.createElement("mrow");
+        a.append(render(attr[0]));
+        let b = document.createElement("mrow");
+        b.append(render(attr[1]));
+        let f = document.createElement("mfrac");
+        f.setAttribute("linethickness", "0");
+        f.append(a, b);
+        let l = document.createElement("mo");
+        l.innerText = "(";
+        let r = document.createElement("mo");
+        r.innerText = ")";
+        row.append(l, f, r);
+        return row;
+    },
     cancel: (attr: tree[], dic: fdic) => {},
     cases: (attr: tree[], dic: fdic) => {},
     frac: (attr: tree[], dic: fdic) => {
