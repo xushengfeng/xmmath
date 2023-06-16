@@ -48,6 +48,8 @@ function createMath(tagname: mathtag, innerText?: string, attr?: { [name: string
     return el;
 }
 
+const mathvariant = "mathvariant";
+
 type vtype = "" | "str" | "v" | "f" | "blank" | "group";
 type tree = { type: vtype; value: string; children?: tree }[];
 
@@ -333,9 +335,34 @@ let f = {
     inline: (attr: tree[], dic: fdic) => {},
     script: (attr: tree[], dic: fdic) => {},
     sscript: (attr: tree[], dic: fdic) => {},
-    upright: (attr: tree[], dic: fdic) => {},
-    italic: (attr: tree[], dic: fdic) => {},
-    bold: (attr: tree[], dic: fdic) => {},
+    upright: (attr: tree[], dic: fdic) => {
+        let r = createMath("mrow");
+        r.append(render(attr[0]));
+        r.querySelectorAll("mi").forEach((el) => {
+            if (!el.getAttribute(mathvariant)) el.setAttribute(mathvariant, "normal");
+        });
+        r.querySelectorAll("ms").forEach((el) => {
+            if (!el.getAttribute(mathvariant)) el.setAttribute(mathvariant, "normal");
+        });
+        return r;
+    },
+    italic: (attr: tree[], dic: fdic) => {
+        let r = createMath("mrow");
+        r.querySelectorAll("mi").forEach((el) => {
+            if (!el.getAttribute(mathvariant)) el.setAttribute(mathvariant, "italic");
+        });
+        r.querySelectorAll("ms").forEach((el) => {
+            if (!el.getAttribute(mathvariant)) el.setAttribute(mathvariant, "italic");
+        });
+        r.append(render(attr[0]));
+        return r;
+    },
+    bold: (attr: tree[], dic: fdic) => {
+        let r = createMath("mrow");
+        r.style.fontWeight = "bold";
+        r.append(render(attr[0]));
+        return r;
+    },
     op: (attr: tree[], dic: fdic) => {
         let f = createMath("mrow");
         let str = createMath("ms", attr[0][0].value);
