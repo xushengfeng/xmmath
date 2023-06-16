@@ -766,7 +766,7 @@ function render(tree: tree) {
         }
 
         if (x.type == "group") {
-            return kh(x.children);
+            fragment.append(kh(x.children));
         }
     }
 
