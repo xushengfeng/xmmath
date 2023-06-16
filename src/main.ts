@@ -394,7 +394,21 @@ let f = {
     mono: (attr: tree[], dic: fdic) => {},
     bb: (attr: tree[], dic: fdic) => {},
     cal: (attr: tree[], dic: fdic) => {},
-    vec: (attr: tree[], dic: fdic) => {},
+    vec: (attr: tree[], dic: fdic) => {
+        let d = dic?.delim?.[0]?.value || "(";
+        let o = { "(": ["(", ")"], "[": ["[", "]"], "{": ["{", "}"], "|": ["|", "|"], "||": ["‖", "‖"] };
+        let row = createMath("mrow");
+        let l = createMath("mo", o[d][0]);
+        let r = createMath("mo", o[d][1]);
+        let t = createMath("mtable");
+        for (let i of attr) {
+            let tr = createMath("mtr");
+            tr.append(render(i));
+            t.append(tr);
+        }
+        row.append(l, t, r);
+        return row;
+    },
     // 额外
     //
 };
