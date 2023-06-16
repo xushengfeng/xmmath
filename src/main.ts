@@ -247,7 +247,20 @@ let f = {
         return row;
     },
     cancel: (attr: tree[], dic: fdic) => {},
-    cases: (attr: tree[], dic: fdic) => {},
+    cases: (attr: tree[], dic: fdic) => {
+        let f = createMath("mrow");
+        let l = createMath("mo", dic?.delim?.[0]?.value || "{");
+        let t = createMath("mtable", null, { columnalign: "left" });
+        for (let i of attr) {
+            let tr = createMath("mtr");
+            let td = createMath("mtd");
+            td.append(render(i));
+            tr.append(td);
+            t.append(tr);
+        }
+        f.append(l, t);
+        return f;
+    },
     frac: (attr: tree[], dic: fdic) => {
         console.log(attr);
 
