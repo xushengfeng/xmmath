@@ -669,9 +669,43 @@ function render(tree: tree) {
         }
 
         if (x.type == "f" && !x.children) {
-            if (s[x.value]) {
+            let l = x.value.split(".");
+            if (s[l[0]]) {
+                let v = "";
+                if (l.length == 1) {
+                    if (typeof s[l[0]] == "string") {
+                        v = s[l[0]];
+                    } else {
+                        // 获取第一个元素值
+                        let o = s[l[0]][0];
+                        if (typeof o == "string") {
+                            v = o;
+                        } else {
+                            v = Object.values(o)[0] as string;
+                        }
+                    }
+                } else {
+                    let p = l.slice(1).join(".");
+                    for (let i of s[l[0]]) {
+                        if (typeof i == "object") {
+                            l: for (let k of Object.keys(i)) {
+                                if (k == p) {
+                                    v = i[k];
+                                } else {
+                                    let ll = k.split(".");
+                                    for (let n = 1; n < ll.length; n++) {
+                                        if (p == ll.slice(0, n).join(".")) {
+                                            v = i[k];
+                                            break l;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
                 let el = document.createElement("mo");
-                el.innerText = s[x.value];
+                el.innerText = v;
                 fragment.append(el);
             } else {
                 if (f[x.value]) {
