@@ -370,12 +370,24 @@ let f = {
         // TODO dic.limit
         return f;
     },
-    underline: (attr: tree[], dic: fdic) => {},
-    overline: (attr: tree[], dic: fdic) => {},
-    underbrace: (attr: tree[], dic: fdic) => {},
-    overbrace: (attr: tree[], dic: fdic) => {},
-    underbracket: (attr: tree[], dic: fdic) => {},
-    overbracket: (attr: tree[], dic: fdic) => {},
+    underline: (attr: tree[], dic: fdic) => {
+        return underover_f("under", attr[0], "_", attr?.[1]?.[0]?.value);
+    },
+    overline: (attr: tree[], dic: fdic) => {
+        return underover_f("over", attr[0], "‾", attr?.[1]?.[0]?.value);
+    },
+    underbrace: (attr: tree[], dic: fdic) => {
+        return underover_f("under", attr[0], "⏟", attr?.[1]?.[0]?.value);
+    },
+    overbrace: (attr: tree[], dic: fdic) => {
+        return underover_f("over", attr[0], "⏞", attr?.[1]?.[0]?.value);
+    },
+    underbracket: (attr: tree[], dic: fdic) => {
+        return underover_f("under", attr[0], "⎵", attr?.[1]?.[0]?.value);
+    },
+    overbracket: (attr: tree[], dic: fdic) => {
+        return underover_f("over", attr[0], "⎴", attr?.[1]?.[0]?.value);
+    },
     serif: (attr: tree[], dic: fdic) => {},
     sans: (attr: tree[], dic: fdic) => {},
     frak: (attr: tree[], dic: fdic) => {},
@@ -484,6 +496,25 @@ function lr_f() {
     }
 }
 lr_f();
+
+function underover_f(type: "under" | "over", tree: tree, x: string, str?: string) {
+    let m =
+        type == "under"
+            ? createMath("munder", null, { accentunder: "true" })
+            : createMath("mover", null, { accent: "true" });
+    let base = createMath("mrow");
+    base.append(render(tree));
+    let xx = createMath("mo", x);
+    m.append(base, xx);
+    if (str) {
+        let s = createMath("ms", str);
+
+        let mm = type == "under" ? createMath("munder") : createMath("mover");
+        mm.append(m, s);
+        return mm;
+    }
+    return m;
+}
 
 function kh(tree: tree) {
     let f = document.createDocumentFragment();
