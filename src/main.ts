@@ -236,6 +236,12 @@ let f = {
         }
         return el;
     },
+    scripts: (attr: tree[], dic: fdic) => {
+        return render(attr[0]);
+    },
+    limits: (attr: tree[], dic: fdic) => {
+        return render(attr[0]);
+    },
     binom: (attr: tree[], dic: fdic) => {
         let row = createMath("mrow");
         let a = createMath("mrow");
@@ -549,6 +555,27 @@ function out_kh(x: tree[0]) {
     }
 }
 
+function is_limit(tree: tree) {
+    if (tree.length == 1) {
+        let x = tree[0];
+        if (x.type == "f") {
+            if (x.value == "sum" || x.value == "limits") {
+                return true;
+            }
+            for (let i of opl) {
+                if (i.limits && x.value == i.id) {
+                    return true;
+                }
+            }
+            if (x.value == "scripts") return false;
+            if (x.value == "op") {
+            }
+        }
+    } else {
+        return false;
+    }
+}
+
 let dh: tree[0] = { type: "v", value: "," };
 
 function v_f(str: string): tree[0] {
@@ -686,45 +713,45 @@ function render(tree: tree) {
                         }
 
                         if (tree[i - 1]?.value == "^" && tree[i - 3]?.value == "_") {
+                            let o = is_limit([tree[i - 4]])
+                                ? { t: out_kh(tmp), b: out_kh(tree[i - 2]) }
+                                : { tr: out_kh(tmp), br: out_kh(tree[i - 2]) };
                             tmp = {
                                 type: "f",
                                 value: "attach",
-                                children: [
-                                    ...out_kh(tree[i - 4]),
-                                    dh,
-                                    ...dic_to_ast({ tr: out_kh(tmp), br: out_kh(tree[i - 2]) }),
-                                ],
+                                children: [...out_kh(tree[i - 4]), dh, ...dic_to_ast(o)],
                             };
                             continue_c = 4 - 1;
                             continue;
                         }
                         if (tree[i - 1]?.value == "_" && tree[i - 3]?.value == "^") {
+                            let o = is_limit([tree[i - 4]])
+                                ? { t: out_kh(tree[i - 2]), b: out_kh(tmp) }
+                                : { tr: out_kh(tree[i - 2]), br: out_kh(tmp) };
                             tmp = {
                                 type: "f",
                                 value: "attach",
-                                children: [
-                                    ...out_kh(tree[i - 4]),
-                                    dh,
-                                    ...dic_to_ast({ tr: out_kh(tree[i - 2]), br: out_kh(tmp) }),
-                                ],
+                                children: [...out_kh(tree[i - 4]), dh, ...dic_to_ast(o)],
                             };
                             continue_c = 4 - 1;
                             continue;
                         }
                         if (tree[i - 1]?.value == "^") {
+                            let o = is_limit([tree[i - 2]]) ? { t: out_kh(tmp) } : { tr: out_kh(tmp) };
                             tmp = {
                                 type: "f",
                                 value: "attach",
-                                children: [...out_kh(tree[i - 2]), dh, ...dic_to_ast({ tr: out_kh(tmp) })],
+                                children: [...out_kh(tree[i - 2]), dh, ...dic_to_ast(o)],
                             };
                             continue_c = 2 - 1;
                             continue;
                         }
                         if (tree[i - 1]?.value == "_") {
+                            let o = is_limit([tree[i - 2]]) ? { b: out_kh(tmp) } : { br: out_kh(tmp) };
                             tmp = {
                                 type: "f",
                                 value: "attach",
-                                children: [...out_kh(tree[i - 2]), dh, ...dic_to_ast({ br: out_kh(tmp) })],
+                                children: [...out_kh(tree[i - 2]), dh, ...dic_to_ast(o)],
                             };
                             continue_c = 2 - 1;
                             continue;
