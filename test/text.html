@@ -9,19 +9,19 @@
 
     <textarea name="" id="" cols="30" rows="10"></textarea>
 
-    <script src="../dist/mmath.umd.js"></script>
+    <script src="../dist/xmmath.umd.js"></script>
     <script>
         let l = ['a', '"a"', "sin(theta)", "()()(())(", "))", "1^2_3_4^5_6_7", "attach(Pi, t: alpha, b: beta,tl: 1, tr: 2+3, bl: 4+5, br: 6,)"]
         for (let i of l) {
             let div = document.createElement('div')
-            div.innerHTML = mmath.toMMLHTML(i)
+            div.innerHTML = xmmath.toMMLHTML(i)
             document.body.append(div)
         }
         let text = document.querySelector('textarea')
         let div = document.createElement('div')
         document.body.append(div)
         text.oninput = () => {
-            div.innerHTML = mmath.toMMLHTML(text.value)
+            div.innerHTML = xmmath.toMMLHTML(text.value)
         }
     </script>
 </body>

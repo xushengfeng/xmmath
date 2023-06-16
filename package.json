@@ -1,13 +1,13 @@
 {
-    "name": "mmath",
+    "name": "xmmath",
     "version": "1.0.0",
     "description": "",
-    "main": "./dist/mmath.umd.js",
-    "module": "./dist/mmath.es.js",
+    "main": "./dist/xmmath.umd.js",
+    "module": "./dist/xmmath.es.js",
     "exports": {
         ".": {
-            "import": "./dist/mmath.es.js",
-            "require": "./dist/mmath.umd.js"
+            "import": "./dist/xmmath.es.js",
+            "require": "./dist/xmmath.umd.js"
         }
     },
     "type": "module",

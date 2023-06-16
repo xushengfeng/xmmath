@@ -1,4 +1,4 @@
-# mmath
+# xmmath
 
 ## 简介（introduction）
 
@@ -25,14 +25,14 @@ In order to better write mathematical formulas on my note-taking software [xlink
 ## 安装（installation）
 
 ```js
-import mmath from mmath
+import xmmath from xmmath
 ```
 
 ```html
-<script src="./dist/mmath.umd.js"></script>
+<script src="./dist/xmmath.umd.js"></script>
 <script>
     let div = document.createElement("div");
-    div.innerHTML = mmath.toMMLHTML("e^(i pi)=-1");
+    div.innerHTML = xmmath.toMMLHTML("e^(i pi)=-1");
     document.body.append(div);
 </script>
 ```

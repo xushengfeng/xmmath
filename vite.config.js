@@ -6,8 +6,8 @@ export default defineConfig({
     build: {
         lib: {
             entry: resolve(__dirname, "src/main.ts"),
-            name: "mmath",
-            fileName: (format) => `mmath.${format}.js`,
+            name: "xmmath",
+            fileName: (format) => `xmmath.${format}.js`,
         },
         sourcemap: true,
     },
