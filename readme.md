@@ -24,6 +24,10 @@ In order to better write mathematical formulas on my note-taking software [xlink
 
 ## 安装（installation）
 
+```bash
+npm i xmmath
+```
+
 ```js
 import xmmath from xmmath
 ```
