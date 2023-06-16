@@ -938,8 +938,7 @@ function render(tree: tree) {
             let tag: mathtag;
             if (x.value.match(/[0-9]+/)) {
                 tag = "mn";
-            }
-            if (x.value.match(/[a-zA-Z]/)) {
+            } else if (x.value.match(/[a-zA-Z]/)) {
                 tag = "mi";
             } else {
                 tag = "mo";
