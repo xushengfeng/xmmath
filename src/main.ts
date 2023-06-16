@@ -737,6 +737,7 @@ function render(tree: tree) {
             for (let i in x.children) {
                 const t = x.children[i];
                 if (Number(i) + 1 == x.children.length) {
+                    if (t.type == "blank" && x.children[Number(i) - 1].value.match(/[,;]/)) break;
                     if (t.value != "," && t.value != ";") l.push(t);
                     if (type == "dic") {
                         dicl.push(l);
