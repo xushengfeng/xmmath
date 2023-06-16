@@ -151,7 +151,16 @@ import symbols from "./symbols.json?raw";
 let s = JSON.parse(symbols);
 
 let f = {
-    accent: (attr: tree[], dic: fdic) => {},
+    accent: (attr: tree[], dic: fdic) => {
+        let base = document.createElement("mrow");
+        base.append(render(attr[0]));
+        let a = document.createElement("mrow");
+        a.append(render(attr[1]));
+        let over = document.createElement("mover");
+        over.setAttribute("accent", "true");
+        over.append(base, a);
+        return over;
+    },
     attach: (attr: tree[], dic: fdic) => {
         let base = render(attr[0]);
         let el = document.createElement("mmultiscripts");
@@ -229,7 +238,6 @@ let f = {
     cal: (attr: tree[], dic: fdic) => {},
     vec: (attr: tree[], dic: fdic) => {},
     // 额外
-    // accent
     //
     arccos: (attr: tree[]) => {
         let s = f.op([[{ type: "str", value: "arccos" }]], {});
@@ -386,6 +394,33 @@ function op_f(s: HTMLElement, attr: tree[]) {
         return s;
     }
 }
+
+function accent_f() {
+    const l = [
+        "grave",
+        "acute",
+        "acute.double",
+        "hat",
+        "tilde",
+        "macron",
+        "breve",
+        "dot",
+        "dot.double",
+        "dot.triple",
+        "dot.quad",
+        "diaer",
+        "circle",
+        "arrow",
+        "arrow.l",
+    ];
+    for (let i of l) {
+        f[i] = (attr: tree[]) => {
+            let s = f.accent([attr[0], [{ type: "f", value: i }]], {});
+            return s;
+        };
+    }
+}
+accent_f();
 
 function kh(tree: tree) {
     let f = document.createDocumentFragment();
