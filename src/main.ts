@@ -206,7 +206,8 @@ let f = {
         return over;
     },
     attach: (attr: tree[], dic: fdic) => {
-        let base = render(attr[0]);
+        let base = createMath("mrow");
+        base.append(render(attr[0]));
         let el = createMath("mmultiscripts");
         el.append(base);
         let tl = createMath("mrow");
@@ -223,7 +224,9 @@ let f = {
         if (dic.t || dic.b) {
             let ud = createMath("munderover");
             if (el.children.length == 1) {
-                ud.append(render(attr[0]));
+                let base = createMath("mrow");
+                base.append(render(attr[0]));
+                ud.append(base);
             } else {
                 ud.append(el);
             }
@@ -719,7 +722,7 @@ function render(tree: tree) {
                             tmp = {
                                 type: "f",
                                 value: "attach",
-                                children: [...out_kh(tree[i - 4]), dh, ...dic_to_ast(o)],
+                                children: [tree[i - 4], dh, ...dic_to_ast(o)],
                             };
                             continue_c = 4 - 1;
                             continue;
@@ -731,7 +734,7 @@ function render(tree: tree) {
                             tmp = {
                                 type: "f",
                                 value: "attach",
-                                children: [...out_kh(tree[i - 4]), dh, ...dic_to_ast(o)],
+                                children: [tree[i - 4], dh, ...dic_to_ast(o)],
                             };
                             continue_c = 4 - 1;
                             continue;
@@ -741,7 +744,7 @@ function render(tree: tree) {
                             tmp = {
                                 type: "f",
                                 value: "attach",
-                                children: [...out_kh(tree[i - 2]), dh, ...dic_to_ast(o)],
+                                children: [tree[i - 2], dh, ...dic_to_ast(o)],
                             };
                             continue_c = 2 - 1;
                             continue;
@@ -751,7 +754,7 @@ function render(tree: tree) {
                             tmp = {
                                 type: "f",
                                 value: "attach",
-                                children: [...out_kh(tree[i - 2]), dh, ...dic_to_ast(o)],
+                                children: [tree[i - 2], dh, ...dic_to_ast(o)],
                             };
                             continue_c = 2 - 1;
                             continue;
