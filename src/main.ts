@@ -272,7 +272,31 @@ let f = {
         f.append(a, b);
         return f;
     },
-    lr: (attr: tree[], dic: fdic) => {},
+    lr: (attr: tree[], dic: fdic) => {
+        let list = attr[0];
+        let start: { c: tree; n: number }, end: { c: tree; n: number };
+        for (let i = 0; i < list.length; i++) {
+            const el = list[i];
+            if (el.type == "blank") continue;
+            start = { c: [el], n: i };
+            break;
+        }
+        for (let i = list.length - 1; i >= 0; i--) {
+            const el = list[i];
+            if (el.type == "blank") continue;
+            end = { c: [el], n: i };
+            break;
+        }
+        let l = document.createDocumentFragment();
+        l.append(render(start.c));
+        let r = document.createDocumentFragment();
+        r.append(render(end.c));
+        let c = document.createDocumentFragment();
+        c.append(render(list.slice(start.n + 1, end.n)));
+        let row = createMath("mrow");
+        row.append(l, c, r);
+        return row;
+    },
     mat: (attr: tree[], dic: fdic, array: tree[][]) => {},
     root: (attr: tree[], dic: fdic) => {},
     display: (attr: tree[], dic: fdic) => {},
@@ -387,6 +411,23 @@ function accent_f() {
 }
 accent_f();
 
+function lr_f() {
+    let l: { name: string; l: tree[0]; r: tree[0] }[] = [
+        { name: "abs", l: v_f("|"), r: v_f("|") },
+        { name: "norm", l: v_f("‖"), r: v_f("‖") },
+        { name: "floor", l: v_f("⌊"), r: v_f("⌋") },
+        { name: "ceil", l: v_f("⌈"), r: v_f("⌉") },
+        { name: "round", l: v_f("⌊"), r: v_f("⌉") },
+    ];
+    for (let i of l) {
+        f[i.name] = (attr: tree[]) => {
+            let s = f.lr([[i.l, ...attr[0], i.r]], {});
+            return s;
+        };
+    }
+}
+lr_f();
+
 function kh(tree: tree) {
     let f = document.createDocumentFragment();
     let l = createMath("ms");
@@ -407,6 +448,10 @@ function out_kh(x: tree[0]) {
 }
 
 let dh: tree[0] = { type: "v", value: "," };
+
+function v_f(str: string): tree[0] {
+    return { type: "v", value: str };
+}
 
 type fdic = { [id: string]: tree };
 
@@ -788,8 +833,11 @@ function render(tree: tree) {
             let tag: mathtag;
             if (x.value.match(/[0-9]+/)) {
                 tag = "mn";
-            } else {
+            }
+            if (x.value.match(/[a-zA-Z]/)) {
                 tag = "mi";
+            } else {
+                tag = "mo";
             }
             let el = createMath(tag, x.value);
             fragment.append(el);
