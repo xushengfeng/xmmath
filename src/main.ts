@@ -380,22 +380,22 @@ let f = {
         return f;
     },
     underline: (attr: tree[], dic: fdic) => {
-        return underover_f("under", attr[0], "_", attr?.[1]?.[0]?.value);
+        return underover_f("under", attr[0], "_", attr?.[1]);
     },
     overline: (attr: tree[], dic: fdic) => {
-        return underover_f("over", attr[0], "‾", attr?.[1]?.[0]?.value);
+        return underover_f("over", attr[0], "‾", attr?.[1]);
     },
     underbrace: (attr: tree[], dic: fdic) => {
-        return underover_f("under", attr[0], "⏟", attr?.[1]?.[0]?.value);
+        return underover_f("under", attr[0], "⏟", attr?.[1]);
     },
     overbrace: (attr: tree[], dic: fdic) => {
-        return underover_f("over", attr[0], "⏞", attr?.[1]?.[0]?.value);
+        return underover_f("over", attr[0], "⏞", attr?.[1]);
     },
     underbracket: (attr: tree[], dic: fdic) => {
-        return underover_f("under", attr[0], "⎵", attr?.[1]?.[0]?.value);
+        return underover_f("under", attr[0], "⎵", attr?.[1]);
     },
     overbracket: (attr: tree[], dic: fdic) => {
-        return underover_f("over", attr[0], "⎴", attr?.[1]?.[0]?.value);
+        return underover_f("over", attr[0], "⎴", attr?.[1]);
     },
     serif: (attr: tree[], dic: fdic) => {},
     sans: (attr: tree[], dic: fdic) => {},
@@ -520,21 +520,22 @@ function lr_f() {
 }
 lr_f();
 
-function underover_f(type: "under" | "over", tree: tree, x: string, str?: string) {
+function underover_f(type: "under" | "over", tree: tree, x: string, str?: tree) {
     let m =
         type == "under"
             ? createMath("munder", null, { accentunder: "true" })
             : createMath("mover", null, { accent: "true" });
     let base = createMath("mrow");
     base.append(render(tree));
-    let xx = createMath("mo", x);
-    m.append(base, xx);
     if (str) {
-        let s = createMath("ms", str);
-
+        let s = render(str);
         let mm = type == "under" ? createMath("munder") : createMath("mover");
-        mm.append(m, s);
-        return mm;
+        let xx = createMath("mo", x);
+        mm.append(xx, s);
+        m.append(base, mm);
+    } else {
+        let xx = createMath("mo", x);
+        m.append(base, xx);
     }
     return m;
 }
