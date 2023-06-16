@@ -7,6 +7,47 @@ function createEl(tagname: string) {
     return document.createElement(tagname);
 }
 
+type mathtag =
+    | "math"
+    | "menclose"
+    | "merror"
+    | "mfrac"
+    | "mi"
+    | "mmultiscripts"
+    | "mprescripts"
+    | "mn"
+    | "mo"
+    | "mover"
+    | "mpadded"
+    | "mphantom"
+    | "mroot"
+    | "mrow"
+    | "ms"
+    | "mspace"
+    | "msqrt"
+    | "mstyle"
+    | "msub"
+    | "msubsup"
+    | "msup"
+    | "mtable"
+    | "mtd"
+    | "mtext"
+    | "mtr"
+    | "munder"
+    | "munderover"
+    | "semantics";
+
+function createMath(tagname: mathtag, innerText?: string, attr?: { [name: string]: string }) {
+    let el = document.createElement(tagname);
+    if (innerText) el.innerText = innerText;
+    if (attr) {
+        for (let i in attr) {
+            el.setAttribute(i, attr[i]);
+        }
+    }
+    return el;
+}
+
 type vtype = "" | "str" | "v" | "f" | "blank" | "group";
 type tree = { type: vtype; value: string; children?: tree }[];
 
@@ -152,40 +193,40 @@ let s = JSON.parse(symbols);
 
 let f = {
     accent: (attr: tree[], dic: fdic) => {
-        let base = document.createElement("mrow");
+        let base = createMath("mrow");
         base.append(render(attr[0]));
-        let a = document.createElement("mrow");
+        let a = createMath("mrow");
         a.append(render(attr[1]));
-        let over = document.createElement("mover");
+        let over = createMath("mover");
         over.setAttribute("accent", "true");
         over.append(base, a);
         return over;
     },
     attach: (attr: tree[], dic: fdic) => {
         let base = render(attr[0]);
-        let el = document.createElement("mmultiscripts");
+        let el = createMath("mmultiscripts");
         el.append(base);
-        let tl = document.createElement("mrow");
+        let tl = createMath("mrow");
         if (dic.tl) tl.append(render(dic.tl));
-        let bl = document.createElement("mrow");
+        let bl = createMath("mrow");
         if (dic.bl) bl.append(render(dic.bl));
-        let tr = document.createElement("mrow");
+        let tr = createMath("mrow");
         if (dic.tr) tr.append(render(dic.tr));
-        let br = document.createElement("mrow");
+        let br = createMath("mrow");
         if (dic.br) br.append(render(dic.br));
         if (dic.tl || dic.bl || dic.tr || dic.br) {
-            el.append(br, tr, document.createElement("mprescripts"), bl, tl);
+            el.append(br, tr, createMath("mprescripts"), bl, tl);
         }
         if (dic.t || dic.b) {
-            let ud = document.createElement("munderover");
+            let ud = createMath("munderover");
             if (el.children.length == 1) {
                 ud.append(render(attr[0]));
             } else {
                 ud.append(el);
             }
-            let t = document.createElement("mrow");
+            let t = createMath("mrow");
             if (dic.t) t.append(render(dic.t));
-            let b = document.createElement("mrow");
+            let b = createMath("mrow");
             if (dic.b) b.append(render(dic.b));
             ud.append(b, t);
             el = ud;
@@ -193,18 +234,15 @@ let f = {
         return el;
     },
     binom: (attr: tree[], dic: fdic) => {
-        let row = document.createElement("mrow");
-        let a = document.createElement("mrow");
+        let row = createMath("mrow");
+        let a = createMath("mrow");
         a.append(render(attr[0]));
-        let b = document.createElement("mrow");
+        let b = createMath("mrow");
         b.append(render(attr[1]));
-        let f = document.createElement("mfrac");
-        f.setAttribute("linethickness", "0");
+        let f = createMath("mfrac", null, { linethickness: "0" });
         f.append(a, b);
-        let l = document.createElement("mo");
-        l.innerText = "(";
-        let r = document.createElement("mo");
-        r.innerText = ")";
+        let l = createMath("mo", "(");
+        let r = createMath("mo", ")");
         row.append(l, f, r);
         return row;
     },
@@ -213,11 +251,11 @@ let f = {
     frac: (attr: tree[], dic: fdic) => {
         console.log(attr);
 
-        let a = document.createElement("mrow");
+        let a = createMath("mrow");
         a.append(render(attr[0]));
-        let b = document.createElement("mrow");
+        let b = createMath("mrow");
         b.append(render(attr[1]));
-        let f = document.createElement("mfrac");
+        let f = createMath("mfrac");
         f.append(a, b);
         return f;
     },
@@ -232,9 +270,8 @@ let f = {
     italic: (attr: tree[], dic: fdic) => {},
     bold: (attr: tree[], dic: fdic) => {},
     op: (attr: tree[], dic: fdic) => {
-        let f = document.createElement("mrow");
-        let str = document.createElement("ms");
-        str.innerText = attr[0][0].value;
+        let f = createMath("mrow");
+        let str = createMath("ms", attr[0][0].value);
         f.append(str);
         // TODO dic.limit
         return f;
@@ -339,10 +376,10 @@ accent_f();
 
 function kh(tree: tree) {
     let f = document.createDocumentFragment();
-    let l = document.createElement("ms");
+    let l = createMath("ms");
     l.innerText = "(";
     let c = render(tree);
-    let r = document.createElement("ms");
+    let r = createMath("ms");
     r.innerText = ")";
     f.append(l, c, r);
     return f;
@@ -719,8 +756,7 @@ function render(tree: tree) {
                         }
                     }
                 }
-                let el = document.createElement("mo");
-                el.innerText = v;
+                let el = createMath("mo", v);
                 fragment.append(el);
             } else {
                 if (f[x.value]) {
@@ -731,19 +767,18 @@ function render(tree: tree) {
         }
 
         if (x.type == "str") {
-            let el = document.createElement("ms");
-            el.innerText = x.value;
+            let el = createMath("ms", x.value);
             fragment.append(el);
         }
 
         if (x.type == "v") {
-            let el: HTMLElement;
+            let tag: mathtag;
             if (x.value.match(/[0-9]+/)) {
-                el = document.createElement("mn");
+                tag = "mn";
             } else {
-                el = document.createElement("mi");
+                tag = "mi";
             }
-            el.innerText = x.value;
+            let el = createMath(tag, x.value);
             fragment.append(el);
         }
 
