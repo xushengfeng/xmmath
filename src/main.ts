@@ -168,18 +168,18 @@ let f = {
             el.append(br, tr, document.createElement("mprescripts"), bl, tl);
         }
         if (dic.t || dic.b) {
-            let uo = document.createElement("munderover");
+            let ud = document.createElement("munderover");
             if (el.children.length == 1) {
-                uo.append(base);
+                ud.append(render(attr[0]));
             } else {
-                uo.append(el);
+                ud.append(el);
             }
             let t = document.createElement("mrow");
             if (dic.t) t.append(render(dic.t));
             let b = document.createElement("mrow");
             if (dic.b) b.append(render(dic.b));
-            uo.append(b, t);
-            el = uo;
+            ud.append(b, t);
+            el = ud;
         }
         return el;
     },
