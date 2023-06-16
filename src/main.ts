@@ -297,7 +297,25 @@ let f = {
         row.append(l, c, r);
         return row;
     },
-    mat: (attr: tree[], dic: fdic, array: tree[][]) => {},
+    mat: (attr: tree[], dic: fdic, array: tree[][]) => {
+        let d = dic?.delim?.[0]?.value || "(";
+        let o = { "(": ["(", ")"], "[": ["[", "]"], "{": ["{", "}"], "|": ["|", "|"], "||": ["‖", "‖"] };
+        let row = createMath("mrow");
+        let l = createMath("mo", o[d][0]);
+        let r = createMath("mo", o[d][1]);
+        let t = createMath("mtable");
+        for (let i of array) {
+            let tr = createMath("mtr");
+            for (let j of i) {
+                let td = createMath("mtd");
+                td.append(render(j));
+                tr.append(td);
+            }
+            t.append(tr);
+        }
+        row.append(l, t, r);
+        return row;
+    },
     root: (attr: tree[], dic: fdic) => {},
     display: (attr: tree[], dic: fdic) => {},
     inline: (attr: tree[], dic: fdic) => {},
@@ -743,6 +761,8 @@ function render(tree: tree) {
                     } else if (t.value == ";") {
                         // 存在; 则存好的attr为array的一个子元素
                         type == "array";
+                        attr.push(l);
+                        l = [];
                         array.push(attr);
                         attr = [];
                     } else {
