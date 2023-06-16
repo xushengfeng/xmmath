@@ -906,6 +906,7 @@ function render(tree: tree) {
                             l: for (let k of Object.keys(i)) {
                                 if (k == p) {
                                     v = i[k];
+                                    break l;
                                 } else {
                                     let ll = k.split(".");
                                     for (let n = 1; n < ll.length; n++) {
