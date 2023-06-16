@@ -718,9 +718,7 @@ function render(tree: tree) {
                 let t: tree = [];
                 for (let el of i) {
                     if (!n) {
-                        if (el.type == "f") {
-                            n = el.value;
-                        }
+                        n = el.value;
                     } else {
                         if (el.value != ":") t.push(el);
                     }
