@@ -317,7 +317,18 @@ let f = {
         row.append(l, t, r);
         return row;
     },
-    root: (attr: tree[], dic: fdic) => {},
+    root: (attr: tree[], dic: fdic) => {
+        let row = createMath("mrow");
+        row.append(render(attr[0]));
+        let base = createMath("mrow");
+        base.append(render(attr[1]));
+        let root = createMath("mroot");
+        root.append(base, row);
+        return root;
+    },
+    sqrt: (attr: tree[], dic: fdic) => {
+        return f.root([[], attr[0]], null);
+    },
     display: (attr: tree[], dic: fdic) => {},
     inline: (attr: tree[], dic: fdic) => {},
     script: (attr: tree[], dic: fdic) => {},
