@@ -812,27 +812,22 @@ function ast2(tree: tree) {
             let n = Number(i);
             let x = tree[n];
 
-            if (x.value == "\\") {
+            if (x.value == "\\" && x.type == "v") {
                 if (tree?.[n + 1]) {
-                    if (tree[n + 1].value == "\\") {
+                    let next = tree[n + 1];
+                    if (next.value == "\\" && next.type == "v") {
                         t.push({ type: "v", value: "\\" });
                         continue_c = 1;
-                    } else if (tree[n + 1].type == "blank") {
+                    } else if (next.type == "blank") {
                         t.push({ type: "v", value: "br", esc: true });
                         continue_c = 1;
-                    } else if (tree[n + 1].value == "&") {
-                        t.push({ type: "v", value: "&", esc: true });
-                        continue_c = 1;
-                    } else if (tree[n + 1].type == "f") {
-                        let v = tree[n + 1].value;
+                    } else if (next.type == "f") {
+                        let v = next.value;
                         t.push({ type: "v", value: v[0] });
                         t.push({ type: v.length == 2 ? "v" : "f", value: v.slice(1) });
                         continue_c = 1;
-                    } else if (tree[n + 1].value == "/") {
-                        t.push({ type: "v", value: "/", esc: true });
-                        continue_c = 1;
                     } else {
-                        let v = tree[n + 1];
+                        let v = next;
                         v.esc = true;
                         t.push(v);
                         continue_c = 1;
