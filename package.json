@@ -11,6 +11,7 @@
         }
     },
     "type": "module",
+    "types": "./src/main.ts",
     "scripts": {
         "test": "vite ",
         "dev": "vite --host 0.0.0.0",
