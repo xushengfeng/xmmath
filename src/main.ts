@@ -63,6 +63,11 @@ function ast(str: string) {
     let now_tree = o;
     let tmp_str = "";
 
+    str = str.replace(/(\\u\{[\dA-Fa-f]+\})/g, (v) => {
+        const codePoint = parseInt(v.slice(3, -1), 16);
+        return String.fromCodePoint(codePoint);
+    });
+
     let lkh_stack: number[] = [];
     let rkh_stack: number[] = [];
     for (let i = 0; i < str.length; i++) {
