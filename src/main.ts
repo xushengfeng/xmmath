@@ -51,7 +51,7 @@ function createMath(tagname: mathtag, innerText?: string, attr?: { [name: string
 const mathvariant = "mathvariant";
 
 type vtype = "" | "str" | "v" | "f" | "blank" | "group";
-type tree = { type: vtype; value: string; children?: tree }[];
+type tree = { type: vtype; value: string; children?: tree; esc?: boolean }[];
 
 function ast(str: string) {
     let v = /[a-zA-Z.]/;
@@ -87,7 +87,7 @@ function ast(str: string) {
             if (lkh_stack.length == 0) {
                 rkh_stack.push(i);
             } else {
-                lkh_stack.pop();
+                if (str[i - 1] != "\\") lkh_stack.pop();
             }
         }
     }
@@ -126,14 +126,6 @@ function ast(str: string) {
             type = "";
         }
 
-        if (t == "\\") {
-            if (str[i + 1] == "\\") {
-                continue_c = 1;
-                now_tree.push({ type: "v", value: t });
-            }
-            continue;
-        }
-
         // 原始值（字母变量、数字、符号）
         if (
             type == "" &&
@@ -163,7 +155,7 @@ function ast(str: string) {
         }
 
         if (t == "(") {
-            if (lkh_stack.includes(i)) {
+            if (lkh_stack.includes(i) || str[i - 1] == "\\") {
                 now_tree.push({ type: "v", value: t });
             } else {
                 p_tree.push({ tree: now_tree, close: false });
@@ -645,6 +637,11 @@ function in_kh(x: tree) {
     return k;
 }
 
+function is_frac(x: tree[0]) {
+    if (!x) return false;
+    return x.value == "/" && !x.esc;
+}
+
 function is_limit(tree: tree) {
     if (tree.length == 1) {
         let x = tree[0];
@@ -757,6 +754,46 @@ function render(tree: tree) {
                     }
                 } else {
                     t.push(x);
+                }
+            } else {
+                t.push(x);
+            }
+        }
+        tree = t;
+    }
+
+    // 处理\转义
+    {
+        let t: tree = [];
+        let continue_c = 0;
+        for (let i in tree) {
+            if (continue_c > 0) {
+                continue_c--;
+                continue;
+            }
+            let n = Number(i);
+            let x = tree[n];
+
+            if (x.value == "\\") {
+                if (tree?.[n + 1]) {
+                    if (tree[n + 1].value == "\\") {
+                        t.push({ type: "v", value: "\\" });
+                        continue_c = 1;
+                    } else if (tree[n + 1].type == "blank") {
+                        t.push({ type: "v", value: "br", esc: true });
+                        continue_c = 1;
+                    } else if (tree[n + 1].value == "&") {
+                        t.push({ type: "v", value: "&", esc: true });
+                        continue_c = 1;
+                    } else if (tree[n + 1].type == "f") {
+                        let v = tree[n + 1].value;
+                        t.push({ type: "v", value: v[0] });
+                        t.push({ type: v.length == 2 ? "v" : "f", value: v.slice(1) });
+                        continue_c = 1;
+                    } else if (tree[n + 1].value == "/") {
+                        t.push({ type: "v", value: "/", esc: true });
+                        continue_c = 1;
+                    }
                 }
             } else {
                 t.push(x);
@@ -909,11 +946,11 @@ function render(tree: tree) {
         let start = NaN;
         for (let n = 0; n < tree.length; n++) {
             const x = tree[n];
-            if (x.value != "/") {
-                if (tree[n + 1]?.value == "/" && !(tree[n - 1]?.value == "/")) {
+            if (!is_frac(x)) {
+                if (is_frac(tree[n + 1]) && !is_frac(tree[n - 1])) {
                     if (!start) start = n;
                 }
-                if (tree[n - 1]?.value == "/" && !(tree[n + 1]?.value == "/")) {
+                if (is_frac(tree[n - 1]) && !is_frac(tree[n + 1])) {
                     index.push([start, n]);
                     start = NaN;
                 }
