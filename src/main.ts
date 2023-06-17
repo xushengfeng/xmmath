@@ -50,6 +50,9 @@ function createMath(tagname: mathtag, innerText?: string, attr?: { [name: string
 
 const mathvariant = "mathvariant";
 
+import GraphemeSplitter from "grapheme-splitter";
+var splitter = new GraphemeSplitter();
+
 type vtype = "" | "str" | "v" | "f" | "blank" | "group";
 type tree = { type: vtype; value: string; children?: tree; esc?: boolean }[];
 
@@ -99,15 +102,16 @@ function ast(str: string) {
 
     let continue_c = 0;
 
-    for (let i = 0; i < str.length; i++) {
+    let strl = splitter.splitGraphemes(str);
+    for (let i = 0; i < strl.length; i++) {
         if (continue_c > 0) {
             continue_c--;
             continue;
         }
 
-        const t = str[i];
+        const t = strl[i];
         // 字符
-        if (t == '"' && str[i - 1] != "\\") {
+        if (t == '"' && strl[i - 1] != "\\") {
             if (type != "str") {
                 type = "str";
             } else {
@@ -134,8 +138,8 @@ function ast(str: string) {
         // 原始值（字母变量、数字、符号）
         if (
             type == "" &&
-            (!str[i - 1] || !str[i - 1].match(v)) &&
-            (!str[i + 1] || !str[i + 1].match(v)) &&
+            (!strl[i - 1] || !strl[i - 1].match(v)) &&
+            (!strl[i + 1] || !strl[i + 1].match(v)) &&
             !t.match(kh)
         ) {
             now_tree.push({ type: "v", value: t });
@@ -147,20 +151,20 @@ function ast(str: string) {
         }
 
         // 函数名
-        if (((str[i - 1] && str[i - 1].match(v)) || (str[i + 1] && str[i + 1].match(v))) && t.match(v)) {
+        if (((strl[i - 1] && strl[i - 1].match(v)) || (strl[i + 1] && strl[i + 1].match(v))) && t.match(v)) {
             type = "f";
         }
         if (type == "f") {
             tmp_str += t;
         }
-        if (type == "f" && (!str[i + 1] || !str[i + 1].match(v))) {
+        if (type == "f" && (!strl[i + 1] || !strl[i + 1].match(v))) {
             now_tree.push({ type, value: tmp_str });
             type = "";
             tmp_str = "";
         }
 
         if (t == "(") {
-            if (lkh_stack.includes(i) || str[i - 1] == "\\") {
+            if (lkh_stack.includes(i) || strl[i - 1] == "\\") {
                 now_tree.push({ type: "v", value: t });
             } else {
                 p_tree.push({ tree: now_tree, close: false });
