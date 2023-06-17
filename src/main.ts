@@ -541,11 +541,11 @@ function underover_f(type: "under" | "over", tree: tree, x: string, str?: tree) 
 }
 
 function kh(tree: tree) {
-    let f = document.createDocumentFragment();
-    let l = createMath("ms");
+    let f = createMath("mrow");
+    let l = createMath("mo");
     l.innerText = "(";
     let c = render(tree);
-    let r = createMath("ms");
+    let r = createMath("mo");
     r.innerText = ")";
     f.append(l, c, r);
     return f;
