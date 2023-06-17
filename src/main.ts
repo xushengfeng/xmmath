@@ -1107,7 +1107,7 @@ function render(tree: tree) {
                     }
                     l = [];
                 } else {
-                    if (t.value == ",") {
+                    if (t.value == "," && t.type == "v") {
                         if (type == "dic") {
                             dicl.push(l);
                             l = [];
@@ -1115,7 +1115,7 @@ function render(tree: tree) {
                             attr.push(l);
                         }
                         l = [];
-                    } else if (t.value == ";") {
+                    } else if (t.value == ";" && t.type == "v") {
                         // 存在; 则存好的attr为array的一个子元素
                         type == "array";
                         attr.push(l);
@@ -1126,7 +1126,7 @@ function render(tree: tree) {
                         // 按,拆分成段
                         l.push(t);
                         // 段中有: 为dic
-                        if (t.value == ":") {
+                        if (t.value == ":" && t.type == "v") {
                             type = "dic";
                         }
                     }
