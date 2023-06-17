@@ -566,6 +566,16 @@ function op_f() {
 }
 op_f();
 
+let limits_f = [];
+let limits_sy = ["∏", "∐", "∑", "⋀", "⋁", "⋂", "⋃", "⨀", "⨁", "⨂", "⨃", "⨄", "⨅", "⨆"];
+for (let i in ss) {
+    for (let j of limits_sy) {
+        if (ss[i] == j) {
+            limits_f.push(i);
+        }
+    }
+}
+
 function accent_f() {
     const l = [
         "grave",
@@ -669,7 +679,7 @@ function is_limit(tree: tree) {
     if (tree.length == 1) {
         let x = tree[0];
         if (x.type == "f") {
-            if (x.value == "sum" || x.value == "limits") {
+            if (limits_f.includes(x.value)) {
                 return true;
             }
             for (let i of opl) {
