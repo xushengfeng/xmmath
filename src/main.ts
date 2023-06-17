@@ -691,6 +691,9 @@ function is_limit(tree: tree) {
             if (x.value == "op") {
             }
         }
+        if (x.type == "v" && limits_sy.includes(x.value)) {
+            return true;
+        }
     } else {
         return false;
     }
