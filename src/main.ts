@@ -764,6 +764,7 @@ function render(tree: tree) {
                     t.push(tmp);
                 }
                 continue_c = index[0][1] - index[0][0];
+                index = index.slice(1);
                 continue;
             }
 
