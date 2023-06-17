@@ -194,6 +194,35 @@ import symbols from "./symbols.json?raw";
 /** @see https://github.com/typst/typst/blob/6c542ea1a4a0ee85069dad6974ff331851eff406/library/src/symbols/sym.rs */
 let s = JSON.parse(symbols);
 
+// symbols路径简写
+let ss: { [id: string]: string } = {};
+for (let i in s) {
+    if (typeof s[i] == "string") {
+        ss[i] = s[i];
+    } else {
+        for (let objOrStr of s[i]) {
+            // 第二层的array
+            if (typeof objOrStr == "string") {
+                ss[i] = objOrStr;
+            } else {
+                if (!ss[i]) ss[i] = objOrStr[Object.keys(objOrStr)[0]];
+                for (let j in objOrStr) {
+                    // 第三层的obj
+                    ss[`${i}.${j}`] = objOrStr[j];
+                    // 允许部分索引，但要保证唯一
+                    let l = j.split(".");
+                    for (let n = 1; n < l.length; n++) {
+                        let shotKey = l.slice(0, n).join(".");
+                        if (!objOrStr[shotKey]) {
+                            ss[`${i}.${shotKey}`] = objOrStr[j];
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
 let f = {
     accent: (attr: tree[], dic: fdic) => {
         let base = createMath("mrow");
@@ -917,43 +946,8 @@ function render(tree: tree) {
         }
 
         if (x.type == "f" && !x.children) {
-            let l = x.value.split(".");
-            if (s[l[0]]) {
-                let v = "";
-                if (l.length == 1) {
-                    if (typeof s[l[0]] == "string") {
-                        v = s[l[0]];
-                    } else {
-                        // 获取第一个元素值
-                        let o = s[l[0]][0];
-                        if (typeof o == "string") {
-                            v = o;
-                        } else {
-                            v = Object.values(o)[0] as string;
-                        }
-                    }
-                } else {
-                    let p = l.slice(1).join(".");
-                    for (let i of s[l[0]]) {
-                        if (typeof i == "object") {
-                            l: for (let k of Object.keys(i)) {
-                                if (k == p) {
-                                    v = i[k];
-                                    break l;
-                                } else {
-                                    let ll = k.split(".");
-                                    for (let n = 1; n < ll.length; n++) {
-                                        if (p == ll.slice(0, n).join(".")) {
-                                            v = i[k];
-                                            break l;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-                let el = createMath("mo", v);
+            if (ss[x.value]) {
+                let el = createMath("mo", ss[x.value]);
                 fragment.append(el);
             } else {
                 if (f[x.value]) {
