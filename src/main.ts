@@ -589,6 +589,11 @@ function out_kh(x: tree[0]) {
     }
 }
 
+function in_kh(x: tree) {
+    let k: tree = [{ type: "group", value: "", children: x }];
+    return k;
+}
+
 function is_limit(tree: tree) {
     if (tree.length == 1) {
         let x = tree[0];
@@ -942,6 +947,9 @@ function render(tree: tree) {
                 console.log(attr, dic, array);
                 let el = f[x.value](attr, dic, array);
                 fragment.append(el);
+            } else if (ss[x.value]) {
+                let el = createMath("mo", ss[x.value]);
+                fragment.append(el, render(in_kh(x.children)));
             }
         }
 
