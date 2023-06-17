@@ -827,6 +827,11 @@ function ast2(tree: tree) {
                     } else if (tree[n + 1].value == "/") {
                         t.push({ type: "v", value: "/", esc: true });
                         continue_c = 1;
+                    } else {
+                        let v = tree[n + 1];
+                        v.esc = true;
+                        t.push(v);
+                        continue_c = 1;
                     }
                 }
             } else {
