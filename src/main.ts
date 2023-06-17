@@ -223,6 +223,57 @@ for (let i in s) {
     }
 }
 
+let shorthand = {
+    "->": "arrow.r",
+    "|->": "arrow.r.bar",
+    "=>": "arrow.r.double",
+    "|=>": "arrow.r.double.bar",
+    "==>": "arrow.r.double.long",
+    "-->": "arrow.r.long",
+    "~~>": "arrow.r.long.squiggly",
+    "~>": "arrow.r.squiggly",
+    ">->": "arrow.r.tail",
+    "->>": "arrow.r.twohead",
+    "<-": "arrow.l",
+    "<==": "arrow.l.double.long",
+    "<--": "arrow.l.long",
+    "<~~": "arrow.l.long.squiggly",
+    "<~": "arrow.l.squiggly",
+    "<-<": "arrow.l.tail",
+    "<<-": "arrow.l.twohead",
+    "<->": "arrow.l.r",
+    "<=>": "arrow.l.r.double",
+    "<==>": "arrow.l.r.double.long",
+    "<-->": "arrow.l.r.long",
+    "*": "convolve",
+    "||": "bar.v.double",
+    "[|": "bracket.l.double",
+    "|]": "bracket.r.double",
+    ":=": "colon.eq",
+    "::=": "colon.double.eq",
+    "--": "dash.en",
+    "---": "dash.em",
+    "...": "dots.h",
+    "=:": "eq.colon",
+    "!=": "eq.not",
+    ">>": "gt.double",
+    ">=": "gt.eq",
+    ">>>": "gt.triple",
+    "-?": "hyph.soft",
+    "<<": "lt.double",
+    "<=": "lt.eq",
+    "<<<": "lt.triple",
+    "-": "minus",
+    "'": "prime",
+    "~": "space.nobreak",
+};
+let max_shorthand_len = 0;
+for (let i in shorthand) {
+    if (i.length > max_shorthand_len) {
+        max_shorthand_len = i.length;
+    }
+}
+
 let f = {
     accent: (attr: tree[], dic: fdic) => {
         let base = createMath("mrow");
@@ -666,6 +717,49 @@ function render(tree: tree) {
             ) {
                 t.push({ type: "v", value: number });
                 number = "";
+            }
+        }
+        tree = t;
+    }
+
+    // 处理符号简写（shorthand）
+    {
+        let t: tree = [];
+        let continue_c = 0;
+        for (let i in tree) {
+            if (continue_c > 0) {
+                continue_c--;
+                continue;
+            }
+            let n = Number(i);
+            let x = tree[n];
+
+            if (tree?.[n - 1]?.value != "\\") {
+                if (x.type == "v") {
+                    let nn = n;
+                    let shortkey = x.value;
+                    let l = [];
+                    if (shorthand[shortkey]) l.push(shortkey);
+                    // 连起来的字符
+                    while (tree?.[nn + 1]?.type == "v" && shortkey.length <= max_shorthand_len) {
+                        shortkey += tree[nn + 1].value;
+                        if (shorthand[shortkey]) l.push(shortkey);
+                        nn++;
+                    }
+                    if (l.length) {
+                        let nx: tree[0] = { type: "f", value: shorthand[l[l.length - 1]] };
+                        t.push(nx);
+
+                        // 不处理已经后面连起来的字符
+                        continue_c = l[l.length - 1].length - 1;
+                    } else {
+                        t.push(x);
+                    }
+                } else {
+                    t.push(x);
+                }
+            } else {
+                t.push(x);
             }
         }
         tree = t;
