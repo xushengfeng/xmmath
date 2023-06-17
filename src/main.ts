@@ -501,6 +501,15 @@ let f = {
     },
     // 额外
     //
+    x_table: (attr: tree[]) => {
+        let t = createMath("mtable");
+        for (let i of attr) {
+            let r = createMath("mtr");
+            r.append(render(i));
+            t.append(r);
+        }
+        return t;
+    },
 };
 
 let opl: { id: string; str?: string; limits?: boolean }[] = [
@@ -1029,6 +1038,25 @@ function render(tree: tree) {
             }
         }
         tree = t;
+    }
+
+    // 处理\ 换行
+    {
+        // 将换行替换成逗号传入函数
+        let xx = false;
+        for (let n = 0; n < tree.length; n++) {
+            const x = tree[n];
+            if (is_br(x)) {
+                tree[n] = dh;
+                xx = true;
+            }
+        }
+
+        if (xx) {
+            let t: tree = [];
+            t.push({ type: "f", value: "x_table", children: tree });
+            tree = t;
+        }
     }
 
     let continue_c = 0;
