@@ -699,6 +699,10 @@ function is_limit(tree: tree) {
     }
 }
 
+function is_f_mark(x: tree[0], str: string) {
+    return x.value == str && x.type == "v" && !x.esc;
+}
+
 let dh: tree[0] = { type: "v", value: "," };
 
 function v_f(str: string): tree[0] {
@@ -856,6 +860,13 @@ function ast2(tree: tree) {
             // 带有括号（参数）的函数
             if (x.type == "f" && tree[n + 1] && tree[n + 1].type == "group") {
                 x.children = tree[n + 1].children;
+                for (let i in x.children) {
+                    if (x.children[i].value == "\\" && x.children[i].type == "v") {
+                        if (x.children[Number(i) + 1]) {
+                            x.children[Number(i) + 1]["esc"] = true;
+                        }
+                    }
+                }
                 t.push(x);
 
                 // 不处理group
@@ -1112,7 +1123,7 @@ function render(tree: tree) {
                 const t = x.children[i];
                 if (Number(i) + 1 == x.children.length) {
                     if (t.type == "blank" && x.children[Number(i) - 1].value.match(/[,;]/)) break;
-                    if (t.value != "," && t.value != ";") l.push(t);
+                    if (!is_f_mark(t, ",") && !is_f_mark(t, ";")) l.push(t);
                     if (type == "dic") {
                         dicl.push(l);
                         l = [];
@@ -1125,7 +1136,7 @@ function render(tree: tree) {
                     }
                     l = [];
                 } else {
-                    if (t.value == "," && t.type == "v") {
+                    if (is_f_mark(t, ",")) {
                         if (type == "dic") {
                             dicl.push(l);
                             l = [];
@@ -1133,7 +1144,7 @@ function render(tree: tree) {
                             attr.push(l);
                         }
                         l = [];
-                    } else if (t.value == ";" && t.type == "v") {
+                    } else if (is_f_mark(t, ";")) {
                         // 存在; 则存好的attr为array的一个子元素
                         type == "array";
                         attr.push(l);
@@ -1144,7 +1155,7 @@ function render(tree: tree) {
                         // 按,拆分成段
                         l.push(t);
                         // 段中有: 为dic
-                        if (t.value == ":" && t.type == "v") {
+                        if (is_f_mark(t, ":")) {
                             type = "dic";
                         }
                     }
