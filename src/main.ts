@@ -528,7 +528,8 @@ function underover_f(type: "under" | "over", tree: tree, x: string, str?: tree) 
     let base = createMath("mrow");
     base.append(render(tree));
     if (str) {
-        let s = render(str);
+        let s = createMath("mrow");
+        s.append(render(str));
         let mm = type == "under" ? createMath("munder") : createMath("mover");
         let xx = createMath("mo", x);
         mm.append(xx, s);
