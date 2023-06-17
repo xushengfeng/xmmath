@@ -707,9 +707,7 @@ function dic_to_ast(dic: { [id: string]: tree }) {
     return l;
 }
 
-function render(tree: tree) {
-    let fragment = document.createDocumentFragment();
-
+function ast2(tree: tree) {
     // 处理数字和小数
     {
         let t: tree = [];
@@ -1022,37 +1020,54 @@ function render(tree: tree) {
         }
         tree = t;
     }
+    return tree;
+}
 
-    // 移除group
-    {
-        let t: tree = [];
-        for (let i in tree) {
-            let x = tree[i];
-            // 不作为group，只是数学上显示的括号对
-            if (x.type == "group") {
-                t.push(v_f("("));
-                t.push(...x.children);
-                t.push(v_f(")"));
-            } else {
-                t.push(x);
-            }
-        }
-        tree = t;
-    }
+function render(tree: tree) {
+    let fragment = document.createDocumentFragment();
+
+    tree = ast2(tree);
 
     // 处理\ 换行
     {
-        // 将换行替换成逗号传入函数
         let xx = false;
-        for (let n = 0; n < tree.length; n++) {
-            const x = tree[n];
-            if (is_br(x)) {
-                tree[n] = dh;
-                xx = true;
+        let w = (tree: tree) => {
+            for (let i of tree) {
+                if (is_br(i)) {
+                    xx = true;
+                    return;
+                }
+                if (i.type == "group") {
+                    w(i.children);
+                }
             }
-        }
-
+        };
+        w(tree);
         if (xx) {
+            // 移除group
+            {
+                let t: tree = [];
+                for (let i in tree) {
+                    let x = tree[i];
+                    // 不作为group，只是数学上显示的括号对
+                    if (x.type == "group") {
+                        t.push(v_f("("));
+                        t.push(...ast2(x.children));
+                        t.push(v_f(")"));
+                    } else {
+                        t.push(x);
+                    }
+                }
+                tree = t;
+            }
+            // 将换行替换成逗号传入函数
+            for (let n = 0; n < tree.length; n++) {
+                const x = tree[n];
+                if (is_br(x)) {
+                    tree[n] = dh;
+                }
+            }
+
             let t: tree = [];
             t.push({ type: "f", value: "x_table", children: tree });
             tree = t;
@@ -1171,6 +1186,10 @@ function render(tree: tree) {
             }
             let el = createMath(tag, x.value);
             fragment.append(el);
+        }
+
+        if (x.type == "group") {
+            fragment.append(kh(x.children));
         }
     }
 
