@@ -651,6 +651,11 @@ function is_frac(x: tree[0]) {
     return x.value == "/" && !x.esc;
 }
 
+function is_br(x: tree[0]) {
+    if (!x) return false;
+    return x.value == "br" && x.esc;
+}
+
 function is_limit(tree: tree) {
     if (tree.length == 1) {
         let x = tree[0];
@@ -1009,6 +1014,23 @@ function render(tree: tree) {
         tree = t;
     }
 
+    // 移除group
+    {
+        let t: tree = [];
+        for (let i in tree) {
+            let x = tree[i];
+            // 不作为group，只是数学上显示的括号对
+            if (x.type == "group") {
+                t.push(v_f("("));
+                t.push(...x.children);
+                t.push(v_f(")"));
+            } else {
+                t.push(x);
+            }
+        }
+        tree = t;
+    }
+
     let continue_c = 0;
     for (let i in tree) {
         if (continue_c > 0) {
@@ -1121,10 +1143,6 @@ function render(tree: tree) {
             }
             let el = createMath(tag, x.value);
             fragment.append(el);
-        }
-
-        if (x.type == "group") {
-            fragment.append(kh(x.children));
         }
     }
 
