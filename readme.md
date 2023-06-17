@@ -29,7 +29,8 @@ npm i xmmath
 ```
 
 ```js
-import xmmath from xmmath
+import * as xmmath from xmmath
+console.log(xmmath.toMMLHTML("e^(i pi)=-1"))
 ```
 
 ```html
