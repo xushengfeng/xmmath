@@ -1,6 +1,6 @@
 {
     "name": "xmmath",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "description": "",
     "main": "./dist/xmmath.umd.js",
     "module": "./dist/xmmath.es.js",
