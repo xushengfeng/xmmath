@@ -1172,7 +1172,13 @@ function render(tree: tree) {
 
         if (x.type == "f" && !x.children) {
             if (ss[x.value]) {
-                let el = createMath("mo", ss[x.value]);
+                let tag: keyof MathMLElementTagNameMap;
+                if (x.value.match(/[a-zA-Z\u0391-\u03C9]/)) {
+                    tag = "mi";
+                } else {
+                    tag = "mo";
+                }
+                let el = createMath(tag, ss[x.value]);
                 fragment.append(el);
             } else {
                 if (f[x.value]) {
@@ -1191,7 +1197,7 @@ function render(tree: tree) {
             let tag: keyof MathMLElementTagNameMap;
             if (x.value.match(/[0-9]+/)) {
                 tag = "mn";
-            } else if (x.value.match(/[a-zA-Z]/)) {
+            } else if (x.value.match(/[a-zA-Z\u0391-\u03C9]/)) {
                 tag = "mi";
             } else {
                 tag = "mo";
