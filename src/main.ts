@@ -727,6 +727,9 @@ function dic_to_ast(dic: { [id: string]: tree }) {
     for (let i in dic) {
         l.push({ type: "f", value: i });
         l.push({ type: "v", value: ":" });
+        for (let x of dic[i]) {
+            if (x.type == "v" && x.value == ",") x.esc = true;
+        }
         l.push(...dic[i]);
         if (Number(i) + 1 != Object.keys(dic).length) {
             l.push(dh);
