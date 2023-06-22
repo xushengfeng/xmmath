@@ -7,39 +7,13 @@ function createEl(tagname: string) {
     return document.createElement(tagname);
 }
 
-type mathtag =
-    | "math"
-    | "menclose"
-    | "merror"
-    | "mfrac"
-    | "mi"
-    | "mmultiscripts"
-    | "mprescripts"
-    | "mn"
-    | "mo"
-    | "mover"
-    | "mpadded"
-    | "mphantom"
-    | "mroot"
-    | "mrow"
-    | "ms"
-    | "mspace"
-    | "msqrt"
-    | "mstyle"
-    | "msub"
-    | "msubsup"
-    | "msup"
-    | "mtable"
-    | "mtd"
-    | "mtext"
-    | "mtr"
-    | "munder"
-    | "munderover"
-    | "semantics";
-
-function createMath(tagname: mathtag, innerText?: string, attr?: { [name: string]: string }) {
-    let el = document.createElement(tagname);
-    if (innerText) el.innerText = innerText;
+function createMath<K extends keyof MathMLElementTagNameMap>(
+    tagname: K,
+    innerText?: string,
+    attr?: { [name: string]: string }
+) {
+    let el = document.createElementNS("http://www.w3.org/1998/Math/MathML", tagname);
+    if (innerText) el.textContent = innerText;
     if (attr) {
         for (let i in attr) {
             el.setAttribute(i, attr[i]);
@@ -655,10 +629,10 @@ function underover_f(type: "under" | "over", tree: tree, x: string, str?: tree) 
 function kh(tree: tree) {
     let f = createMath("mrow");
     let l = createMath("mo");
-    l.innerText = "(";
+    l.textContent = "(";
     let c = render(tree);
     let r = createMath("mo");
-    r.innerText = ")";
+    r.textContent = ")";
     f.append(l, c, r);
     return f;
 }
@@ -1214,7 +1188,7 @@ function render(tree: tree) {
         }
 
         if (x.type == "v") {
-            let tag: mathtag;
+            let tag: keyof MathMLElementTagNameMap;
             if (x.value.match(/[0-9]+/)) {
                 tag = "mn";
             } else if (x.value.match(/[a-zA-Z]/)) {
