@@ -1134,7 +1134,7 @@ function render(tree: tree) {
                     if (is_f_mark(t, ",")) {
                         if (type == "dic") {
                             dicl.push(l);
-                            l = [];
+                            type = "array";
                         } else {
                             attr.push(l);
                         }
