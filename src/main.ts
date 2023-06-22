@@ -169,16 +169,16 @@ function ast(str: string) {
             } else {
                 p_tree.push({ tree: now_tree, close: false });
                 now_tree.push({ type: "group", value: tmp_str, children: [] });
-                now_tree = now_tree[now_tree.length - 1].children;
+                now_tree = now_tree.at(-1).children;
                 tmp_str = "";
                 continue;
             }
         }
         if (t == ")") {
-            if (p_tree[p_tree.length - 1]) {
-                if (p_tree[p_tree.length - 1].close == false) {
-                    p_tree[p_tree.length - 1].close = true;
-                    now_tree = p_tree[p_tree.length - 1].tree;
+            if (p_tree.at(-1)) {
+                if (p_tree.at(-1).close == false) {
+                    p_tree.at(-1).close = true;
+                    now_tree = p_tree.at(-1).tree;
                     p_tree.pop();
                     continue;
                 }
@@ -782,11 +782,11 @@ function ast2(tree: tree) {
                         nn++;
                     }
                     if (l.length) {
-                        let nx: tree[0] = { type: "f", value: shorthand[l[l.length - 1]] };
+                        let nx: tree[0] = { type: "f", value: shorthand[l.at(-1)] };
                         t.push(nx);
 
                         // 不处理已经后面连起来的字符
-                        continue_c = l[l.length - 1].length - 1;
+                        continue_c = l.at(-1).length - 1;
                     } else {
                         t.push(x);
                     }
