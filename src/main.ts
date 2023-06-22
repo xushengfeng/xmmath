@@ -505,7 +505,9 @@ let f = {
         let t = createMath("mtable");
         for (let i of attr) {
             let r = createMath("mtr");
-            r.append(render(i));
+            let d = createMath("mtd");
+            r.append(d);
+            d.append(render(i));
             t.append(r);
         }
         return t;
