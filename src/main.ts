@@ -289,8 +289,7 @@ let f = {
     attach: (attr: tree[], dic: fdic) => {
         let base = createMath("mrow");
         base.append(render(attr[0]));
-        let el = createMath("mmultiscripts");
-        el.append(base);
+        let el: MathMLElement;
         let tl = createMath("mrow");
         if (dic.tl) tl.append(render(dic.tl));
         let bl = createMath("mrow");
@@ -300,23 +299,33 @@ let f = {
         let br = createMath("mrow");
         if (dic.br) br.append(render(dic.br));
         if (dic.tl || dic.bl || dic.tr || dic.br) {
-            el.append(br, tr, createMath("mprescripts"), bl, tl);
+            if (dic.tl || dic.bl) {
+                el = createMath("mmultiscripts");
+                el.append(base, br, tr, createMath("mprescripts"), bl, tl);
+            } else if (dic.tr && dic.br) {
+                el = createMath("msubsup");
+                el.append(base, br, tr);
+            } else if (dic.tr) {
+                el = createMath("msup");
+                el.append(base, tr);
+            } else {
+                el = createMath("msub");
+                el.append(base, br);
+            }
         }
         if (dic.t || dic.b) {
-            let ud = createMath("munderover");
-            if (el.children.length == 1) {
-                let base = createMath("mrow");
-                base.append(render(attr[0]));
-                ud.append(base);
+            let uo = createMath("munderover");
+            if (!el) {
+                uo.append(base);
             } else {
-                ud.append(el);
+                uo.append(el);
             }
             let t = createMath("mrow");
             if (dic.t) t.append(render(dic.t));
             let b = createMath("mrow");
             if (dic.b) b.append(render(dic.b));
-            ud.append(b, t);
-            el = ud;
+            uo.append(b, t);
+            el = uo;
         }
         return el;
     },
