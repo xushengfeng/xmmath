@@ -488,9 +488,30 @@ let f = {
         let t = createMath("mtable");
         for (let i of attr) {
             let r = createMath("mtr");
-            let d = createMath("mtd");
-            r.append(d);
-            d.append(render(i));
+
+            // 按&拆分
+            let result: tree[] = [];
+            let tmp_group: tree = [];
+            for (let n = 0; n < i.length; n++) {
+                if (!i[n].esc && i[n].value == "&") {
+                    if (tmp_group.length > 0) {
+                        result.push(tmp_group);
+                        tmp_group = [];
+                    }
+                } else {
+                    tmp_group.push(i[n]);
+                }
+            }
+            if (tmp_group.length > 0) {
+                result.push(tmp_group);
+            }
+
+            for (let i of result) {
+                let d = createMath("mtd");
+                r.append(d);
+                d.append(render(i));
+            }
+
             t.append(r);
         }
         return t;
