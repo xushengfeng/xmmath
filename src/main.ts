@@ -1239,7 +1239,7 @@ function toMML(str: string) {
     let obj = ast(str);
     console.log(obj);
 
-    let mathEl = createEl("math");
+    let mathEl = createMath("math");
     mathEl.setAttribute("display", "block");
     let f = render(obj);
     mathEl.append(f);
