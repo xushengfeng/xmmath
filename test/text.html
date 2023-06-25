@@ -33,7 +33,7 @@
             let p = document.createElement('pre')
             p.innerText = i
             div.append(p)
-            div.insertAdjacentHTML('beforeend', xmmath.toMMLHTML(i))
+            div.append(xmmath.toMML(i))
             document.body.append(div)
         }
     </script>
