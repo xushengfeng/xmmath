@@ -1157,7 +1157,7 @@ function render(tree: tree) {
         if (x.type == "f" && !x.children) {
             if (ss[x.value]) {
                 let tag: keyof MathMLElementTagNameMap;
-                if (x.value.match(/[a-zA-Z\u0391-\u03C9]/)) {
+                if (ss[x.value].match(/[a-zA-Z\u0391-\u03C9]/)) {
                     tag = "mi";
                 } else {
                     tag = "mo";
