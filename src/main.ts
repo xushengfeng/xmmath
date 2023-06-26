@@ -1179,7 +1179,7 @@ function render(tree: tree) {
 
         if (x.type == "v") {
             let tag: keyof MathMLElementTagNameMap;
-            if (x.value.match(/[0-9]+/)) {
+            if (x.value.match(/[0-9.]+/)) {
                 tag = "mn";
             } else if (x.value.match(/[a-zA-Z\u0391-\u03C9]/)) {
                 tag = "mi";
