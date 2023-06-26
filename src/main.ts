@@ -74,15 +74,8 @@ function ast(str: string) {
         }
     }
 
-    let continue_c = 0;
-
     let strl = splitter.splitGraphemes(str);
     for (let i = 0; i < strl.length; i++) {
-        if (continue_c > 0) {
-            continue_c--;
-            continue;
-        }
-
         const t = strl[i];
         // 字符
         if (t == '"' && strl[i - 1] != "\\") {
@@ -765,13 +758,7 @@ function ast2(tree: tree) {
     // 处理符号简写（shorthand）
     {
         let t: tree = [];
-        let continue_c = 0;
-        for (let i in tree) {
-            if (continue_c > 0) {
-                continue_c--;
-                continue;
-            }
-            let n = Number(i);
+        for (let n = 0; n < tree.length; n++) {
             let x = tree[n];
 
             if (tree?.[n - 1]?.value != "\\") {
@@ -791,7 +778,7 @@ function ast2(tree: tree) {
                         t.push(nx);
 
                         // 不处理已经后面连起来的字符
-                        continue_c = l.at(-1).length - 1;
+                        n += l.at(-1).length - 1;
                     } else {
                         t.push(x);
                     }
@@ -808,13 +795,7 @@ function ast2(tree: tree) {
     // 处理\转义
     {
         let t: tree = [];
-        let continue_c = 0;
-        for (let i in tree) {
-            if (continue_c > 0) {
-                continue_c--;
-                continue;
-            }
-            let n = Number(i);
+        for (let n = 0; n < tree.length; n++) {
             let x = tree[n];
 
             if (x.value == "\\" && x.type == "v") {
@@ -822,20 +803,20 @@ function ast2(tree: tree) {
                     let next = tree[n + 1];
                     if (next.value == "\\" && next.type == "v") {
                         t.push({ type: "v", value: "\\" });
-                        continue_c = 1;
+                        n++;
                     } else if (next.type == "blank") {
                         t.push({ type: "v", value: "br", esc: true });
-                        continue_c = 1;
+                        n++;
                     } else if (next.type == "f") {
                         let v = next.value;
                         t.push({ type: "v", value: v[0] });
                         t.push({ type: v.length == 2 ? "v" : "f", value: v.slice(1) });
-                        continue_c = 1;
+                        n++;
                     } else {
                         let v = next;
                         v.esc = true;
                         t.push(v);
-                        continue_c = 1;
+                        n++;
                     }
                 }
             } else {
@@ -848,19 +829,13 @@ function ast2(tree: tree) {
     // 处理带.的f
     {
         let t: tree = [];
-        let continue_c = 0;
         let f = "";
-        for (let i in tree) {
-            if (continue_c > 0) {
-                continue_c--;
-                continue;
-            }
-            let n = Number(i);
+        for (let n = 0; n < tree.length; n++) {
             let x = tree[n];
 
             if (x.type == "f" && is_dot(tree[n + 1])) {
                 f += x.value + ".";
-                continue_c = 1;
+                n++;
                 continue;
             } else if (f && x.type == "f") {
                 f += x.value;
@@ -877,13 +852,7 @@ function ast2(tree: tree) {
     // 处理f
     {
         let t: tree = [];
-        let continue_c = 0;
-        for (let i in tree) {
-            if (continue_c > 0) {
-                continue_c--;
-                continue;
-            }
-            let n = Number(i);
+        for (let n = 0; n < tree.length; n++) {
             let x = tree[n];
 
             // 带有括号（参数）的函数
@@ -899,7 +868,7 @@ function ast2(tree: tree) {
                 t.push(x);
 
                 // 不处理group
-                continue_c = 1;
+                n++;
                 continue;
             } else {
                 t.push(x);
@@ -943,24 +912,11 @@ function ast2(tree: tree) {
         }
 
         let t: tree = [];
-        let continue_c = 0;
-        for (let i in tree) {
-            if (continue_c > 0) {
-                continue_c--;
-                continue;
-            }
-            let n = Number(i);
-
+        for (let n = 0; n < tree.length; n++) {
             if (n == index?.[0]?.[0]) {
                 {
-                    let continue_c = 0;
                     let tmp: tree[0] = tree[index[0][1]];
                     for (let i = index[0][1]; i >= index[0][0]; i--) {
-                        if (continue_c > 0) {
-                            continue_c--;
-                            continue;
-                        }
-
                         if (tree[i - 1]?.value == "^" && tree[i - 3]?.value == "_") {
                             let o = is_limit([tree[i - 4]])
                                 ? { t: out_kh(tmp), b: out_kh(tree[i - 2]) }
@@ -970,7 +926,7 @@ function ast2(tree: tree) {
                                 value: "attach",
                                 children: [tree[i - 4], dh, ...dic_to_ast(o)],
                             };
-                            continue_c = 4 - 1;
+                            i -= 4 - 1;
                             continue;
                         }
                         if (tree[i - 1]?.value == "_" && tree[i - 3]?.value == "^") {
@@ -982,7 +938,7 @@ function ast2(tree: tree) {
                                 value: "attach",
                                 children: [tree[i - 4], dh, ...dic_to_ast(o)],
                             };
-                            continue_c = 4 - 1;
+                            i -= 4 - 1;
                             continue;
                         }
                         if (tree[i - 1]?.value == "^") {
@@ -992,7 +948,7 @@ function ast2(tree: tree) {
                                 value: "attach",
                                 children: [tree[i - 2], dh, ...dic_to_ast(o)],
                             };
-                            continue_c = 2 - 1;
+                            i -= 2 - 1;
                             continue;
                         }
                         if (tree[i - 1]?.value == "_") {
@@ -1002,18 +958,18 @@ function ast2(tree: tree) {
                                 value: "attach",
                                 children: [tree[i - 2], dh, ...dic_to_ast(o)],
                             };
-                            continue_c = 2 - 1;
+                            i -= 2 - 1;
                             continue;
                         }
                     }
                     t.push(tmp);
                 }
-                continue_c = index[0][1] - index[0][0];
+                n += index[0][1] - index[0][0];
                 index = index.slice(1);
                 continue;
             }
 
-            t.push(tree[i]);
+            t.push(tree[n]);
         }
         tree = t;
     }
@@ -1037,31 +993,18 @@ function ast2(tree: tree) {
         }
 
         let t: tree = [];
-        let continue_c = 0;
-        for (let i in tree) {
-            if (continue_c > 0) {
-                continue_c--;
-                continue;
-            }
-            let n = Number(i);
-
+        for (let n = 0; n < tree.length; n++) {
             if (n == index?.[0]?.[0]) {
                 {
-                    let continue_c = 0;
                     let tmp: tree[0] = tree[index[0][0]];
                     for (let i = index[0][0]; i <= index[0][1]; i++) {
-                        if (continue_c > 0) {
-                            continue_c--;
-                            continue;
-                        }
-
                         if (tree[i + 1]?.value == "/") {
                             tmp = {
                                 type: "f",
                                 value: "frac",
                                 children: [...out_kh(tmp), dh, ...out_kh(tree[i + 2])],
                             };
-                            continue_c = 2 - 1;
+                            i += 2 - 1;
                             continue;
                         }
                     }
@@ -1069,12 +1012,12 @@ function ast2(tree: tree) {
 
                     t.push(tmp);
                 }
-                continue_c = index[0][1] - index[0][0];
+                n += index[0][1] - index[0][0];
                 index.splice(0, 1);
                 continue;
             }
 
-            t.push(tree[i]);
+            t.push(tree[n]);
         }
         tree = t;
     }
@@ -1132,12 +1075,7 @@ function render(tree: tree) {
         }
     }
 
-    let continue_c = 0;
     for (let i in tree) {
-        if (continue_c > 0) {
-            continue_c--;
-            continue;
-        }
         let n = Number(i);
         let x = tree[n];
 
