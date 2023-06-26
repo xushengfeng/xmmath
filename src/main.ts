@@ -709,6 +709,10 @@ function is_f_mark(x: tree[0], str: string) {
     return x.value == str && x.type == "v" && !x.esc;
 }
 
+function is_dot(x: tree[0]) {
+    return x && x.type == "v" && x.value == ".";
+}
+
 let dh: tree[0] = { type: "v", value: "," };
 
 function v_f(str: string): tree[0] {
@@ -746,7 +750,7 @@ function ast2(tree: tree) {
                 x.value.match(num) ||
                 (tree[n - 1] &&
                     tree[n - 1].value.match(num) &&
-                    x.value == "." &&
+                    is_dot(x) &&
                     tree[n + 1] &&
                     tree[n + 1].value.match(num))
             ) {
@@ -757,7 +761,7 @@ function ast2(tree: tree) {
             if (
                 x.value.match(num) &&
                 (!tree[n + 1] || !tree[n + 1].value.match(/[0-9]/)) &&
-                !(tree[n + 1]?.value == "." && tree[n + 2]?.value.match(num))
+                !(is_dot(tree[n + 1]) && tree[n + 2]?.value.match(num))
             ) {
                 t.push({ type: "v", value: number });
                 number = "";
@@ -854,9 +858,6 @@ function ast2(tree: tree) {
         let t: tree = [];
         let continue_c = 0;
         let f = "";
-        function is_dot(x: tree[0]) {
-            return x && x.type == "v" && x.value == ".";
-        }
         for (let i in tree) {
             if (continue_c > 0) {
                 continue_c--;
