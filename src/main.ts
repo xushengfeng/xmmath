@@ -743,24 +743,16 @@ function ast2(tree: tree) {
         let t: tree = [];
         let num = /[0-9]/;
         let number = "";
-        for (let i in tree) {
-            let n = Number(i);
+        for (let n = 0; n < tree.length; n++) {
             let x = tree[n];
-            if (
-                x.value.match(num) ||
-                (tree[n - 1] &&
-                    tree[n - 1].value.match(num) &&
-                    is_dot(x) &&
-                    tree[n + 1] &&
-                    tree[n + 1].value.match(num))
-            ) {
+            if (x.value.match(num) || (tree[n - 1]?.value.match(num) && is_dot(x) && tree[n + 1]?.value.match(num))) {
                 number += x.value;
             } else {
                 t.push(x);
             }
             if (
                 x.value.match(num) &&
-                (!tree[n + 1] || !tree[n + 1].value.match(/[0-9]/)) &&
+                (!tree[n + 1] || !tree[n + 1].value.match(num)) &&
                 !(is_dot(tree[n + 1]) && tree[n + 2]?.value.match(num))
             ) {
                 t.push({ type: "v", value: number });
