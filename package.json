@@ -10,6 +10,7 @@
             "require": "./dist/xmmath.umd.js"
         }
     },
+    "homepage": "https://github.com/xushengfeng/xmmath",
     "type": "module",
     "types": "./src/main.ts",
     "scripts": {
