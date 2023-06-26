@@ -31,7 +31,7 @@ type vtype = "" | "str" | "v" | "f" | "blank" | "group";
 type tree = { type: vtype; value: string; children?: tree; esc?: boolean }[];
 
 function ast(str: string) {
-    let v = /[a-zA-Z.]/;
+    let v = /[a-zA-Z]/;
     let kh = /[\(\)]/;
     let blank = /[ \t\n\r]+/;
     let type: vtype = "";
@@ -849,6 +849,38 @@ function ast2(tree: tree) {
         tree = t;
     }
 
+    // 处理带.的f
+    {
+        let t: tree = [];
+        let continue_c = 0;
+        let f = "";
+        function is_dot(x: tree[0]) {
+            return x && x.type == "v" && x.value == ".";
+        }
+        for (let i in tree) {
+            if (continue_c > 0) {
+                continue_c--;
+                continue;
+            }
+            let n = Number(i);
+            let x = tree[n];
+
+            if (x.type == "f" && is_dot(tree[n + 1])) {
+                f += x.value + ".";
+                continue_c = 1;
+                continue;
+            } else if (f && x.type == "f") {
+                f += x.value;
+                if (!is_dot(tree[n + 1])) {
+                    t.push({ type: "f", value: f });
+                    f = "";
+                }
+            } else {
+                t.push(x);
+            }
+        }
+        tree = t;
+    }
     // 处理f
     {
         let t: tree = [];
