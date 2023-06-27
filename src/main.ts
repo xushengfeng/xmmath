@@ -410,24 +410,24 @@ let f: {
         return f.root([[], attr[0]], null);
     },
     display: (attr: tree[], dic: fdic) => {
-        let m = createMath("math", null, { display: "block" });
+        let m = createMath("mrow", null, { displaystyle: "true" });
         m.append(render(attr[0]));
-        let style = `math[display="inline"] math[display="block"]{display:inline}`;
-        let sel = document.createElement("style");
-        sel.innerHTML = style;
-        document.body.append(sel);
         return m;
     },
     inline: (attr: tree[], dic: fdic) => {
-        let m = createMath("math", null, { display: "inline" });
+        let m = createMath("mrow", null, { displaystyle: "false", scriptlevel: "0" });
         m.append(render(attr[0]));
         return m;
     },
     script: (attr: tree[], dic: fdic) => {
-        return render(attr[0]);
+        let m = createMath("mrow", null, { displaystyle: "false", scriptlevel: "1" });
+        m.append(render(attr[0]));
+        return m;
     },
     sscript: (attr: tree[], dic: fdic) => {
-        return render(attr[0]);
+        let m = createMath("mrow", null, { displaystyle: "false", scriptlevel: "2" });
+        m.append(render(attr[0]));
+        return m;
     },
     upright: (attr: tree[], dic: fdic) => {
         let r = createMath("mrow");
