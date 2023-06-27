@@ -410,10 +410,18 @@ let f: {
         return f.root([[], attr[0]], null);
     },
     display: (attr: tree[], dic: fdic) => {
-        return render(attr[0]);
+        let m = createMath("math", null, { display: "block" });
+        m.append(render(attr[0]));
+        let style = `math[display="inline"] math[display="block"]{display:inline}`;
+        let sel = document.createElement("style");
+        sel.innerHTML = style;
+        document.body.append(sel);
+        return m;
     },
     inline: (attr: tree[], dic: fdic) => {
-        return render(attr[0]);
+        let m = createMath("math", null, { display: "inline" });
+        m.append(render(attr[0]));
+        return m;
     },
     script: (attr: tree[], dic: fdic) => {
         return render(attr[0]);
