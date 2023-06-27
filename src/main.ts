@@ -321,18 +321,11 @@ let f: {
         return render(attr[0]);
     },
     cases: (attr: tree[], dic: fdic) => {
-        let f = createMath("mrow");
+        let r = createMath("mrow");
         let l = createMath("mo", dic?.delim?.[0]?.value || "{");
-        let t = createMath("mtable", null, { columnalign: "left" });
-        for (let i of attr) {
-            let tr = createMath("mtr");
-            let td = createMath("mtd");
-            td.append(render(i));
-            tr.append(td);
-            t.append(tr);
-        }
-        f.append(l, t);
-        return f;
+        let t = f.x_table(attr);
+        r.append(l, t);
+        return r;
     },
     frac: (attr: tree[], dic: fdic) => {
         console.log(attr);
@@ -502,7 +495,7 @@ let f: {
     // 额外
     //
     x_table: (attr: tree[]) => {
-        let t = createMath("mtable");
+        let t = createMath("mtable", null, { columnalign: "left" });
         for (let i of attr) {
             let r = createMath("mtr");
 
