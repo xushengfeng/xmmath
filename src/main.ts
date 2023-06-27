@@ -1282,6 +1282,15 @@ function render(tree: tree, e?: fonts) {
             let t: tree = [];
             t.push({ type: "f", value: "x_table", children: tree });
             tree = t;
+        } else {
+            let t: tree = [];
+            for (let x of tree) {
+                // 移除&
+                if (!(x.type == "v" && x.value == "&" && !x.esc)) {
+                    t.push(x);
+                }
+            }
+            tree = t;
         }
     }
 
