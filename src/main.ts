@@ -1048,6 +1048,72 @@ function ast2(tree: tree) {
     return tree;
 }
 
+function f_attr(x: tree[0]) {
+    let type: "dic" | "array" | "attr" = "array";
+    let attr: tree[] = [];
+    let dicl: tree[] = [];
+    let array: tree[][] = [];
+    let l: tree = [];
+    for (let i in x.children) {
+        const t = x.children[i];
+        if (Number(i) + 1 == x.children.length) {
+            if (t.type == "blank" && x.children[Number(i) - 1].value.match(/[,;]/)) break;
+            if (!is_f_mark(t, ",") && !is_f_mark(t, ";")) l.push(t);
+            if (type == "dic") {
+                dicl.push(l);
+                l = [];
+            } else {
+                attr.push(l);
+            }
+            if (array.length) {
+                array.push(attr);
+                attr = [];
+            }
+            l = [];
+        } else {
+            if (is_f_mark(t, ",")) {
+                if (type == "dic") {
+                    dicl.push(l);
+                    type = "array";
+                } else {
+                    attr.push(l);
+                }
+                l = [];
+            } else if (is_f_mark(t, ";")) {
+                // 存在; 则存好的attr为array的一个子元素
+                type == "array";
+                attr.push(l);
+                l = [];
+                array.push(attr);
+                attr = [];
+            } else {
+                // 按,拆分成段
+                l.push(t);
+                // 段中有: 为dic
+                if (is_f_mark(t, ":")) {
+                    type = "dic";
+                }
+            }
+        }
+    }
+
+    // 将dicl的tree转为键对
+    let dic: fdic = {};
+    for (let i of dicl) {
+        let n = "";
+        let t: tree = [];
+        for (let el of i) {
+            if (!n) {
+                n = el.value;
+            } else {
+                if (el.value != ":") t.push(el);
+            }
+        }
+        dic[n] = t;
+    }
+    return { attr, dic, array };
+}
+
 type fonts = "serif" | "sans" | "frak" | "mono" | "bb" | "cal";
 function font(str: string, type: fonts = "serif") {
     function index_c(c: string) {
@@ -1153,68 +1219,7 @@ function render(tree: tree, e?: fonts) {
 
         // 带有括号（参数）的函数
         if (x.type == "f" && x.children) {
-            let type: "dic" | "array" | "attr" = "array";
-            let attr: tree[] = [];
-            let dicl: tree[] = [];
-            let array: tree[][] = [];
-            let l: tree = [];
-            for (let i in x.children) {
-                const t = x.children[i];
-                if (Number(i) + 1 == x.children.length) {
-                    if (t.type == "blank" && x.children[Number(i) - 1].value.match(/[,;]/)) break;
-                    if (!is_f_mark(t, ",") && !is_f_mark(t, ";")) l.push(t);
-                    if (type == "dic") {
-                        dicl.push(l);
-                        l = [];
-                    } else {
-                        attr.push(l);
-                    }
-                    if (array.length) {
-                        array.push(attr);
-                        attr = [];
-                    }
-                    l = [];
-                } else {
-                    if (is_f_mark(t, ",")) {
-                        if (type == "dic") {
-                            dicl.push(l);
-                            type = "array";
-                        } else {
-                            attr.push(l);
-                        }
-                        l = [];
-                    } else if (is_f_mark(t, ";")) {
-                        // 存在; 则存好的attr为array的一个子元素
-                        type == "array";
-                        attr.push(l);
-                        l = [];
-                        array.push(attr);
-                        attr = [];
-                    } else {
-                        // 按,拆分成段
-                        l.push(t);
-                        // 段中有: 为dic
-                        if (is_f_mark(t, ":")) {
-                            type = "dic";
-                        }
-                    }
-                }
-            }
-
-            // 将dicl的tree转为键对
-            let dic: fdic = {};
-            for (let i of dicl) {
-                let n = "";
-                let t: tree = [];
-                for (let el of i) {
-                    if (!n) {
-                        n = el.value;
-                    } else {
-                        if (el.value != ":") t.push(el);
-                    }
-                }
-                dic[n] = t;
-            }
+            let { attr, dic, array }: { attr: tree[]; dic: fdic; array: tree[][] } = f_attr(x);
 
             if (f[x.value]) {
                 console.log(attr, dic, array);
