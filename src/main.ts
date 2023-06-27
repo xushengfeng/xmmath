@@ -242,7 +242,7 @@ for (let i in shorthand) {
     }
 }
 
-let f = {
+let f: { [name: string]: (attr?: tree[], dic?: fdic, array?: tree[][]) => MathMLElement | DocumentFragment } = {
     accent: (attr: tree[], dic: fdic) => {
         let base = createMath("mrow");
         base.append(render(attr[0]));
@@ -315,7 +315,9 @@ let f = {
         row.append(l, f, r);
         return row;
     },
-    cancel: (attr: tree[], dic: fdic) => {},
+    cancel: (attr: tree[], dic: fdic) => {
+        return render(attr[0]);
+    },
     cases: (attr: tree[], dic: fdic) => {
         let f = createMath("mrow");
         let l = createMath("mo", dic?.delim?.[0]?.value || "{");
@@ -397,10 +399,18 @@ let f = {
     sqrt: (attr: tree[], dic: fdic) => {
         return f.root([[], attr[0]], null);
     },
-    display: (attr: tree[], dic: fdic) => {},
-    inline: (attr: tree[], dic: fdic) => {},
-    script: (attr: tree[], dic: fdic) => {},
-    sscript: (attr: tree[], dic: fdic) => {},
+    display: (attr: tree[], dic: fdic) => {
+        return render(attr[0]);
+    },
+    inline: (attr: tree[], dic: fdic) => {
+        return render(attr[0]);
+    },
+    script: (attr: tree[], dic: fdic) => {
+        return render(attr[0]);
+    },
+    sscript: (attr: tree[], dic: fdic) => {
+        return render(attr[0]);
+    },
     upright: (attr: tree[], dic: fdic) => {
         let r = createMath("mrow");
         r.append(render(attr[0]));
