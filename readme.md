@@ -80,3 +80,19 @@ For more details, please go to [typst docs](https://typst.app/docs) for more inf
 -   [x] &
 -   [x] Symbols (no emoji)
 -   [ ] 变量 （不打算支持）
+
+## 使用（use）
+
+```typescript
+xmmath.toMMLHTML("e^(i pi)=-1"); // 输出html
+```
+
+```typescript
+xmmath.toMML("e^(i pi)=-1"); // 输出mathml元素
+```
+
+```typescript
+xmmath.init({
+    emoji: true, // 默认false false:🇺🇳=>🇺 🇳 true:性能会降低slow 字符类型（string）不影响
+});
+```
