@@ -318,7 +318,22 @@ let f: {
         return row;
     },
     cancel: (attr: tree[], dic: fdic) => {
-        return render(attr[0]);
+        let r = createMath("mrow");
+        const bg = (x: boolean) =>
+            `linear-gradient(to ${
+                x ? "left" : "right"
+            } top, transparent 47.75%, currentColor 49.5%, currentColor 50.5%, transparent 52.25%)`;
+        let s = "";
+        if (is_true(dic.cross)) {
+            s = bg(true) + "," + bg(false);
+        } else if (is_true(dic.inverted)) {
+            s = bg(false);
+        } else {
+            s = bg(true);
+        }
+        r.style.backgroundImage = s;
+        r.append(render(attr[0]));
+        return r;
     },
     cases: (attr: tree[], dic: fdic) => {
         let r = createMath("mrow");
@@ -751,6 +766,19 @@ function dic_to_ast(dic: { [id: string]: tree }) {
         }
     }
     return l;
+}
+
+function is_true(t: tree) {
+    let n = 0;
+    if (t) {
+        if (t[0].type == "blank") n++;
+        if (t[n] && t[n].type == "v" && t[n].value == "#") {
+            if (t[n + 1] && t[n + 1].type == "f" && t[n + 1].value == "true") {
+                return true;
+            }
+        }
+    }
+    return false;
 }
 
 function ast2(tree: tree) {
