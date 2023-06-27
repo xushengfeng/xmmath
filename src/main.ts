@@ -454,12 +454,24 @@ let f = {
     overbracket: (attr: tree[], dic: fdic) => {
         return underover_f("over", attr[0], "⎴", attr?.[1]);
     },
-    serif: (attr: tree[], dic: fdic) => {},
-    sans: (attr: tree[], dic: fdic) => {},
-    frak: (attr: tree[], dic: fdic) => {},
-    mono: (attr: tree[], dic: fdic) => {},
-    bb: (attr: tree[], dic: fdic) => {},
-    cal: (attr: tree[], dic: fdic) => {},
+    serif: (attr: tree[], dic: fdic) => {
+        return render(attr[0], "serif");
+    },
+    sans: (attr: tree[], dic: fdic) => {
+        return render(attr[0], "sans");
+    },
+    frak: (attr: tree[], dic: fdic) => {
+        return render(attr[0], "frak");
+    },
+    mono: (attr: tree[], dic: fdic) => {
+        return render(attr[0], "mono");
+    },
+    bb: (attr: tree[], dic: fdic) => {
+        return render(attr[0], "bb");
+    },
+    cal: (attr: tree[], dic: fdic) => {
+        return render(attr[0], "cal");
+    },
     vec: (attr: tree[], dic: fdic) => {
         let d = dic?.delim?.[0]?.value || "(";
         let o = { "(": ["(", ")"], "[": ["[", "]"], "{": ["{", "}"], "|": ["|", "|"], "||": ["‖", "‖"] };
@@ -1024,7 +1036,55 @@ function ast2(tree: tree) {
     return tree;
 }
 
-function render(tree: tree) {
+type fonts = "serif" | "sans" | "frak" | "mono" | "bb" | "cal";
+function font(str: string, type: fonts = "serif") {
+    function index_c(c: string) {
+        const l = "abcdefghijklmnopqrstuvwxyz";
+        return l.indexOf(c.toLowerCase());
+    }
+    switch (type) {
+        case "serif":
+            return str;
+        case "sans":
+            const s0 = [..."𝟢𝟣𝟤𝟥𝟦𝟧𝟨𝟩𝟪𝟫"];
+            const s1 = [..."𝖺𝖻𝖼𝖽𝖾𝖿𝗀𝗁𝗂𝗃𝗄𝗅𝗆𝗇𝗈𝗉𝗊𝗋𝗌𝗍𝗎𝗏𝗐𝗑𝗒𝗓"];
+            const s2 = [..."𝖠𝖡𝖢𝖣𝖤𝖥𝖦𝖧𝖨𝖩𝖪𝖫𝖬𝖭𝖮𝖯𝖰𝖱𝖲𝖳𝖴𝖵𝖶𝖷𝖸𝖹"];
+            str = str.replace(/[0-9]+/g, (s) => s0[s]);
+            str = str.replace(/[a-z]/g, (s) => s1[index_c(s)]);
+            str = str.replace(/[A-Z]/g, (s) => s2[index_c(s)]);
+            return str;
+        case "frak":
+            const frak1 = [..."𝔞𝔟𝔠𝔡𝔢𝔣𝔤𝔥𝔦𝔧𝔨𝔩𝔪𝔫𝔬𝔭𝔮𝔯𝔰𝔱𝔲𝔳𝔴𝔵𝔶𝔷"];
+            const frak2 = [..."𝔄𝔅ℭ𝔇𝔈𝔉𝔊ℌℑ𝔍𝔎𝔏𝔐𝔑𝔒𝔓𝔔ℜ𝔖𝔗𝔘𝔙𝔚𝔛𝔜ℨ"];
+            str = str.replace(/[a-z]/g, (s) => frak1[index_c(s)]);
+            str = str.replace(/[A-Z]/g, (s) => frak2[index_c(s)]);
+            return str;
+        case "mono":
+            const m0 = [..."0𝟷𝟸𝟹𝟺𝟻𝟼𝟽𝟾𝟿"];
+            const m1 = [..."𝚊𝚋𝚌𝚍𝚎𝚏𝚐𝚑𝚒𝚓𝚔𝚕𝚖𝚗𝚘𝚙𝚚𝚛𝚜𝚝𝚞𝚟𝚠𝚡𝚢𝚣"];
+            const m2 = [..."𝙰𝙱𝙲𝙳𝙴𝙵𝙶𝙷𝙸𝙹𝙺𝙻𝙼𝙽𝙾𝙿𝚀𝚁𝚂𝚃𝚄𝚅𝚆𝚇𝚈𝚉"];
+            str = str.replace(/[0-9]+/g, (s) => m0[s]);
+            str = str.replace(/[a-z]/g, (s) => m1[index_c(s)]);
+            str = str.replace(/[A-Z]/g, (s) => m2[index_c(s)]);
+            return str;
+        case "bb":
+            const bb0 = [..."𝟘𝟙𝟚𝟛𝟜𝟝𝟞𝟟𝟠𝟡"];
+            const bb1 = [..."𝕒𝕓𝕔𝕕𝕖𝕗𝕘𝕙𝕚𝕛𝕜𝕝𝕞𝕟𝕠𝕡𝕢𝕣𝕤𝕥𝕦𝕧𝕨𝕩𝕪𝕫"];
+            const bb2 = [..."𝔸𝔹ℂ𝔻𝔼𝔽𝔾ℍ𝕀𝕁𝕂𝕃𝕄ℕ𝕆ℙℚℝ𝕊𝕋𝕌𝕍𝕎𝕏𝕐ℤ"];
+            str = str.replace(/[0-9]+/g, (s) => bb0[s]);
+            str = str.replace(/[a-z]/g, (s) => bb1[index_c(s)]);
+            str = str.replace(/[A-Z]/g, (s) => bb2[index_c(s)]);
+            return str;
+        case "cal":
+            const c1 = [..."𝒶𝒷𝒸𝒹ℯ𝒻ℊ𝒽𝒾𝒿𝓀𝓁𝓂𝓃ℴ𝓅𝓆𝓇𝓈𝓉𝓊𝓋𝓌𝓍𝓎𝓏"];
+            const c2 = [..."𝒜ℬ𝒞𝒟ℰℱ𝒢ℋℐ𝒥𝒦ℒℳ𝒩𝒪𝒫𝒬ℛ𝒮𝒯𝒰𝒱𝒲𝒳𝒴𝒵"];
+            str = str.replace(/[a-z]/g, (s) => c1[index_c(s)]);
+            str = str.replace(/[A-Z]/g, (s) => c2[index_c(s)]);
+            return str;
+    }
+}
+
+function render(tree: tree, e?: fonts) {
     let fragment = document.createDocumentFragment();
 
     tree = ast2(tree);
@@ -1173,7 +1233,7 @@ function render(tree: tree) {
         }
 
         if (x.type == "str") {
-            let el = createMath("ms", x.value);
+            let el = createMath("ms", font(x.value, e));
             fragment.append(el);
         }
 
@@ -1186,7 +1246,7 @@ function render(tree: tree) {
             } else {
                 tag = "mo";
             }
-            let el = createMath(tag, x.value);
+            let el = createMath(tag, font(x.value, e));
             fragment.append(el);
         }
 
