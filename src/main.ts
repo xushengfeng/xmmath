@@ -338,7 +338,7 @@ let f: {
     cases: (attr: tree[], dic: fdic) => {
         let r = createMath("mrow");
         let l = createMath("mo", dic?.delim?.[0]?.value || "{");
-        let t = f.x_table(attr);
+        let t = f.x_table(attr, { cases: [] });
         r.append(l, t);
         return r;
     },
@@ -516,8 +516,9 @@ let f: {
     },
     // 额外
     //
-    x_table: (attr: tree[]) => {
-        let t = createMath("mtable", null, { columnalign: "left" });
+    x_table: (attr: tree[], dic: fdic) => {
+        let max = 0;
+        let t = createMath("mtable");
         for (let i of attr) {
             let r = createMath("mtr");
 
@@ -538,6 +539,8 @@ let f: {
                 result.push(tmp_group);
             }
 
+            if (result.length > max) max = result.length;
+
             for (let i of result) {
                 let d = createMath("mtd");
                 r.append(d);
@@ -546,6 +549,21 @@ let f: {
 
             t.append(r);
         }
+        let al = [];
+        if (dic.cases) {
+            // cases
+            al.push("left");
+        } else {
+            // 其他换行对齐 交替
+            for (let i = 0; i < max; i++) {
+                if (i % 2 == 0) {
+                    al.push("right");
+                } else {
+                    al.push("left");
+                }
+            }
+        }
+        t.setAttribute("columnalign", al.join(" "));
         return t;
     },
 };
