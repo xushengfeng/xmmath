@@ -1280,25 +1280,25 @@ function render(tree: tree, e?: fonts) {
         if (x.type == "f" && !x.children) {
             if (ss[x.value]) {
                 let tag: keyof MathMLElementTagNameMap;
-                let space_w = {};
+                let space_w = null;
+                const space_width = {
+                    " ": "0.36em",
+                    " ": "0.5em",
+                    " ": "3.75em",
+                    " ": "0.333em",
+                    " ": "0.25em",
+                    " ": "0.166em",
+                    " ": "0.222em",
+                    " ": "1ch",
+                    " ": "0.27em",
+                    " ": "0.2em",
+                    " ": "0.09em",
+                };
                 if (ss[x.value].match(/[a-zA-Z\u0391-\u03C9]/)) {
                     tag = "mi";
-                } else if (ss[x.value].match(/\W/)) {
+                } else if (space_width[ss[x.value]]) {
                     tag = "mspace";
-                    let w = {
-                        " ": "0.36em",
-                        " ": "0.5em",
-                        " ": "3.75em",
-                        " ": "0.333em",
-                        " ": "0.25em",
-                        " ": "0.166em",
-                        " ": "0.222em",
-                        " ": "1ch",
-                        " ": "0.27em",
-                        " ": "0.2em",
-                        " ": "0.09em",
-                    };
-                    space_w["width"] = w[ss[x.value]];
+                    space_w = { width: space_width[ss[x.value]] };
                 } else {
                     tag = "mo";
                 }
