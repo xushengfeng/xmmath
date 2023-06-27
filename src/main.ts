@@ -74,7 +74,7 @@ function ast(str: string) {
         }
     }
 
-    let strl = splitter.splitGraphemes(str);
+    let strl = init_c.emoji ? splitter.splitGraphemes(str) : [...str];
     for (let i = 0; i < strl.length; i++) {
         const t = strl[i];
         // 字符
@@ -1373,6 +1373,16 @@ function render(tree: tree, e?: fonts) {
     return fragment;
 }
 
+var init_c = {
+    emoji: false,
+};
+
+function init(p: { emoji: boolean }) {
+    for (let i in p) {
+        if (init_c[i]) init_c[i] = p[i];
+    }
+}
+
 function toMML(str: string) {
     let obj = ast(str);
     console.log(obj);
@@ -1388,4 +1398,4 @@ function toMMLHTML(str: string) {
     return toMML(str).outerHTML;
 }
 
-export { toMML, toMMLHTML };
+export { init, toMML, toMMLHTML };
