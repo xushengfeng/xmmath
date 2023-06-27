@@ -849,6 +849,25 @@ function ast2(tree: tree) {
         tree = t;
     }
 
+    // 处理字符与v之间空格
+    {
+        let t: tree = [];
+        for (let n = 0; n < tree.length; n++) {
+            let x = tree[n];
+
+            if (x.type == "v" && tree?.[n + 1]?.type == "blank" && tree?.[n + 2]?.type == "str") {
+                t.push(x);
+                t.push({ type: "f", value: "space" });
+            } else if (x.type == "str" && tree?.[n + 1]?.type == "blank" && tree?.[n + 2]?.type == "v") {
+                t.push(x);
+                t.push({ type: "f", value: "space" });
+            } else {
+                t.push(x);
+            }
+        }
+        tree = t;
+    }
+
     // 处理带.的f
     {
         let t: tree = [];
@@ -1233,12 +1252,29 @@ function render(tree: tree, e?: fonts) {
         if (x.type == "f" && !x.children) {
             if (ss[x.value]) {
                 let tag: keyof MathMLElementTagNameMap;
+                let space_w = {};
                 if (ss[x.value].match(/[a-zA-Z\u0391-\u03C9]/)) {
                     tag = "mi";
+                } else if (ss[x.value].match(/\W/)) {
+                    tag = "mspace";
+                    let w = {
+                        " ": "0.36em",
+                        " ": "0.5em",
+                        " ": "3.75em",
+                        " ": "0.333em",
+                        " ": "0.25em",
+                        " ": "0.166em",
+                        " ": "0.222em",
+                        " ": "1ch",
+                        " ": "0.27em",
+                        " ": "0.2em",
+                        " ": "0.09em",
+                    };
+                    space_w["width"] = w[ss[x.value]];
                 } else {
                     tag = "mo";
                 }
-                let el = createMath(tag, ss[x.value]);
+                let el = createMath(tag, ss[x.value], space_w);
                 fragment.append(el);
             } else {
                 if (f[x.value]) {
