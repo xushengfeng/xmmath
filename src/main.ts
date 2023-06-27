@@ -242,7 +242,9 @@ for (let i in shorthand) {
     }
 }
 
-let f: { [name: string]: (attr?: tree[], dic?: fdic, array?: tree[][]) => MathMLElement | DocumentFragment } = {
+let f: {
+    [name: string]: (attr?: tree[], dic?: fdic, array?: tree[][], e?: fonts) => MathMLElement | DocumentFragment;
+} = {
     accent: (attr: tree[], dic: fdic) => {
         let base = createMath("mrow");
         base.append(render(attr[0]));
@@ -439,9 +441,9 @@ let f: { [name: string]: (attr?: tree[], dic?: fdic, array?: tree[][]) => MathML
         r.append(render(attr[0]));
         return r;
     },
-    op: (attr: tree[], dic: fdic) => {
+    op: (attr: tree[], dic: fdic, a, e) => {
         let f = createMath("mrow");
-        let str = createMath("ms", attr[0][0].value);
+        let str = createMath("ms", font(attr[0][0].value, e));
         f.append(str);
         // TODO dic.limit
         return f;
@@ -573,8 +575,8 @@ let opl: { id: string; str?: string; limits?: boolean }[] = [
 ];
 function op_f() {
     for (let i of opl) {
-        f[i.id] = (attr: tree[]) => {
-            let s = f.op([[{ type: "str", value: i.str || i.id }]], {});
+        f[i.id] = (attr: tree[], a, b, e) => {
+            let s = f.op([[{ type: "str", value: i.str || i.id }]], {}, null, e);
             if (attr) {
                 let f = document.createDocumentFragment();
                 f.append(s, kh(attr[0]));
@@ -1216,7 +1218,7 @@ function render(tree: tree, e?: fonts) {
 
             if (f[x.value]) {
                 console.log(attr, dic, array);
-                let el = f[x.value](attr, dic, array);
+                let el = f[x.value](attr, dic, array, e);
                 fragment.append(el);
             } else if (ss[x.value]) {
                 let el = createMath("mo", ss[x.value]);
@@ -1236,7 +1238,7 @@ function render(tree: tree, e?: fonts) {
                 fragment.append(el);
             } else {
                 if (f[x.value]) {
-                    let el = f[x.value]();
+                    let el = f[x.value](null, null, null, e);
                     fragment.append(el);
                 }
             }
