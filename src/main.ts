@@ -438,7 +438,6 @@ let f: {
         let f = createMath("mrow");
         let str = createMath("ms", font(attr[0][0].value, e));
         f.append(str);
-        // TODO dic.limit
         return f;
     },
     underline: (attr: tree[], dic: fdic) => {
@@ -705,6 +704,13 @@ function is_limit(tree: tree) {
             }
             if (x.value == "scripts") return false;
             if (x.value == "op") {
+                let { dic } = f_attr(x);
+                let t = "";
+                if (dic.limits)
+                    for (let i of dic.limits) {
+                        t += i.value;
+                    }
+                return t == "#true";
             }
         }
         if (x.type == "v" && limits_sy.includes(x.value)) {
