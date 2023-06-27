@@ -57,3 +57,26 @@ For more details, please go to [typst docs](https://typst.app/docs) for more inf
 -   the function is a string of letters and can contain `.`, followed by parentheses to pass the parameter: `sum` `gt.eq` (display `≥` [symbol](https://typst.app/docs/reference/symbols/sym/) `sqrt(2)` `root(2，4)`).
 -   string is wrapped with `"`, and can be escaped with `\"`.
 -   `^_`is the superscript, and the numbers can be linked together: `2^10`. `/` is division, and the function `frac(1，2)`is available. They can use `()`to disambiguate.
+
+## 实现的函数（Realized function）
+
+-   [x] accent
+-   [x] attach
+-   [x] binom
+-   [x] cancel （仅支持 inverted 和 cross 参数）
+-   [x] cases
+-   [ ] equation
+-   [x] frac
+-   [x] lr
+-   [x] mat
+-   [x] op
+-   [x] roots
+-   [x] sizes
+-   [x] styles
+-   [x] underover
+-   [x] variants
+-   [x] vec
+-   [x] \换行
+-   [x] &
+-   [x] Symbols (no emoji)
+-   [ ] 变量 （不打算支持）
