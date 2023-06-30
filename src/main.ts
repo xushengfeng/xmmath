@@ -27,7 +27,7 @@ const mathvariant = "mathvariant";
 import GraphemeSplitter from "grapheme-splitter";
 var splitter = new GraphemeSplitter();
 
-type vtype = "" | "str" | "v" | "f" | "blank" | "group";
+type vtype = "" | "str" | "v" | "f" | "blank" | "group" | "group1"; // group1组合基本类型，提高优先级
 type tree = { type: vtype; value: string; children?: tree; esc?: boolean }[];
 
 function ast(str: string) {
@@ -774,6 +774,10 @@ function is_dot_f(x: tree[0]) {
     return x.type == "f" || (x.type == "v" && x.value.match(/[a-z]/));
 }
 
+function is_factorial(x: tree[0]) {
+    return x && x.type == "v" && x.value == "!" && !x.esc;
+}
+
 let dh: tree[0] = { type: "v", value: "," };
 
 function v_f(str: string): tree[0] {
@@ -923,6 +927,29 @@ function ast2(tree: tree) {
                 t.push(x);
             }
         }
+        tree = t;
+    }
+
+    // 处理!
+    {
+        let t: tree = [];
+        let tmpx: tree = [];
+        for (let n = 0; n < tree.length; n++) {
+            let x = tree[n];
+
+            if (is_factorial(tree?.[n + 1]) && x.value != "^" && x.value != "_" && x.value != "/") {
+                tmpx.push(x);
+            } else {
+                if (tmpx.length) {
+                    tmpx.push(x);
+                    t.push({ type: "group1", value: "", children: tmpx });
+                    tmpx = [];
+                } else {
+                    t.push(x);
+                }
+            }
+        }
+
         tree = t;
     }
 
@@ -1300,6 +1327,19 @@ function render(tree: tree, e?: fonts) {
             }
             tree = t;
         }
+    }
+
+    // 移除group1
+    {
+        let t: tree = [];
+        for (let x of tree) {
+            if (x.type == "group1") {
+                t.push(...x.children);
+            } else {
+                t.push(x);
+            }
+        }
+        tree = t;
     }
 
     for (let i in tree) {
