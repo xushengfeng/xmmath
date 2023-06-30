@@ -721,14 +721,20 @@ function in_kh(x: tree) {
     return k;
 }
 
+function is_sup(x: tree[0]) {
+    return x && x.type == "v" && x.value == "^" && !x.esc;
+}
+
+function is_sub(x: tree[0]) {
+    return x && x.type == "v" && x.value == "_" && !x.esc;
+}
+
 function is_frac(x: tree[0]) {
-    if (!x) return false;
-    return x.value == "/" && !x.esc;
+    return x && x.type == "v" && x.value == "/" && !x.esc;
 }
 
 function is_br(x: tree[0]) {
-    if (!x) return false;
-    return x.value == "br" && x.esc;
+    return x && x.value == "br" && x.esc;
 }
 
 function is_limit(tree: tree) {
@@ -771,7 +777,7 @@ function is_dot(x: tree[0]) {
 }
 
 function is_dot_f(x: tree[0]) {
-    return x.type == "f" || (x.type == "v" && x.value.match(/[a-z]/));
+    return x && (x.type == "f" || (x.type == "v" && x.value.match(/[a-z]/)));
 }
 
 function is_factorial(x: tree[0]) {
@@ -937,7 +943,7 @@ function ast2(tree: tree) {
         for (let n = 0; n < tree.length; n++) {
             let x = tree[n];
 
-            if (is_factorial(tree?.[n + 1]) && x.value != "^" && x.value != "_" && x.value != "/") {
+            if (is_factorial(tree?.[n + 1]) && !is_sup(x) && !is_sub(x) && !is_frac(x)) {
                 tmpx.push(x);
             } else {
                 if (tmpx.length) {
@@ -1025,17 +1031,11 @@ function ast2(tree: tree) {
         let start = NaN;
         for (let n = 0; n < tree.length; n++) {
             const x = tree[n];
-            if (x.value != "^" && x.value != "_") {
-                if (
-                    (tree[n + 1]?.value == "^" || tree[n + 1]?.value == "_") &&
-                    !(tree[n - 1]?.value == "^" || tree[n - 1]?.value == "_")
-                ) {
+            if (!is_sup(x) && !is_sub(x)) {
+                if ((is_sup(tree[n + 1]) || is_sub(tree[n + 1])) && !(is_sup(tree[n - 1]) || is_sub(tree[n - 1]))) {
                     if (!start) start = n;
                 }
-                if (
-                    (tree[n - 1]?.value == "^" || tree[n - 1]?.value == "_") &&
-                    !(tree[n + 1]?.value == "^" || tree[n + 1]?.value == "_")
-                ) {
+                if ((is_sup(tree[n - 1]) || is_sub(tree[n - 1])) && !(is_sup(tree[n + 1]) || is_sub(tree[n + 1]))) {
                     index.push([start, n]);
                     start = NaN;
                 }
@@ -1048,7 +1048,7 @@ function ast2(tree: tree) {
                 {
                     let tmp: tree[0] = tree[index[0][1]];
                     for (let i = index[0][1]; i >= index[0][0]; i--) {
-                        if (tree[i - 1]?.value == "^" && tree[i - 3]?.value == "_") {
+                        if (is_sup(tree[i - 1]) && is_sub(tree[i - 3])) {
                             let o = is_limit([tree[i - 4]])
                                 ? { t: out_kh(tmp), b: out_kh(tree[i - 2]) }
                                 : { tr: out_kh(tmp), br: out_kh(tree[i - 2]) };
@@ -1060,7 +1060,7 @@ function ast2(tree: tree) {
                             i -= 4 - 1;
                             continue;
                         }
-                        if (tree[i - 1]?.value == "_" && tree[i - 3]?.value == "^") {
+                        if (is_sub(tree[i - 1]) && is_sup(tree[i - 3])) {
                             let o = is_limit([tree[i - 4]])
                                 ? { t: out_kh(tree[i - 2]), b: out_kh(tmp) }
                                 : { tr: out_kh(tree[i - 2]), br: out_kh(tmp) };
@@ -1072,7 +1072,7 @@ function ast2(tree: tree) {
                             i -= 4 - 1;
                             continue;
                         }
-                        if (tree[i - 1]?.value == "^") {
+                        if (is_sup(tree[i - 1])) {
                             let o = is_limit([tree[i - 2]]) ? { t: out_kh(tmp) } : { tr: out_kh(tmp) };
                             tmp = {
                                 type: "f",
@@ -1082,7 +1082,7 @@ function ast2(tree: tree) {
                             i -= 2 - 1;
                             continue;
                         }
-                        if (tree[i - 1]?.value == "_") {
+                        if (is_sub(tree[i - 1])) {
                             let o = is_limit([tree[i - 2]]) ? { b: out_kh(tmp) } : { br: out_kh(tmp) };
                             tmp = {
                                 type: "f",
@@ -1129,7 +1129,7 @@ function ast2(tree: tree) {
                 {
                     let tmp: tree[0] = tree[index[0][0]];
                     for (let i = index[0][0]; i <= index[0][1]; i++) {
-                        if (tree[i + 1]?.value == "/") {
+                        if (is_frac(tree[i + 1])) {
                             tmp = {
                                 type: "f",
                                 value: "frac",
