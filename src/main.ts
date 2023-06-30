@@ -770,6 +770,10 @@ function is_dot(x: tree[0]) {
     return x && x.type == "v" && x.value == ".";
 }
 
+function is_dot_f(x: tree[0]) {
+    return x.type == "f" || (x.type == "v" && x.value.match(/[a-z]/));
+}
+
 let dh: tree[0] = { type: "v", value: "," };
 
 function v_f(str: string): tree[0] {
@@ -929,11 +933,15 @@ function ast2(tree: tree) {
         for (let n = 0; n < tree.length; n++) {
             let x = tree[n];
 
-            if (x.type == "f" && is_dot(tree[n + 1])) {
-                f += x.value + ".";
-                n++;
-                continue;
-            } else if (f && x.type == "f") {
+            if (is_dot_f(x) && is_dot(tree[n + 1])) {
+                if (f || (!f && x.type == "f")) {
+                    f += x.value + ".";
+                    n++;
+                    continue;
+                } else {
+                    t.push(x);
+                }
+            } else if (f && is_dot_f(x)) {
                 f += x.value;
                 if (!is_dot(tree[n + 1])) {
                     t.push({ type: "f", value: f });
