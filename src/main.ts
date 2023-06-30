@@ -159,7 +159,7 @@ function ast(str: string) {
 }
 
 import symbols from "./symbols.json?raw";
-/** @see https://github.com/typst/typst/blob/6c542ea1a4a0ee85069dad6974ff331851eff406/library/src/symbols/sym.rs */
+/** @see https://github.com/typst/typst/blob/v0.6.0/library/src/symbols/sym.rs */
 let s = JSON.parse(symbols);
 
 // symbols路径简写
