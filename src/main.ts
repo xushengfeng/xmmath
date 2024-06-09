@@ -1446,4 +1446,9 @@ function toMMLHTML(str: string) {
     return toMML(str).outerHTML;
 }
 
-export { init, toMML, toMMLHTML };
+const version = {
+    lan: "0.6.0",
+    symbol: "0.10.0",
+};
+
+export { init, toMML, toMMLHTML, version };
