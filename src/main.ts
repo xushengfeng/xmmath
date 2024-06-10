@@ -389,6 +389,29 @@ let f: {
         let l = createMath("mo", o[d][0]);
         let r = createMath("mo", o[d][1]);
         let t = createMath("mtable");
+        let augment = sharp(dic?.augment);
+        if (augment) {
+            let xa = NaN;
+            let ya = NaN;
+            if (Array.isArray(augment)) {
+                xa = Number((augment as tree).map((i) => i.value).join(""));
+            } else {
+                ya = Number((augment["hline"] as tree).map((i) => i.value).join(""));
+            }
+            if (xa < 0) xa = array[0].length + xa;
+            if (ya < 0) ya = array.length + ya;
+
+            if (ya) {
+                let l: boolean[] = [];
+                for (let i = 1; i < array.length; i++) l.push(i === ya);
+                t.setAttribute("rowlines", l.map((i) => (i ? "solid" : "none")).join(" "));
+            }
+            if (xa) {
+                let l: boolean[] = [];
+                for (let i = 1; i < array[0].length; i++) l.push(i === xa);
+                t.setAttribute("columnlines", l.map((i) => (i ? "solid" : "none")).join(" "));
+            }
+        }
         for (let i of array) {
             let tr = createMath("mtr");
             for (let j of i) {
@@ -798,6 +821,24 @@ function v_f(str: string): tree[0] {
     return { type: "v", value: str };
 }
 
+function eq(x0: tree[0], x1: tree[0]) {
+    return x0.type === x1.type && x0.value === x1.value;
+}
+
+function eqq(x0: tree[0], x1: tree[0]) {
+    return x0.type === x1.type && x0.value === x1.value && x0?.esc === x1?.esc;
+}
+
+function trim(tree: tree) {
+    while (tree.length > 0 && tree[0].type === "blank") {
+        tree.shift();
+    }
+    while (tree.length > 0 && tree.at(-1).type === "blank") {
+        tree.pop();
+    }
+    return tree;
+}
+
 type fdic = { [id: string]: tree };
 
 function dic_to_ast(dic: { [id: string]: tree }) {
@@ -814,6 +855,38 @@ function dic_to_ast(dic: { [id: string]: tree }) {
         }
     }
     return l;
+}
+
+function sharp(tree: tree) {
+    if (!tree) return tree;
+    const ni = tree.findIndex((v) => eq(v, v_f("#")));
+    if (ni === -1) throw "need # dic";
+    tree = trim(tree).slice(ni);
+    if (tree.at(0).type === "group") tree = tree.at(0).children;
+    tree = trim(tree);
+    if (!tree.find((v) => eqq(v, v_f(":")))) return tree;
+    const o = new Object();
+    let key = "";
+    let value: tree = [];
+    tree.push(v_f(","));
+    for (let i = 0; i < tree.length; i++) {
+        if (!key && tree[i].type != "blank") {
+            key = tree[i].value;
+        } else {
+            if (value.length) {
+                if (eqq(tree[i], v_f(","))) {
+                    o[key] = trim(value);
+                    key = "";
+                    value = [];
+                } else value.push(tree[i]);
+            } else {
+                if (eqq(tree[i], v_f(":"))) {
+                    value.push(tree[i + 1]);
+                }
+            }
+        }
+    }
+    return o;
 }
 
 function is_true(t: tree) {
