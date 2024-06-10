@@ -520,7 +520,8 @@ let f: {
     },
     op: (attr: tree[], dic: fdic, a, e) => {
         let f = createMath("mrow");
-        let str = createMath("ms", font(attr[0][0].value, e));
+        let str = createMath("ms");
+        str.append(render(attr[0], e));
         f.append(str);
         return f;
     },
