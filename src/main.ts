@@ -541,6 +541,9 @@ let f: {
         row.append(l, t, r);
         return row;
     },
+    h: (attr: tree[], dic: fdic) => {
+        return createMath("mspace", "", { width: attr[0][0].value });
+    },
     // 额外
     //
     x_table: (attr: tree[], dic: fdic) => {
@@ -653,6 +656,20 @@ function op_f() {
     }
 }
 op_f();
+
+const spaceConst = {
+    quad: "1em",
+    med: "0.222em",
+    thin: "0.17em",
+    thick: "0.28em",
+    wide: "2em",
+};
+
+for (let i in spaceConst) {
+    f[i] = () => {
+        return f.h([[{ type: "str", value: spaceConst[i] }]]);
+    };
+}
 
 let limits_f = [];
 let limits_sy = ["∏", "∐", "∑", "⋀", "⋁", "⋂", "⋃", "⨀", "⨁", "⨂", "⨃", "⨄", "⨅", "⨆"];
@@ -1475,16 +1492,16 @@ function render(tree: tree, e?: fonts) {
                 let space_w = null;
                 const space_width = {
                     " ": "0.36em",
-                    " ": "0.5em",
-                    " ": "3.75em",
-                    " ": "0.333em",
-                    " ": "0.25em",
-                    " ": "0.166em",
-                    " ": "0.222em",
-                    " ": "1ch",
-                    " ": "0.27em",
-                    " ": "0.2em",
-                    " ": "0.09em",
+                    "\u2002": "0.5em",
+                    "\u2003": "1em",
+                    "\u2004": "0.333em",
+                    "\u2005": "0.25em",
+                    "\u2006": "0.166em",
+                    "\u205f": "0.222em",
+                    "\u2007": "1ch",
+                    "\u2008": "0.27em",
+                    "\u2009": "0.17em",
+                    "\u200a": "0.09em",
                 };
                 if (ss[x.value].match(/[a-zA-Z\u0391-\u03C9]/)) {
                     tag = "mi";

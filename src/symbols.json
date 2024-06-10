@@ -10,16 +10,16 @@
         {
             "nobreak": " ",
             "nobreak.narrow": "\u202F",
-            "en": " ",
-            "quad": " ",
-            "third": " ",
-            "quarter": " ",
-            "sixth": " ",
-            "med": " ",
-            "fig": " ",
-            "punct": " ",
-            "thin": " ",
-            "hair": " "
+            "en": "\u2002",
+            "quad": "\u2003",
+            "third": "\u2004",
+            "quarter": "\u2005",
+            "sixth": "\u2006",
+            "med": "\u205f",
+            "fig": "\u2007",
+            "punct": "\u2008",
+            "thin": "\u2009",
+            "hair": "\u200a"
         }
     ],
     "paren": [{ "l": "(", "r": ")", "t": "⏜", "b": "⏝" }],
