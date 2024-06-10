@@ -60,15 +60,16 @@ For more details, please go to [typst docs](https://typst.app/docs) for more inf
 
 ## 实现的函数（Realized function）
 
--   [x] accent
+-   [x] accent （不支持 size）
 -   [x] attach
--   [x] binom
 -   [x] cancel （仅支持 inverted 和 cross 参数）
 -   [x] cases
+-   [ ] class
 -   [ ] equation
 -   [x] frac
 -   [x] lr
 -   [x] mat
+-   [ ] primes
 -   [x] op
 -   [x] roots
 -   [x] sizes
