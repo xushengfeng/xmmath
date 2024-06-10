@@ -680,7 +680,13 @@ function accent_f() {
         "diaer",
         "circle",
         "arrow",
+        "arrow.r",
         "arrow.l",
+        "arrow.l.r",
+        "caron",
+        "harpoon",
+        "harpoon.rt",
+        "harpoon.lt",
     ];
     for (let i of l) {
         f[i] = (attr: tree[]) => {
