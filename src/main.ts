@@ -809,15 +809,15 @@ function in_kh(x: tree) {
 }
 
 function is_sup(x: tree[0]) {
-    return x && x.type == "v" && x.value == "^" && !x.esc;
+    return eqq(x, { type: "v", value: "^" });
 }
 
 function is_sub(x: tree[0]) {
-    return x && x.type == "v" && x.value == "_" && !x.esc;
+    return eqq(x, { type: "v", value: "_" });
 }
 
 function is_frac(x: tree[0]) {
-    return x && x.type == "v" && x.value == "/" && !x.esc;
+    return eqq(x, { type: "v", value: "/" });
 }
 
 function is_br(x: tree[0]) {
@@ -856,7 +856,7 @@ function is_f_mark(x: tree[0], str: string) {
 }
 
 function is_dot(x: tree[0]) {
-    return x && x.type == "v" && x.value == ".";
+    return eq(x, { type: "v", value: "." });
 }
 
 function is_dot_f(x: tree[0]) {
@@ -874,6 +874,7 @@ function v_f(str: string): tree[0] {
 }
 
 function eq(x0: tree[0], x1: tree[0]) {
+    if (!x0 || !x1) return false;
     return x0.type === x1.type && x0.value === x1.value;
 }
 
@@ -901,7 +902,7 @@ function dic_to_ast(dic: { [id: string]: tree }) {
         l.push({ type: "f", value: i });
         l.push({ type: "v", value: ":" });
         for (let x of dic[i]) {
-            if (x.type == "v" && x.value == ",") x.esc = true;
+            if (eq(x, dh)) x.esc = true;
         }
         l.push(...dic[i]);
         if (Number(i) + 1 != Object.keys(dic).length) {
@@ -917,13 +918,13 @@ function lan_dic(tree: tree) {
     const o = new Object();
     let key = "";
     let value: tree = [];
-    tree.push(v_f(","));
+    tree.push(dh);
     for (let i = 0; i < tree.length; i++) {
         if (!key && tree[i].type != "blank") {
             key = tree[i].value;
         } else {
             if (value.length) {
-                if (eqq(tree[i], v_f(","))) {
+                if (eqq(tree[i], dh)) {
                     o[key] = trim(value);
                     key = "";
                     value = [];
@@ -1187,7 +1188,7 @@ function ast2(tree: tree) {
                 tree[n - 1] &&
                 !is_sup(tree[n - 1]) &&
                 !is_sub(tree[n - 1]) &&
-                !(tree[n - 1].type === "f" && tree[n - 1].value === "prime")
+                !eq(tree[n - 1], { type: "f", value: "prime" })
             ) {
                 t.push({ type: "v", value: "^" });
             }
