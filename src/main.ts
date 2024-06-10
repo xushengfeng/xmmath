@@ -380,13 +380,19 @@ let f: {
             end = { c: [el], n: i };
             break;
         }
-        let l = document.createDocumentFragment();
-        l.append(render(start.c));
-        let r = document.createDocumentFragment();
-        r.append(render(end.c));
-        let c = document.createDocumentFragment();
-        c.append(render(list.slice(start.n + 1, end.n)));
-        let row = createMath("mrow");
+        const size = (sharp(dic?.size) as tree)?.map((i) => i.value)?.join("");
+        const l = render(start.c);
+        const r = render(end.c);
+        if (size && size != "auto") {
+            const lm = l.querySelector("mo");
+            const rm = r.querySelector("mo");
+            lm.setAttribute("maxsize", size);
+            lm.setAttribute("minsize", size);
+            rm.setAttribute("maxsize", size);
+            rm.setAttribute("minsize", size);
+        }
+        const c = render(list.slice(start.n + 1, end.n));
+        const row = createMath("mrow");
         row.append(l, c, r);
         return row;
     },
@@ -731,8 +737,8 @@ function lr_f() {
         { name: "round", l: v_f("⌊"), r: v_f("⌉") },
     ];
     for (let i of l) {
-        f[i.name] = (attr: tree[]) => {
-            let s = f.lr([[i.l, ...attr[0], i.r]], {});
+        f[i.name] = (attr: tree[], dic) => {
+            let s = f.lr([[i.l, ...attr[0], i.r]], dic);
             return s;
         };
     }
@@ -859,6 +865,7 @@ function eq(x0: tree[0], x1: tree[0]) {
 }
 
 function eqq(x0: tree[0], x1: tree[0]) {
+    if (!x0 || !x1) return false;
     return x0.type === x1.type && x0.value === x1.value && x0?.esc === x1?.esc;
 }
 
@@ -890,11 +897,12 @@ function dic_to_ast(dic: { [id: string]: tree }) {
     return l;
 }
 
+// todo 在ast解析
 function sharp(tree: tree) {
     if (!tree) return tree;
     const ni = tree.findIndex((v) => eq(v, v_f("#")));
     if (ni === -1) throw "need # dic";
-    tree = trim(tree).slice(ni);
+    tree = trim(tree).slice(ni + 1);
     if (tree.at(0).type === "group") tree = tree.at(0).children;
     tree = trim(tree);
     if (!tree.find((v) => eqq(v, v_f(":")))) return tree;
@@ -923,6 +931,7 @@ function sharp(tree: tree) {
 }
 
 function is_true(t: tree) {
+    return eqq((sharp(t) as tree)?.[0], { type: "f", value: "true" });
     let n = 0;
     if (t) {
         if (t[0].type == "blank") n++;
