@@ -1543,7 +1543,7 @@ function render(tree: tree, e?: fonts) {
                 let el = f[x.value](attr, dic, array, e);
                 fragment.append(el);
             } else if (ss[x.value]) {
-                let el = createMath("mo", ss[x.value]);
+                let el = createMath("mi", ss[x.value]);
                 fragment.append(el, render(in_kh(x.children)));
             }
         }
