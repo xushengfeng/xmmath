@@ -349,7 +349,9 @@ let f: {
     cases: (attr: tree[], dic: fdic) => {
         let r = createMath("mrow");
         const d = dic?.delim?.[0]?.value || "{";
-        let t = f.x_table(attr, { cases: [] });
+        let t = f.x_table(attr, { cases: [] }) as MathMLElement;
+        const gap = dic?.gap?.[0]?.value || "0.5em";
+        t.setAttribute("rowspacing", gap);
         if (is_true(dic?.reverse)) {
             const l = createMath("mo", delimPair[d][1]);
             r.append(t, l);
@@ -431,8 +433,15 @@ let f: {
                 t.setAttribute("columnlines", l.map((i) => (i ? "solid" : "none")).join(" "));
             }
         }
+        const gap = dic?.gap?.[0]?.value;
+        const rowgap = dic?.["row-gap"]?.[0]?.value;
+        const colgap = dic?.["column-gap"]?.[0]?.value;
+        t.setAttribute("columnspacing", colgap || gap || "0.5em");
+        t.setAttribute("rowspacing", rowgap || gap || "0.5em");
+
         for (let i of array) {
             let tr = createMath("mtr");
+            if (!i.length) continue;
             for (let j of i) {
                 let td = createMath("mtd");
                 td.append(render(j));
@@ -552,6 +561,8 @@ let f: {
         let l = createMath("mo", o[d][0]);
         let r = createMath("mo", o[d][1]);
         let t = createMath("mtable");
+        const gap = dic?.gap?.[0]?.value || "0.5em";
+        t.setAttribute("rowspacing", gap);
         for (let i of attr) {
             let tr = createMath("mtr");
             tr.append(render(i));
@@ -1376,13 +1387,18 @@ function f_attr(x: tree[0]) {
     // 将dicl的tree转为键对
     let dic: fdic = {};
     for (let i of dicl) {
+        let x = false;
         let n = "";
         let t: tree = [];
         for (let el of i) {
-            if (!n) {
-                n = el.value;
+            if (el.value === ":") {
+                x = true;
+                continue;
+            }
+            if (!x) {
+                n += el.value;
             } else {
-                if (el.value != ":") t.push(el);
+                t.push(el);
             }
         }
         dic[n] = ast2(t);
