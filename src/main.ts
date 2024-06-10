@@ -748,6 +748,7 @@ function is_limit(tree: tree) {
             if (limits_f.includes(x.value)) {
                 return true;
             }
+            if (x.value.split(".").at(0) === "arrow") return true;
             for (let i of opl) {
                 if (i.limits && x.value == i.id) {
                     return true;
