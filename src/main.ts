@@ -246,6 +246,8 @@ for (let i in shorthand) {
     }
 }
 
+const delimPair = { "(": ["(", ")"], "[": ["[", "]"], "{": ["{", "}"], "|": ["|", "|"], "||": ["‖", "‖"] };
+
 let f: {
     [name: string]: (attr?: tree[], dic?: fdic, array?: tree[][], e?: fonts) => MathMLElement | DocumentFragment;
 } = {
@@ -341,9 +343,15 @@ let f: {
     },
     cases: (attr: tree[], dic: fdic) => {
         let r = createMath("mrow");
-        let l = createMath("mo", dic?.delim?.[0]?.value || "{");
+        const d = dic?.delim?.[0]?.value || "{";
         let t = f.x_table(attr, { cases: [] });
-        r.append(l, t);
+        if (is_true(dic?.reverse)) {
+            const l = createMath("mo", delimPair[d][1]);
+            r.append(t, l);
+        } else {
+            const l = createMath("mo", d);
+            r.append(l, t);
+        }
         return r;
     },
     frac: (attr: tree[], dic: fdic) => {
@@ -528,7 +536,7 @@ let f: {
     },
     vec: (attr: tree[], dic: fdic) => {
         let d = dic?.delim?.[0]?.value || "(";
-        let o = { "(": ["(", ")"], "[": ["[", "]"], "{": ["{", "}"], "|": ["|", "|"], "||": ["‖", "‖"] };
+        let o = delimPair;
         let row = createMath("mrow");
         let l = createMath("mo", o[d][0]);
         let r = createMath("mo", o[d][1]);
