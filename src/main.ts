@@ -1635,7 +1635,7 @@ function toMMLHTML(str: string) {
 }
 
 const version = {
-    lan: "0.8.0",
+    lan: "0.9.0",
     symbol: "0.11.1",
 };
 
