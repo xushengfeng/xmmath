@@ -1018,6 +1018,27 @@ function ast2(tree: tree) {
         tree = t;
     }
 
+    // '->^'
+    {
+        console.log(structuredClone(tree));
+
+        let t: tree = [];
+        for (let n = 0; n < tree.length; n++) {
+            let x = tree[n];
+            if (
+                x.type === "f" &&
+                x.value === "prime" &&
+                tree[n - 1] &&
+                !is_sup(tree[n - 1]) &&
+                (tree[n - 1].type != "f" || tree[n - 1].value != "prime")
+            ) {
+                t.push({ type: "v", value: "^" });
+            }
+            t.push(x);
+        }
+        tree = t;
+    }
+
     // 移除blank
     {
         let t: tree = [];
