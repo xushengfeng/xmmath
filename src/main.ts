@@ -24,8 +24,8 @@ function createMath<K extends keyof MathMLElementTagNameMap>(
 
 const mathvariant = "mathvariant";
 
-import GraphemeSplitter from "grapheme-splitter";
-var splitter = new GraphemeSplitter();
+const Segmenter = Intl.Segmenter;
+const segmenter = new Segmenter("emoji", { granularity: "grapheme" });
 
 type vtype = "" | "str" | "v" | "f" | "blank" | "group" | "group1"; // group1组合基本类型，提高优先级
 type tree = { type: vtype; value: string; children?: tree; esc?: boolean }[];
@@ -74,7 +74,11 @@ function ast(str: string) {
         }
     }
 
-    let strl = init_c.emoji ? splitter.splitGraphemes(str) : [...str];
+    let strl = init_c.emoji
+        ? typeof init_c.emoji === "boolean"
+            ? Array.from(segmenter.segment(str)).map((w) => w.segment)
+            : init_c.emoji(str)
+        : [...str];
     for (let i = 0; i < strl.length; i++) {
         const t = strl[i];
         // 字符
@@ -1421,7 +1425,7 @@ function render(tree: tree, e?: fonts) {
     return fragment;
 }
 
-var init_c = {
+var init_c: { emoji: boolean | ((str: string) => string) } = {
     emoji: false,
 };
 
