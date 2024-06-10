@@ -850,43 +850,6 @@ function ast2(tree: tree) {
         tree = t;
     }
 
-    // 处理符号简写（shorthand）
-    {
-        let t: tree = [];
-        for (let n = 0; n < tree.length; n++) {
-            let x = tree[n];
-
-            if (tree?.[n - 1]?.value != "\\") {
-                if (x.type == "v") {
-                    let nn = n;
-                    let shortkey = x.value;
-                    let l = [];
-                    if (shorthand[shortkey]) l.push(shortkey);
-                    // 连起来的字符
-                    while (tree?.[nn + 1]?.type == "v" && shortkey.length <= max_shorthand_len) {
-                        shortkey += tree[nn + 1].value;
-                        if (shorthand[shortkey]) l.push(shortkey);
-                        nn++;
-                    }
-                    if (l.length) {
-                        let nx: tree[0] = { type: "f", value: shorthand[l.at(-1)] };
-                        t.push(nx);
-
-                        // 不处理已经后面连起来的字符
-                        n += l.at(-1).length - 1;
-                    } else {
-                        t.push(x);
-                    }
-                } else {
-                    t.push(x);
-                }
-            } else {
-                t.push(x);
-            }
-        }
-        tree = t;
-    }
-
     // 处理\转义
     {
         let t: tree = [];
@@ -913,6 +876,43 @@ function ast2(tree: tree) {
                         t.push(v);
                         n++;
                     }
+                }
+            } else {
+                t.push(x);
+            }
+        }
+        tree = t;
+    }
+
+    // 处理符号简写（shorthand）
+    {
+        let t: tree = [];
+        for (let n = 0; n < tree.length; n++) {
+            let x = tree[n];
+
+            if (!x.esc) {
+                if (x.type == "v") {
+                    let nn = n;
+                    let shortkey = x.value;
+                    let l = [];
+                    if (shorthand[shortkey]) l.push(shortkey);
+                    // 连起来的字符
+                    while (tree?.[nn + 1]?.type == "v" && shortkey.length <= max_shorthand_len) {
+                        shortkey += tree[nn + 1].value;
+                        if (shorthand[shortkey]) l.push(shortkey);
+                        nn++;
+                    }
+                    if (l.length) {
+                        let nx: tree[0] = { type: "f", value: shorthand[l.at(-1)] };
+                        t.push(nx);
+
+                        // 不处理已经后面连起来的字符
+                        n += l.at(-1).length - 1;
+                    } else {
+                        t.push(x);
+                    }
+                } else {
+                    t.push(x);
                 }
             } else {
                 t.push(x);
