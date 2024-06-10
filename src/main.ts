@@ -405,6 +405,10 @@ let f: {
         row.append(l, c, r);
         return row;
     },
+    mid: (attr: tree[], dic: fdic) => {
+        const o = createMath("mo", attr?.[0]?.[0]?.value, { stretchy: "true" });
+        return o;
+    },
     mat: (attr: tree[], dic: fdic, array: tree[][]) => {
         let d = dic?.delim?.[0]?.value || "(";
         let o = { "(": ["(", ")"], "[": ["[", "]"], "{": ["{", "}"], "|": ["|", "|"], "||": ["‖", "‖"] };
