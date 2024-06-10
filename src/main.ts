@@ -320,7 +320,9 @@ let f: {
         let a = createMath("mrow");
         a.append(render(attr[0]));
         let b = createMath("mrow");
-        b.append(render(attr[1]));
+        const s: tree = [];
+        for (let x of attr.slice(1)) s.push(...x, dh);
+        b.append(render(s.slice(0, -1)));
         let f = createMath("mfrac", null, { linethickness: "0" });
         f.append(a, b);
         let l = createMath("mo", "(");
