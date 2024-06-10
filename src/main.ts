@@ -27,7 +27,7 @@ const mathvariant = "mathvariant";
 const Segmenter = Intl.Segmenter;
 const segmenter = new Segmenter("emoji", { granularity: "grapheme" });
 
-type vtype = "" | "str" | "v" | "f" | "blank" | "group" | "group1"; // group1组合基本类型，提高优先级
+type vtype = "" | "str" | "v" | "f" | "blank" | "group" | "group1" | "sharp"; // group1组合基本类型，提高优先级
 type tree = { type: vtype; value: string; children?: tree; esc?: boolean }[];
 
 function ast(str: string) {
@@ -104,6 +104,11 @@ function ast(str: string) {
         if (type == "blank" && !t.match(blank)) {
             now_tree.push({ type, value: "" });
             type = "";
+        }
+
+        if (t === "#") {
+            now_tree.push({ type: "sharp", value: t });
+            continue;
         }
 
         // 原始值（字母变量、数字、符号）
@@ -380,7 +385,7 @@ let f: {
             end = { c: [el], n: i };
             break;
         }
-        const size = (sharp(dic?.size) as tree)?.map((i) => i.value)?.join("");
+        const size = dic?.size?.[0]?.value;
         const l = render(start.c);
         const r = render(end.c);
         if (size && size != "auto") {
@@ -403,7 +408,7 @@ let f: {
         let l = createMath("mo", o[d][0]);
         let r = createMath("mo", o[d][1]);
         let t = createMath("mtable");
-        let augment = sharp(dic?.augment);
+        let augment = lan_dic(dic?.augment?.[0].children);
         if (augment) {
             let xa = NaN;
             let ya = NaN;
@@ -822,12 +827,7 @@ function is_limit(tree: tree) {
             if (x.value == "scripts") return false;
             if (x.value == "op") {
                 let { dic } = f_attr(x);
-                let t = "";
-                if (dic.limits)
-                    for (let i of dic.limits) {
-                        t += i.value;
-                    }
-                return t == "#true";
+                return is_true(dic.limits);
             }
         }
         if (x.type == "v" && limits_sy.includes(x.value)) {
@@ -870,6 +870,7 @@ function eqq(x0: tree[0], x1: tree[0]) {
 }
 
 function trim(tree: tree) {
+    if (!tree) return [];
     while (tree.length > 0 && tree[0].type === "blank") {
         tree.shift();
     }
@@ -897,13 +898,7 @@ function dic_to_ast(dic: { [id: string]: tree }) {
     return l;
 }
 
-// todo 在ast解析
-function sharp(tree: tree) {
-    if (!tree) return tree;
-    const ni = tree.findIndex((v) => eq(v, v_f("#")));
-    if (ni === -1) throw "need # dic";
-    tree = trim(tree).slice(ni + 1);
-    if (tree.at(0).type === "group") tree = tree.at(0).children;
+function lan_dic(tree: tree) {
     tree = trim(tree);
     if (!tree.find((v) => eqq(v, v_f(":")))) return tree;
     const o = new Object();
@@ -931,17 +926,7 @@ function sharp(tree: tree) {
 }
 
 function is_true(t: tree) {
-    return eqq((sharp(t) as tree)?.[0], { type: "f", value: "true" });
-    let n = 0;
-    if (t) {
-        if (t[0].type == "blank") n++;
-        if (t[n] && t[n].type == "v" && t[n].value == "#") {
-            if (t[n + 1] && t[n + 1].type == "f" && t[n + 1].value == "true") {
-                return true;
-            }
-        }
-    }
-    return false;
+    return eqq(trim(t)?.[0], { type: "sharp", value: "true" });
 }
 
 function ast2(tree: tree) {
@@ -989,6 +974,9 @@ function ast2(tree: tree) {
                         t.push({ type: "v", value: v[0] });
                         t.push({ type: v.length == 2 ? "v" : "f", value: v.slice(1) });
                         n++;
+                    } else if (next.type === "sharp") {
+                        t.push({ type: "v", value: "#" });
+                        n++;
                     } else {
                         let v = next;
                         v.esc = true;
@@ -996,6 +984,44 @@ function ast2(tree: tree) {
                         n++;
                     }
                 }
+            } else {
+                t.push(x);
+            }
+        }
+        tree = t;
+    }
+
+    // 处理#
+    {
+        const t: tree = [];
+        for (let n = 0; n < tree.length; n++) {
+            const x = tree[n];
+            if (x.type === "sharp") {
+                if (tree[n + 1]?.type === "group") {
+                    x.children = tree[n + 1].children;
+                    for (let i in x.children) {
+                        if (x.children[i].value === "\\" && x.children[i].type === "v") {
+                            if (x.children[Number(i) + 1]) {
+                                x.children[Number(i) + 1]["esc"] = true;
+                            }
+                        }
+                    }
+                    const v = x.children.map((i) => i.value).join("");
+                    if (v.match(/^[0-9\+\-\*\/()]+$/)) {
+                        x.value = v; // todo 数学运算
+                    } else {
+                        x.value = v;
+                    }
+                } else {
+                    x.value = tree[n + 1]?.value;
+                    if (tree[n + 2]?.type === "f") {
+                        x.value += tree[n + 2].value;
+                        n++;
+                    }
+                }
+                t.push(x);
+                n++;
+                continue;
             } else {
                 t.push(x);
             }
@@ -1359,7 +1385,7 @@ function f_attr(x: tree[0]) {
                 if (el.value != ":") t.push(el);
             }
         }
-        dic[n] = t;
+        dic[n] = ast2(t);
     }
     return { attr, dic, array };
 }
@@ -1543,7 +1569,7 @@ function render(tree: tree, e?: fonts) {
             fragment.append(el);
         }
 
-        if (x.type == "v") {
+        if (x.type === "v" || x.type === "sharp") {
             let tag: keyof MathMLElementTagNameMap;
             if (x.value.match(/[0-9.]+/)) {
                 tag = "mn";
