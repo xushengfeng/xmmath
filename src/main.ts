@@ -585,23 +585,8 @@ let f: {
     // 额外
     //
     x_table: (attr: tree[], dic: fdic) => {
-        let max = 0;
         let t = x_table(attr);
-        let al = [];
-        if (dic.cases) {
-            // cases
-            al.push("left");
-        } else {
-            // 其他换行对齐 交替
-            for (let i = 0; i < max; i++) {
-                if (i % 2 == 0) {
-                    al.push("right");
-                } else {
-                    al.push("left");
-                }
-            }
-        }
-        t.setAttribute("columnalign", al.join(" "));
+        if (dic.cases) t.setAttribute("columnalign", "left");
         return t;
     },
 };
@@ -610,33 +595,37 @@ function x_table(trees: tree[]) {
     let max = 0;
     let t = createMath("mtable");
     for (let i of trees) {
+        const n = i.filter((x) => eqq(x, v_f("&"))).length;
+        if (n > max) max = n;
+    }
+    for (let i of trees) {
         let r = createMath("mtr");
 
         // 按&拆分
-        let result: tree[] = [];
-        let tmp_group: tree = [];
+        let result: tree[] = [[]];
         for (let n = 0; n < i.length; n++) {
-            if (!i[n].esc && i[n].value == "&") {
-                if (tmp_group.length > 0) {
-                    result.push(tmp_group);
-                    tmp_group = [];
-                }
+            if (eqq(i[n], v_f("&"))) {
+                result.push([]);
             } else {
-                tmp_group.push(i[n]);
+                result.at(-1).push(i[n]);
             }
         }
-        if (tmp_group.length > 0) {
-            result.push(tmp_group);
-        }
-
-        if (result.length > max) max = result.length;
-
         for (let i of result) {
             let d = createMath("mtd");
             r.append(d);
             d.append(render(i));
         }
 
+        // 交替对齐
+        const al = [];
+        for (let i = 0; i < max; i++) {
+            if (i % 2 == 0) {
+                al.push("right");
+            } else {
+                al.push("left");
+            }
+        }
+        t.setAttribute("columnalign", al.join(" "));
         t.append(r);
     }
     return t;
