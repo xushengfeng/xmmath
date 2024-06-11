@@ -69,7 +69,7 @@ For more details, please go to [typst docs](https://typst.app/docs) for more inf
 -   [x] frac
 -   [x] lr
 -   [x] mat
--   [ ] primes
+-   [x] primes
 -   [x] op
 -   [x] roots
 -   [x] sizes
