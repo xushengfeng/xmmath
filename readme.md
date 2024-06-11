@@ -79,7 +79,7 @@ For more details, please go to [typst docs](https://typst.app/docs) for more inf
 -   [x] vec
 -   [x] \换行
 -   [x] &
--   [x] Symbols (no emoji)
+-   [x] Symbols
 -   [ ] 变量 （不打算支持）
 
 ## 使用（use）

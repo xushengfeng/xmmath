@@ -111,7 +111,7 @@ function ast(str: string) {
         }
 
         if (t === "#") {
-            now_tree.push({ type: "sharp", value: t });
+            now_tree.push({ type: "sharp", value: "" });
             continue;
         }
 
@@ -176,33 +176,42 @@ import symbols from "./symbols.json?raw";
 let s = JSON.parse(symbols);
 
 // symbols路径简写
-let ss: { [id: string]: string } = {};
-for (let i in s) {
-    if (typeof s[i] == "string") {
-        ss[i] = s[i];
-    } else {
-        for (let objOrStr of s[i]) {
-            // 第二层的array
-            if (typeof objOrStr == "string") {
-                ss[i] = objOrStr;
-            } else {
-                if (!ss[i]) ss[i] = objOrStr[Object.keys(objOrStr)[0]];
-                for (let j in objOrStr) {
-                    // 第三层的obj
-                    ss[`${i}.${j}`] = objOrStr[j];
-                    // 允许部分索引，但要保证唯一
-                    let l = j.split(".");
-                    for (let n = 1; n < l.length; n++) {
-                        let shotKey = l.slice(0, n).join(".");
-                        if (!objOrStr[shotKey]) {
-                            ss[`${i}.${shotKey}`] = objOrStr[j];
+
+function simple_dot(s: any) {
+    const ss: { [id: string]: string } = {};
+    for (let i in s) {
+        if (typeof s[i] == "string") {
+            ss[i] = s[i];
+        } else {
+            for (let objOrStr of s[i]) {
+                // 第二层的array
+                if (typeof objOrStr == "string") {
+                    ss[i] = objOrStr;
+                } else {
+                    if (!ss[i]) ss[i] = objOrStr[Object.keys(objOrStr)[0]];
+                    for (let j in objOrStr) {
+                        // 第三层的obj
+                        ss[`${i}.${j}`] = objOrStr[j];
+                        // 允许部分索引，但要保证唯一
+                        let l = j.split(".");
+                        for (let n = 1; n < l.length; n++) {
+                            let shotKey = l.slice(0, n).join(".");
+                            if (!objOrStr[shotKey]) {
+                                ss[`${i}.${shotKey}`] = objOrStr[j];
+                            }
                         }
                     }
                 }
             }
         }
     }
+    return ss;
 }
+let ss = simple_dot(s);
+
+import emoji from "./emoji.json?raw";
+/** @see https://github.com/typst/typst/blob/v0.11.1/crates/typst/src/symbols/emoji.rs */
+let emojix = simple_dot(JSON.parse(emoji));
 
 let shorthand = {
     "->": "arrow.r",
@@ -1031,44 +1040,6 @@ function ast2(tree: tree) {
         tree = t;
     }
 
-    // 处理#
-    {
-        const t: tree = [];
-        for (let n = 0; n < tree.length; n++) {
-            const x = tree[n];
-            if (x.type === "sharp") {
-                if (tree[n + 1]?.type === "group") {
-                    x.children = tree[n + 1].children;
-                    for (let i in x.children) {
-                        if (x.children[i].value === "\\" && x.children[i].type === "v") {
-                            if (x.children[Number(i) + 1]) {
-                                x.children[Number(i) + 1]["esc"] = true;
-                            }
-                        }
-                    }
-                    const v = x.children.map((i) => i.value).join("");
-                    if (v.match(/^[0-9\+\-\*\/()]+$/)) {
-                        x.value = v; // todo 数学运算
-                    } else {
-                        x.value = v;
-                    }
-                } else {
-                    x.value = tree[n + 1]?.value;
-                    if (tree[n + 2]?.type === "f") {
-                        x.value += tree[n + 2].value;
-                        n++;
-                    }
-                }
-                t.push(x);
-                n++;
-                continue;
-            } else {
-                t.push(x);
-            }
-        }
-        tree = t;
-    }
-
     return tree;
 }
 
@@ -1216,6 +1187,47 @@ function ast3(tree: tree) {
                 t.push(x);
 
                 // 不处理group
+                n++;
+                continue;
+            } else {
+                t.push(x);
+            }
+        }
+        tree = t;
+    }
+
+    // 处理#
+    {
+        const t: tree = [];
+        for (let n = 0; n < tree.length; n++) {
+            const x = tree[n];
+            if (x.type === "sharp") {
+                if (!x.value)
+                    if (tree[n + 1]?.type === "group") {
+                        x.children = tree[n + 1].children;
+                        for (let i in x.children) {
+                            if (x.children[i].value === "\\" && x.children[i].type === "v") {
+                                if (x.children[Number(i) + 1]) {
+                                    x.children[Number(i) + 1]["esc"] = true;
+                                }
+                            }
+                        }
+                        const v = x.children.map((i) => i.value).join("");
+                        if (v.match(/^[0-9\+\-\*\/()]+$/)) {
+                            x.value = v; // todo 数学运算
+                        } else {
+                            x.value = v;
+                        }
+                    } else {
+                        console.log("+1", tree[n + 1]);
+
+                        x.value = tree[n + 1]?.value;
+                        if (tree[n + 2]?.type === "f") {
+                            x.value += tree[n + 2].value;
+                            n++;
+                        }
+                    }
+                t.push(x);
                 n++;
                 continue;
             } else {
@@ -1572,6 +1584,7 @@ function render(tree: tree, e?: fonts) {
         tree = t;
     }
 
+    console.log("ast3", structuredClone(tree));
     for (let i in tree) {
         let n = Number(i);
         let x = tree[n];
@@ -1635,6 +1648,7 @@ function render(tree: tree, e?: fonts) {
 
         if (x.type === "v" || x.type === "sharp") {
             let tag: keyof MathMLElementTagNameMap;
+            let value = x.value;
             if (x.value.match(/[0-9.]+/)) {
                 tag = "mn";
             } else if (x.value.match(/[a-zA-Z\u0391-\u03C9]/)) {
@@ -1645,7 +1659,13 @@ function render(tree: tree, e?: fonts) {
             } else {
                 tag = "mo";
             }
-            let el = createMath(tag, font(x.value, e));
+            if (x.type === "sharp") {
+                if (x.value.startsWith("emoji.")) {
+                    tag = "mi";
+                    value = emojix[x.value.replace("emoji.", "")];
+                }
+            }
+            let el = createMath(tag, font(value, e));
             fragment.append(el);
         }
 
