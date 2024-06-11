@@ -858,8 +858,9 @@ function is_limit(tree: tree) {
                     return true;
                 }
             }
-            if (x.value == "scripts") return false;
-            if (x.value == "op") {
+            if (x.value === "scripts") return false;
+            if (x.value === "limits") return true;
+            if (x.value === "op") {
                 let { dic } = f_attr(x);
                 return is_true(dic.limits);
             }
