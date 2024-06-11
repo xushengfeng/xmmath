@@ -1020,7 +1020,7 @@ function ast2(tree: tree) {
             if (eqq(x, v_f("\\"))) {
                 if (tree?.[n + 1]) {
                     let next = tree[n + 1];
-                    if (eq(next, v_f("&"))) {
+                    if (eq(next, v_f("\\"))) {
                         t.push({ type: "v", value: "\\", esc: true });
                         n++;
                     } else if (next.type === "blank") {
