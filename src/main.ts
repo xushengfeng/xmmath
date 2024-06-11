@@ -264,7 +264,23 @@ for (let i in shorthand) {
     }
 }
 
-const delimPair = { "(": ["(", ")"], "[": ["[", "]"], "{": ["{", "}"], "|": ["|", "|"], "||": ["‖", "‖"] };
+const delimPair = {
+    "(": ["(", ")"],
+    "[": ["[", "]"],
+    "{": ["{", "}"],
+    "|": ["|", "|"],
+    "||": ["‖", "‖"],
+    "": ["", ""],
+};
+
+function delim(dic: fdic, _default: string) {
+    const d = get_value(dic, "delim") as string;
+    let x = "";
+    if (d !== null)
+        if (d === undefined) x = _default;
+        else x = d;
+    return delimPair[x] as [string, string];
+}
 
 let f: {
     [name: string]: (attr?: tree[], dic?: fdic, e?: fonts) => MathMLElement | DocumentFragment;
@@ -363,15 +379,15 @@ let f: {
     },
     cases: (attr: tree[], dic: fdic) => {
         let r = createMath("mrow");
-        const d = (get_value(dic, "delim") as string) || "{";
+        const d = delim(dic, "{");
         let t = f.x_table(attr, { cases: [] }) as MathMLElement;
         const gap = (get_value(dic, "gap") as string) || "0.5em";
         t.setAttribute("rowspacing", gap);
         if (is_true(dic?.reverse)) {
-            const l = createMath("mo", delimPair[d][1]);
+            const l = createMath("mo", d[1]);
             r.append(t, l);
         } else {
-            const l = createMath("mo", d);
+            const l = createMath("mo", d[0]);
             r.append(l, t);
         }
         return r;
@@ -415,11 +431,10 @@ let f: {
         return o;
     },
     mat: (attr: tree[] | tree[][], dic: fdic) => {
-        let d = (get_value(dic, "delim") as string) || "(";
-        let o = { "(": ["(", ")"], "[": ["[", "]"], "{": ["{", "}"], "|": ["|", "|"], "||": ["‖", "‖"] };
+        let d = delim(dic, "(");
         let row = createMath("mrow");
-        let l = createMath("mo", o[d][0]);
-        let r = createMath("mo", o[d][1]);
+        let l = createMath("mo", d[0]);
+        let r = createMath("mo", d[1]);
         let t = createMath("mtable");
         let array: tree[][];
         if ((attr[0][0] as tree[0])?.type) array = [attr as tree[]];
@@ -571,11 +586,10 @@ let f: {
         return render(attr[0], "cal");
     },
     vec: (attr: tree[], dic: fdic) => {
-        let d = (get_value(dic, "value") as string) || "(";
-        let o = delimPair;
+        let d = delim(dic, "(");
         let row = createMath("mrow");
-        let l = createMath("mo", o[d][0]);
-        let r = createMath("mo", o[d][1]);
+        let l = createMath("mo", d[0]);
+        let r = createMath("mo", d[1]);
         let t = createMath("mtable");
         const gap = (get_value(dic, "gap") as string) || "0.5em";
         t.setAttribute("rowspacing", gap);
