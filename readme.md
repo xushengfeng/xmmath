@@ -80,6 +80,8 @@ For more details, please go to [typst docs](https://typst.app/docs) for more inf
 -   [x] \换行
 -   [x] &
 -   [x] Symbols
+-   [x] 注释
+-   [x] 对齐（mat 带逗号暂时不支持）
 -   [ ] 变量 （不打算支持）
 
 ## 使用（use）
