@@ -784,6 +784,12 @@ function underover_f(type: "under" | "over", tree: tree, x: string, str?: tree) 
     return m;
 }
 
+const ff: typeof f = {
+    "√": f["sqrt"],
+    "∛": (attr) => f.root([[v_f("3")], attr[0]]),
+    "∜": (attr) => f.root([[v_f("4")], attr[0]]),
+};
+
 function kh(tree: tree) {
     let f = createMath("mrow");
     let l = createMath("mo");
@@ -1164,6 +1170,24 @@ function ast3(tree: tree) {
             } else {
                 t.push(x);
             }
+        }
+        tree = t;
+    }
+    // 处理后面直接跟参数的f
+    {
+        const t: tree = [];
+        for (let n = 0; n < tree.length; n++) {
+            const x = tree[n];
+            if (x.type === "v" && ff[x.value] && tree[n + 1]) {
+                x.type = "f";
+                if (tree[n + 1].type != "group") {
+                    t.push(x);
+                    t.push({ type: "group", children: [tree[n + 1]], value: "" });
+                    n++;
+                    continue;
+                }
+            }
+            t.push(x);
         }
         tree = t;
     }
@@ -1557,6 +1581,9 @@ function render(tree: tree, e?: fonts) {
             } else if (ss[x.value]) {
                 let el = createMath("mi", ss[x.value]);
                 fragment.append(el, render(in_kh(x.children)));
+            } else if (ff[x.value]) {
+                let el = ff[x.value](attr, dic, array, e);
+                fragment.append(el);
             }
         }
 
