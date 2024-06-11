@@ -267,7 +267,7 @@ for (let i in shorthand) {
 const delimPair = { "(": ["(", ")"], "[": ["[", "]"], "{": ["{", "}"], "|": ["|", "|"], "||": ["‖", "‖"] };
 
 let f: {
-    [name: string]: (attr?: tree[], dic?: fdic, array?: tree[][], e?: fonts) => MathMLElement | DocumentFragment;
+    [name: string]: (attr?: tree[], dic?: fdic, e?: fonts) => MathMLElement | DocumentFragment;
 } = {
     accent: (attr: tree[], dic: fdic) => {
         let base = createMath("mrow");
@@ -414,14 +414,17 @@ let f: {
         const o = createMath("mo", attr?.[0]?.[0]?.value, { stretchy: "true" });
         return o;
     },
-    mat: (attr: tree[], dic: fdic, array: tree[][]) => {
+    mat: (attr: tree[] | tree[][], dic: fdic) => {
         let d = (get_value(dic, "delim") as string) || "(";
         let o = { "(": ["(", ")"], "[": ["[", "]"], "{": ["{", "}"], "|": ["|", "|"], "||": ["‖", "‖"] };
         let row = createMath("mrow");
         let l = createMath("mo", o[d][0]);
         let r = createMath("mo", o[d][1]);
         let t = createMath("mtable");
-        if (!array.at(-1).length) array = array.slice(0, -1);
+        let array: tree[][];
+        if ((attr[0][0] as tree[0])?.type) array = [attr as tree[]];
+        else array = attr as tree[][];
+
         let augment = get_value(dic, "augment");
         if (augment) {
             let xa = NaN;
@@ -524,7 +527,7 @@ let f: {
         r.append(render(attr[0]));
         return r;
     },
-    op: (attr: tree[], dic: fdic, a, e) => {
+    op: (attr: tree[], dic: fdic, e) => {
         let f = createMath("mrow");
         let str = createMath("ms");
         str.append(render(attr[0], e));
@@ -682,8 +685,8 @@ let opl: { id: string; str?: string; limits?: boolean }[] = [
 ];
 function op_f() {
     for (let i of opl) {
-        f[i.id] = (attr: tree[], a, b, e) => {
-            let s = f.op([[{ type: "str", value: i.str || i.id }]], {}, null, e);
+        f[i.id] = (attr: tree[], a, e) => {
+            let s = f.op([[{ type: "str", value: i.str || i.id }]], {}, e);
             if (attr) {
                 let f = document.createDocumentFragment();
                 f.append(s, kh(attr[0]));
@@ -898,7 +901,7 @@ function eqq(x0: tree[0], x1: tree[0]) {
 }
 
 function trim(tree: tree) {
-    if (!tree) return [];
+    if (!tree || !tree[0]) return [];
     let start = 0;
     let end = tree.length;
     if (tree[0].type === "blank") start = 1;
@@ -1399,52 +1402,50 @@ function ast3(tree: tree) {
 }
 
 function f_attr(x: tree[0]) {
-    let type: "dic" | "array" | "attr" = "array";
-    let attr: tree[] = [];
-    let dicl: tree[] = [];
-    let array: tree[][] = [];
-    let l: tree = [];
-    for (let i in x.children) {
-        const t = x.children[i];
-        if (Number(i) + 1 == x.children.length) {
-            if (t.type == "blank" && x.children[Number(i) - 1].value.match(/[,;]/)) break;
-            if (!is_f_mark(t, ",") && !is_f_mark(t, ";")) l.push(t);
-            if (type == "dic") {
-                dicl.push(l);
-                l = [];
-            } else {
-                attr.push(l);
-            }
-            if (array.length) {
-                array.push(attr);
-                attr = [];
-            }
-            l = [];
+    const list: (tree | "," | ";")[] = [[]];
+    for (let i of x.children) {
+        if (eqq(i, { type: "v", value: "," }) || eqq(i, { type: "v", value: ";" })) {
+            list.push(i.value as "," | ";");
+            list.push([]);
         } else {
-            if (is_f_mark(t, ",")) {
-                if (type == "dic") {
-                    dicl.push(l);
-                    type = "array";
-                } else {
-                    attr.push(l);
-                }
-                l = [];
-            } else if (is_f_mark(t, ";")) {
-                // 存在; 则存好的attr为array的一个子元素
-                type == "array";
-                attr.push(l);
-                l = [];
-                array.push(attr);
-                attr = [];
+            (list.at(-1) as tree).push(i);
+        }
+    }
+    const dicl: tree[] = [];
+    const xattr: typeof list = [];
+    for (let x of list) {
+        if (typeof x === "string") {
+            xattr.push(x);
+        } else {
+            if (x.find((v) => eqq(v, { type: "v", value: ":" }))) {
+                dicl.push(x);
             } else {
-                // 按,拆分成段
-                l.push(t);
-                // 段中有: 为dic
-                if (is_f_mark(t, ":")) {
-                    type = "dic";
-                }
+                xattr.push(x);
             }
         }
+    }
+
+    let nl: typeof xattr = [];
+    for (let i = 0; i < xattr.length; i++) {
+        const n = xattr[i],
+            next = xattr[i + 1];
+        if ((n === "," && next === ";") || (n === ";" && next === ",")) {
+            nl.push(";");
+            i++;
+        } else {
+            nl.push(xattr[i]);
+        }
+    }
+
+    let attr: tree[] | tree[][];
+    if (typeof nl.at(-1) === "string") nl = nl.slice(0, -1);
+    const has_fenhao = nl.includes(";");
+    if (has_fenhao) {
+        let x = array_split(nl, (x) => x === ";");
+        if (x.at(-1)[0].length === 0) x = x.slice(0, -1);
+        attr = x.map((x) => x.filter((i) => typeof i != "string")) as tree[][];
+    } else {
+        attr = (nl.filter((i) => typeof i != "string") as tree[]).map((i) => trim(i));
     }
 
     // 将dicl的tree转为键对
@@ -1454,7 +1455,7 @@ function f_attr(x: tree[0]) {
         let n = "";
         let t: tree = [];
         for (let el of i) {
-            if (el.value === ":") {
+            if (eqq(el, { type: "v", value: ":" })) {
                 x = true;
                 continue;
             }
@@ -1466,7 +1467,19 @@ function f_attr(x: tree[0]) {
         }
         dic[n] = ast3(ast2(t));
     }
-    return { attr: attr.map((t) => trim(t)), dic, array };
+    return { attr, dic };
+}
+
+function array_split<i>(list: i[], f: (i: i) => boolean) {
+    const l: i[][] = [[]];
+    for (let x of list) {
+        if (f(x)) {
+            l.push([]);
+        } else {
+            l.at(-1).push(x);
+        }
+    }
+    return l;
 }
 
 type fonts = "serif" | "sans" | "frak" | "mono" | "bb" | "cal";
@@ -1582,17 +1595,16 @@ function render(tree: tree, e?: fonts) {
 
         // 带有括号（参数）的函数
         if (x.type == "f" && x.children) {
-            let { attr, dic, array }: { attr: tree[]; dic: fdic; array: tree[][] } = f_attr(x);
+            let { attr, dic } = f_attr(x);
 
             if (f[x.value]) {
-                console.log(attr, dic, array);
-                let el = f[x.value](attr, dic, array, e);
+                let el = f[x.value](attr as tree[], dic, e);
                 fragment.append(el);
             } else if (ss[x.value]) {
                 let el = createMath("mi", ss[x.value]);
                 fragment.append(el, render(in_kh(x.children)));
             } else if (ff[x.value]) {
-                let el = ff[x.value](attr, dic, array, e);
+                let el = ff[x.value](attr as tree[], dic, e);
                 fragment.append(el);
             }
         }
@@ -1626,7 +1638,7 @@ function render(tree: tree, e?: fonts) {
                 fragment.append(el);
             } else {
                 if (f[x.value]) {
-                    let el = f[x.value](null, null, null, e);
+                    let el = f[x.value](null, null, e);
                     fragment.append(el);
                 }
             }
