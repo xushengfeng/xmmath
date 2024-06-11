@@ -699,7 +699,7 @@ function op_f() {
             let s = f.op([[{ type: "str", value: i.str || i.id }]], {}, e);
             if (attr) {
                 let f = document.createDocumentFragment();
-                f.append(s, kh(attr[0]));
+                f.append(s, kh(attr_join(attr)));
                 return f;
             } else {
                 return s;
@@ -1490,6 +1490,14 @@ function array_split<i>(list: i[], f: (i: i) => boolean) {
         }
     }
     return l;
+}
+
+function attr_join(attr: tree[]) {
+    const t: tree = [];
+    for (let i of attr) {
+        t.push(...i, v_f(","));
+    }
+    return t.slice(0, -1);
 }
 
 type fonts = "serif" | "sans" | "frak" | "mono" | "bb" | "cal";
