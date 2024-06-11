@@ -619,14 +619,15 @@ function x_table(trees: tree[]) {
 
         // 交替对齐
         const al = [];
-        for (let i = 0; i < max; i++) {
-            if (i % 2 == 0) {
+        for (let i = 0; i <= max; i++) {
+            if (i % 2 === 0) {
                 al.push("right");
             } else {
                 al.push("left");
             }
         }
         t.setAttribute("columnalign", al.join(" "));
+        t.setAttribute("columnspacing", "0");
         t.append(r);
     }
     return t;
