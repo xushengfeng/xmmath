@@ -415,12 +415,12 @@ let f: {
         let r = createMath("mo", o[d][1]);
         let t = createMath("mtable");
         if (!array.at(-1).length) array = array.slice(0, -1);
-        let augment = lan_dic(dic?.augment?.[0].children);
+        let augment = get_value(dic, "augment");
         if (augment) {
             let xa = NaN;
             let ya = NaN;
-            if (Array.isArray(augment)) {
-                xa = Number((augment as tree).map((i) => i.value).join(""));
+            if (typeof augment != "object") {
+                xa = Number(augment);
             } else {
                 if (augment["hline"]) ya = Number((augment["hline"] as tree).map((i) => i.value).join(""));
                 if (augment["vline"]) xa = Number((augment["vline"] as tree).map((i) => i.value).join(""));
@@ -914,7 +914,6 @@ function dic_to_ast(dic: { [id: string]: tree }) {
 
 function lan_dic(tree: tree) {
     tree = trim(tree);
-    if (!tree.find((v) => eqq(v, v_f(":")))) return tree;
     const o = new Object();
     let key = "";
     let value: tree = [];
@@ -940,12 +939,16 @@ function lan_dic(tree: tree) {
 }
 
 function get_value(dic: fdic, o: string) {
-    if (!dic?.delim?.[0]?.[o]) return undefined;
-    const x = dic.delim[0][o] as tree[0];
+    if (!dic?.[o]?.[0]) return undefined;
+    const x = dic[o][0];
     if (x.type === "sharp") {
         if (x.value === "true") return true;
         if (x.value === "false") return false;
         if (x.value === "none") return null;
+        if (x.children) {
+            if (!x.children.find((v) => eqq(v, v_f(":")))) return x.children.map((v) => v.value).join("");
+            return lan_dic(x.children);
+        }
     }
     return x.value;
 }
