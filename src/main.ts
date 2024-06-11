@@ -35,6 +35,7 @@ function ast(str: string) {
     let kh = /[\(\)]/;
     let blank = /[ \t\n\r]+/;
     let type: vtype = "";
+    let ignore: false | "line" | "block" = false;
     let o: tree = [];
     let p_tree: { tree: tree; close: boolean }[] = [];
     let now_tree = o;
@@ -50,7 +51,7 @@ function ast(str: string) {
     for (let i = 0; i < str.length; i++) {
         const t = str[i];
         // 字符
-        if (t == '"' && str[i - 1] != "\\") {
+        if (t === '"' && str[i - 1] != "\\" && !ignore) {
             if (type != "str") {
                 type = "str";
             } else {
@@ -58,14 +59,28 @@ function ast(str: string) {
             }
             continue;
         }
-        if (type == "str") {
+        if (type === "str") {
             continue;
+        } else {
+            const next = str[i + 1];
+            if (t === "/" && next === "/") ignore = "line";
+            if (ignore === "line" && t === "\n") {
+                i++;
+                ignore = false;
+                continue;
+            }
+            if (t === "/" && next === "*") ignore = "block";
+            if (ignore === "block" && t === "*" && next === "/") {
+                i++;
+                ignore = false;
+                continue;
+            }
         }
 
-        if (t == "(") {
+        if (t === "(" && !ignore) {
             lkh_stack.push(i);
         }
-        if (t == ")") {
+        if (t === ")" && !ignore) {
             if (lkh_stack.length == 0) {
                 rkh_stack.push(i);
             } else {
@@ -73,6 +88,7 @@ function ast(str: string) {
             }
         }
     }
+    ignore = false;
 
     let strl = init_c.emoji ? init_c.emoji(str) : Array.from(segmenter.segment(str)).map((w) => w.segment);
     let strl2 = [];
@@ -84,6 +100,23 @@ function ast(str: string) {
 
     for (let i = 0; i < strl.length; i++) {
         const t = strl[i];
+        const next = str[i + 1];
+        // 注释
+        if (t === "/" && next === "/") ignore = "line";
+        if (ignore === "line" && t === "\n") {
+            i++;
+            ignore = false;
+            continue;
+        }
+        if (t === "/" && next === "*") ignore = "block";
+        if (ignore === "block" && t === "*" && next === "/") {
+            i++;
+            ignore = false;
+            continue;
+        }
+
+        if (ignore) continue;
+
         // 空白
         if (type === "blank" && !t.match(blank)) {
             now_tree.push({ type, value: "" });
