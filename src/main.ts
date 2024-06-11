@@ -350,9 +350,9 @@ let f: {
     },
     cases: (attr: tree[], dic: fdic) => {
         let r = createMath("mrow");
-        const d = dic?.delim?.[0]?.value || "{";
+        const d = (get_value(dic, "delim") as string) || "{";
         let t = f.x_table(attr, { cases: [] }) as MathMLElement;
-        const gap = dic?.gap?.[0]?.value || "0.5em";
+        const gap = (get_value(dic, "gap") as string) || "0.5em";
         t.setAttribute("rowspacing", gap);
         if (is_true(dic?.reverse)) {
             const l = createMath("mo", delimPair[d][1]);
@@ -440,9 +440,9 @@ let f: {
                 t.setAttribute("columnlines", l.map((i) => (i ? "solid" : "none")).join(" "));
             }
         }
-        const gap = dic?.gap?.[0]?.value;
-        const rowgap = dic?.["row-gap"]?.[0]?.value;
-        const colgap = dic?.["column-gap"]?.[0]?.value;
+        const gap = get_value(dic, "gap") as string;
+        const rowgap = get_value(dic, "row-gap") as string;
+        const colgap = get_value(dic, "column-gap") as string;
         t.setAttribute("columnspacing", colgap || gap || "0.5em");
         t.setAttribute("rowspacing", rowgap || gap || "0.5em");
 
