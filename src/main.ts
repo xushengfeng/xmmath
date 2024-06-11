@@ -414,6 +414,7 @@ let f: {
         let l = createMath("mo", o[d][0]);
         let r = createMath("mo", o[d][1]);
         let t = createMath("mtable");
+        if (!array.at(-1).length) array = array.slice(0, -1);
         let augment = lan_dic(dic?.augment?.[0].children);
         if (augment) {
             let xa = NaN;
@@ -446,7 +447,6 @@ let f: {
 
         for (let i of array) {
             let tr = createMath("mtr");
-            if (!i.length) continue;
             for (let j of i) {
                 let td = createMath("mtd");
                 td.append(render(j));
