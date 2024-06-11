@@ -1636,12 +1636,12 @@ function init(p: { emoji: boolean }) {
     }
 }
 
-function toMML(str: string) {
+function toMML(str: string, inline?: boolean) {
     let obj = ast(str);
     console.log(obj);
 
     let mathEl = createMath("math");
-    mathEl.setAttribute("display", "block");
+    if (!inline) mathEl.setAttribute("display", "block");
     let f = render(obj);
     mathEl.append(f);
     return mathEl;
