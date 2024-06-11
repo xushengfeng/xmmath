@@ -74,11 +74,8 @@ function ast(str: string) {
         }
     }
 
-    let strl = init_c.emoji
-        ? typeof init_c.emoji === "boolean"
-            ? Array.from(segmenter.segment(str)).map((w) => w.segment)
-            : init_c.emoji(str)
-        : [...str];
+    let strl = init_c.emoji ? init_c.emoji(str) : Array.from(segmenter.segment(str)).map((w) => w.segment);
+
     for (let i = 0; i < strl.length; i++) {
         const t = strl[i];
         // 空白
@@ -1624,8 +1621,8 @@ function render(tree: tree, e?: fonts) {
     return fragment;
 }
 
-var init_c: { emoji: boolean | ((str: string) => string) } = {
-    emoji: false,
+var init_c: { emoji: (str: string) => string } = {
+    emoji: null,
 };
 
 function init(p: { emoji: boolean }) {
