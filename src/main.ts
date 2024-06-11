@@ -75,6 +75,12 @@ function ast(str: string) {
     }
 
     let strl = init_c.emoji ? init_c.emoji(str) : Array.from(segmenter.segment(str)).map((w) => w.segment);
+    let strl2 = [];
+    for (let i of strl) {
+        if (i.length > 1 && i.includes(",")) strl2.push(...i);
+        else strl2.push(i);
+    }
+    strl = strl2;
 
     for (let i = 0; i < strl.length; i++) {
         const t = strl[i];
