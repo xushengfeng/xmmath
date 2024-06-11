@@ -389,22 +389,14 @@ let f: {
     },
     lr: (attr: tree[], dic: fdic) => {
         let list = attr[0];
-        let start: { c: tree; n: number }, end: { c: tree; n: number };
-        for (let i = 0; i < list.length; i++) {
-            const el = list[i];
-            if (el.type == "blank") continue;
-            start = { c: [el], n: i };
-            break;
-        }
-        for (let i = list.length - 1; i >= 0; i--) {
-            const el = list[i];
-            if (el.type == "blank") continue;
-            end = { c: [el], n: i };
-            break;
-        }
+        let start: tree, end: tree;
+        const tList = trim(ast3(ast2(list)));
+        start = [tList[0]];
+        end = [tList.at(-1)];
+
         const size = get_value(dic, "size") as string;
-        const l = render(start.c);
-        const r = render(end.c);
+        const l = render(start);
+        const r = render(end);
         if (size && size != "auto") {
             const lm = l.querySelector("mo");
             const rm = r.querySelector("mo");
@@ -413,7 +405,7 @@ let f: {
             rm.setAttribute("maxsize", size);
             rm.setAttribute("minsize", size);
         }
-        const c = render(list.slice(start.n + 1, end.n));
+        const c = render(tList.slice(1, -1));
         const row = createMath("mrow");
         row.append(l, c, r);
         return row;
@@ -907,13 +899,11 @@ function eqq(x0: tree[0], x1: tree[0]) {
 
 function trim(tree: tree) {
     if (!tree) return [];
-    while (tree.length > 0 && tree[0].type === "blank") {
-        tree.shift();
-    }
-    while (tree.length > 0 && tree.at(-1).type === "blank") {
-        tree.pop();
-    }
-    return tree;
+    let start = 0;
+    let end = tree.length;
+    if (tree[0].type === "blank") start = 1;
+    if (tree.at(-1).type === "blank") end--;
+    return tree.slice(start, end);
 }
 
 type fdic = { [id: string]: tree };
@@ -1476,7 +1466,7 @@ function f_attr(x: tree[0]) {
         }
         dic[n] = ast3(ast2(t));
     }
-    return { attr, dic, array };
+    return { attr: attr.map((t) => trim(t)), dic, array };
 }
 
 type fonts = "serif" | "sans" | "frak" | "mono" | "bb" | "cal";
