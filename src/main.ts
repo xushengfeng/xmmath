@@ -81,8 +81,13 @@ function ast(str: string) {
         : [...str];
     for (let i = 0; i < strl.length; i++) {
         const t = strl[i];
+        // 空白
+        if (type === "blank" && !t.match(blank)) {
+            now_tree.push({ type, value: "" });
+            type = "";
+        }
         // 字符
-        if (t == '"' && strl[i - 1] != "\\") {
+        if (t === '"' && strl[i - 1] != "\\") {
             if (type != "str") {
                 type = "str";
             } else {
@@ -100,10 +105,6 @@ function ast(str: string) {
         // 空白
         if (t.match(blank)) {
             type = "blank";
-        }
-        if (type == "blank" && !t.match(blank)) {
-            now_tree.push({ type, value: "" });
-            type = "";
         }
 
         if (t === "#") {
@@ -989,13 +990,13 @@ function ast2(tree: tree) {
             if (eqq(x, v_f("\\"))) {
                 if (tree?.[n + 1]) {
                     let next = tree[n + 1];
-                    if (next.value == "\\" && next.type == "v") {
+                    if (eq(next, v_f("&"))) {
                         t.push({ type: "v", value: "\\", esc: true });
                         n++;
-                    } else if (next.type == "blank") {
+                    } else if (next.type === "blank") {
                         t.push({ type: "v", value: "br", esc: true });
                         n++;
-                    } else if (next.type == "f") {
+                    } else if (next.type === "f") {
                         let v = next.value;
                         t.push({ type: "v", value: v[0] });
                         t.push({ type: v.length == 2 ? "v" : "f", value: v.slice(1) });
@@ -1634,7 +1635,7 @@ function init(p: { emoji: boolean }) {
 
 function toMML(str: string, inline?: boolean) {
     let obj = ast(str);
-    console.log(obj);
+    console.log("ast1", obj);
 
     let mathEl = createMath("math");
     if (!inline) mathEl.setAttribute("display", "block");
