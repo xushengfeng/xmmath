@@ -586,37 +586,7 @@ let f: {
     //
     x_table: (attr: tree[], dic: fdic) => {
         let max = 0;
-        let t = createMath("mtable");
-        for (let i of attr) {
-            let r = createMath("mtr");
-
-            // 按&拆分
-            let result: tree[] = [];
-            let tmp_group: tree = [];
-            for (let n = 0; n < i.length; n++) {
-                if (!i[n].esc && i[n].value == "&") {
-                    if (tmp_group.length > 0) {
-                        result.push(tmp_group);
-                        tmp_group = [];
-                    }
-                } else {
-                    tmp_group.push(i[n]);
-                }
-            }
-            if (tmp_group.length > 0) {
-                result.push(tmp_group);
-            }
-
-            if (result.length > max) max = result.length;
-
-            for (let i of result) {
-                let d = createMath("mtd");
-                r.append(d);
-                d.append(render(i));
-            }
-
-            t.append(r);
-        }
+        let t = x_table(attr);
         let al = [];
         if (dic.cases) {
             // cases
@@ -635,6 +605,42 @@ let f: {
         return t;
     },
 };
+
+function x_table(trees: tree[]) {
+    let max = 0;
+    let t = createMath("mtable");
+    for (let i of trees) {
+        let r = createMath("mtr");
+
+        // 按&拆分
+        let result: tree[] = [];
+        let tmp_group: tree = [];
+        for (let n = 0; n < i.length; n++) {
+            if (!i[n].esc && i[n].value == "&") {
+                if (tmp_group.length > 0) {
+                    result.push(tmp_group);
+                    tmp_group = [];
+                }
+            } else {
+                tmp_group.push(i[n]);
+            }
+        }
+        if (tmp_group.length > 0) {
+            result.push(tmp_group);
+        }
+
+        if (result.length > max) max = result.length;
+
+        for (let i of result) {
+            let d = createMath("mtd");
+            r.append(d);
+            d.append(render(i));
+        }
+
+        t.append(r);
+    }
+    return t;
+}
 
 let opl: { id: string; str?: string; limits?: boolean }[] = [
     { id: "arccos" },
@@ -991,11 +997,11 @@ function ast2(tree: tree) {
         for (let n = 0; n < tree.length; n++) {
             let x = tree[n];
 
-            if (x.value == "\\" && x.type == "v") {
+            if (eqq(x, v_f("\\"))) {
                 if (tree?.[n + 1]) {
                     let next = tree[n + 1];
                     if (next.value == "\\" && next.type == "v") {
-                        t.push({ type: "v", value: "\\" });
+                        t.push({ type: "v", value: "\\", esc: true });
                         n++;
                     } else if (next.type == "blank") {
                         t.push({ type: "v", value: "br", esc: true });
@@ -1060,6 +1066,10 @@ function ast2(tree: tree) {
         tree = t;
     }
 
+    return tree;
+}
+
+function ast3(tree: tree) {
     // 处理符号简写（shorthand）
     {
         let t: tree = [];
@@ -1430,7 +1440,7 @@ function f_attr(x: tree[0]) {
                 t.push(el);
             }
         }
-        dic[n] = ast2(t);
+        dic[n] = ast3(ast2(t));
     }
     return { attr, dic, array };
 }
@@ -1488,59 +1498,44 @@ function render(tree: tree, e?: fonts) {
 
     tree = ast2(tree);
 
+    // 多行
     // 处理\ 换行
     {
         let xx = false;
-        let w = (tree: tree) => {
-            for (let i of tree) {
-                if (is_br(i)) {
-                    xx = true;
-                    return;
-                }
-                if (i.type == "group") {
-                    w(i.children);
-                }
+        for (let n in tree) {
+            const i = tree[n];
+            if (is_br(i)) {
+                xx = true;
+                break;
             }
-        };
-        w(tree);
-        if (xx) {
-            // 移除group
-            {
-                let t: tree = [];
-                for (let i in tree) {
-                    let x = tree[i];
-                    // 不作为group，只是数学上显示的括号对
-                    if (x.type == "group") {
-                        t.push(v_f("("));
-                        t.push(...ast2(x.children));
-                        t.push(v_f(")"));
-                    } else {
-                        t.push(x);
-                    }
-                }
-                tree = t;
-            }
-            // 将换行替换成逗号传入函数
-            for (let n = 0; n < tree.length; n++) {
-                const x = tree[n];
-                if (is_br(x)) {
-                    tree[n] = dh;
-                }
-            }
-
-            let t: tree = [];
-            t.push({ type: "f", value: "x_table", children: tree });
-            tree = t;
-        } else {
-            let t: tree = [];
-            for (let x of tree) {
-                // 移除&
-                if (!(x.type == "v" && x.value == "&" && !x.esc)) {
-                    t.push(x);
-                }
-            }
-            tree = t;
         }
+        if (xx) {
+            const trees: tree[] = [[]];
+            for (let n = 0; n < tree.length; n++) {
+                const i = tree[n];
+                if (is_br(i)) {
+                    trees.push([]);
+                } else {
+                    trees.at(-1).push(i);
+                }
+            }
+            return x_table(trees);
+        }
+    }
+
+    // 单行
+
+    tree = ast3(tree);
+
+    {
+        let t: tree = [];
+        for (let x of tree) {
+            // 移除&
+            if (!(x.type == "v" && x.value == "&" && !x.esc)) {
+                t.push(x);
+            }
+        }
+        tree = t;
     }
 
     // 移除group1
