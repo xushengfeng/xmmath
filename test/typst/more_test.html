@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="">
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+</head>
+
+<body>
+  <style>
+    @font-face {
+      font-family: x;
+      src: url('../../docs/latinmodern-math.otf');
+    }
+
+    body {
+      background-color: #eee;
+    }
+
+    math {
+      font-family: x;
+      background-color: white;
+    }
+
+    pre {
+      font-family: monospace;
+      opacity: 0.7;
+    }
+
+    .error {
+      background-color: #fdd;
+    }
+  </style>
+  <script src="../../dist/xmmath.umd.js"></script>
+  <script src="math.js"></script>
+  <script>
+    xmmath.init({
+      emoji: true,
+    });
+    for (let n in test) {
+      document.body.append(document.createElement('hr'))
+      document.body.append(document.createElement('h3').innerText = n)
+      for (let i of test[n]) {
+        let div = document.createElement('div')
+        let p = document.createElement('pre')
+        p.innerText = i.text
+        div.append(p)
+        try {
+          div.append(xmmath.toMML(i.text, !i.block))
+
+        } catch (error) {
+          div.classList.add('error')
+        }
+        document.body.append(div)
+      }
+    }
+  </script>
+</body>
+
+</html>

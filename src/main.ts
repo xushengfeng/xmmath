@@ -389,7 +389,7 @@ let f: {
             end = { c: [el], n: i };
             break;
         }
-        const size = dic?.size?.[0]?.value;
+        const size = get_value(dic, "size") as string;
         const l = render(start.c);
         const r = render(end.c);
         if (size && size != "auto") {
@@ -410,7 +410,7 @@ let f: {
         return o;
     },
     mat: (attr: tree[], dic: fdic, array: tree[][]) => {
-        let d = dic?.delim?.[0]?.value || "(";
+        let d = (get_value(dic, "delim") as string) || "(";
         let o = { "(": ["(", ")"], "[": ["[", "]"], "{": ["{", "}"], "|": ["|", "|"], "||": ["‖", "‖"] };
         let row = createMath("mrow");
         let l = createMath("mo", o[d][0]);
@@ -423,7 +423,8 @@ let f: {
             if (Array.isArray(augment)) {
                 xa = Number((augment as tree).map((i) => i.value).join(""));
             } else {
-                ya = Number((augment["hline"] as tree).map((i) => i.value).join(""));
+                if (augment["hline"]) ya = Number((augment["hline"] as tree).map((i) => i.value).join(""));
+                if (augment["vline"]) xa = Number((augment["vline"] as tree).map((i) => i.value).join(""));
             }
             if (xa < 0) xa = array[0].length + xa;
             if (ya < 0) ya = array.length + ya;
@@ -562,13 +563,13 @@ let f: {
         return render(attr[0], "cal");
     },
     vec: (attr: tree[], dic: fdic) => {
-        let d = dic?.delim?.[0]?.value || "(";
+        let d = (get_value(dic, "value") as string) || "(";
         let o = delimPair;
         let row = createMath("mrow");
         let l = createMath("mo", o[d][0]);
         let r = createMath("mo", o[d][1]);
         let t = createMath("mtable");
-        const gap = dic?.gap?.[0]?.value || "0.5em";
+        const gap = (get_value(dic, "gap") as string) || "0.5em";
         t.setAttribute("rowspacing", gap);
         for (let i of attr) {
             let tr = createMath("mtr");
@@ -942,6 +943,17 @@ function lan_dic(tree: tree) {
         }
     }
     return o;
+}
+
+function get_value(dic: fdic, o: string) {
+    if (!dic?.delim?.[0]?.[o]) return undefined;
+    const x = dic.delim[0][o] as tree[0];
+    if (x.type === "sharp") {
+        if (x.value === "true") return true;
+        if (x.value === "false") return false;
+        if (x.value === "none") return null;
+    }
+    return x.value;
 }
 
 function is_true(t: tree) {
