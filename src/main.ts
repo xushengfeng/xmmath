@@ -590,14 +590,10 @@ let f: {
         let row = createMath("mrow");
         let l = createMath("mo", d[0]);
         let r = createMath("mo", d[1]);
-        let t = createMath("mtable");
+        let t = x_table(attr);
         const gap = (get_value(dic, "gap") as string) || "0.5em";
         t.setAttribute("rowspacing", gap);
-        for (let i of attr) {
-            let tr = createMath("mtr");
-            tr.append(render(i));
-            t.append(tr);
-        }
+        t.setAttribute("columnspacing", "0.5em");
         row.append(l, t, r);
         return row;
     },
