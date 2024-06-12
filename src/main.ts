@@ -1008,7 +1008,7 @@ function get_value(dic: fdic, o: string) {
             return lan_dic(x.children);
         }
     }
-    return x.value;
+    return dic[o].map((i) => i.value).join("");
 }
 
 function is_true(t: tree) {
