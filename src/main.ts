@@ -28,11 +28,13 @@ const Segmenter = Intl.Segmenter;
 const segmenter = new Segmenter("emoji", { granularity: "grapheme" });
 
 type vtype = "" | "str" | "v" | "f" | "blank" | "group" | "group1" | "sharp"; // group1组合基本类型，提高优先级
-type tree = { type: vtype; value: string; children?: tree; esc?: boolean }[];
+type tree = { type: vtype; value: string; children?: tree; esc?: boolean; kh?: string }[];
 
 function ast(str: string) {
     let v = /[a-zA-Z]/;
-    let kh = /[\(\)]/;
+    let kh = /[\(\)\{\}\[\]]/;
+    const khl = /[\(\{\[]/;
+    const khr = /[\)\}\]]/;
     let blank = /[ \t\n\r]+/;
     let type: vtype = "";
     let ignore: false | "line" | "block" = false;
@@ -77,10 +79,10 @@ function ast(str: string) {
             }
         }
 
-        if (t === "(" && !ignore) {
+        if (t.match(khl) && !ignore) {
             lkh_stack.push(i);
         }
-        if (t === ")" && !ignore) {
+        if (t.match(khr) && !ignore) {
             if (lkh_stack.length == 0) {
                 rkh_stack.push(i);
             } else {
@@ -176,22 +178,23 @@ function ast(str: string) {
             tmp_str = "";
         }
 
-        if (t == "(") {
-            if (lkh_stack.includes(i) || strl[i - 1] == "\\") {
+        if (t.match(khl)) {
+            if (lkh_stack.includes(i) || strl[i - 1] === "\\") {
                 now_tree.push({ type: "v", value: t });
             } else {
                 p_tree.push({ tree: now_tree, close: false });
-                now_tree.push({ type: "group", value: tmp_str, children: [] });
+                now_tree.push({ type: "group", value: tmp_str, children: [], kh: t });
                 now_tree = now_tree.at(-1).children;
                 tmp_str = "";
                 continue;
             }
         }
-        if (t == ")") {
+        if (t.match(khr)) {
             if (p_tree.at(-1)) {
-                if (p_tree.at(-1).close == false) {
+                if (p_tree.at(-1).close === false) {
                     p_tree.at(-1).close = true;
                     now_tree = p_tree.at(-1).tree;
+                    now_tree.at(-1).kh += t;
                     p_tree.pop();
                     continue;
                 }
@@ -438,25 +441,20 @@ let f: {
     },
     lr: (attr: tree[], dic: fdic) => {
         let list = attr[0];
-        let start: tree, end: tree;
-        const tList = trim(ast3(ast2(list)));
-        start = [tList[0]];
-        end = [tList.at(-1)];
+        const tList = trim(ast3(ast2(flat_kh(list))));
 
         const size = get_value(dic, "size") as string;
-        const l = render(start);
-        const r = render(end);
-        if (size && size != "auto") {
-            const lm = l.querySelector("mo");
-            const rm = r.querySelector("mo");
-            lm.setAttribute("maxsize", size);
-            lm.setAttribute("minsize", size);
-            rm.setAttribute("maxsize", size);
-            rm.setAttribute("minsize", size);
-        }
-        const c = render(tList.slice(1, -1));
+        const c = render(tList);
         const row = createMath("mrow");
-        row.append(l, c, r);
+        row.append(c);
+        if (size && size != "auto") {
+            const lm = row.querySelector(":first-child");
+            const rm = row.querySelector(":last-child");
+            lm?.setAttribute("maxsize", size);
+            lm?.setAttribute("minsize", size);
+            rm?.setAttribute("maxsize", size);
+            rm?.setAttribute("minsize", size);
+        }
         return row;
     },
     mid: (attr: tree[], dic: fdic) => {
@@ -855,15 +853,28 @@ function kh(tree: tree) {
 }
 
 function out_kh(x: tree[0]) {
-    if (x.type == "group") {
-        return x.children;
+    if (x.type === "group") {
+        if (x.kh === "()") return x.children;
+        else return [x];
     } else {
         return [x];
     }
 }
 
+function flat_kh(x: tree) {
+    const t: tree = [];
+    for (let i of x) {
+        if (i.type === "group") {
+            t.push(v_f(i.kh[0]), ...i.children, v_f(i.kh[1]));
+        } else {
+            t.push(i);
+        }
+    }
+    return t;
+}
+
 function in_kh(x: tree) {
-    let k: tree = [{ type: "group", value: "", children: x }];
+    let k: tree = [{ type: "group", value: "", children: x, kh: "()" }];
     return k;
 }
 
@@ -1196,7 +1207,7 @@ function ast3(tree: tree) {
                 x.type = "f";
                 if (tree[n + 1].type != "group") {
                     t.push(x);
-                    t.push({ type: "group", children: [tree[n + 1]], value: "" });
+                    t.push({ type: "group", children: [tree[n + 1]], value: "", kh: "()" });
                     n++;
                     continue;
                 }
@@ -1723,8 +1734,8 @@ function render(tree: tree, e?: fonts) {
             fragment.append(el);
         }
 
-        if (x.type == "group") {
-            fragment.append(kh(x.children));
+        if (x.type === "group") {
+            fragment.append(f.lr([[x]]));
         }
     }
 
