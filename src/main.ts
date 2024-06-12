@@ -52,8 +52,9 @@ function ast(str: string) {
     let rkh_stack: number[] = [];
     for (let i = 0; i < str.length; i++) {
         const t = str[i];
+        const last = str[i - 1];
         // 字符
-        if (t === '"' && str[i - 1] != "\\" && !ignore) {
+        if (t === '"' && last != "\\" && !ignore) {
             if (type != "str") {
                 type = "str";
             } else {
@@ -79,14 +80,14 @@ function ast(str: string) {
             }
         }
 
-        if (t.match(khl) && !ignore) {
+        if (t.match(khl) && !ignore && last != "\\") {
             lkh_stack.push(i);
         }
-        if (t.match(khr) && !ignore) {
-            if (lkh_stack.length == 0) {
+        if (t.match(khr) && !ignore && last != "\\") {
+            if (lkh_stack.length === 0) {
                 rkh_stack.push(i);
             } else {
-                if (str[i - 1] != "\\") lkh_stack.pop();
+                lkh_stack.pop();
             }
         }
     }
@@ -179,7 +180,9 @@ function ast(str: string) {
         }
 
         if (t.match(khl)) {
-            if (lkh_stack.includes(i) || strl[i - 1] === "\\") {
+            if (strl[i - 1] === "\\") {
+                now_tree.push({ type: "v", value: t, esc: true });
+            } else if (lkh_stack.includes(i)) {
                 now_tree.push({ type: "v", value: t });
             } else {
                 p_tree.push({ tree: now_tree, close: false });
@@ -190,7 +193,9 @@ function ast(str: string) {
             }
         }
         if (t.match(khr)) {
-            if (p_tree.at(-1)) {
+            if (strl[i - 1] === "\\") {
+                now_tree.push({ type: "v", value: t, esc: true });
+            } else if (p_tree.at(-1)) {
                 if (p_tree.at(-1).close === false) {
                     p_tree.at(-1).close = true;
                     now_tree = p_tree.at(-1).tree;
@@ -441,7 +446,9 @@ let f: {
     },
     lr: (attr: tree[], dic: fdic) => {
         let list = attr[0];
-        const tList = trim(ast3(ast2(flat_kh(list))));
+        if (list.length === 1 && list[0].type === "group")
+            list = [v_f(list[0].kh[0]), ...list[0].children, v_f(list[0].kh[1])];
+        const tList = trim(ast3(ast2(list)));
 
         const size = get_value(dic, "size") as string;
         const c = render(tList);
@@ -861,18 +868,6 @@ function out_kh(x: tree[0]) {
     }
 }
 
-function flat_kh(x: tree) {
-    const t: tree = [];
-    for (let i of x) {
-        if (i.type === "group") {
-            t.push(v_f(i.kh[0]), ...i.children, v_f(i.kh[1]));
-        } else {
-            t.push(i);
-        }
-    }
-    return t;
-}
-
 function in_kh(x: tree) {
     let k: tree = [{ type: "group", value: "", children: x, kh: "()" }];
     return k;
@@ -1221,22 +1216,46 @@ function ast3(tree: tree) {
         let t: tree = [];
         for (let n = 0; n < tree.length; n++) {
             let x = tree[n];
+            const next = tree[n + 1];
 
             // 带有括号（参数）的函数
-            if (x.type == "f" && tree[n + 1] && tree[n + 1].type == "group") {
-                x.children = tree[n + 1].children;
-                for (let i in x.children) {
-                    if (x.children[i].value == "\\" && x.children[i].type == "v") {
+            if (x.type === "f" && next && next.type === "group") {
+                if (next.kh === "()") {
+                    x.children = tree[n + 1].children;
+                    t.push(x);
+
+                    // 不处理group
+                    n++;
+                    continue;
+                } else {
+                    if (next.kh[0] === "(") {
+                        // 向后找
+                        const tt: tree = [];
+                        tt.push(v_f(next.kh[1]));
+                        tt.push(...next.children);
+                        for (let i = n + 2; i < tree.length; i++) {
+                            if (tree[i]) {
+                                if (eqq(tree[i], v_f(")"))) {
+                                    n = i;
+                                    break;
+                                } else {
+                                    tt.push(tree[i]);
+                                }
+                            }
+                        }
+                        x.children = tt;
+                        t.push(x);
+                    } else {
+                        t.push(x);
+                    }
+                }
+                for (let i in x.children || []) {
+                    if (x.children[i].value === "\\" && x.children[i].type === "v") {
                         if (x.children[Number(i) + 1]) {
                             x.children[Number(i) + 1]["esc"] = true;
                         }
                     }
                 }
-                t.push(x);
-
-                // 不处理group
-                n++;
-                continue;
             } else {
                 t.push(x);
             }
