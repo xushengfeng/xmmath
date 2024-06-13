@@ -1496,7 +1496,7 @@ function f_attr(x: tree[0]) {
         if (typeof x === "string") {
             xattr.push(x);
         } else {
-            if (x.find((v) => eqq(v, { type: "v", value: ":" }))) {
+            if (x.find((v, i) => x[i - 1]?.type === "f" && eqq(v, { type: "v", value: ":" }))) {
                 dicl.push(x);
             } else {
                 xattr.push(x);
