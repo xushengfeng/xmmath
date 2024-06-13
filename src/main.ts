@@ -728,6 +728,8 @@ let opl: { id: string; str?: string; limits?: boolean }[] = [
     { id: "tanh" },
     { id: "liminf", str: "lim inf", limits: true },
     { id: "limsup", str: "lim sup", limits: true },
+    { id: "dif", str: "d" },
+    { id: "Dif", str: "D" },
 ];
 function op_f() {
     for (let i of opl) {
