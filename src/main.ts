@@ -445,18 +445,16 @@ let f: {
         return f;
     },
     lr: (attr: tree[], dic: fdic) => {
-        let list = attr[0];
-        if (list.length === 1 && list[0].type === "group")
-            list = [v_f(list[0].kh[0]), ...list[0].children, v_f(list[0].kh[1])];
-        const tList = trim(ast3(ast2(list)));
+        let list = attr_join(attr.map((i) => transfer_kh(i)));
+        const tList = trim(list);
 
         const size = get_value(dic, "size") as string;
         const c = render(tList);
         const row = createMath("mrow");
         row.append(c);
         if (size && size != "auto") {
-            const lm = row.querySelector(":first-child");
-            const rm = row.querySelector(":last-child");
+            const lm = row.children[0];
+            const rm = row.children[row.children.length - 1];
             lm?.setAttribute("maxsize", size);
             lm?.setAttribute("minsize", size);
             rm?.setAttribute("maxsize", size);
@@ -868,6 +866,12 @@ function out_kh(x: tree[0]) {
     }
 }
 
+function transfer_kh(list: tree) {
+    if (list.length === 1 && list[0].type === "group")
+        list = [v_f(list[0].kh[0]), ...list[0].children, v_f(list[0].kh[1])];
+    return list;
+}
+
 function in_kh(x: tree) {
     let k: tree = [{ type: "group", value: "", children: x, kh: "()" }];
     return k;
@@ -1231,8 +1235,8 @@ function ast3(tree: tree) {
                     if (next.kh[0] === "(") {
                         // 向后找
                         const tt: tree = [];
-                        tt.push(v_f(next.kh[1]));
                         tt.push(...next.children);
+                        tt.push(v_f(next.kh[1]));
                         for (let i = n + 2; i < tree.length; i++) {
                             if (tree[i]) {
                                 if (eqq(tree[i], v_f(")"))) {
