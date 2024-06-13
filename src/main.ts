@@ -586,10 +586,10 @@ let f: {
         return f;
     },
     underline: (attr: tree[], dic: fdic) => {
-        return underover_f("under", attr[0], "_", attr?.[1]);
+        return underover_line_f("under", attr[0]);
     },
     overline: (attr: tree[], dic: fdic) => {
-        return underover_f("over", attr[0], "‾", attr?.[1]);
+        return underover_line_f("over", attr[0]);
     },
     underbrace: (attr: tree[], dic: fdic) => {
         return underover_f("under", attr[0], "⏟", attr?.[1]);
@@ -839,6 +839,19 @@ function underover_f(type: "under" | "over", tree: tree, x: string, str?: tree) 
         let xx = createMath("mo", x);
         m.append(base, xx);
     }
+    return m;
+}
+
+function underover_line_f(type: "under" | "over", tree: tree) {
+    let m =
+        type === "under"
+            ? createMath("munder", null, { accentunder: "true" })
+            : createMath("mover", null, { accent: "true" });
+    let base = createMath("mrow");
+    base.append(render(tree));
+    if (type === "under") base.style.borderBottom = "1px solid black";
+    if (type === "over") base.style.borderTop = "1px solid black";
+    m.append(base);
     return m;
 }
 
