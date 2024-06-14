@@ -331,6 +331,7 @@ let f: {
         base.append(render(attr[0]));
         let a = createMath("mrow");
         a.append(render(attr[1]));
+        a.children[0].innerHTML = accent_match_str(a.children[0].innerHTML);
         let over = createMath("mover");
         over.setAttribute("accent", "true");
         over.append(base, a);
@@ -768,6 +769,78 @@ for (let i in ss) {
         if (ss[i] == j) {
             limits_f.push(i);
         }
+    }
+}
+
+function accent_match_str(c: string) {
+    switch (c) {
+        case "\u{0300}":
+        case "`":
+            return "\u{0300}";
+        case "\u{0301}":
+        case "´":
+            return "\u{0301}";
+        case "\u{0302}":
+        case "^":
+        case "ˆ":
+            return "\u{0302}";
+        case "\u{0303}":
+        case "~":
+        case "∼":
+        case "˜":
+            return "\u{0303}";
+        case "\u{0304}":
+        case "¯":
+            return "\u{0304}";
+        case "\u{0305}":
+        case "-":
+        case "‾":
+        case "−":
+            return "\u{0305}";
+        case "\u{0306}":
+        case "˘":
+            return "\u{0306}";
+        case "\u{0307}":
+        case ".":
+        case "˙":
+        case "⋅":
+            return "\u{0307}";
+        case "\u{0308}":
+        case "¨":
+            return "\u{0308}";
+        case "\u{20db}":
+            return "\u{20db}";
+        case "\u{20dc}":
+            return "\u{20dc}";
+        case "\u{030a}":
+        case "∘":
+        case "○":
+            return "\u{030a}";
+        case "\u{030b}":
+        case "˝":
+            return "\u{030b}";
+        case "\u{030c}":
+        case "ˇ":
+            return "\u{030c}";
+        case "\u{20d6}":
+        case "←":
+            return "\u{20d6}";
+        case "\u{20d7}":
+        case "→":
+        case "⟶":
+            return "\u{20d7}";
+        case "\u{20e1}":
+        case "↔":
+        case "⟷":
+            return "\u{20e1}";
+        case "\u{20d0}":
+        case "↼":
+            return "\u{20d0}";
+        case "\u{20d1}":
+        case "⇀":
+            return "\u{20d1}";
+        default:
+            return c;
     }
 }
 
