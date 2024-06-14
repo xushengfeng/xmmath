@@ -326,29 +326,29 @@ function delim(dic: fdic, _default: string) {
 let f: {
     [name: string]: (attr: tree[], dic?: fdic, e?: fonts) => MathMLElement | DocumentFragment;
 } = {
-    accent: (attr: tree[], dic: fdic) => {
+    accent: (attr: tree[], dic: fdic, e) => {
         let base = createMath("mrow");
-        base.append(render(attr[0]));
+        base.append(render(attr[0], e));
         let a = createMath("mrow");
-        a.append(render(attr[1]));
+        a.append(render(attr[1], e));
         a.children[0].innerHTML = accent_match_str(a.children[0].innerHTML);
         let over = createMath("mover");
         over.setAttribute("accent", "true");
         over.append(base, a);
         return over;
     },
-    attach: (attr: tree[], dic: fdic) => {
+    attach: (attr: tree[], dic: fdic, e) => {
         let base = createMath("mrow");
         base.append(render(attr[0]));
         let el: MathMLElement;
         let tl = createMath("mrow");
-        if (dic.tl) tl.append(render(dic.tl));
+        if (dic.tl) tl.append(render(dic.tl, e));
         let bl = createMath("mrow");
-        if (dic.bl) bl.append(render(dic.bl));
+        if (dic.bl) bl.append(render(dic.bl, e));
         let tr = createMath("mrow");
-        if (dic.tr) tr.append(render(dic.tr));
+        if (dic.tr) tr.append(render(dic.tr, e));
         let br = createMath("mrow");
-        if (dic.br) br.append(render(dic.br));
+        if (dic.br) br.append(render(dic.br, e));
         if (dic.tl || dic.bl || dic.tr || dic.br) {
             if (dic.tl || dic.bl) {
                 el = createMath("mmultiscripts");
@@ -372,28 +372,28 @@ let f: {
                 uo.append(el);
             }
             let t = createMath("mrow");
-            if (dic.t) t.append(render(dic.t));
+            if (dic.t) t.append(render(dic.t, e));
             let b = createMath("mrow");
-            if (dic.b) b.append(render(dic.b));
+            if (dic.b) b.append(render(dic.b, e));
             uo.append(b, t);
             el = uo;
         }
         return el;
     },
-    scripts: (attr: tree[], dic: fdic) => {
-        return render(attr[0]);
+    scripts: (attr: tree[], dic: fdic, e) => {
+        return render(attr[0], e);
     },
-    limits: (attr: tree[], dic: fdic) => {
-        return render(attr[0]);
+    limits: (attr: tree[], dic: fdic, e) => {
+        return render(attr[0], e);
     },
-    binom: (attr: tree[], dic: fdic) => {
+    binom: (attr: tree[], dic: fdic, e) => {
         let row = createMath("mrow");
         let a = createMath("mrow");
-        a.append(render(attr[0]));
+        a.append(render(attr[0], e));
         let b = createMath("mrow");
         const s: tree = [];
         for (let x of attr.slice(1)) s.push(...x, dh);
-        b.append(render(s.slice(0, -1)));
+        b.append(render(s.slice(0, -1), e));
         let f = createMath("mfrac", null, { linethickness: "0" });
         f.append(a, b);
         let l = createMath("mo", "(");
@@ -401,7 +401,7 @@ let f: {
         row.append(l, f, r);
         return row;
     },
-    cancel: (attr: tree[], dic: fdic) => {
+    cancel: (attr: tree[], dic: fdic, e) => {
         let r = createMath("mrow");
         const bg = (x: boolean) =>
             `linear-gradient(to ${
@@ -416,13 +416,13 @@ let f: {
             s = bg(true);
         }
         r.style.backgroundImage = s;
-        r.append(render(attr[0]));
+        r.append(render(attr[0], e));
         return r;
     },
-    cases: (attr: tree[], dic: fdic) => {
+    cases: (attr: tree[], dic: fdic, e) => {
         let r = createMath("mrow");
         const d = delim(dic, "{");
-        let t = f.x_table(attr, { cases: [] }) as MathMLElement;
+        let t = f.x_table(attr, { cases: [] }, e) as MathMLElement;
         const gap = (get_value(dic, "gap") as string) || "0.5em";
         t.setAttribute("rowspacing", gap);
         if (is_true(dic?.reverse)) {
@@ -434,23 +434,21 @@ let f: {
         }
         return r;
     },
-    frac: (attr: tree[], dic: fdic) => {
-        console.log(attr);
-
+    frac: (attr: tree[], dic: fdic, e) => {
         let a = createMath("mrow");
-        a.append(render(attr[0]));
+        a.append(render(attr[0], e));
         let b = createMath("mrow");
-        b.append(render(attr[1]));
+        b.append(render(attr[1], e));
         let f = createMath("mfrac");
         f.append(a, b);
         return f;
     },
-    lr: (attr: tree[], dic: fdic) => {
+    lr: (attr: tree[], dic: fdic, e) => {
         let list = attr_join(attr.map((i) => transfer_kh(i)));
         const tList = trim(list);
 
         const size = get_value(dic, "size") as string;
-        const c = render(tList);
+        const c = render(tList, e);
         const row = createMath("mrow");
         row.append(c);
         if (size && size != "auto") {
@@ -467,7 +465,7 @@ let f: {
         const o = createMath("mo", attr?.[0]?.[0]?.value, { stretchy: "true" });
         return o;
     },
-    mat: (attr: tree[] | tree[][], dic: fdic) => {
+    mat: (attr: tree[] | tree[][], dic: fdic, e) => {
         let d = delim(dic, "(");
         let row = createMath("mrow");
         let l = createMath("mo", d[0]);
@@ -511,7 +509,7 @@ let f: {
             let tr = createMath("mtr");
             for (let j of i) {
                 let td = createMath("mtd");
-                td.append(render(j));
+                td.append(render(j, e));
                 tr.append(td);
             }
             t.append(tr);
@@ -519,41 +517,41 @@ let f: {
         row.append(l, t, r);
         return row;
     },
-    root: (attr: tree[], dic: fdic) => {
+    root: (attr: tree[], dic: fdic, e) => {
         let row = createMath("mrow");
-        row.append(render(attr[0]));
+        row.append(render(attr[0], e));
         let base = createMath("mrow");
-        base.append(render(attr[1]));
+        base.append(render(attr[1], e));
         let root = createMath("mroot");
         root.append(base, row);
         return root;
     },
-    sqrt: (attr: tree[], dic: fdic) => {
-        return f.root([[], attr[0]], null);
+    sqrt: (attr: tree[], dic: fdic, e) => {
+        return f.root([[], attr[0]], null, e);
     },
-    display: (attr: tree[], dic: fdic) => {
+    display: (attr: tree[], dic: fdic, e) => {
         let m = createMath("mrow", null, { displaystyle: "true" });
-        m.append(render(attr[0]));
+        m.append(render(attr[0], e));
         return m;
     },
-    inline: (attr: tree[], dic: fdic) => {
+    inline: (attr: tree[], dic: fdic, e) => {
         let m = createMath("mrow", null, { displaystyle: "false", scriptlevel: "0" });
-        m.append(render(attr[0]));
+        m.append(render(attr[0], e));
         return m;
     },
-    script: (attr: tree[], dic: fdic) => {
+    script: (attr: tree[], dic: fdic, e) => {
         let m = createMath("mrow", null, { displaystyle: "false", scriptlevel: "1" });
-        m.append(render(attr[0]));
+        m.append(render(attr[0], e));
         return m;
     },
-    sscript: (attr: tree[], dic: fdic) => {
+    sscript: (attr: tree[], dic: fdic, e) => {
         let m = createMath("mrow", null, { displaystyle: "false", scriptlevel: "2" });
-        m.append(render(attr[0]));
+        m.append(render(attr[0], e));
         return m;
     },
-    upright: (attr: tree[], dic: fdic) => {
+    upright: (attr: tree[], dic: fdic, e) => {
         let r = createMath("mrow");
-        r.append(render(attr[0]));
+        r.append(render(attr[0], e));
         r.querySelectorAll("mi").forEach((el) => {
             if (!el.getAttribute(mathvariant)) el.setAttribute(mathvariant, "normal");
         });
@@ -562,21 +560,21 @@ let f: {
         });
         return r;
     },
-    italic: (attr: tree[], dic: fdic) => {
+    italic: (attr: tree[], dic: fdic, e) => {
         let r = createMath("mrow");
+        r.append(render(attr[0], e));
         r.querySelectorAll("mi").forEach((el) => {
             if (!el.getAttribute(mathvariant)) el.setAttribute(mathvariant, "italic");
         });
         r.querySelectorAll("ms").forEach((el) => {
             if (!el.getAttribute(mathvariant)) el.setAttribute(mathvariant, "italic");
         });
-        r.append(render(attr[0]));
         return r;
     },
-    bold: (attr: tree[], dic: fdic) => {
+    bold: (attr: tree[], dic: fdic, e) => {
         let r = createMath("mrow");
         r.style.fontWeight = "bold";
-        r.append(render(attr[0]));
+        r.append(render(attr[0], e));
         return r;
     },
     op: (attr: tree[], dic: fdic, e) => {
@@ -586,48 +584,48 @@ let f: {
         f.append(str);
         return f;
     },
-    underline: (attr: tree[], dic: fdic) => {
-        return underover_line_f("under", attr[0]);
+    underline: (attr: tree[], dic: fdic, e) => {
+        return underover_line_f("under", attr[0], e);
     },
-    overline: (attr: tree[], dic: fdic) => {
-        return underover_line_f("over", attr[0]);
+    overline: (attr: tree[], dic: fdic, e) => {
+        return underover_line_f("over", attr[0], e);
     },
-    underbrace: (attr: tree[], dic: fdic) => {
-        return underover_f("under", attr[0], "⏟", attr?.[1]);
+    underbrace: (attr: tree[], dic: fdic, e) => {
+        return underover_f("under", attr[0], "⏟", attr?.[1], e);
     },
-    overbrace: (attr: tree[], dic: fdic) => {
-        return underover_f("over", attr[0], "⏞", attr?.[1]);
+    overbrace: (attr: tree[], dic: fdic, e) => {
+        return underover_f("over", attr[0], "⏞", attr?.[1], e);
     },
-    underbracket: (attr: tree[], dic: fdic) => {
-        return underover_f("under", attr[0], "⎵", attr?.[1]);
+    underbracket: (attr: tree[], dic: fdic, e) => {
+        return underover_f("under", attr[0], "⎵", attr?.[1], e);
     },
-    overbracket: (attr: tree[], dic: fdic) => {
-        return underover_f("over", attr[0], "⎴", attr?.[1]);
+    overbracket: (attr: tree[], dic: fdic, e) => {
+        return underover_f("over", attr[0], "⎴", attr?.[1], e);
     },
-    serif: (attr: tree[], dic: fdic) => {
+    serif: (attr: tree[]) => {
         return render(attr[0], "serif");
     },
-    sans: (attr: tree[], dic: fdic) => {
+    sans: (attr: tree[]) => {
         return render(attr[0], "sans");
     },
-    frak: (attr: tree[], dic: fdic) => {
+    frak: (attr: tree[]) => {
         return render(attr[0], "frak");
     },
-    mono: (attr: tree[], dic: fdic) => {
+    mono: (attr: tree[]) => {
         return render(attr[0], "mono");
     },
-    bb: (attr: tree[], dic: fdic) => {
+    bb: (attr: tree[]) => {
         return render(attr[0], "bb");
     },
-    cal: (attr: tree[], dic: fdic) => {
+    cal: (attr: tree[]) => {
         return render(attr[0], "cal");
     },
-    vec: (attr: tree[], dic: fdic) => {
+    vec: (attr: tree[], dic: fdic, e) => {
         let d = delim(dic, "(");
         let row = createMath("mrow");
         let l = createMath("mo", d[0]);
         let r = createMath("mo", d[1]);
-        let t = x_table(attr);
+        let t = x_table(attr, e);
         const gap = (get_value(dic, "gap") as string) || "0.5em";
         t.setAttribute("rowspacing", gap);
         t.setAttribute("columnspacing", "0.5em");
@@ -646,7 +644,7 @@ let f: {
     },
 };
 
-function x_table(trees: tree[]) {
+function x_table(trees: tree[], e?: fonts) {
     let max = 0;
     let t = createMath("mtable");
     for (let i of trees) {
@@ -668,7 +666,7 @@ function x_table(trees: tree[]) {
         for (let i of result) {
             let d = createMath("mtd");
             r.append(d);
-            d.append(render(i));
+            d.append(render(i, e));
         }
 
         // 交替对齐
@@ -869,8 +867,8 @@ function accent_f() {
         "harpoon.lt",
     ];
     for (let i of l) {
-        f[i] = (attr: tree[]) => {
-            let s = f.accent([attr[0], [{ type: "f", value: i }]], {});
+        f[i] = (attr: tree[], dic, e) => {
+            let s = f.accent([attr[0], [{ type: "f", value: i }]], {}, e);
             return s;
         };
     }
@@ -886,25 +884,25 @@ function lr_f() {
         { name: "round", l: v_f("⌊"), r: v_f("⌉") },
     ];
     for (let i of l) {
-        f[i.name] = (attr: tree[], dic) => {
-            let s = f.lr([[i.l, ...attr[0], i.r]], dic);
+        f[i.name] = (attr: tree[], dic, e) => {
+            let s = f.lr([[i.l, ...attr[0], i.r]], dic, e);
             return s;
         };
     }
 }
 lr_f();
 
-function underover_f(type: "under" | "over", tree: tree, x: string, str?: tree) {
+function underover_f(type: "under" | "over", tree: tree, x: string, str: tree, e: fonts) {
     let m =
-        type == "under"
+        type === "under"
             ? createMath("munder", null, { accentunder: "true" })
             : createMath("mover", null, { accent: "true" });
     let base = createMath("mrow");
-    base.append(render(tree));
+    base.append(render(tree, e));
     if (str) {
         let s = createMath("mrow");
-        s.append(render(str));
-        let mm = type == "under" ? createMath("munder") : createMath("mover");
+        s.append(render(str, e));
+        let mm = type === "under" ? createMath("munder") : createMath("mover");
         let xx = createMath("mo", x);
         mm.append(xx, s);
         m.append(base, mm);
@@ -915,13 +913,13 @@ function underover_f(type: "under" | "over", tree: tree, x: string, str?: tree) 
     return m;
 }
 
-function underover_line_f(type: "under" | "over", tree: tree) {
+function underover_line_f(type: "under" | "over", tree: tree, e: fonts) {
     let m =
         type === "under"
             ? createMath("munder", null, { accentunder: "true" })
             : createMath("mover", null, { accent: "true" });
     let base = createMath("mrow");
-    base.append(render(tree));
+    base.append(render(tree, e));
     if (type === "under") base.style.borderBottom = "1px solid black";
     if (type === "over") base.style.borderTop = "1px solid black";
     m.append(base);
@@ -930,8 +928,8 @@ function underover_line_f(type: "under" | "over", tree: tree) {
 
 const ff: typeof f = {
     "√": f["sqrt"],
-    "∛": (attr) => f.root([[v_f("3")], attr[0]]),
-    "∜": (attr) => f.root([[v_f("4")], attr[0]]),
+    "∛": (attr, _, e) => f.root([[v_f("3")], attr[0]], null, e),
+    "∜": (attr, _, e) => f.root([[v_f("4")], attr[0]], null, e),
 };
 
 function kh(tree: tree) {
@@ -1723,46 +1721,38 @@ function font(str: string, type: fonts = "serif") {
         const l = "abcdefghijklmnopqrstuvwxyz";
         return l.indexOf(c.toLowerCase());
     }
-    switch (type) {
-        case "serif":
-            return str;
-        case "sans":
-            const s0 = [..."𝟢𝟣𝟤𝟥𝟦𝟧𝟨𝟩𝟪𝟫"];
-            const s1 = [..."𝖺𝖻𝖼𝖽𝖾𝖿𝗀𝗁𝗂𝗃𝗄𝗅𝗆𝗇𝗈𝗉𝗊𝗋𝗌𝗍𝗎𝗏𝗐𝗑𝗒𝗓"];
-            const s2 = [..."𝖠𝖡𝖢𝖣𝖤𝖥𝖦𝖧𝖨𝖩𝖪𝖫𝖬𝖭𝖮𝖯𝖰𝖱𝖲𝖳𝖴𝖵𝖶𝖷𝖸𝖹"];
-            str = str.replace(/[0-9]+/g, (s) => s0[s]);
-            str = str.replace(/[a-z]/g, (s) => s1[index_c(s)]);
-            str = str.replace(/[A-Z]/g, (s) => s2[index_c(s)]);
-            return str;
-        case "frak":
-            const frak1 = [..."𝔞𝔟𝔠𝔡𝔢𝔣𝔤𝔥𝔦𝔧𝔨𝔩𝔪𝔫𝔬𝔭𝔮𝔯𝔰𝔱𝔲𝔳𝔴𝔵𝔶𝔷"];
-            const frak2 = [..."𝔄𝔅ℭ𝔇𝔈𝔉𝔊ℌℑ𝔍𝔎𝔏𝔐𝔑𝔒𝔓𝔔ℜ𝔖𝔗𝔘𝔙𝔚𝔛𝔜ℨ"];
-            str = str.replace(/[a-z]/g, (s) => frak1[index_c(s)]);
-            str = str.replace(/[A-Z]/g, (s) => frak2[index_c(s)]);
-            return str;
-        case "mono":
-            const m0 = [..."0𝟷𝟸𝟹𝟺𝟻𝟼𝟽𝟾𝟿"];
-            const m1 = [..."𝚊𝚋𝚌𝚍𝚎𝚏𝚐𝚑𝚒𝚓𝚔𝚕𝚖𝚗𝚘𝚙𝚚𝚛𝚜𝚝𝚞𝚟𝚠𝚡𝚢𝚣"];
-            const m2 = [..."𝙰𝙱𝙲𝙳𝙴𝙵𝙶𝙷𝙸𝙹𝙺𝙻𝙼𝙽𝙾𝙿𝚀𝚁𝚂𝚃𝚄𝚅𝚆𝚇𝚈𝚉"];
-            str = str.replace(/[0-9]+/g, (s) => m0[s]);
-            str = str.replace(/[a-z]/g, (s) => m1[index_c(s)]);
-            str = str.replace(/[A-Z]/g, (s) => m2[index_c(s)]);
-            return str;
-        case "bb":
-            const bb0 = [..."𝟘𝟙𝟚𝟛𝟜𝟝𝟞𝟟𝟠𝟡"];
-            const bb1 = [..."𝕒𝕓𝕔𝕕𝕖𝕗𝕘𝕙𝕚𝕛𝕜𝕝𝕞𝕟𝕠𝕡𝕢𝕣𝕤𝕥𝕦𝕧𝕨𝕩𝕪𝕫"];
-            const bb2 = [..."𝔸𝔹ℂ𝔻𝔼𝔽𝔾ℍ𝕀𝕁𝕂𝕃𝕄ℕ𝕆ℙℚℝ𝕊𝕋𝕌𝕍𝕎𝕏𝕐ℤ"];
-            str = str.replace(/[0-9]+/g, (s) => bb0[s]);
-            str = str.replace(/[a-z]/g, (s) => bb1[index_c(s)]);
-            str = str.replace(/[A-Z]/g, (s) => bb2[index_c(s)]);
-            return str;
-        case "cal":
-            const c1 = [..."𝒶𝒷𝒸𝒹ℯ𝒻ℊ𝒽𝒾𝒿𝓀𝓁𝓂𝓃ℴ𝓅𝓆𝓇𝓈𝓉𝓊𝓋𝓌𝓍𝓎𝓏"];
-            const c2 = [..."𝒜ℬ𝒞𝒟ℰℱ𝒢ℋℐ𝒥𝒦ℒℳ𝒩𝒪𝒫𝒬ℛ𝒮𝒯𝒰𝒱𝒲𝒳𝒴𝒵"];
-            str = str.replace(/[a-z]/g, (s) => c1[index_c(s)]);
-            str = str.replace(/[A-Z]/g, (s) => c2[index_c(s)]);
-            return str;
+    const map: { [font in "sans" | "frak" | "mono" | "bb" | "cal"]: { num?: string; up: string; low: string } } = {
+        sans: {
+            num: "𝟢𝟣𝟤𝟥𝟦𝟧𝟨𝟩𝟪𝟫",
+            low: "𝖺𝖻𝖼𝖽𝖾𝖿𝗀𝗁𝗂𝗃𝗄𝗅𝗆𝗇𝗈𝗉𝗊𝗋𝗌𝗍𝗎𝗏𝗐𝗑𝗒𝗓",
+            up: "𝖠𝖡𝖢𝖣𝖤𝖥𝖦𝖧𝖨𝖩𝖪𝖫𝖬𝖭𝖮𝖯𝖰𝖱𝖲𝖳𝖴𝖵𝖶𝖷𝖸𝖹",
+        },
+        frak: {
+            low: "𝔞𝔟𝔠𝔡𝔢𝔣𝔤𝔥𝔦𝔧𝔨𝔩𝔪𝔫𝔬𝔭𝔮𝔯𝔰𝔱𝔲𝔳𝔴𝔵𝔶𝔷",
+            up: "𝔄𝔅ℭ𝔇𝔈𝔉𝔊ℌℑ𝔍𝔎𝔏𝔐𝔑𝔒𝔓𝔔ℜ𝔖𝔗𝔘𝔙𝔚𝔛𝔜ℨ",
+        },
+        mono: {
+            num: "𝟶𝟷𝟸𝟹𝟺𝟻𝟼𝟽𝟾𝟿",
+            low: "𝚊𝚋𝚌𝚍𝚎𝚏𝚐𝚑𝚒𝚓𝚔𝚕𝚖𝚗𝚘𝚙𝚚𝚛𝚜𝚝𝚞𝚟𝚠𝚡𝚢𝚣",
+            up: "𝙰𝙱𝙲𝙳𝙴𝙵𝙶𝙷𝙸𝙹𝙺𝙻𝙼𝙽𝙾𝙿𝚀𝚁𝚂𝚃𝚄𝚅𝚆𝚇𝚈𝚉",
+        },
+        bb: {
+            num: "𝟘𝟙𝟚𝟛𝟜𝟝𝟞𝟟𝟠𝟡",
+            low: "𝕒𝕓𝕔𝕕𝕖𝕗𝕘𝕙𝕚𝕛𝕜𝕝𝕞𝕟𝕠𝕡𝕢𝕣𝕤𝕥𝕦𝕧𝕨𝕩𝕪𝕫",
+            up: "𝔸𝔹ℂ𝔻𝔼𝔽𝔾ℍ𝕀𝕁𝕂𝕃𝕄ℕ𝕆ℙℚℝ𝕊𝕋𝕌𝕍𝕎𝕏𝕐ℤ",
+        },
+        cal: {
+            low: "𝒶𝒷𝒸𝒹ℯ𝒻ℊ𝒽𝒾𝒿𝓀𝓁𝓂𝓃ℴ𝓅𝓆𝓇𝓈𝓉𝓊𝓋𝓌𝓍𝓎𝓏",
+            up: "𝒜ℬ𝒞𝒟ℰℱ𝒢ℋℐ𝒥𝒦ℒℳ𝒩𝒪𝒫𝒬ℛ𝒮𝒯𝒰𝒱𝒲𝒳𝒴𝒵",
+        },
+    };
+    if (type === "serif") return str;
+    else {
+        str = str.replace(/[0-9]/g, (s) => [...map[type].num][s]);
+        str = str.replace(/[a-z]/g, (s) => [...map[type].low][index_c(s)]);
+        str = str.replace(/[A-Z]/g, (s) => [...map[type].up][index_c(s)]);
     }
+    return str;
 }
 
 function render(tree: tree, e?: fonts) {
@@ -1910,7 +1900,7 @@ function render(tree: tree, e?: fonts) {
         }
 
         if (x.type === "group") {
-            fragment.append(f.lr([[x]]));
+            fragment.append(f.lr([[x]], null, e));
         }
     }
 
