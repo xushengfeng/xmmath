@@ -28,7 +28,7 @@ const Segmenter = Intl.Segmenter;
 const segmenter = new Segmenter("emoji", { granularity: "grapheme" });
 
 type vtype = "" | "str" | "v" | "f" | "blank" | "group" | "group1" | "sharp"; // group1组合基本类型，提高优先级
-type tree = { type: vtype; value: string; children?: tree; esc?: boolean; kh?: string }[];
+type tree = { type: vtype; value: string; children?: tree; esc?: boolean; kh?: string; src?: string }[];
 
 function ast(str: string) {
     let v = /[a-zA-Z]/;
@@ -1202,7 +1202,7 @@ function ast3(tree: tree) {
                         nn++;
                     }
                     if (l.length) {
-                        let nx: tree[0] = { type: "f", value: shorthand[l.at(-1)] };
+                        let nx: tree[0] = { type: "f", value: shorthand[l.at(-1)], src: l.at(-1) };
                         t.push(nx);
 
                         // 不处理已经后面连起来的字符
@@ -1355,6 +1355,59 @@ function ast3(tree: tree) {
             } else {
                 t.push(x);
             }
+        }
+        tree = t;
+    }
+
+    // sin[]/2=(sin[])/2 a_i()=a_(i()) 之类的
+    {
+        const t: tree = [];
+        const un_list_str = [
+            "`",
+            "~",
+            "!",
+            "@",
+            "%",
+            "*",
+            "(",
+            ")",
+            "-",
+            "+",
+            "=",
+            "[",
+            "]",
+            "{",
+            "}",
+            "|",
+            ":",
+            ";",
+            "<",
+            ",",
+            ">",
+            ".",
+            "?",
+        ]; // typst 似乎是直接排除了这些字符，不排除转义，shorthand之类的
+        for (let n = 0; n < tree.length; n++) {
+            const x = tree[n];
+            const next = tree[n + 1];
+            if (
+                is_type(next, "group") &&
+                next.kh != "()" &&
+                is_type(x, "f", "str", "v") &&
+                !x.value.match(/[0-9]/) &&
+                !is_sub(x) &&
+                !is_sup(x) &&
+                (!(
+                    (is_type(x, "f") && un_list_str.includes(x.src)) ||
+                    (is_type(x, "v") && un_list_str.includes(x.value))
+                ) ||
+                    x.esc)
+            ) {
+                t.push({ type: "group1", value: "", children: [x, next] });
+                n++;
+                continue;
+            }
+            t.push(x);
         }
         tree = t;
     }
