@@ -324,7 +324,7 @@ function delim(dic: fdic, _default: string) {
 }
 
 let f: {
-    [name: string]: (attr?: tree[], dic?: fdic, e?: fonts) => MathMLElement | DocumentFragment;
+    [name: string]: (attr: tree[], dic?: fdic, e?: fonts) => MathMLElement | DocumentFragment;
 } = {
     accent: (attr: tree[], dic: fdic) => {
         let base = createMath("mrow");
@@ -1296,7 +1296,7 @@ function ast3(tree: tree) {
             const x = tree[n];
             if (x.type === "v" && ff[x.value] && tree[n + 1]) {
                 x.type = "f";
-                if (tree[n + 1].type != "group") {
+                if (!(is_type(tree[n + 1], "group") && tree[n + 1].kh === "()")) {
                     t.push(x);
                     t.push({ type: "group", children: [tree[n + 1]], value: "", kh: "()" });
                     n++;
@@ -1828,52 +1828,54 @@ function render(tree: tree, e?: fonts) {
         let n = Number(i);
         let x = tree[n];
 
-        // 带有括号（参数）的函数
-        if (x.type == "f" && x.children) {
-            let { attr, dic } = f_attr(x);
+        // 函数
+        if (x.type === "f") {
+            // 带有括号（参数）的函数
+            if (x.children && (x.kh === "()" || !x.kh)) {
+                let { attr, dic } = f_attr(x);
 
-            if (f[x.value]) {
-                let el = f[x.value](attr as tree[], dic, e);
-                fragment.append(el);
-            } else if (ss[x.value]) {
-                let el = createMath("mi", ss[x.value]);
-                fragment.append(el, render(in_kh(x.children)));
-            } else if (ff[x.value]) {
-                let el = ff[x.value](attr as tree[], dic, e);
-                fragment.append(el);
-            }
-        }
-
-        if (x.type == "f" && !x.children) {
-            if (ss[x.value]) {
-                let tag: keyof MathMLElementTagNameMap;
-                let space_w = null;
-                const space_width = {
-                    " ": "0.36em",
-                    "\u2002": "0.5em",
-                    "\u2003": "1em",
-                    "\u2004": "0.333em",
-                    "\u2005": "0.25em",
-                    "\u2006": "0.166em",
-                    "\u205f": "0.222em",
-                    "\u2007": "1ch",
-                    "\u2008": "0.27em",
-                    "\u2009": "0.17em",
-                    "\u200a": "0.09em",
-                };
-                if (ss[x.value].match(/[a-zA-Z\u0391-\u03C9]/)) {
-                    tag = "mi";
-                } else if (space_width[ss[x.value]]) {
-                    tag = "mspace";
-                    space_w = { width: space_width[ss[x.value]] };
-                } else {
-                    tag = "mo";
-                }
-                let el = createMath(tag, ss[x.value], space_w);
-                fragment.append(el);
-            } else {
                 if (f[x.value]) {
+                    let el = f[x.value](attr as tree[], dic, e);
+                    fragment.append(el);
+                } else if (ss[x.value]) {
+                    let el = createMath("mi", ss[x.value]);
+                    fragment.append(el, render(in_kh(x.children), e));
+                } else if (ff[x.value]) {
+                    let el = ff[x.value](attr as tree[], dic, e);
+                    fragment.append(el);
+                }
+            } else {
+                if (ss[x.value]) {
+                    let tag: keyof MathMLElementTagNameMap;
+                    let space_w = null;
+                    const space_width = {
+                        " ": "0.36em",
+                        "\u2002": "0.5em",
+                        "\u2003": "1em",
+                        "\u2004": "0.333em",
+                        "\u2005": "0.25em",
+                        "\u2006": "0.166em",
+                        "\u205f": "0.222em",
+                        "\u2007": "1ch",
+                        "\u2008": "0.27em",
+                        "\u2009": "0.17em",
+                        "\u200a": "0.09em",
+                    };
+                    if (ss[x.value].match(/[a-zA-Z\u0391-\u03C9]/)) {
+                        tag = "mi";
+                    } else if (space_width[ss[x.value]]) {
+                        tag = "mspace";
+                        space_w = { width: space_width[ss[x.value]] };
+                    } else {
+                        tag = "mo";
+                    }
+                    let el = createMath(tag, ss[x.value], space_w);
+                    fragment.append(el);
+                } else if (f[x.value]) {
                     let el = f[x.value](null, null, e);
+                    fragment.append(el);
+                } else if (ff[x.value]) {
+                    let el = ff[x.value]([x.children], null, e);
                     fragment.append(el);
                 }
             }
