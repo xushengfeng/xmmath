@@ -35,7 +35,7 @@ function ast(str: string) {
     let kh = /[\(\)\{\}\[\]]/;
     const khl = /[\(\{\[]/;
     const khr = /[\)\}\]]/;
-    let blank = /[ \t\n\r]+/;
+    let blank = /^[ \t\n\r]+$/;
     let type: vtype = "";
     let ignore: false | "line" | "block" = false;
     let o: tree = [];
