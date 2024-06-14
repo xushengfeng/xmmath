@@ -103,7 +103,7 @@ function ast(str: string) {
 
     for (let i = 0; i < strl.length; i++) {
         const t = strl[i];
-        const next = str[i + 1];
+        const next = strl[i + 1];
         // 注释
         if (t === "/" && next === "/") ignore = "line";
         if (ignore === "line" && t === "\n") {
