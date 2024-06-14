@@ -1404,24 +1404,29 @@ function ast3(tree: tree) {
     {
         let t: tree = [];
         for (let n = 0; n < tree.length; n++) {
-            let x = tree[n];
-            let nn = n;
-            if (eqq(x, { type: "f", value: "prime" })) {
-                while (tree[nn] && eqq(tree[nn], { type: "f", value: "prime" })) {
-                    nn++;
+            const next = tree[n + 1];
+            const x = tree[n];
+            let nn = n + 1;
+            if (eqq(next, { type: "f", value: "prime" })) {
+                while (tree[nn] && eqq(tree[nn], { type: "f", value: "prime" })) nn++;
+                const primes = nn - (n + 1);
+                if (!is_sup(x) && !is_sub(x) && x.type != "blank") {
+                    t.push({
+                        type: "f",
+                        value: "attach",
+                        children: [
+                            x,
+                            dh,
+                            ...dic_to_ast({
+                                tr: [{ type: "v", value: "'".repeat(primes) }],
+                            }),
+                        ],
+                    });
+                } else {
+                    t.push(x);
+                    for (let i = 0; i < primes; i++) t.push({ type: "f", value: "prime" });
                 }
-                const primes = nn - n;
-                if (
-                    tree[n - 1] &&
-                    !is_sup(tree[n - 1]) &&
-                    !is_sub(tree[n - 1]) &&
-                    !eq(tree[n - 1], { type: "f", value: "prime" }) &&
-                    tree[n - 1].type != "blank"
-                ) {
-                    t.push({ type: "v", value: "^" });
-                }
-                t.push({ type: "v", value: "'".repeat(primes), children: [{ type: "v", value: String(primes) }] });
-                n += primes - 1;
+                n += primes;
                 continue;
             }
             t.push(x);
@@ -1834,7 +1839,7 @@ function render(tree: tree, e?: fonts) {
             } else if (x.value.match(/[a-zA-Z\u0391-\u03C9]/)) {
                 tag = "mi";
             } else if (x.value.match(/^'+$/)) {
-                if (x.value.length > 1) x.value = x.value.replaceAll("'", ss["prime"]);
+                if (!x.esc) value = x.value.replaceAll("'", ss["prime"]);
                 tag = "mo";
             } else {
                 tag = "mo";
