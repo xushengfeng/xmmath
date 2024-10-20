@@ -251,7 +251,7 @@ function simple_dot(s: any) {
 let ss = simple_dot(s);
 
 import emoji from "./emoji.json?raw";
-/** @see https://github.com/typst/typst/blob/v0.11.1/crates/typst/src/symbols/emoji.rs */
+/** @see https://github.com/typst/typst/blob/v0.12.0/crates/typst/src/symbols/emoji.rs */
 let emojix = simple_dot(JSON.parse(emoji));
 
 let shorthand = {
@@ -1935,6 +1935,7 @@ function toMMLHTML(str: string) {
 const version = {
     lan: "0.11.1",
     symbol: "0.11.1",
+    emoji: "0.12.0",
 };
 
 export { init, toMML, toMMLHTML, version };

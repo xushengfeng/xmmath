@@ -83,6 +83,7 @@
     "bed": ["🛏", { "person": "🛌" }],
     "bee": "🐝",
     "beer": ["🍺", { "clink": "🍻" }],
+    "beet": "🫜",
     "beetle": ["🪲", { "lady": "🐞" }],
     "bell": ["🔔", { "ding": "🛎", "not": "🔕" }],
     "bento": "🍱",
@@ -461,6 +462,7 @@
             "devil.frown": "👿",
             "diagonal": "🫤",
             "disguise": "🥸",
+            "distress": "😫",
             "dizzy": "😵",
             "dotted": "🫥",
             "down": "😞",
@@ -530,7 +532,7 @@
             "tear.withheld": "🥹",
             "teeth": "😬",
             "think": "🤔",
-            "tired": "😫",
+            "tired": "🫩",
             "tongue": "😛",
             "tongue.squint": "😝",
             "tongue.wink": "😜",
@@ -584,6 +586,7 @@
             "m": "🖕"
         }
     ],
+    "fingerprint": "🫆",
     "fingers": [{ "cross": "🤞", "pinch": "🤌", "snap": "🫰" }],
     "fire": "🔥",
     "firecracker": "🧨",
@@ -713,6 +716,7 @@
             "shake": "🤝"
         }
     ],
+    "harp": "🪉",
     "hash": "#",
     "hat": [{ "ribbon": "👒", "top": "🎩" }],
     "headphone": "🎧",
@@ -1198,6 +1202,7 @@
     "shopping": "🛍",
     "shorts": "🩳",
     "shoshinsha": "🔰",
+    "shovel": "🪏",
     "shower": "🚿",
     "shrimp": ["🦐", { "fried": "🍤" }],
     "shrine": "⛩",
@@ -1246,6 +1251,7 @@
     "spider": "🕷",
     "spiderweb": "🕸",
     "spinach": "🥬",
+    "splatter": "🫟",
     "sponge": "🧽",
     "spoon": "🥄",
     "square": [
@@ -1361,6 +1367,7 @@
         {
             "deciduous": "🌳",
             "evergreen": "🌲",
+            "leafless": "🪾",
             "palm": "🌴",
             "xmas": "🎄"
         }
