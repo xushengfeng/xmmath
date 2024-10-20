@@ -213,7 +213,7 @@ function ast(str: string) {
 }
 
 import symbols from "./symbols.json?raw";
-/** @see https://github.com/typst/typst/blob/v0.11.1/crates/typst/src/symbols/sym.rs */
+/** @see https://github.com/typst/typst/blob/v0.12.0/crates/typst/src/symbols/sym.rs */
 let s = JSON.parse(symbols);
 
 // symbols路径简写
@@ -1934,7 +1934,7 @@ function toMMLHTML(str: string) {
 
 const version = {
     lan: "0.11.1",
-    symbol: "0.11.1",
+    symbol: "0.12.0",
     emoji: "0.12.0",
 };
 
