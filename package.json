@@ -1,29 +1,30 @@
 {
-    "name": "xmmath",
-    "version": "1.0.9",
-    "description": "",
-    "main": "./dist/xmmath.umd.js",
-    "module": "./dist/xmmath.es.js",
-    "exports": {
-        ".": {
-            "import": "./dist/xmmath.es.js",
-            "require": "./dist/xmmath.umd.js"
-        }
-    },
-    "homepage": "https://github.com/xushengfeng/xmmath",
-    "type": "module",
-    "types": "./src/main.ts",
-    "scripts": {
-        "test": "vite ",
-        "dev": "vite --host 0.0.0.0",
-        "build": "tsc && vite build",
-        "preview": "vite preview"
-    },
-    "keywords": [],
-    "author": "",
-    "license": "Apache-2.0",
-    "devDependencies": {
-        "typescript": "^5.4.5",
-        "vite": "^4.3.9"
-    }
+	"name": "xmmath",
+	"version": "1.0.9",
+	"description": "",
+	"main": "./dist/xmmath.umd.js",
+	"module": "./dist/xmmath.es.js",
+	"exports": {
+		".": {
+			"import": "./dist/xmmath.es.js",
+			"require": "./dist/xmmath.umd.js"
+		}
+	},
+	"homepage": "https://github.com/xushengfeng/xmmath",
+	"type": "module",
+	"types": "./src/main.ts",
+	"scripts": {
+		"test": "vite ",
+		"dev": "vite --host 0.0.0.0",
+		"build": "tsc && vite build",
+		"preview": "vite preview"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "Apache-2.0",
+	"devDependencies": {
+		"@biomejs/biome": "^2.5.14",
+		"typescript": "^5.4.5",
+		"vite": "^4.3.9"
+	}
 }
