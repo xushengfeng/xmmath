@@ -1,23 +1,5 @@
 /// <reference types="vite/client" />
 
-function createMath<K extends keyof MathMLElementTagNameMap>(
-	tagname: K,
-	innerText?: string,
-	attr?: { [name: string]: string },
-) {
-	const el = document.createElementNS(
-		"http://www.w3.org/1998/Math/MathML",
-		tagname,
-	);
-	if (innerText) el.textContent = innerText;
-	if (attr) {
-		for (const i in attr) {
-			el.setAttribute(i, attr[i]);
-		}
-	}
-	return el;
-}
-
 import { ast, init_c, type tree } from "./ast.js";
 import {
 	ast2,
@@ -36,6 +18,14 @@ import {
 	trim,
 	v_f,
 } from "./normalize.js";
+import {
+	createFragment,
+	createMath,
+	toDom,
+	toHtml,
+	type VEl,
+	type VFragment,
+} from "./vdom.js";
 
 const mathvariant = "mathvariant";
 
@@ -58,11 +48,7 @@ function delim(dic: fdic, _default: string) {
 }
 
 const f: {
-	[name: string]: (
-		attr: tree[],
-		dic?: fdic,
-		e?: fonts,
-	) => MathMLElement | DocumentFragment;
+	[name: string]: (attr: tree[], dic?: fdic, e?: fonts) => VEl | VFragment;
 } = {
 	accent: (attr: tree[], _dic: fdic, e) => {
 		const base = createMath("mrow");
@@ -78,7 +64,7 @@ const f: {
 	attach: (attr: tree[], dic: fdic, e) => {
 		const base = createMath("mrow");
 		base.append(render(attr[0]));
-		let el: MathMLElement;
+		let el: VEl;
 		const tl = createMath("mrow");
 		if (dic.tl) tl.append(render(dic.tl, e));
 		const bl = createMath("mrow");
@@ -160,7 +146,7 @@ const f: {
 	cases: (attr: tree[], dic: fdic, e) => {
 		const r = createMath("mrow");
 		const d = delim(dic, "{");
-		const t = f.x_table(attr, { cases: [] }, e) as MathMLElement;
+		const t = f.x_table(attr, { cases: [] }, e) as VEl;
 		const gap = (get_value(dic, "gap") as string) || "0.5em";
 		t.setAttribute("rowspacing", gap);
 		if (is_true(dic?.reverse)) {
@@ -445,7 +431,7 @@ function op_f() {
 		f[i.id] = (attr: tree[], _a, e) => {
 			const s = f.op([[{ type: "str", value: i.str || i.id }]], {}, e);
 			if (attr) {
-				const f = document.createDocumentFragment();
+				const f = createFragment();
 				f.append(s, kh(attr_join(attr)));
 				return f;
 			} else {
@@ -745,8 +731,8 @@ function font(str: string, type: fonts = "serif") {
 	return str;
 }
 
-function render(tree: tree, e?: fonts) {
-	const fragment = document.createDocumentFragment();
+function render(tree: tree, e?: fonts): VEl | VFragment {
+	const fragment = createFragment();
 
 	tree = ast2(tree);
 
@@ -803,7 +789,6 @@ function render(tree: tree, e?: fonts) {
 		tree = t;
 	}
 
-	console.log("ast3", structuredClone(tree));
 	for (const i in tree) {
 		const n = Number(i);
 		const x = tree[n];
@@ -903,9 +888,9 @@ function init(p: { emoji: boolean }) {
 	}
 }
 
-function toMML(str: string, inline?: boolean) {
+// Build the MathML virtual DOM (no `document`).
+function toMMLV(str: string, inline?: boolean): VEl {
 	const obj = ast(str);
-	console.log("ast1", obj);
 
 	const mathEl = createMath("math");
 	if (!inline) mathEl.setAttribute("display", "block");
@@ -914,8 +899,13 @@ function toMML(str: string, inline?: boolean) {
 	return mathEl;
 }
 
+// Materialize to real MathML DOM (the only path that touches `document`).
+function toMML(str: string, inline?: boolean): MathMLElement {
+	return toDom(toMMLV(str, inline)) as MathMLElement;
+}
+
 function toMMLHTML(str: string) {
-	return toMML(str).outerHTML;
+	return toHtml(toMMLV(str));
 }
 
 const version = {
@@ -924,4 +914,4 @@ const version = {
 	emoji: "0.15.1",
 };
 
-export { ast2, ast3, init, toMML, toMMLHTML, version };
+export { ast2, ast3, init, toMML, toMMLHTML, toMMLV, version };

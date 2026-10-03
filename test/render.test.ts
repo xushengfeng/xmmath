@@ -1,6 +1,3 @@
-/**
- * @vitest-environment jsdom
- */
 import { describe, it, expect } from "vitest";
 import { toMMLHTML } from "../src/main.js";
 
@@ -71,10 +68,7 @@ describe("render() - function rendering", () => {
 describe("render() - symbol mapping", () => {
 	it("arrow.r maps to arrow symbol", () => {
 		const html = toMMLHTML("arrow.r");
-		const normalized = normalizeMathML(html);
-		expect(
-			hasTextContent(normalized, "→") || hasTextContent(normalized, "⟶"),
-		).toBe(true);
+		expect(html.includes("→") || html.includes("⟶")).toBe(true);
 	});
 
 	it("shorthand -> maps to arrow", () => {
@@ -124,19 +118,16 @@ describe("render() - error handling", () => {
 describe("render() - full corpus robustness", () => {
 	const testCases = loadCorpus();
 
-	it("no throw on all corpus entries (except those needing DOM style shims)", () => {
-		const skipCategories = new Set([
-			"cancel",
-			"class",
-			"interactions",
-			"op",
-			"style",
-			"spacing",
-			"syntax",
-			"underover",
-		]);
+	it("no throw on all corpus entries (except known unimplemented functions)", () => {
+		// toMMLHTML is now DOM-free (string path); only unimplemented functions
+		// (class / #hide) still crash. Everything else, incl. cancel/style/.style
+		// cases that used to need jsdom, now serializes fine.
+		const knownBroken = [
+			"a class(\"normal\", +) b \\",
+			"1 + sqrt(x/2) + sqrt(#hide(",
+		];
 		for (const { text, category } of testCases) {
-			if (skipCategories.has(category)) continue;
+			if (knownBroken.some((k) => text.startsWith(k))) continue;
 			expect(
 				() => toMMLHTML(text),
 				`category: ${category}, input: ${text}`,
@@ -144,50 +135,6 @@ describe("render() - full corpus robustness", () => {
 		}
 	});
 });
-
-function normalizeMathML(html: string): {
-	tag: string;
-	attr?: Record<string, string>;
-	children?: any[];
-	text?: string;
-} {
-	const parser = new DOMParser();
-	const doc = parser.parseFromString(html, "application/xml");
-	const root = doc.documentElement;
-
-	function walk(node: Element): any {
-		const result: any = { tag: node.localName };
-		if (node.attributes.length > 0) {
-			result.attr = {};
-			for (const attr of Array.from(node.attributes)) {
-				result.attr[attr.name] = attr.value;
-			}
-		}
-		const children: any[] = [];
-		for (const child of Array.from(node.childNodes)) {
-			if (child.nodeType === 3) {
-				const text = child.textContent?.trim();
-				if (text) children.push({ text });
-			} else if (child.nodeType === 1) {
-				children.push(walk(child as Element));
-			}
-		}
-		if (children.length > 0) result.children = children;
-		return result;
-	}
-
-	return walk(root);
-}
-
-function hasTextContent(obj: any, text: string): boolean {
-	if (obj.text === text) return true;
-	if (obj.children) {
-		for (const child of obj.children) {
-			if (hasTextContent(child, text)) return true;
-		}
-	}
-	return false;
-}
 
 function loadCorpus(): { text: string; category: string }[] {
 	const cases: { text: string; category: string }[] = [];
