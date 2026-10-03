@@ -17,6 +17,7 @@
 		"test": "vitest run",
 		"test:watch": "vitest",
 		"sync:symbols": "node test/symbols/gen.mjs",
+		"render:typst": "node test/typst/render.mjs",
 		"dev": "vite --host 0.0.0.0",
 		"build": "tsc && vite build",
 		"preview": "vite preview"
