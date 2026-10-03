@@ -106,19 +106,19 @@ describe("ast() - comments", () => {
 		expect(values).toEqual(["a"]);
 	});
 
-	it.fails("line comment does not swallow next line token (BUG)", () => {
+	it("line comment does not swallow next line token", () => {
 		const result = ast("a // c\nb");
 		const values = result.filter((n) => n.type !== "blank").map((n) => n.value);
 		expect(values).toEqual(["a", "b"]);
 	});
 
-	it.fails("line comment only (BUG)", () => {
+	it("line comment only", () => {
 		const result = ast("// c\nx");
 		const values = result.filter((n) => n.type !== "blank").map((n) => n.value);
 		expect(values).toEqual(["x"]);
 	});
 
-	it.fails("line comment with multiple tokens after (BUG)", () => {
+	it("line comment with multiple tokens after", () => {
 		const result = ast("// c\nx\ny");
 		const values = result.filter((n) => n.type !== "blank").map((n) => n.value);
 		expect(values).toEqual(["x", "y"]);

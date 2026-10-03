@@ -60,7 +60,6 @@ export function ast(str: string): tree {
 			const next = str[i + 1];
 			if (t === "/" && next === "/") ignore = "line";
 			if (ignore === "line" && t === "\n") {
-				i++;
 				ignore = false;
 				continue;
 			}
@@ -100,7 +99,6 @@ export function ast(str: string): tree {
 		const next = strl[i + 1];
 		if (t === "/" && next === "/") ignore = "line";
 		if (ignore === "line" && t === "\n") {
-			i++;
 			ignore = false;
 			continue;
 		}
