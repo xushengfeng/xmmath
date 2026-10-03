@@ -521,7 +521,8 @@ function ast3(tree: tree) {
 			const next = tree[n + 1];
 
 			// 带有括号（参数）的函数
-			if (x.type === "f" && next && next.type === "group") {
+			// prime 是后缀算子（稍后单独转成 attach），不能吞掉后面的 (..) 组
+			if (x.type === "f" && x.value !== "prime" && next && next.type === "group") {
 				if (next.kh === "()") {
 					x.children = tree[n + 1].children;
 					t.push(x);

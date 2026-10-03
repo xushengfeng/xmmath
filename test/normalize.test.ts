@@ -123,6 +123,23 @@ describe("ast3() - prime and factorial", () => {
 		expect(result[0].value).toBe("attach");
 	});
 
+	it("prime followed by a group keeps the group (f'(x))", () => {
+		const result = normalize("f'(x)");
+		// should be [attach(f, tr:prime), group(x)] — the (x) must NOT be swallowed by prime
+		expect(result).toHaveLength(2);
+		expect(result[0].value).toBe("attach");
+		expect(result[1].type).toBe("group");
+		expect(result[1].kh).toBe("()");
+		expect(result[1].children).toEqual([{ type: "v", value: "x" }]);
+	});
+
+	it("double prime followed by a group keeps the group (f''(x))", () => {
+		const result = normalize("f''(x)");
+		expect(result).toHaveLength(2);
+		expect(result[0].value).toBe("attach");
+		expect(result[1].type).toBe("group");
+	});
+
 	it("factorial groups preceding token", () => {
 		const result = ast2(ast("n!"));
 		const after = ast3(result);

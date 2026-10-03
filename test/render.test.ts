@@ -50,6 +50,13 @@ describe("render() - function rendering", () => {
 		expect(html).toContain("sin");
 	});
 
+	it("f'(x) keeps both the prime and the (x) group", () => {
+		const html = toMMLHTML("f'(x)");
+		expect(html).toContain("<msup>"); // f′
+		expect(html).toContain("<mi>x</mi>"); // (x) not dropped
+		expect(html).toContain("<mo>(</mo>");
+	});
+
 	it("accent creates mover or accent notation", () => {
 		const html = toMMLHTML("hat(x)");
 		expect(html).toMatch(/<(mover|mo)>/);
