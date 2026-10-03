@@ -38,6 +38,7 @@ function parseArgs(argv) {
 			case "--typst": o.version = next(); break;
 			case "--bin": o.bin = next(); break;
 			case "--base-url": o.baseUrl = next(); break;
+			case "--mirror": o.mirror = next(); break;
 			case "--timeout": o.timeoutMs = Number(next()); break;
 			case "--no-wrap": o.wrap = false; break;
 			case "--keep": o.keep = true; break;
@@ -60,6 +61,8 @@ const HELP = `typst render -> PNG (for AI inspection)
   --typst <ver>   pin a typst version (e.g. v0.12.0); downloads + caches binary
   --bin <path>    use an explicit typst binary (skips download)
   --base-url <u>  override release download base (default github.com/typst/typst/releases/download)
+  --mirror <u>    prefix a GitHub mirror/proxy for the download (retry after direct);
+                  or env TYPST_MIRROR=<u> / TYPST_MIRRORS=<u1,u2,...>
   --timeout <ms>  download timeout (default 120000; slow networks raise this)
   --no-wrap       with --expr, do not wrap in \$ ... \$ / page setup
   --keep          keep the generated .typ temp file
@@ -87,16 +90,30 @@ function which(name = "typst") {
 	return found.status === 0 ? found.stdout.trim() : null;
 }
 
+// Download with curl (resume + retry), trying the direct URL then GitHub mirrors.
+// Mirrors prefix the full github URL; override the list with TYPST_MIRRORS (comma-separated).
+const DEFAULT_MIRRORS = [
+	"https://ghfast.top/",
+	"https://gh-proxy.com/",
+	"https://ghproxy.net/",
+];
+
 function download(url, dest, timeoutMs) {
-	const ctrl = new AbortController();
-	const t = setTimeout(() => ctrl.abort(), timeoutMs);
-	return fetch(url, { signal: ctrl.signal })
-		.then((res) => {
-			if (!res.ok) throw new Error(`HTTP ${res.status}`);
-			return res.arrayBuffer();
-		})
-		.then((buf) => writeFileSync(dest, Buffer.from(buf)))
-		.finally(() => clearTimeout(t));
+	const secs = Math.max(1, Math.ceil((timeoutMs || 120000) / 1000));
+	const r = spawnSync(
+		"curl",
+		["-sSL", "--retry", "5", "--retry-all-errors", "-C", "-", "--max-time", String(secs), url, "-o", dest],
+		{ encoding: "utf8" },
+	);
+	if (r.status !== 0) throw new Error(`curl ${r.status} for ${url}`);
+}
+
+function candidateUrls(direct, opts) {
+	const mirrors = (process.env.TYPST_MIRRORS || (opts.mirror ? String(opts.mirror) : ""))
+		? (process.env.TYPST_MIRRORS || String(opts.mirror)).split(",").map((s) => s.trim()).filter(Boolean)
+		: DEFAULT_MIRRORS;
+	const single = process.env.TYPST_MIRROR ? [process.env.TYPST_MIRROR, ...mirrors] : mirrors;
+	return [direct, ...single.map((m) => (m.endsWith("/") ? m + direct : `${m}/${direct}`))];
 }
 
 async function ensureVersionBinary(version, opts) {
@@ -109,12 +126,33 @@ async function ensureVersionBinary(version, opts) {
 	if (!triple) throw new Error(`no prebuilt typst asset for ${process.platform}-${process.arch}; use --bin`);
 	const base = opts.baseUrl || "https://github.com/typst/typst/releases/download";
 	const asset = `typst-${triple}.tar.xz`;
-	const url = `${base}/${tag}/${asset}`;
+	const direct = `${base}/${tag}/${asset}`;
 	const timeoutMs = opts.timeoutMs || 120000;
 
 	mkdirSync(dir, { recursive: true });
 	const tarball = join(dir, asset);
-	await download(url, tarball, timeoutMs);
+
+	let lastErr = null;
+	let ok = false;
+	for (const url of candidateUrls(direct, opts)) {
+		try {
+			download(url, tarball, timeoutMs);
+			const probe = spawnSync("tar", ["-tf", tarball], { encoding: "utf8" });
+			if (probe.status === 0) {
+				ok = true;
+				break;
+			}
+			lastErr = `not a valid archive: ${url}`;
+		} catch (e) {
+			lastErr = String(e.message || e);
+		}
+	}
+	if (!ok) {
+		rmSync(tarball, { force: true });
+		throw new Error(
+			`download failed for ${tag} (${lastErr}). Use --bin, set TYPST_MIRROR, or pre-place the binary at ${bin}`,
+		);
+	}
 	const ex = spawnSync("tar", ["-xf", tarball, "-C", dir], { encoding: "utf8" });
 	if (ex.status !== 0) throw new Error(`extract failed: ${ex.stderr}`);
 	// extracted into typst-<triple>/typst ; relocate to dir/typst
