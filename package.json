@@ -16,6 +16,7 @@
 	"scripts": {
 		"test": "vitest run",
 		"test:watch": "vitest",
+		"sync:symbols": "node test/symbols/gen.mjs",
 		"dev": "vite --host 0.0.0.0",
 		"build": "tsc && vite build",
 		"preview": "vite preview"

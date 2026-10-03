@@ -65,7 +65,9 @@ describe("render() - symbol mapping", () => {
 	it("arrow.r maps to arrow symbol", () => {
 		const html = toMMLHTML("arrow.r");
 		const normalized = normalizeMathML(html);
-		expect(hasTextContent(normalized, "→") || hasTextContent(normalized, "⟶")).toBe(true);
+		expect(
+			hasTextContent(normalized, "→") || hasTextContent(normalized, "⟶"),
+		).toBe(true);
 	});
 
 	it("shorthand -> maps to arrow", () => {
@@ -116,15 +118,32 @@ describe("render() - full corpus robustness", () => {
 	const testCases = loadCorpus();
 
 	it("no throw on all corpus entries (except those needing DOM style shims)", () => {
-		const skipCategories = new Set(["cancel", "class", "interactions", "op", "style", "spacing", "syntax", "underover"]);
+		const skipCategories = new Set([
+			"cancel",
+			"class",
+			"interactions",
+			"op",
+			"style",
+			"spacing",
+			"syntax",
+			"underover",
+		]);
 		for (const { text, category } of testCases) {
 			if (skipCategories.has(category)) continue;
-			expect(() => toMMLHTML(text), `category: ${category}, input: ${text}`).not.toThrow();
+			expect(
+				() => toMMLHTML(text),
+				`category: ${category}, input: ${text}`,
+			).not.toThrow();
 		}
 	});
 });
 
-function normalizeMathML(html: string): { tag: string; attr?: Record<string, string>; children?: any[]; text?: string } {
+function normalizeMathML(html: string): {
+	tag: string;
+	attr?: Record<string, string>;
+	children?: any[];
+	text?: string;
+} {
 	const parser = new DOMParser();
 	const doc = parser.parseFromString(html, "application/xml");
 	const root = doc.documentElement;

@@ -4,55 +4,86 @@
 	"abcd": "🔡",
 	"ABCD": "🔠",
 	"accordion": "🪗",
-	"aesculapius": "⚕",
+	"aesculapius": "⚕️",
 	"airplane": [
-		"✈",
+		"✈️",
 		{
 			"landing": "🛬",
-			"small": "🛩",
+			"small": "🛩️",
 			"takeoff": "🛫"
 		}
 	],
-	"alembic": "⚗",
-	"alien": ["👽", { "monster": "👾" }],
-	"ambulance": "🚑",
-	"amphora": "🏺",
-	"anchor": "⚓",
-	"anger": "💢",
-	"ant": "🐜",
-	"apple": [{ "green": "🍏", "red": "🍎" }],
-	"arm": [{ "mech": "🦾", "muscle": "💪", "selfie": "🤳" }],
-	"arrow": [
+	"alembic": "⚗️",
+	"alien": [
+		"👽️",
 		{
-			"r.filled": "➡",
-			"r.hook": "↪",
-			"r.soon": "🔜",
-			"l.filled": "⬅",
-			"l.hook": "↩",
-			"l.back": "🔙",
-			"l.end": "🔚",
-			"t.filled": "⬆",
-			"t.curve": "⤴",
-			"t.top": "🔝",
-			"b.filled": "⬇",
-			"b.curve": "⤵",
-			"l.r": "↔",
-			"l.r.on": "🔛",
-			"t.b": "↕",
-			"bl": "↙",
-			"br": "↘",
-			"tl": "↖",
-			"tr": "↗"
+			"monster": "👾"
 		}
 	],
-	"arrows": [{ "cycle": "🔄" }],
-	"ast": ["*", { "box": "✳" }],
+	"ambulance": "🚑️",
+	"amphora": "🏺",
+	"anchor": "⚓️",
+	"anger": "💢",
+	"ant": "🐜",
+	"apple": [
+		{
+			"green": "🍏",
+			"red": "🍎"
+		}
+	],
+	"arm": [
+		{
+			"mech": "🦾",
+			"muscle": "💪",
+			"selfie": "🤳"
+		}
+	],
+	"arrow": [
+		{
+			"r.filled": "➡️",
+			"r.hook": "↪️",
+			"r.soon": "🔜",
+			"l.filled": "⬅️",
+			"l.hook": "↩️",
+			"l.back": "🔙",
+			"l.end": "🔚",
+			"t.filled": "⬆️",
+			"t.curve": "⤴️",
+			"t.top": "🔝",
+			"b.filled": "⬇️",
+			"b.curve": "⤵️",
+			"l.r": "↔️",
+			"l.r.on": "🔛",
+			"t.b": "↕️",
+			"bl": "↙️",
+			"br": "↘️",
+			"tl": "↖️",
+			"tr": "↗️"
+		}
+	],
+	"arrows": [
+		{
+			"cycle": "🔄"
+		}
+	],
+	"ast": [
+		"*️",
+		{
+			"box": "✳️"
+		}
+	],
 	"atm": "🏧",
-	"atom": "⚛",
+	"atom": "⚛️",
 	"aubergine": "🍆",
 	"avocado": "🥑",
 	"axe": "🪓",
-	"baby": ["👶", { "angel": "👼", "box": "🚼" }],
+	"baby": [
+		"👶",
+		{
+			"angel": "👼",
+			"box": "🚼️"
+		}
+	],
 	"babybottle": "🍼",
 	"backpack": "🎒",
 	"bacon": "🥓",
@@ -62,38 +93,94 @@
 	"baggageclaim": "🛄",
 	"baguette": "🥖",
 	"balloon": "🎈",
-	"ballot": [{ "check": "☑" }],
-	"ballotbox": "🗳",
+	"ballot": [
+		{
+			"check": "☑️"
+		}
+	],
+	"ballotbox": "🗳️",
 	"banana": "🍌",
 	"banjo": "🪕",
 	"bank": "🏦",
 	"barberpole": "💈",
-	"baseball": "⚾",
+	"baseball": "⚾️",
 	"basecap": "🧢",
 	"basket": "🧺",
-	"basketball": ["⛹", { "ball": "🏀" }],
+	"basketball": [
+		"⛹️",
+		{
+			"ball": "🏀"
+		}
+	],
 	"bat": "🦇",
-	"bathtub": ["🛀", { "foam": "🛁" }],
-	"battery": ["🔋", { "low": "🪫" }],
-	"beach": [{ "palm": "🏝", "umbrella": "🏖" }],
+	"bathtub": [
+		"🛀",
+		{
+			"foam": "🛁"
+		}
+	],
+	"battery": [
+		"🔋",
+		{
+			"low": "🪫"
+		}
+	],
+	"beach": [
+		{
+			"palm": "🏝️",
+			"umbrella": "🏖️"
+		}
+	],
 	"beads": "📿",
 	"beans": "🫘",
 	"bear": "🐻",
 	"beaver": "🦫",
-	"bed": ["🛏", { "person": "🛌" }],
+	"bed": [
+		"🛏️",
+		{
+			"person": "🛌"
+		}
+	],
 	"bee": "🐝",
-	"beer": ["🍺", { "clink": "🍻" }],
+	"beer": [
+		"🍺",
+		{
+			"clink": "🍻"
+		}
+	],
 	"beet": "🫜",
-	"beetle": ["🪲", { "lady": "🐞" }],
-	"bell": ["🔔", { "ding": "🛎", "not": "🔕" }],
+	"beetle": [
+		"🪲",
+		{
+			"lady": "🐞"
+		}
+	],
+	"bell": [
+		"🔔",
+		{
+			"ding": "🛎️",
+			"not": "🔕"
+		}
+	],
 	"bento": "🍱",
-	"bicyclist": ["🚴", { "mountain": "🚵" }],
-	"bike": ["🚲", { "not": "🚳" }],
+	"bicyclist": [
+		"🚴",
+		{
+			"mountain": "🚵"
+		}
+	],
+	"bigfoot": "🫈",
+	"bike": [
+		"🚲️",
+		{
+			"not": "🚳"
+		}
+	],
 	"bikini": "👙",
 	"billiards": "🎱",
-	"bin": "🗑",
-	"biohazard": "☣",
-	"bird": "🐦",
+	"bin": "🗑️",
+	"biohazard": "☣️",
+	"bird": "🐦️",
 	"bison": "🦬",
 	"blood": "🩸",
 	"blouse": "👚",
@@ -102,15 +189,15 @@
 	"boar": "🐗",
 	"boat": [
 		{
-			"sail": "⛵",
+			"sail": "⛵️",
 			"row": "🚣",
-			"motor": "🛥",
+			"motor": "🛥️",
 			"speed": "🚤",
 			"canoe": "🛶"
 		}
 	],
 	"bolt": "🔩",
-	"bomb": "💣",
+	"bomb": "💣️",
 	"bone": "🦴",
 	"book": [
 		{
@@ -123,12 +210,17 @@
 		}
 	],
 	"bookmark": "🔖",
-	"books": "📚",
+	"books": "📚️",
 	"boomerang": "🪃",
 	"bordercontrol": "🛂",
 	"bouquet": "💐",
 	"bow": "🏹",
-	"bowl": [{ "spoon": "🥣", "steam": "🍜" }],
+	"bowl": [
+		{
+			"spoon": "🥣",
+			"steam": "🍜"
+		}
+	],
 	"bowling": "🎳",
 	"boxing": "🥊",
 	"boy": "👦",
@@ -136,25 +228,39 @@
 	"bread": "🍞",
 	"brick": "🧱",
 	"bride": "👰",
-	"bridge": [{ "fog": "🌁", "night": "🌉" }],
+	"bridge": [
+		{
+			"fog": "🌁",
+			"night": "🌉"
+		}
+	],
 	"briefcase": "💼",
 	"briefs": "🩲",
-	"brightness": [{ "high": "🔆", "low": "🔅" }],
+	"brightness": [
+		{
+			"high": "🔆",
+			"low": "🔅"
+		}
+	],
 	"broccoli": "🥦",
 	"broom": "🧹",
-	"brush": "🖌",
+	"brush": "🖌️",
 	"bubble": [
 		{
 			"speech.r": "💬",
-			"speech.l": "🗨",
+			"speech.l": "🗨️",
 			"thought": "💭",
-			"anger.r": "🗯"
+			"anger.r": "🗯️"
 		}
 	],
 	"bubbles": "🫧",
 	"bubbletea": "🧋",
 	"bucket": "🪣",
-	"buffalo": [{ "water": "🐃" }],
+	"buffalo": [
+		{
+			"water": "🐃"
+		}
+	],
 	"bug": "🐛",
 	"builder": "👷",
 	"burger": "🍔",
@@ -162,7 +268,7 @@
 	"bus": [
 		"🚌",
 		{
-			"front": "🚍",
+			"front": "🚍️",
 			"small": "🚐",
 			"stop": "🚏",
 			"trolley": "🚎"
@@ -170,9 +276,24 @@
 	],
 	"butter": "🧈",
 	"butterfly": "🦋",
-	"button": ["🔲", { "alt": "🔳", "radio": "🔘" }],
-	"cabinet": [{ "file": "🗄" }],
-	"cablecar": ["🚠", { "small": "🚡" }],
+	"button": [
+		"🔲",
+		{
+			"alt": "🔳",
+			"radio": "🔘"
+		}
+	],
+	"cabinet": [
+		{
+			"file": "🗄️"
+		}
+	],
+	"cablecar": [
+		"🚠",
+		{
+			"small": "🚡"
+		}
+	],
 	"cactus": "🌵",
 	"cake": [
 		"🎂",
@@ -182,42 +303,63 @@
 			"slice": "🍰"
 		}
 	],
-	"calendar": ["📅", { "spiral": "🗓", "tearoff": "📆" }],
-	"camel": ["🐫", { "dromedar": "🐪" }],
+	"calendar": [
+		"📅",
+		{
+			"spiral": "🗓️",
+			"tearoff": "📆"
+		}
+	],
+	"camel": [
+		"🐫",
+		{
+			"dromedar": "🐪"
+		}
+	],
 	"camera": [
-		"📷",
+		"📷️",
 		{
 			"flash": "📸",
 			"movie": "🎥",
 			"movie.box": "🎦",
-			"video": "📹"
+			"video": "📹️"
 		}
 	],
-	"camping": "🏕",
+	"camping": "🏕️",
 	"can": "🥫",
-	"candle": "🕯",
+	"candle": "🕯️",
 	"candy": "🍬",
 	"cane": "🦯",
 	"car": [
 		"🚗",
 		{
-			"front": "🚘",
+			"front": "🚘️",
 			"pickup": "🛻",
 			"police": "🚓",
-			"police.front": "🚔",
-			"racing": "🏎",
+			"police.front": "🚔️",
+			"racing": "🏎️",
 			"rickshaw": "🛺",
 			"suv": "🚙"
 		}
 	],
-	"card": [{ "credit": "💳", "id": "🪪" }],
+	"card": [
+		{
+			"credit": "💳️",
+			"id": "🪪"
+		}
+	],
 	"cardindex": "📇",
 	"carrot": "🥕",
 	"cart": "🛒",
 	"cassette": "📼",
-	"castle": [{ "eu": "🏰", "jp": "🏯" }],
+	"castle": [
+		{
+			"eu": "🏰",
+			"jp": "🏯"
+		}
+	],
 	"cat": [
-		"🐈",
+		"🐈️",
 		{
 			"face": "🐱",
 			"face.angry": "😾",
@@ -232,7 +374,7 @@
 		}
 	],
 	"chain": "🔗",
-	"chains": "⛓",
+	"chains": "⛓️",
 	"chair": "🪑",
 	"champagne": "🍾",
 	"chart": [
@@ -243,10 +385,15 @@
 			"yen.up": "💹"
 		}
 	],
-	"checkmark": [{ "heavy": "✔", "box": "✅" }],
+	"checkmark": [
+		{
+			"heavy": "✔️",
+			"box": "✅️"
+		}
+	],
 	"cheese": "🧀",
 	"cherries": "🍒",
-	"chess": "♟",
+	"chess": "♟️",
 	"chestnut": "🌰",
 	"chicken": [
 		"🐔",
@@ -259,120 +406,159 @@
 		}
 	],
 	"child": "🧒",
-	"chipmunk": "🐿",
+	"chipmunk": "🐿️",
 	"chocolate": "🍫",
 	"chopsticks": "🥢",
-	"church": ["⛪", { "love": "💒" }],
-	"cigarette": ["🚬", { "not": "🚭" }],
+	"church": [
+		"⛪️",
+		{
+			"love": "💒"
+		}
+	],
+	"cigarette": [
+		"🚬",
+		{
+			"not": "🚭️"
+		}
+	],
 	"circle": [
 		{
-			"black": "⚫",
+			"black": "⚫️",
 			"blue": "🔵",
 			"brown": "🟤",
 			"green": "🟢",
 			"orange": "🟠",
 			"purple": "🟣",
-			"white": "⚪",
+			"white": "⚪️",
 			"red": "🔴",
 			"yellow": "🟡",
-			"stroked": "⭕"
+			"stroked": "⭕️"
 		}
 	],
 	"circus": "🎪",
 	"city": [
-		"🏙",
+		"🏙️",
 		{
 			"dusk": "🌆",
 			"night": "🌃",
 			"sunset": "🌇"
 		}
 	],
-	"clamp": "🗜",
-	"clapperboard": "🎬",
+	"clamp": "🗜️",
+	"clapperboard": "🎬️",
 	"climbing": "🧗",
 	"clip": "📎",
-	"clipboard": "📋",
-	"clips": "🖇",
+	"clipboard": "📋️",
+	"clips": "🖇️",
 	"clock": [
 		{
-			"one": "🕐",
-			"one.thirty": "🕜",
-			"two": "🕑",
-			"two.thirty": "🕝",
-			"three": "🕒",
-			"three.thirty": "🕞",
-			"four": "🕓",
-			"four.thirty": "🕟",
-			"five": "🕔",
-			"five.thirty": "🕠",
-			"six": "🕕",
-			"six.thirty": "🕡",
-			"seven": "🕖",
-			"seven.thirty": "🕢",
-			"eight": "🕗",
-			"eight.thirty": "🕣",
-			"nine": "🕘",
-			"nine.thirty": "🕤",
-			"ten": "🕙",
-			"ten.thirty": "🕥",
-			"eleven": "🕚",
-			"eleven.thirty": "🕦",
-			"twelve": "🕛",
-			"twelve.thirty": "🕧",
-			"alarm": "⏰",
-			"old": "🕰",
-			"timer": "⏲"
+			"one": "🕐️",
+			"one.thirty": "🕜️",
+			"two": "🕑️",
+			"two.thirty": "🕝️",
+			"three": "🕒️",
+			"three.thirty": "🕞️",
+			"four": "🕓️",
+			"four.thirty": "🕟️",
+			"five": "🕔️",
+			"five.thirty": "🕠️",
+			"six": "🕕️",
+			"six.thirty": "🕡️",
+			"seven": "🕖️",
+			"seven.thirty": "🕢️",
+			"eight": "🕗️",
+			"eight.thirty": "🕣️",
+			"nine": "🕘️",
+			"nine.thirty": "🕤️",
+			"ten": "🕙️",
+			"ten.thirty": "🕥️",
+			"eleven": "🕚️",
+			"eleven.thirty": "🕦️",
+			"twelve": "🕛️",
+			"twelve.thirty": "🕧️",
+			"alarm": "⏰️",
+			"old": "🕰️",
+			"timer": "⏲️"
 		}
 	],
 	"cloud": [
-		"☁",
+		"☁️",
 		{
 			"dust": "💨",
-			"rain": "🌧",
-			"snow": "🌨",
-			"storm": "⛈",
-			"sun": "⛅",
-			"sun.hidden": "🌥",
-			"sun.rain": "🌦",
-			"thunder": "🌩"
+			"rain": "🌧️",
+			"snow": "🌨️",
+			"storm": "⛈️",
+			"sun": "⛅️",
+			"sun.hidden": "🌥️",
+			"sun.rain": "🌦️",
+			"thunder": "🌩️"
 		}
 	],
-	"coat": ["🧥", { "lab": "🥼" }],
+	"coat": [
+		"🧥",
+		{
+			"lab": "🥼"
+		}
+	],
 	"cockroach": "🪳",
-	"cocktail": [{ "martini": "🍸", "tropical": "🍹" }],
+	"cocktail": [
+		{
+			"martini": "🍸️",
+			"tropical": "🍹"
+		}
+	],
 	"coconut": "🥥",
-	"coffee": "☕",
-	"coffin": "⚰",
+	"coffee": "☕️",
+	"coffin": "⚰️",
 	"coin": "🪙",
-	"comet": "☄",
+	"comet": "☄️",
 	"compass": "🧭",
-	"computer": "🖥",
-	"computermouse": "🖱",
+	"computer": "🖥️",
+	"computermouse": "🖱️",
 	"confetti": "🎊",
 	"construction": "🚧",
-	"controller": "🎮",
-	"cookie": ["🍪", { "fortune": "🥠" }],
+	"controller": "🎮️",
+	"cookie": [
+		"🍪",
+		{
+			"fortune": "🥠"
+		}
+	],
 	"cooking": "🍳",
 	"cool": "🆒",
-	"copyright": "©",
+	"copyright": "©️",
 	"coral": "🪸",
 	"corn": "🌽",
-	"couch": "🛋",
+	"couch": "🛋️",
 	"couple": "💑",
-	"cow": ["🐄", { "face": "🐮" }],
+	"cow": [
+		"🐄",
+		{
+			"face": "🐮"
+		}
+	],
 	"crab": "🦀",
-	"crane": "🏗",
-	"crayon": "🖍",
+	"crane": "🏗️",
+	"crayon": "🖍️",
 	"cricket": "🦗",
 	"cricketbat": "🏏",
 	"crocodile": "🐊",
 	"croissant": "🥐",
-	"crossmark": ["❌", { "box": "❎" }],
+	"crossmark": [
+		"❌️",
+		{
+			"box": "❎️"
+		}
+	],
 	"crown": "👑",
 	"crutch": "🩼",
 	"crystal": "🔮",
 	"cucumber": "🥒",
-	"cup": [{ "straw": "🥤" }],
+	"cup": [
+		{
+			"straw": "🥤"
+		}
+	],
 	"cupcake": "🧁",
 	"curling": "🥌",
 	"curry": "🍛",
@@ -380,12 +566,25 @@
 	"customs": "🛃",
 	"cutlery": "🍴",
 	"cyclone": "🌀",
-	"dancing": [{ "man": "🕺", "woman": "💃", "women.bunny": "👯" }],
+	"dancing": [
+		{
+			"ballet": "🧑‍🩰",
+			"man": "🕺",
+			"woman": "💃",
+			"bunny": "👯",
+			"bunny.men": "👯‍♂",
+			"bunny.women": "👯‍♀"
+		}
+	],
 	"darts": "🎯",
-	"dash": [{ "wave.double": "〰" }],
+	"dash": [
+		{
+			"wave.double": "〰️"
+		}
+	],
 	"deer": "🦌",
-	"desert": "🏜",
-	"detective": "🕵",
+	"desert": "🏜️",
+	"detective": "🕵️",
 	"diamond": [
 		{
 			"blue": "🔷",
@@ -396,13 +595,24 @@
 		}
 	],
 	"die": "🎲",
-	"dino": [{ "pod": "🦕", "rex": "🦖" }],
-	"disc": [{ "cd": "💿", "dvd": "📀", "mini": "💽" }],
+	"dino": [
+		{
+			"pod": "🦕",
+			"rex": "🦖"
+		}
+	],
+	"disc": [
+		{
+			"cd": "💿️",
+			"dvd": "📀",
+			"mini": "💽"
+		}
+	],
 	"discoball": "🪩",
 	"diving": "🤿",
 	"dodo": "🦤",
 	"dog": [
-		"🐕",
+		"🐕️",
 		{
 			"face": "🐶",
 			"guide": "🦮",
@@ -411,35 +621,65 @@
 	],
 	"dollar": "💲",
 	"dolphin": "🐬",
+	"donkey": "🫏",
 	"donut": "🍩",
 	"door": "🚪",
-	"dove": [{ "peace": "🕊" }],
-	"dragon": ["🐉", { "face": "🐲" }],
-	"dress": ["👗", { "kimono": "👘", "sari": "🥻" }],
+	"dove": [
+		{
+			"peace": "🕊️"
+		}
+	],
+	"dragon": [
+		"🐉",
+		{
+			"face": "🐲"
+		}
+	],
+	"dress": [
+		"👗",
+		{
+			"kimono": "👘",
+			"sari": "🥻"
+		}
+	],
 	"drop": "💧",
 	"drops": "💦",
-	"drum": ["🥁", { "big": "🪘" }],
+	"drum": [
+		"🥁",
+		{
+			"big": "🪘"
+		}
+	],
 	"duck": "🦆",
 	"dumpling": "🥟",
 	"eagle": "🦅",
-	"ear": ["👂", { "aid": "🦻" }],
+	"ear": [
+		"👂️",
+		{
+			"aid": "🦻"
+		}
+	],
 	"egg": "🥚",
-	"eighteen": [{ "not": "🔞" }],
+	"eighteen": [
+		{
+			"not": "🔞"
+		}
+	],
 	"elephant": "🐘",
 	"elevator": "🛗",
 	"elf": "🧝",
 	"email": "📧",
 	"excl": [
-		"❗",
+		"❗️",
 		{
-			"white": "❕",
-			"double": "‼",
-			"quest": "⁉"
+			"white": "❕️",
+			"double": "‼️",
+			"quest": "⁉️"
 		}
 	],
 	"explosion": "💥",
 	"extinguisher": "🧯",
-	"eye": "👁",
+	"eye": "👁️",
 	"eyes": "👀",
 	"face": [
 		{
@@ -462,6 +702,7 @@
 			"devil.frown": "👿",
 			"diagonal": "🫤",
 			"disguise": "🥸",
+			"distorted": "🫪",
 			"distress": "😫",
 			"dizzy": "😵",
 			"dotted": "🫥",
@@ -470,12 +711,12 @@
 			"drool": "🤤",
 			"explode": "🤯",
 			"eyeroll": "🙄",
-			"friendly": "☺",
+			"friendly": "☺️",
 			"fear": "😨",
 			"fear.sweat": "😰",
 			"fever": "🤒",
 			"flush": "😳",
-			"frown": "☹",
+			"frown": "☹️",
 			"frown.slight": "🙁",
 			"frust": "😣",
 			"goofy": "🤪",
@@ -500,7 +741,7 @@
 			"monocle": "🧐",
 			"nausea": "🤢",
 			"nerd": "🤓",
-			"neutral": "😐",
+			"neutral": "😐️",
 			"open": "😃",
 			"party": "🥳",
 			"peek": "🫣",
@@ -509,6 +750,7 @@
 			"rofl": "🤣",
 			"sad": "😔",
 			"salute": "🫡",
+			"shaking": "🫨",
 			"shock": "😱",
 			"shush": "🤫",
 			"skeptic": "🤨",
@@ -548,78 +790,100 @@
 			"zip": "🤐"
 		}
 	],
-	"factory": "🏭",
+	"factory": "🏭️",
 	"fairy": "🧚",
 	"faith": [
 		{
-			"christ": "✝",
-			"dharma": "☸",
-			"islam": "☪",
-			"judaism": "✡",
+			"christ": "✝️",
+			"dharma": "☸️",
+			"khanda": "🪯",
+			"islam": "☪️",
+			"judaism": "✡️",
 			"menorah": "🕎",
-			"om": "🕉",
-			"orthodox": "☦",
-			"peace": "☮",
+			"om": "🕉️",
+			"orthodox": "☦️",
+			"peace": "☮️",
 			"star.dot": "🔯",
 			"worship": "🛐",
-			"yinyang": "☯"
+			"yinyang": "☯️"
 		}
 	],
 	"falafel": "🧆",
-	"family": "👪",
+	"family": "👪️",
 	"fax": "📠",
 	"feather": "🪶",
-	"feeding": [{ "breast": "🤱" }],
+	"feeding": [
+		{
+			"breast": "🤱"
+		}
+	],
 	"fencing": "🤺",
 	"ferriswheel": "🎡",
-	"filebox": "🗃",
-	"filedividers": "🗂",
-	"film": "🎞",
+	"fightcloud": "🫯",
+	"filebox": "🗃️",
+	"filedividers": "🗂️",
+	"film": "🎞️",
 	"finger": [
 		{
-			"r": "👉",
-			"l": "👈",
-			"t": "👆",
-			"t.alt": "☝",
-			"b": "👇",
+			"r": "👉️",
+			"l": "👈️",
+			"t": "👆️",
+			"t.alt": "☝️",
+			"b": "👇️",
 			"front": "🫵",
 			"m": "🖕"
 		}
 	],
 	"fingerprint": "🫆",
-	"fingers": [{ "cross": "🤞", "pinch": "🤌", "snap": "🫰" }],
+	"fingers": [
+		{
+			"cross": "🤞",
+			"pinch": "🤌",
+			"snap": "🫰"
+		}
+	],
 	"fire": "🔥",
 	"firecracker": "🧨",
 	"fireengine": "🚒",
 	"fireworks": "🎆",
-	"fish": ["🐟", { "tropical": "🐠" }],
+	"fish": [
+		"🐟️",
+		{
+			"tropical": "🐠"
+		}
+	],
 	"fishing": "🎣",
 	"fist": [
 		{
 			"front": "👊",
 			"r": "🤜",
 			"l": "🤛",
-			"raised": "✊"
+			"raised": "✊️"
 		}
 	],
 	"flag": [
 		{
 			"black": "🏴",
-			"white": "🏳",
+			"white": "🏳️",
 			"goal": "🏁",
-			"golf": "⛳",
+			"golf": "⛳️",
 			"red": "🚩"
 		}
 	],
-	"flags": [{ "jp.crossed": "🎌" }],
+	"flags": [
+		{
+			"jp.crossed": "🎌"
+		}
+	],
 	"flamingo": "🦩",
 	"flashlight": "🔦",
 	"flatbread": "🫓",
-	"fleur": "⚜",
+	"fleur": "⚜️",
 	"floppy": "💾",
 	"flower": [
 		{
 			"hibiscus": "🌺",
+			"hyacinth": "🪻",
 			"lotus": "🪷",
 			"pink": "🌸",
 			"rose": "🌹",
@@ -630,25 +894,41 @@
 			"yellow": "🌼"
 		}
 	],
+	"flute": "🪈",
 	"fly": "🪰",
-	"fog": "🌫",
-	"folder": ["📁", { "open": "📂" }],
+	"fog": "🌫️",
+	"folder": [
+		"📁",
+		{
+			"open": "📂"
+		}
+	],
 	"fondue": "🫕",
 	"foot": "🦶",
-	"football": ["⚽", { "am": "🏈" }],
+	"football": [
+		"⚽️",
+		{
+			"am": "🏈"
+		}
+	],
 	"forex": "💱",
-	"fountain": "⛲",
+	"fountain": "⛲️",
 	"fox": "🦊",
 	"free": "🆓",
 	"fries": "🍟",
 	"frisbee": "🥏",
-	"frog": [{ "face": "🐸" }],
-	"fuelpump": "⛽",
+	"frog": [
+		{
+			"face": "🐸"
+		}
+	],
+	"fuelpump": "⛽️",
 	"garlic": "🧄",
-	"gear": "⚙",
+	"gear": "⚙️",
 	"gem": "💎",
 	"genie": "🧞",
 	"ghost": "👻",
+	"ginger": "🫚",
 	"giraffe": "🦒",
 	"girl": "👧",
 	"glass": [
@@ -659,12 +939,17 @@
 			"tumbler": "🥃"
 		}
 	],
-	"glasses": ["👓", { "sun": "🕶" }],
+	"glasses": [
+		"👓️",
+		{
+			"sun": "🕶️"
+		}
+	],
 	"globe": [
 		{
-			"am": "🌎",
-			"as.au": "🌏",
-			"eu.af": "🌍",
+			"am": "🌎️",
+			"as.au": "🌏️",
+			"eu.af": "🌍️",
 			"meridian": "🌐"
 		}
 	],
@@ -672,19 +957,35 @@
 	"goal": "🥅",
 	"goat": "🐐",
 	"goggles": "🥽",
-	"golfing": "🏌",
+	"golfing": "🏌️",
+	"goose": "🪿",
 	"gorilla": "🦍",
 	"grapes": "🍇",
-	"guard": [{ "man": "💂" }],
+	"guard": [
+		{
+			"man": "💂"
+		}
+	],
 	"guitar": "🎸",
 	"gymnastics": "🤸",
 	"haircut": "💇",
-	"hammer": ["🔨", { "pick": "⚒", "wrench": "🛠" }],
+	"hairpick": "🪮",
+	"hammer": [
+		"🔨",
+		{
+			"pick": "⚒️",
+			"wrench": "🛠️"
+		}
+	],
 	"hamsa": "🪬",
-	"hamster": [{ "face": "🐹" }],
+	"hamster": [
+		{
+			"face": "🐹"
+		}
+	],
 	"hand": [
 		{
-			"raised": "✋",
+			"raised": "✋️",
 			"raised.alt": "🤚",
 			"r": "🫱",
 			"l": "🫲",
@@ -694,17 +995,27 @@
 			"call": "🤙",
 			"love": "🤟",
 			"part": "🖖",
-			"peace": "✌",
+			"peace": "✌️",
 			"pinch": "🤏",
+			"pushing.l": "🫷",
+			"pushing.r": "🫸",
 			"rock": "🤘",
-			"splay": "🖐",
+			"splay": "🖐️",
 			"wave": "👋",
-			"write": "✍"
+			"write": "✍️"
 		}
 	],
 	"handbag": "👜",
 	"handball": "🤾",
-	"handholding": [{ "man.man": "👬", "woman.man": "👫", "woman.woman": "👭" }],
+	"handfan": "🪭",
+	"handholding": [
+		"🧑‍🤝‍🧑",
+		{
+			"man.man": "👬",
+			"woman.man": "👫",
+			"woman.woman": "👭"
+		}
+	],
 	"hands": [
 		{
 			"folded": "🙏",
@@ -717,11 +1028,16 @@
 		}
 	],
 	"harp": "🪉",
-	"hash": "#",
-	"hat": [{ "ribbon": "👒", "top": "🎩" }],
-	"headphone": "🎧",
+	"hash": "#️",
+	"hat": [
+		{
+			"ribbon": "👒",
+			"top": "🎩"
+		}
+	],
+	"headphone": "🎧️",
 	"heart": [
-		"❤",
+		"❤️",
 		{
 			"arrow": "💘",
 			"beat": "💓",
@@ -731,10 +1047,13 @@
 			"broken": "💔",
 			"brown": "🤎",
 			"double": "💕",
-			"excl": "❣",
+			"excl": "❣️",
+			"gray": "🩶",
 			"green": "💚",
 			"grow": "💗",
+			"lightblue": "🩵",
 			"orange": "🧡",
+			"pink": "🩷",
 			"purple": "💜",
 			"real": "🫀",
 			"revolve": "💞",
@@ -747,14 +1066,23 @@
 	"hedgehog": "🦔",
 	"helicopter": "🚁",
 	"helix": "🧬",
-	"helmet": [{ "cross": "⛑", "military": "🪖" }],
+	"helmet": [
+		{
+			"cross": "⛑️",
+			"military": "🪖"
+		}
+	],
 	"hippo": "🦛",
 	"hockey": "🏑",
-	"hole": "🕳",
+	"hole": "🕳️",
 	"honey": "🍯",
 	"hongbao": "🧧",
 	"hook": "🪝",
-	"horn": [{ "postal": "📯" }],
+	"horn": [
+		{
+			"postal": "📯"
+		}
+	],
 	"horse": [
 		"🐎",
 		{
@@ -765,75 +1093,119 @@
 	],
 	"hospital": "🏥",
 	"hotdog": "🌭",
-	"hotel": ["🏨", { "love": "🏩" }],
-	"hotspring": "♨",
-	"hourglass": ["⌛", { "flow": "⏳" }],
-	"house": [
-		"🏠",
+	"hotel": [
+		"🏨",
 		{
-			"derelict": "🏚",
+			"love": "🏩"
+		}
+	],
+	"hotspring": "♨️",
+	"hourglass": [
+		"⌛️",
+		{
+			"flow": "⏳️"
+		}
+	],
+	"house": [
+		"🏠️",
+		{
+			"derelict": "🏚️",
 			"garden": "🏡",
-			"multiple": "🏘"
+			"multiple": "🏘️"
 		}
 	],
 	"hundred": "💯",
 	"hut": "🛖",
 	"ice": "🧊",
-	"icecream": ["🍨", { "shaved": "🍧", "soft": "🍦" }],
+	"icecream": [
+		"🍨",
+		{
+			"shaved": "🍧",
+			"soft": "🍦"
+		}
+	],
 	"icehockey": "🏒",
 	"id": "🆔",
-	"info": "ℹ",
+	"info": "ℹ️",
 	"izakaya": "🏮",
 	"jar": "🫙",
+	"jellyfish": "🪼",
 	"jeans": "👖",
 	"jigsaw": "🧩",
-	"joystick": "🕹",
+	"joystick": "🕹️",
 	"juggling": "🤹",
 	"juice": "🧃",
 	"kaaba": "🕋",
 	"kadomatsu": "🎍",
 	"kangaroo": "🦘",
-	"gachi": "🈷",
+	"gachi": "🈷️",
 	"go": "🈴",
-	"hi": "㊙",
+	"hi": "㊙️",
 	"ka": "🉑",
 	"kachi": "🈹",
 	"kara": "🈳",
 	"kon": "🈲",
-	"man1": "🈵",
-	"muryo": "🈚",
+	"man": [
+		"👨",
+		{
+			"box": "🚹️",
+			"crown": "🤴",
+			"guapimao": "👲",
+			"levitate": "🕴️",
+			"old": "👴",
+			"pregnant": "🫃",
+			"turban": "👳",
+			"tuxedo": "🤵"
+		}
+	],
+	"muryo": "🈚️",
 	"shin": "🈸",
-	"shuku": "㊗",
+	"shuku": "㊗️",
 	"toku": "🉐",
 	"yo": "🈺",
-	"yubi": "🈯",
+	"yubi": "🈯️",
 	"yuryo": "🈶",
 	"koko": "🈁",
-	"sa": "🈂",
+	"sa": "🈂️",
 	"kebab": "🥙",
-	"key": ["🔑", { "old": "🗝" }],
-	"keyboard": "⌨",
+	"key": [
+		"🔑",
+		{
+			"old": "🗝️"
+		}
+	],
+	"keyboard": "⌨️",
 	"kiss": "💏",
 	"kissmark": "💋",
 	"kite": "🪁",
 	"kiwi": "🥝",
-	"knife": ["🔪", { "dagger": "🗡" }],
+	"knife": [
+		"🔪",
+		{
+			"dagger": "🗡️"
+		}
+	],
 	"knot": "🪢",
 	"koala": "🐨",
 	"koinobori": "🎏",
-	"label": "🏷",
+	"label": "🏷️",
 	"lacrosse": "🥍",
 	"ladder": "🪜",
-	"lamp": [{ "diya": "🪔" }],
-	"laptop": "💻",
-	"a": "🅰",
+	"lamp": [
+		{
+			"diya": "🪔"
+		}
+	],
+	"landslide": "🛘",
+	"laptop": "💻️",
+	"a": "🅰️",
 	"ab": "🆎",
-	"b": "🅱",
+	"b": "🅱️",
 	"cl": "🆑",
-	"o": "🅾",
+	"o": "🅾️",
 	"leaf": [
 		{
-			"clover.three": "☘",
+			"clover.three": "☘️",
 			"clover.four": "🍀",
 			"fall": "🍂",
 			"herb": "🌿",
@@ -842,24 +1214,38 @@
 		}
 	],
 	"leftluggage": "🛅",
-	"leg": ["🦵", { "mech": "🦿" }],
+	"leg": [
+		"🦵",
+		{
+			"mech": "🦿"
+		}
+	],
 	"lemon": "🍋",
 	"leopard": "🐆",
-	"letter": [{ "love": "💌" }],
+	"letter": [
+		{
+			"love": "💌"
+		}
+	],
 	"liberty": "🗽",
 	"lightbulb": "💡",
-	"lightning": "⚡",
+	"lightning": "⚡️",
 	"lion": "🦁",
 	"lipstick": "💄",
-	"litter": ["🚮", { "not": "🚯" }],
+	"litter": [
+		"🚮",
+		{
+			"not": "🚯"
+		}
+	],
 	"lizard": "🦎",
 	"llama": "🦙",
 	"lobster": "🦞",
 	"lock": [
-		"🔒",
+		"🔒️",
 		{
 			"key": "🔐",
-			"open": "🔓",
+			"open": "🔓️",
 			"pen": "🔏"
 		}
 	],
@@ -869,60 +1255,82 @@
 	"lungs": "🫁",
 	"mage": "🧙",
 	"magnet": "🧲",
-	"magnify": [{ "r": "🔎", "l": "🔍" }],
-	"mahjong": [{ "dragon.red": "🀄" }],
-	"mail": ["✉", { "arrow": "📩" }],
+	"magnify": [
+		{
+			"r": "🔎",
+			"l": "🔍️"
+		}
+	],
+	"mahjong": [
+		{
+			"dragon.red": "🀄️"
+		}
+	],
+	"mail": [
+		"✉️",
+		{
+			"arrow": "📩"
+		}
+	],
 	"mailbox": [
 		{
-			"closed.empty": "📪",
-			"closed.full": "📫",
-			"open.empty": "📭",
-			"open.full": "📬"
+			"closed.empty": "📪️",
+			"closed.full": "📫️",
+			"open.empty": "📭️",
+			"open.full": "📬️"
 		}
 	],
 	"mammoth": "🦣",
-	"man": [
-		"👨",
+	"mango": "🥭",
+	"map": [
 		{
-			"box": "🚹",
-			"crown": "🤴",
-			"guapimao": "👲",
-			"levitate": "🕴",
-			"old": "👴",
-			"pregnant": "🫃",
-			"turban": "👳",
-			"tuxedo": "🤵"
+			"world": "🗺️",
+			"jp": "🗾"
 		}
 	],
-	"mango": "🥭",
-	"map": [{ "world": "🗺", "jp": "🗾" }],
+	"maracas": "🪇",
 	"martialarts": "🥋",
-	"masks": "🎭",
+	"masks": "🎭️",
 	"mate": "🧉",
 	"matryoshka": "🪆",
-	"meat": ["🥩", { "bone": "🍖" }],
+	"meat": [
+		"🥩",
+		{
+			"bone": "🍖"
+		}
+	],
 	"medal": [
 		{
 			"first": "🥇",
 			"second": "🥈",
 			"third": "🥉",
 			"sports": "🏅",
-			"military": "🎖"
+			"military": "🎖️"
 		}
 	],
-	"megaphone": ["📢", { "simple": "📣" }],
+	"megaphone": [
+		"📢",
+		{
+			"simple": "📣"
+		}
+	],
 	"melon": "🍈",
 	"merperson": "🧜",
-	"metro": "Ⓜ",
+	"metro": "Ⓜ️",
 	"microbe": "🦠",
-	"microphone": ["🎤", { "studio": "🎙" }],
+	"microphone": [
+		"🎤",
+		{
+			"studio": "🎙️"
+		}
+	],
 	"microscope": "🔬",
 	"milkyway": "🌌",
 	"mirror": "🪞",
-	"mixer": "🎛",
+	"mixer": "🎛️",
 	"money": [
 		{
-			"bag": "💰",
+			"bag": "💰️",
 			"dollar": "💵",
 			"euro": "💶",
 			"pound": "💷",
@@ -942,13 +1350,13 @@
 	"moon": [
 		{
 			"crescent": "🌙",
-			"full": "🌕",
+			"full": "🌕️",
 			"full.face": "🌝",
 			"new": "🌑",
 			"new.face": "🌚",
 			"wane.one": "🌖",
 			"wane.two": "🌗",
-			"wane.three.face": "🌜",
+			"wane.three.face": "🌜️",
 			"wane.three": "🌘",
 			"wax.one": "🌒",
 			"wax.two": "🌓",
@@ -956,79 +1364,141 @@
 			"wax.three": "🌔"
 		}
 	],
-	"mortarboard": "🎓",
+	"moose": "🫎",
+	"mortarboard": "🎓️",
 	"mosque": "🕌",
 	"mosquito": "🦟",
-	"motorcycle": "🏍",
-	"motorway": "🛣",
+	"motorcycle": "🏍️",
+	"motorway": "🛣️",
 	"mountain": [
-		"⛰",
+		"⛰️",
 		{
 			"fuji": "🗻",
-			"snow": "🏔",
+			"snow": "🏔️",
 			"sunrise": "🌄"
 		}
 	],
-	"mouse": ["🐁", { "face": "🐭" }],
+	"mouse": [
+		"🐁",
+		{
+			"face": "🐭"
+		}
+	],
 	"mousetrap": "🪤",
-	"mouth": ["👄", { "bite": "🫦" }],
+	"mouth": [
+		"👄",
+		{
+			"bite": "🫦"
+		}
+	],
 	"moyai": "🗿",
-	"museum": "🏛",
+	"museum": "🏛️",
 	"mushroom": "🍄",
 	"musicalscore": "🎼",
-	"nails": [{ "polish": "💅" }],
+	"nails": [
+		{
+			"polish": "💅"
+		}
+	],
 	"namebadge": "📛",
 	"nazar": "🧿",
 	"necktie": "👔",
 	"needle": "🪡",
-	"nest": [{ "empty": "🪹", "eggs": "🪺" }],
+	"nest": [
+		{
+			"empty": "🪹",
+			"eggs": "🪺"
+		}
+	],
 	"new": "🆕",
-	"newspaper": ["📰", { "rolled": "🗞" }],
+	"newspaper": [
+		"📰",
+		{
+			"rolled": "🗞️"
+		}
+	],
 	"ng": "🆖",
 	"ningyo": "🎎",
 	"ninja": "🥷",
-	"noentry": "⛔",
+	"noentry": "⛔️",
 	"nose": "👃",
-	"notebook": ["📓", { "deco": "📔" }],
-	"notepad": "🗒",
-	"notes": ["🎵", { "triple": "🎶" }],
+	"notebook": [
+		"📓",
+		{
+			"deco": "📔"
+		}
+	],
+	"notepad": "🗒️",
+	"notes": [
+		"🎵",
+		{
+			"triple": "🎶"
+		}
+	],
 	"numbers": "🔢",
 	"octopus": "🐙",
 	"office": "🏢",
-	"oil": "🛢",
+	"oil": "🛢️",
 	"ok": "🆗",
 	"olive": "🫒",
 	"oni": "👹",
 	"onion": "🧅",
 	"orangutan": "🦧",
+	"orca": "🫍",
 	"otter": "🦦",
 	"owl": "🦉",
 	"ox": "🐂",
 	"oyster": "🦪",
-	"package": "📦",
+	"package": "📦️",
 	"paella": "🥘",
-	"page": ["📄", { "curl": "📃", "pencil": "📝" }],
-	"pager": "📟",
-	"pages": [{ "tabs": "📑" }],
-	"painting": "🖼",
+	"page": [
+		"📄",
+		{
+			"curl": "📃",
+			"pencil": "📝"
+		}
+	],
+	"pager": "📟️",
+	"pages": [
+		{
+			"tabs": "📑"
+		}
+	],
+	"painting": "🖼️",
 	"palette": "🎨",
 	"pancakes": "🥞",
 	"panda": "🐼",
 	"parachute": "🪂",
-	"park": "🏞",
-	"parking": "🅿",
+	"park": "🏞️",
+	"parking": "🅿️",
 	"parrot": "🦜",
-	"partalteration": "〽",
+	"partalteration": "〽️",
 	"party": "🎉",
 	"peach": "🍑",
 	"peacock": "🦚",
 	"peanuts": "🥜",
+	"peapod": "🫛",
 	"pear": "🍐",
-	"pedestrian": ["🚶", { "not": "🚷" }],
-	"pen": [{ "ball": "🖊", "fountain": "🖋" }],
-	"pencil": "✏",
+	"pedestrian": [
+		"🚶",
+		{
+			"not": "🚷"
+		}
+	],
+	"pen": [
+		{
+			"ball": "🖊️",
+			"fountain": "🖋️"
+		}
+	],
+	"pencil": "✏️",
 	"penguin": "🐧",
-	"pepper": ["🫑", { "hot": "🌶" }],
+	"pepper": [
+		"🫑",
+		{
+			"hot": "🌶️"
+		}
+	],
 	"person": [
 		"🧑",
 		{
@@ -1060,7 +1530,7 @@
 		"📱",
 		{
 			"arrow": "📲",
-			"classic": "☎",
+			"classic": "☎️",
 			"not": "📵",
 			"off": "📴",
 			"receiver": "📞",
@@ -1069,11 +1539,22 @@
 		}
 	],
 	"piano": "🎹",
-	"pick": "⛏",
+	"pick": "⛏️",
 	"pie": "🥧",
-	"pig": ["🐖", { "face": "🐷", "nose": "🐽" }],
+	"pig": [
+		"🐖",
+		{
+			"face": "🐷",
+			"nose": "🐽"
+		}
+	],
 	"pill": "💊",
-	"pin": ["📌", { "round": "📍" }],
+	"pin": [
+		"📌",
+		{
+			"round": "📍"
+		}
+	],
 	"pinata": "🪅",
 	"pineapple": "🍍",
 	"pingpong": "🏓",
@@ -1083,60 +1564,103 @@
 	"planet": "🪐",
 	"plant": "🪴",
 	"plaster": "🩹",
-	"plate": [{ "cutlery": "🍽" }],
+	"plate": [
+		{
+			"cutlery": "🍽️"
+		}
+	],
 	"playback": [
 		{
-			"down": "⏬",
-			"eject": "⏏",
-			"forward": "⏩",
-			"pause": "⏸",
-			"record": "⏺",
+			"down": "⏬️",
+			"eject": "⏏️",
+			"forward": "⏩️",
+			"pause": "⏸️",
+			"record": "⏺️",
 			"repeat": "🔁",
 			"repeat.once": "🔂",
 			"repeat.v": "🔃",
-			"restart": "⏮",
-			"rewind": "⏪",
+			"restart": "⏮️",
+			"rewind": "⏪️",
 			"shuffle": "🔀",
-			"skip": "⏭",
-			"stop": "⏹",
-			"toggle": "⏯",
-			"up": "⏫"
+			"skip": "⏭️",
+			"stop": "⏹️",
+			"toggle": "⏯️",
+			"up": "⏫️"
 		}
 	],
-	"playingcard": [{ "flower": "🎴", "joker": "🃏" }],
+	"playingcard": [
+		{
+			"flower": "🎴",
+			"joker": "🃏"
+		}
+	],
 	"plunger": "🪠",
 	"policeofficer": "👮",
 	"poo": "💩",
 	"popcorn": "🍿",
-	"post": [{ "eu": "🏤", "jp": "🏣" }],
+	"post": [
+		{
+			"eu": "🏤",
+			"jp": "🏣"
+		}
+	],
 	"postbox": "📮",
-	"potato": ["🥔", { "sweet": "🍠" }],
+	"potato": [
+		"🥔",
+		{
+			"sweet": "🍠"
+		}
+	],
 	"pouch": "👝",
 	"powerplug": "🔌",
 	"present": "🎁",
 	"pretzel": "🥨",
-	"printer": "🖨",
-	"prints": [{ "foot": "👣", "paw": "🐾" }],
+	"printer": "🖨️",
+	"prints": [
+		{
+			"foot": "👣",
+			"paw": "🐾"
+		}
+	],
 	"prohibited": "🚫",
-	"projector": "📽",
-	"pumpkin": [{ "lantern": "🎃" }],
+	"projector": "📽️",
+	"pumpkin": [
+		{
+			"lantern": "🎃"
+		}
+	],
 	"purse": "👛",
-	"quest": ["❓", { "white": "❔" }],
-	"rabbit": ["🐇", { "face": "🐰" }],
+	"quest": [
+		"❓️",
+		{
+			"white": "❔️"
+		}
+	],
+	"rabbit": [
+		"🐇",
+		{
+			"face": "🐰"
+		}
+	],
 	"raccoon": "🦝",
-	"radio": "📻",
-	"radioactive": "☢",
-	"railway": "🛤",
+	"radio": "📻️",
+	"radioactive": "☢️",
+	"railway": "🛤️",
 	"rainbow": "🌈",
 	"ram": "🐏",
 	"rat": "🐀",
 	"razor": "🪒",
 	"receipt": "🧾",
-	"recycling": "♻",
-	"reg": "®",
+	"recycling": "♻️",
+	"reg": "®️",
 	"restroom": "🚻",
 	"rhino": "🦏",
-	"ribbon": ["🎀", { "remind": "🎗" }],
+	"ribbon": [
+		"🎀",
+		{
+			"remind": "🎗️"
+		}
+	],
 	"rice": [
 		"🍚",
 		{
@@ -1151,9 +1675,14 @@
 	"rock": "🪨",
 	"rocket": "🚀",
 	"rollercoaster": "🎢",
-	"rosette": "🏵",
+	"rosette": "🏵️",
 	"rugby": "🏉",
-	"ruler": ["📏", { "triangle": "📐" }],
+	"ruler": [
+		"📏",
+		{
+			"triangle": "📐"
+		}
+	],
 	"running": "🏃",
 	"safetypin": "🧷",
 	"safetyvest": "🦺",
@@ -1161,16 +1690,26 @@
 	"salad": "🥗",
 	"salt": "🧂",
 	"sandwich": "🥪",
-	"santa": [{ "man": "🎅", "woman": "🤶" }],
+	"santa": [
+		{
+			"man": "🎅",
+			"woman": "🤶"
+		}
+	],
 	"satdish": "📡",
-	"satellite": "🛰",
+	"satellite": "🛰️",
 	"saw": "🪚",
 	"saxophone": "🎷",
-	"scales": "⚖",
+	"scales": "⚖️",
 	"scarf": "🧣",
 	"school": "🏫",
-	"scissors": "✂",
-	"scooter": ["🛴", { "motor": "🛵" }],
+	"scissors": "✂️",
+	"scooter": [
+		"🛴",
+		{
+			"motor": "🛵"
+		}
+	],
 	"scorpion": "🦂",
 	"screwdriver": "🪛",
 	"scroll": "📜",
@@ -1179,10 +1718,25 @@
 	"seedling": "🌱",
 	"shark": "🦈",
 	"sheep": "🐑",
-	"shell": [{ "spiral": "🐚" }],
-	"shield": "🛡",
-	"ship": ["🚢", { "cruise": "🛳", "ferry": "⛴" }],
-	"shirt": [{ "sports": "🎽", "t": "👕" }],
+	"shell": [
+		{
+			"spiral": "🐚"
+		}
+	],
+	"shield": "🛡️",
+	"ship": [
+		"🚢",
+		{
+			"cruise": "🛳️",
+			"ferry": "⛴️"
+		}
+	],
+	"shirt": [
+		{
+			"sports": "🎽",
+			"t": "👕"
+		}
+	],
 	"shoe": [
 		"👞",
 		{
@@ -1190,7 +1744,7 @@
 			"flat": "🥿",
 			"heel": "👠",
 			"hike": "🥾",
-			"ice": "⛸",
+			"ice": "⛸️",
 			"roller": "🛼",
 			"sandal.heel": "👡",
 			"ski": "🎿",
@@ -1199,71 +1753,100 @@
 			"thong": "🩴"
 		}
 	],
-	"shopping": "🛍",
+	"shopping": "🛍️",
 	"shorts": "🩳",
 	"shoshinsha": "🔰",
 	"shovel": "🪏",
 	"shower": "🚿",
-	"shrimp": ["🦐", { "fried": "🍤" }],
-	"shrine": "⛩",
-	"sign": [{ "crossing": "🚸", "stop": "🛑" }],
+	"shrimp": [
+		"🦐",
+		{
+			"fried": "🍤"
+		}
+	],
+	"shrine": "⛩️",
+	"sign": [
+		{
+			"crossing": "🚸",
+			"stop": "🛑"
+		}
+	],
 	"silhouette": [
 		"👤",
 		{
 			"double": "👥",
 			"hug": "🫂",
-			"speak": "🗣"
+			"speak": "🗣️"
 		}
 	],
 	"siren": "🚨",
 	"skateboard": "🛹",
-	"skewer": [{ "dango": "🍡", "oden": "🍢" }],
-	"skiing": "⛷",
-	"skull": ["💀", { "bones": "☠" }],
+	"skewer": [
+		{
+			"dango": "🍡",
+			"oden": "🍢"
+		}
+	],
+	"skiing": "⛷️",
+	"skull": [
+		"💀",
+		{
+			"bones": "☠️"
+		}
+	],
 	"skunk": "🦨",
 	"sled": "🛷",
 	"slide": "🛝",
-	"slider": "🎚",
+	"slider": "🎚️",
 	"sloth": "🦥",
 	"slots": "🎰",
 	"snail": "🐌",
 	"snake": "🐍",
-	"snowboarding": "🏂",
-	"snowflake": "❄",
-	"snowman": ["⛄", { "snow": "☃" }],
+	"snowboarding": "🏂️",
+	"snowflake": "❄️",
+	"snowman": [
+		"⛄️",
+		{
+			"snow": "☃️"
+		}
+	],
 	"soap": "🧼",
 	"socks": "🧦",
 	"softball": "🥎",
 	"sos": "🆘",
 	"soup": "🍲",
 	"spaghetti": "🍝",
-	"sparkle": [{ "box": "❇" }],
+	"sparkle": [
+		{
+			"box": "❇️"
+		}
+	],
 	"sparkler": "🎇",
-	"sparkles": "✨",
+	"sparkles": "✨️",
 	"speaker": [
-		"🔈",
+		"🔈️",
 		{
 			"not": "🔇",
 			"wave": "🔉",
 			"waves": "🔊"
 		}
 	],
-	"spider": "🕷",
-	"spiderweb": "🕸",
+	"spider": "🕷️",
+	"spiderweb": "🕸️",
 	"spinach": "🥬",
 	"splatter": "🫟",
 	"sponge": "🧽",
 	"spoon": "🥄",
 	"square": [
 		{
-			"black": "⬛",
-			"black.tiny": "▪",
-			"black.small": "◾",
-			"black.medium": "◼",
-			"white": "⬜",
-			"white.tiny": "▫",
-			"white.small": "◽",
-			"white.medium": "◻",
+			"black": "⬛️",
+			"black.tiny": "▪️",
+			"black.small": "◾️",
+			"black.medium": "◼️",
+			"white": "⬜️",
+			"white.tiny": "▫️",
+			"white.small": "◽️",
+			"white.medium": "◻️",
 			"blue": "🟦",
 			"brown": "🟫",
 			"green": "🟩",
@@ -1274,37 +1857,48 @@
 		}
 	],
 	"squid": "🦑",
-	"stadium": "🏟",
+	"stadium": "🏟️",
 	"star": [
-		"⭐",
+		"⭐️",
 		{
 			"arc": "💫",
-			"box": "✴",
+			"box": "✴️",
 			"glow": "🌟",
 			"shoot": "🌠"
 		}
 	],
 	"stethoscope": "🩺",
-	"store": [{ "big": "🏬", "small": "🏪" }],
+	"store": [
+		{
+			"big": "🏬",
+			"small": "🏪"
+		}
+	],
 	"strawberry": "🍓",
 	"suit": [
 		{
-			"club": "♣",
-			"diamond": "♦",
-			"heart": "♥",
-			"spade": "♠"
+			"club": "♣️",
+			"diamond": "♦️",
+			"heart": "♥️",
+			"spade": "♠️"
 		}
 	],
-	"sun": ["☀", { "cloud": "🌤", "face": "🌞" }],
+	"sun": [
+		"☀️",
+		{
+			"cloud": "🌤️",
+			"face": "🌞"
+		}
+	],
 	"sunrise": "🌅",
 	"superhero": "🦸",
 	"supervillain": "🦹",
-	"surfing": "🏄",
+	"surfing": "🏄️",
 	"sushi": "🍣",
 	"swan": "🦢",
-	"swimming": "🏊",
+	"swimming": "🏊️",
 	"swimsuit": "🩱",
-	"swords": "⚔",
+	"swords": "⚔️",
 	"symbols": "🔣",
 	"synagogue": "🕍",
 	"syringe": "💉",
@@ -1313,8 +1907,18 @@
 	"tamale": "🫔",
 	"tanabata": "🎋",
 	"tangerine": "🍊",
-	"tap": ["🚰", { "not": "🚱" }],
-	"taxi": ["🚕", { "front": "🚖" }],
+	"tap": [
+		"🚰",
+		{
+			"not": "🚱"
+		}
+	],
+	"taxi": [
+		"🚕",
+		{
+			"front": "🚖"
+		}
+	],
 	"teacup": "🍵",
 	"teapot": "🫖",
 	"teddy": "🧸",
@@ -1323,14 +1927,29 @@
 	"ten": "🔟",
 	"tengu": "👺",
 	"tennis": "🎾",
-	"tent": "⛺",
+	"tent": "⛺️",
 	"testtube": "🧪",
-	"thermometer": "🌡",
+	"thermometer": "🌡️",
 	"thread": "🧵",
-	"thumb": [{ "up": "👍", "down": "👎" }],
-	"ticket": [{ "event": "🎟", "travel": "🎫" }],
-	"tiger": ["🐅", { "face": "🐯" }],
-	"tm": "™",
+	"thumb": [
+		{
+			"up": "👍️",
+			"down": "👎️"
+		}
+	],
+	"ticket": [
+		{
+			"event": "🎟️",
+			"travel": "🎫"
+		}
+	],
+	"tiger": [
+		"🐅",
+		{
+			"face": "🐯"
+		}
+	],
+	"tm": "™️",
 	"toilet": "🚽",
 	"toiletpaper": "🧻",
 	"tomato": "🍅",
@@ -1339,17 +1958,26 @@
 	"toolbox": "🧰",
 	"tooth": "🦷",
 	"toothbrush": "🪥",
-	"tornado": "🌪",
-	"tower": [{ "tokyo": "🗼" }],
-	"trackball": "🖲",
+	"tornado": "🌪️",
+	"tower": [
+		{
+			"tokyo": "🗼"
+		}
+	],
+	"trackball": "🖲️",
 	"tractor": "🚜",
-	"trafficlight": [{ "v": "🚦", "h": "🚥" }],
+	"trafficlight": [
+		{
+			"v": "🚦",
+			"h": "🚥"
+		}
+	],
 	"train": [
 		"🚆",
 		{
 			"car": "🚃",
 			"light": "🚈",
-			"metro": "🚇",
+			"metro": "🚇️",
 			"mono": "🚝",
 			"mountain": "🚞",
 			"speed": "🚄",
@@ -1361,8 +1989,15 @@
 			"tram.car": "🚋"
 		}
 	],
-	"transgender": "⚧",
-	"tray": [{ "inbox": "📥", "mail": "📨", "outbox": "📤" }],
+	"transgender": "⚧️",
+	"tray": [
+		{
+			"inbox": "📥️",
+			"mail": "📨",
+			"outbox": "📤️"
+		}
+	],
+	"treasure": "🪎",
 	"tree": [
 		{
 			"deciduous": "🌳",
@@ -1374,8 +2009,8 @@
 	],
 	"triangle": [
 		{
-			"r": "▶",
-			"l": "◀",
+			"r": "▶️",
+			"l": "◀️",
 			"t": "🔼",
 			"b": "🔽",
 			"t.red": "🔺",
@@ -1384,26 +2019,32 @@
 	],
 	"trident": "🔱",
 	"troll": "🧌",
-	"trophy": "🏆",
-	"truck": ["🚚", { "trailer": "🚛" }],
+	"trombone": "🪊",
+	"trophy": "🏆️",
+	"truck": [
+		"🚚",
+		{
+			"trailer": "🚛"
+		}
+	],
 	"trumpet": "🎺",
 	"tsukimi": "🎑",
 	"turkey": "🦃",
 	"turtle": "🐢",
-	"tv": "📺",
+	"tv": "📺️",
 	"ufo": "🛸",
 	"umbrella": [
 		{
-			"open": "☂",
+			"open": "☂️",
 			"closed": "🌂",
-			"rain": "☔",
-			"sun": "⛱"
+			"rain": "☔️",
+			"sun": "⛱️"
 		}
 	],
 	"unicorn": "🦄",
 	"unknown": "🦳",
 	"up": "🆙",
-	"urn": "⚱",
+	"urn": "⚱️",
 	"vampire": "🧛",
 	"violin": "🎻",
 	"volcano": "🌋",
@@ -1411,25 +2052,43 @@
 	"vs": "🆚",
 	"waffle": "🧇",
 	"wand": "🪄",
-	"warning": "⚠",
-	"watch": ["⌚", { "stop": "⏱" }],
+	"warning": "⚠️",
+	"watch": [
+		"⌚️",
+		{
+			"stop": "⏱️"
+		}
+	],
 	"watermelon": "🍉",
 	"waterpolo": "🤽",
 	"wave": "🌊",
 	"wc": "🚾",
-	"weightlifting": "🏋",
-	"whale": ["🐋", { "spout": "🐳" }],
+	"weightlifting": "🏋️",
+	"whale": [
+		"🐋",
+		{
+			"spout": "🐳"
+		}
+	],
 	"wheel": "🛞",
-	"wheelchair": ["🦽", { "box": "♿", "motor": "🦼" }],
-	"wind": "🌬",
+	"wheelchair": [
+		"🦽",
+		{
+			"box": "♿️",
+			"motor": "🦼"
+		}
+	],
+	"wind": "🌬️",
 	"windchime": "🎐",
 	"window": "🪟",
 	"wine": "🍷",
+	"wing": "🪽",
+	"wireless": "🛜",
 	"wolf": "🐺",
 	"woman": [
 		"👩",
 		{
-			"box": "🚺",
+			"box": "🚺️",
 			"crown": "👸",
 			"old": "👵",
 			"pregnant": "🤰"
@@ -1445,19 +2104,19 @@
 	"zebra": "🦓",
 	"zodiac": [
 		{
-			"aquarius": "♒",
-			"aries": "♈",
-			"cancer": "♋",
-			"capri": "♑",
-			"gemini": "♊",
-			"leo": "♌",
-			"libra": "♎",
-			"ophi": "⛎",
-			"pisces": "♓",
-			"sagit": "♐",
-			"scorpio": "♏",
-			"taurus": "♉",
-			"virgo": "♍"
+			"aquarius": "♒️",
+			"aries": "♈️",
+			"cancer": "♋️",
+			"capri": "♑️",
+			"gemini": "♊️",
+			"leo": "♌️",
+			"libra": "♎️",
+			"ophi": "⛎️",
+			"pisces": "♓️",
+			"sagit": "♐️",
+			"scorpio": "♏️",
+			"taurus": "♉️",
+			"virgo": "♍️"
 		}
 	],
 	"zombie": "🧟",

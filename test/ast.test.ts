@@ -197,7 +197,10 @@ describe("ast() - full corpus robustness", () => {
 
 	it("no throw on all corpus entries", () => {
 		for (const { text, category } of testCases) {
-			expect(() => ast(text), `category: ${category}, input: ${text}`).not.toThrow();
+			expect(
+				() => ast(text),
+				`category: ${category}, input: ${text}`,
+			).not.toThrow();
 		}
 	});
 

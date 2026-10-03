@@ -5,7 +5,7 @@ import symbols from "./symbols.json?raw";
 
 type fdic = { [id: string]: tree };
 
-/** @see https://github.com/typst/typst/blob/v0.12.0/crates/typst/src/symbols/sym.rs */
+/** @see https://github.com/typst/codex/blob/v0.3.0/src/modules/sym.txt (typst v0.15.1) */
 const s = JSON.parse(symbols);
 
 // symbols路径简写
@@ -41,7 +41,7 @@ function simple_dot(s: any) {
 }
 const ss = simple_dot(s);
 
-/** @see https://github.com/typst/typst/blob/v0.12.0/crates/typst/src/symbols/emoji.rs */
+/** @see https://github.com/typst/codex/blob/v0.3.0/src/modules/emoji.txt (typst v0.15.1) */
 const emojix = simple_dot(JSON.parse(emoji));
 
 const shorthand = {
@@ -68,8 +68,8 @@ const shorthand = {
 	"<-->": "arrow.l.r.long",
 	"*": "convolve",
 	"||": "bar.v.double",
-	"[|": "bracket.l.double",
-	"|]": "bracket.r.double",
+	"[|": "bracket.l.stroked",
+	"|]": "bracket.r.stroked",
 	":=": "colon.eq",
 	"::=": "colon.double.eq",
 	"--": "dash.en",
