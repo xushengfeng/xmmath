@@ -1,4 +1,12 @@
-export type vtype = "" | "str" | "v" | "f" | "blank" | "group" | "group1" | "sharp";
+export type vtype =
+	| ""
+	| "str"
+	| "v"
+	| "f"
+	| "blank"
+	| "group"
+	| "group1"
+	| "sharp";
 export type tree = {
 	type: vtype;
 	value: string;
