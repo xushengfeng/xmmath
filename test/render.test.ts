@@ -1,4 +1,4 @@
-import { describe, it, expect } from "vitest";
+import { describe, expect, it } from "vitest";
 import { toMMLHTML } from "../src/main.js";
 import { allCases, knownBroken } from "./corpus/_shared.js";
 

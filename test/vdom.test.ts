@@ -1,7 +1,7 @@
 // Proves the render pipeline is DOM-free: this file runs in the default node
 // environment (NO jsdom) and still builds + serializes MathML.
-import { describe, it, expect } from "vitest";
-import { toMMLV, toMMLHTML } from "../src/main.js";
+import { describe, expect, it } from "vitest";
+import { toMMLHTML, toMMLV } from "../src/main.js";
 import { toHtml, type VEl } from "../src/vdom.js";
 import { allCases, knownBroken } from "./corpus/_shared.js";
 

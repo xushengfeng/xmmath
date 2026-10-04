@@ -522,7 +522,12 @@ function ast3(tree: tree) {
 
 			// 带有括号（参数）的函数
 			// prime 是后缀算子（稍后单独转成 attach），不能吞掉后面的 (..) 组
-			if (x.type === "f" && x.value !== "prime" && next && next.type === "group") {
+			if (
+				x.type === "f" &&
+				x.value !== "prime" &&
+				next &&
+				next.type === "group"
+			) {
 				if (next.kh === "()") {
 					x.children = tree[n + 1].children;
 					t.push(x);
@@ -657,37 +662,38 @@ function ast3(tree: tree) {
 		tree = t;
 	}
 
-	// '->^'
+	// '->^'：素号是后缀算子，等价于 `^<素号串>`，交给后面的 ^/_ 合并逻辑处理
 	{
 		const t: tree = [];
 		for (let n = 0; n < tree.length; n++) {
-			const next = tree[n + 1];
 			const x = tree[n];
-			let nn = n + 1;
-			if (eqq(next, { type: "f", value: "prime" })) {
-				while (tree[nn] && eqq(tree[nn], { type: "f", value: "prime" })) nn++;
-				const primes = nn - (n + 1);
-				if (!is_sup(x) && !is_sub(x) && x.type !== "blank") {
-					t.push({
-						type: "f",
-						value: "attach",
-						children: [
-							x,
-							dh,
-							...dic_to_ast({
-								tr: [{ type: "v", value: "'".repeat(primes) }],
-							}),
-						],
-					});
-				} else {
-					t.push(x);
-					for (let i = 0; i < primes; i++)
-						t.push({ type: "f", value: "prime" });
-				}
-				n += primes;
+			const next = tree[n + 1];
+			if (!eqq(next, { type: "f", value: "prime" })) {
+				t.push(x);
 				continue;
 			}
-			t.push(x);
+			let nn = n + 1;
+			while (tree[nn] && eqq(tree[nn], { type: "f", value: "prime" })) nn++;
+			const primes = nn - (n + 1);
+			if (eqq(x, { type: "f", value: "prime" })) {
+				// 整段素号前面没有基底（如 `'''''''`）：平铺成一个后缀串，不做附着
+				t.push({ type: "v", value: "'".repeat(primes + 1) });
+			} else if (!is_sup(x) && !is_sub(x) && x.type !== "blank") {
+				t.push({
+					type: "f",
+					value: "attach",
+					children: [
+						x,
+						dh,
+						...dic_to_ast({
+							tr: [{ type: "v", value: "'".repeat(primes) }],
+						}),
+					],
+				});
+			} else {
+				t.push(x, { type: "v", value: "'".repeat(primes) });
+			}
+			n += primes;
 		}
 		tree = t;
 	}

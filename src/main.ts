@@ -424,6 +424,17 @@ function x_table(trees: tree[], e?: fonts, inline?: boolean) {
 	return t;
 }
 
+// typst 把 1–4 个连续素号折成连字，5 个及以上重复 ′
+function primeRun(n: number) {
+	const lig = [
+		ss.prime,
+		ss["prime.double"],
+		ss["prime.triple"],
+		ss["prime.quad"],
+	];
+	return n <= 4 ? lig[n - 1] : ss.prime.repeat(n);
+}
+
 function op_f() {
 	for (const i of opl) {
 		f[i.id] = (attr: tree[], _a, e) => {
@@ -857,7 +868,7 @@ function render(tree: tree, e?: fonts, inline?: boolean): VEl | VFragment {
 			} else if (x.value.match(/[a-zA-Z\u0391-\u03C9]/)) {
 				tag = "mi";
 			} else if (x.value.match(/^'+$/)) {
-				if (!x.esc) value = x.value.replaceAll("'", ss.prime);
+				if (!x.esc) value = primeRun(x.value.length);
 				tag = "mo";
 			} else {
 				tag = "mo";

@@ -1,4 +1,4 @@
-import { describe, it, expect } from "vitest";
+import { describe, expect, it } from "vitest";
 import { ast } from "../src/ast.js";
 import { allCases } from "./corpus/_shared.js";
 
@@ -198,10 +198,7 @@ describe("ast() - full corpus robustness", () => {
 
 	it("no throw on all corpus entries", () => {
 		for (const { text, cat } of testCases) {
-			expect(
-				() => ast(text),
-				`category: ${cat}, input: ${text}`,
-			).not.toThrow();
+			expect(() => ast(text), `category: ${cat}, input: ${text}`).not.toThrow();
 		}
 	});
 

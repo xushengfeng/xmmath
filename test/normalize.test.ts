@@ -1,4 +1,4 @@
-import { describe, it, expect } from "vitest";
+import { describe, expect, it } from "vitest";
 import { ast } from "../src/ast.js";
 import { ast2, ast3 } from "../src/normalize.js";
 import { allCases } from "./corpus/_shared.js";
