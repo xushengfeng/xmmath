@@ -875,22 +875,48 @@ function ast3(tree: tree) {
 		}
 		tree = t;
 	}
-	// 处理后面直接跟参数的f
+	// 处理后面直接跟参数的f（√ ∛ ∜）
+	// typst v0.11.1 实测：根号吃掉一个「原子」，该原子自己的附着（_/^ 与素号）都算在根号里面 ——
+	// √2^3=√(2³)、√2_1^2=√(2带1带2)、√f'=√(f')、√a_1^2 b^3=√(a带1带2)·b³、∛x^2=³√(x²)；
+	// 后面再接别的原子（√2 3、√a b^2）或二元运算符（√2+3）则到此为止。
+	// 括号组：无附着时沿用原来的去括号路径（√(2)=√2、√(x+y) 根号直接覆盖 x+y，与 typst 一致），
+	// 有附着时把整组（连括号）当基底收进参数（√(2)^3=√((2)³)，typst 同样保留括号）。
 	{
 		const t: tree = [];
 		for (let n = 0; n < tree.length; n++) {
 			const x = tree[n];
 			if (x.type === "v" && direct_arg_sy.includes(x.value) && tree[n + 1]) {
 				x.type = "f";
-				if (!(is_type(tree[n + 1], "group") && tree[n + 1].kh === "()")) {
+				const next = tree[n + 1];
+				// 向后吞附着链：_值、^值、素号，可混排可重复，中间允许空格
+				const att: tree = [];
+				let end = n + 1;
+				let j = n + 2;
+				for (;;) {
+					let k = j;
+					while (tree[k]?.type === "blank") k++;
+					const y = tree[k];
+					if (!y) break;
+					if ((is_sup(y) || is_sub(y)) && tree[k + 1] !== undefined) {
+						att.push(y, tree[k + 1]);
+						end = k + 1;
+						j = k + 2;
+					} else if (eqq(y, { type: "f", value: "prime" })) {
+						att.push(y);
+						end = k;
+						j = k + 1;
+					} else break;
+				}
+				const is_paren = is_type(next, "group") && next.kh === "()";
+				if (!is_paren || att.length) {
 					t.push(x);
 					t.push({
 						type: "group",
-						children: [tree[n + 1]],
+						children: [next, ...att],
 						value: "",
 						kh: "()",
 					});
-					n++;
+					n = end;
 					continue;
 				}
 			}

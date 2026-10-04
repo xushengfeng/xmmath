@@ -24792,7 +24792,7 @@ exports[`corpus/root > root-10 1`] = `
 exports[`corpus/root > root-11 1`] = `
 {
   "block": true,
-  "html": "<math display="block"><msup><mrow><mroot><mrow><mn>2</mn></mrow><mrow></mrow></mroot></mrow><mrow><mn>3</mn></mrow></msup><mo>=</mo><mroot><mrow><msup><mrow><mn>2</mn></mrow><mrow><mn>3</mn></mrow></msup></mrow><mrow></mrow></mroot></math>",
+  "html": "<math display="block"><mroot><mrow><msup><mrow><mn>2</mn></mrow><mrow><mn>3</mn></mrow></msup></mrow><mrow></mrow></mroot><mo>=</mo><mroot><mrow><msup><mrow><mn>2</mn></mrow><mrow><mn>3</mn></mrow></msup></mrow><mrow></mrow></mroot></math>",
   "text": "√2^3 = sqrt(2^3)",
   "vdom": [
     "math",
@@ -24800,11 +24800,11 @@ exports[`corpus/root > root-11 1`] = `
       "display": "block",
     },
     [
-      "msup",
+      "mroot",
       [
         "mrow",
         [
-          "mroot",
+          "msup",
           [
             "mrow",
             [
@@ -24814,15 +24814,15 @@ exports[`corpus/root > root-11 1`] = `
           ],
           [
             "mrow",
+            [
+              "mn",
+              "3",
+            ],
           ],
         ],
       ],
       [
         "mrow",
-        [
-          "mn",
-          "3",
-        ],
       ],
     ],
     [

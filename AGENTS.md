@@ -22,6 +22,8 @@ pnpm review 打开 test/review/index.html，只做对照不记录反馈：每例
 
 旧的人类测试 test/typst/more_test.html 保留作历史参考，现改为读 math.json，需经 pnpm dev 打开（/test/typst/more_test.html）
 
-sync:symbols脚本用于同步emoji和symbols，render:typst可以自定typst版本，查看官方标准渲染结果的图片
+sync:symbols脚本用于同步emoji和symbols
+
+render:typst可以自定typst版本，查看官方标准渲染结果的图片，如 `pnpm run render:typst --typst v0.11.1 --expr '1+1' 注意inline和block
 
 版本升级任务（动 version.lan 之前）先读 docs/math-syntax-typst-diff.md 第 8 节：`_`/`^` 上下位置规则的源码坐标（0.11.1 vs 0.15.1）、帧宽差探针脚本与判据、0.11→0.15 的 11 个字符漂移清单；升级后先重跑探针、再改 src/normalize.ts 的 rel_names 及其注释
