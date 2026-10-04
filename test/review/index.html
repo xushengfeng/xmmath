@@ -34,6 +34,7 @@
 
 		math {
 			font-family: lmmath, "Latin Modern Math", serif;
+			white-space: nowrap;
 			/* 与 typst 源码里的 #set text(size: 14pt) 对齐，两边字号才可比 */
 			font-size: 14pt;
 		}
@@ -221,6 +222,9 @@
 			min-height: 34px;
 			display: flex;
 			align-items: center;
+			/* 长公式换行会让左右两栏对不上，宁可横向滚动 */
+			overflow-x: auto;
+			max-width: 100%;
 			/* typst 页边距 6pt，位图按 72dpi 折算后正好是 8px，两边内容起点对齐 */
 			padding: 8px;
 		}
