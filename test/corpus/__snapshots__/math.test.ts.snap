@@ -5776,7 +5776,7 @@ exports[`corpus/attach > attach-17 1`] = `
 exports[`corpus/attach > attach-18 1`] = `
 {
   "block": true,
-  "html": "<math display="block"><mi>a</mi><msup><mrow><mo>=</mo></mrow><mrow><ms>def</ms></mrow></msup><mspace width="0.36em"> </mspace><mi>b</mi><mspace width="1em"></mspace><mi>a</mi><msub><mrow><mo>≤</mo></mrow><mrow><ms>really</ms></mrow></msub><mspace width="0.36em"> </mspace><mi>b</mi><mspace width="1em"></mspace><mi>a</mi><munderover><mrow><mo>⟿</mo></mrow><mrow></mrow><mrow><ms>slowly</ms></mrow></munderover><mspace width="0.36em"> </mspace><mi>b</mi></math>",
+  "html": "<math display="block"><mi>a</mi><munderover><mrow><mo>=</mo></mrow><mrow></mrow><mrow><ms>def</ms></mrow></munderover><mspace width="0.36em"> </mspace><mi>b</mi><mspace width="1em"></mspace><mi>a</mi><munderover><mrow><mo>≤</mo></mrow><mrow><ms>really</ms></mrow><mrow></mrow></munderover><mspace width="0.36em"> </mspace><mi>b</mi><mspace width="1em"></mspace><mi>a</mi><munderover><mrow><mo>⟿</mo></mrow><mrow></mrow><mrow><ms>slowly</ms></mrow></munderover><mspace width="0.36em"> </mspace><mi>b</mi></math>",
   "text": "a =^"def" b quad a lt.eq_"really" b quad  a arrow.r.long.squiggly^"slowly" b",
   "vdom": [
     "math",
@@ -5788,13 +5788,16 @@ exports[`corpus/attach > attach-18 1`] = `
       "a",
     ],
     [
-      "msup",
+      "munderover",
       [
         "mrow",
         [
           "mo",
           "=",
         ],
+      ],
+      [
+        "mrow",
       ],
       [
         "mrow",
@@ -5826,7 +5829,7 @@ exports[`corpus/attach > attach-18 1`] = `
       "a",
     ],
     [
-      "msub",
+      "munderover",
       [
         "mrow",
         [
@@ -5840,6 +5843,9 @@ exports[`corpus/attach > attach-18 1`] = `
           "ms",
           "really",
         ],
+      ],
+      [
+        "mrow",
       ],
     ],
     [
@@ -5901,7 +5907,7 @@ exports[`corpus/attach > attach-18 1`] = `
 exports[`corpus/attach > attach-19 1`] = `
 {
   "block": false,
-  "html": "<math><mi>a</mi><msup><mrow><mo>=</mo></mrow><mrow><ms>def</ms></mrow></msup><mspace width="0.36em"> </mspace><mi>b</mi><mspace width="1em"></mspace><mi>a</mi><msub><mrow><mo>≤</mo></mrow><mrow><ms>really</ms></mrow></msub><mspace width="0.36em"> </mspace><mi>b</mi><mspace width="1em"></mspace><mi>a</mi><munderover><mrow><mo>⟿</mo></mrow><mrow></mrow><mrow><ms>slowly</ms></mrow></munderover><mspace width="0.36em"> </mspace><mi>b</mi></math>",
+  "html": "<math><mi>a</mi><munderover><mrow><mo>=</mo></mrow><mrow></mrow><mrow><ms>def</ms></mrow></munderover><mspace width="0.36em"> </mspace><mi>b</mi><mspace width="1em"></mspace><mi>a</mi><munderover><mrow><mo>≤</mo></mrow><mrow><ms>really</ms></mrow><mrow></mrow></munderover><mspace width="0.36em"> </mspace><mi>b</mi><mspace width="1em"></mspace><mi>a</mi><munderover><mrow><mo>⟿</mo></mrow><mrow></mrow><mrow><ms>slowly</ms></mrow></munderover><mspace width="0.36em"> </mspace><mi>b</mi></math>",
   "text": "a =^"def" b quad a lt.eq_"really" b quad a arrow.r.long.squiggly^"slowly" b",
   "vdom": [
     "math",
@@ -5910,13 +5916,16 @@ exports[`corpus/attach > attach-19 1`] = `
       "a",
     ],
     [
-      "msup",
+      "munderover",
       [
         "mrow",
         [
           "mo",
           "=",
         ],
+      ],
+      [
+        "mrow",
       ],
       [
         "mrow",
@@ -5948,7 +5957,7 @@ exports[`corpus/attach > attach-19 1`] = `
       "a",
     ],
     [
-      "msub",
+      "munderover",
       [
         "mrow",
         [
@@ -5962,6 +5971,9 @@ exports[`corpus/attach > attach-19 1`] = `
           "ms",
           "really",
         ],
+      ],
+      [
+        "mrow",
       ],
     ],
     [
@@ -6327,7 +6339,7 @@ exports[`corpus/attach > attach-22 1`] = `
 exports[`corpus/attach > attach-23 1`] = `
 {
   "block": true,
-  "html": "<math display="block"><msubsup><mrow><mo>⟘</mo></mrow><mrow><mn>0</mn></mrow><mrow><mn>1</mn></mrow></msubsup><mspace width="1em"></mspace><msubsup><mrow><mo>⨊</mo></mrow><mrow><mn>0</mn></mrow><mrow><mn>1</mn></mrow></msubsup><mspace width="1em"></mspace><msubsup><mrow><mo>⨝</mo></mrow><mrow><mn>0</mn></mrow><mrow><mn>1</mn></mrow></msubsup></math>",
+  "html": "<math display="block"><munderover><mrow><mo>⟘</mo></mrow><mrow><mn>0</mn></mrow><mrow><mn>1</mn></mrow></munderover><mspace width="1em"></mspace><munderover><mrow><mo>⨊</mo></mrow><mrow><mn>0</mn></mrow><mrow><mn>1</mn></mrow></munderover><mspace width="1em"></mspace><munderover><mrow><mo>⨝</mo></mrow><mrow><mn>0</mn></mrow><mrow><mn>1</mn></mrow></munderover></math>",
   "text": "tack.t.big_0^1 quad \\u{02A0A}_0^1 quad join_0^1",
   "vdom": [
     "math",
@@ -6335,7 +6347,7 @@ exports[`corpus/attach > attach-23 1`] = `
       "display": "block",
     },
     [
-      "msubsup",
+      "munderover",
       [
         "mrow",
         [
@@ -6365,7 +6377,7 @@ exports[`corpus/attach > attach-23 1`] = `
       },
     ],
     [
-      "msubsup",
+      "munderover",
       [
         "mrow",
         [
@@ -6395,7 +6407,7 @@ exports[`corpus/attach > attach-23 1`] = `
       },
     ],
     [
-      "msubsup",
+      "munderover",
       [
         "mrow",
         [
@@ -11446,12 +11458,12 @@ exports[`corpus/equation > equation-04 1`] = `
 exports[`corpus/equation > equation-05 1`] = `
 {
   "block": false,
-  "html": "<math><munderover><mrow><mo>∑</mo></mrow><mrow><mi>i</mi><mo>=</mo><mn>0</mn></mrow><mrow><mi>n</mi></mrow></munderover></math>",
+  "html": "<math><msubsup><mrow><mo>∑</mo></mrow><mrow><mi>i</mi><mo>=</mo><mn>0</mn></mrow><mrow><mi>n</mi></mrow></msubsup></math>",
   "text": "sum_(i=0)^n",
   "vdom": [
     "math",
     [
-      "munderover",
+      "msubsup",
       [
         "mrow",
         [
@@ -11489,12 +11501,12 @@ exports[`corpus/equation > equation-05 1`] = `
 exports[`corpus/equation > equation-06 1`] = `
 {
   "block": false,
-  "html": "<math><munderover><mrow><mo>∑</mo></mrow><mrow><mi>i</mi><mo>=</mo><mn>0</mn></mrow><mrow><mi>n</mi></mrow></munderover></math>",
+  "html": "<math><msubsup><mrow><mo>∑</mo></mrow><mrow><mi>i</mi><mo>=</mo><mn>0</mn></mrow><mrow><mi>n</mi></mrow></msubsup></math>",
   "text": "sum_(i=0)^n",
   "vdom": [
     "math",
     [
-      "munderover",
+      "msubsup",
       [
         "mrow",
         [
@@ -22020,12 +22032,12 @@ exports[`corpus/op > op-02 1`] = `
 exports[`corpus/op > op-03 1`] = `
 {
   "block": false,
-  "html": "<math><munderover><mrow><mrow><ms><ms>lim</ms></ms></mrow></mrow><mrow><mi>n</mi><mo>→</mo><mo>∞</mo></mrow><mrow></mrow></munderover><mfrac><mrow><mn>1</mn></mrow><mrow><mi>n</mi></mrow></mfrac></math>",
+  "html": "<math><msub><mrow><mrow><ms><ms>lim</ms></ms></mrow></mrow><mrow><mi>n</mi><mo>→</mo><mo>∞</mo></mrow></msub><mfrac><mrow><mn>1</mn></mrow><mrow><mi>n</mi></mrow></mfrac></math>",
   "text": "lim_(n->oo) 1/n",
   "vdom": [
     "math",
     [
-      "munderover",
+      "msub",
       [
         "mrow",
         [
@@ -22053,9 +22065,6 @@ exports[`corpus/op > op-03 1`] = `
           "mo",
           "∞",
         ],
-      ],
-      [
-        "mrow",
       ],
     ],
     [
@@ -23507,7 +23516,7 @@ exports[`corpus/primes > primes-26 1`] = `
 exports[`corpus/primes > primes-27 1`] = `
 {
   "block": true,
-  "html": "<math display="block"><msup><mrow><mo>&lt;</mo></mrow><mrow><mo>′</mo></mrow></msup></math>",
+  "html": "<math display="block"><munderover><mrow><mo>&lt;</mo></mrow><mrow></mrow><mrow><mo>′</mo></mrow></munderover></math>",
   "text": "<^'",
   "vdom": [
     "math",
@@ -23515,13 +23524,16 @@ exports[`corpus/primes > primes-27 1`] = `
       "display": "block",
     },
     [
-      "msup",
+      "munderover",
       [
         "mrow",
         [
           "mo",
           "<",
         ],
+      ],
+      [
+        "mrow",
       ],
       [
         "mrow",
@@ -23572,7 +23584,7 @@ exports[`corpus/primes > primes-28 1`] = `
 exports[`corpus/primes > primes-29 1`] = `
 {
   "block": true,
-  "html": "<math display="block"><msub><mrow><mo>&lt;</mo></mrow><mrow><mo>′</mo></mrow></msub></math>",
+  "html": "<math display="block"><munderover><mrow><mo>&lt;</mo></mrow><mrow><mo>′</mo></mrow><mrow></mrow></munderover></math>",
   "text": "<_'",
   "vdom": [
     "math",
@@ -23580,7 +23592,7 @@ exports[`corpus/primes > primes-29 1`] = `
       "display": "block",
     },
     [
-      "msub",
+      "munderover",
       [
         "mrow",
         [
@@ -23594,6 +23606,9 @@ exports[`corpus/primes > primes-29 1`] = `
           "mo",
           "′",
         ],
+      ],
+      [
+        "mrow",
       ],
     ],
   ],
@@ -29125,12 +29140,12 @@ exports[`corpus/text > text-14 1`] = `
 exports[`corpus/text > text-15 1`] = `
 {
   "block": false,
-  "html": "<math><munderover><mrow><mo>∑</mo></mrow><mrow><mi>k</mi><mo>∈</mo><mo>ℕ</mo></mrow><mrow><mo>′</mo></mrow></munderover><mfrac><mrow><mn>1</mn></mrow><mrow><msup><mrow><mi>k</mi></mrow><mrow><mn>2</mn></mrow></msup></mrow></mfrac></math>",
+  "html": "<math><msubsup><mrow><mo>∑</mo></mrow><mrow><mi>k</mi><mo>∈</mo><mo>ℕ</mo></mrow><mrow><mo>′</mo></mrow></msubsup><mfrac><mrow><mn>1</mn></mrow><mrow><msup><mrow><mi>k</mi></mrow><mrow><mn>2</mn></mrow></msup></mrow></mfrac></math>",
   "text": "sum_(k in NN)^prime 1/k^2",
   "vdom": [
     "math",
     [
-      "munderover",
+      "msubsup",
       [
         "mrow",
         [

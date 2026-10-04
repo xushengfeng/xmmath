@@ -12,7 +12,9 @@ import {
 	in_kh,
 	is_br,
 	is_true,
+	isDisplay,
 	opl,
+	setDisplay,
 	ss,
 	transfer_kh,
 	trim,
@@ -740,7 +742,7 @@ function font(str: string, type: fonts = "serif") {
 	return str;
 }
 
-function render(tree: tree, e?: fonts, inline?: boolean): VEl | VFragment {
+function render(tree: tree, e?: fonts): VEl | VFragment {
 	const fragment = createFragment();
 
 	tree = ast2(tree);
@@ -766,7 +768,7 @@ function render(tree: tree, e?: fonts, inline?: boolean): VEl | VFragment {
 					trees.at(-1).push(i);
 				}
 			}
-			return x_table(trees, undefined, inline);
+			return x_table(trees, undefined, !isDisplay());
 		}
 	}
 
@@ -899,11 +901,12 @@ function init(p: { emoji: boolean }) {
 
 // Build the MathML virtual DOM (no `document`).
 function toMMLV(str: string, inline?: boolean): VEl {
+	setDisplay(!inline);
 	const obj = ast(str);
 
 	const mathEl = createMath("math");
 	if (!inline) mathEl.setAttribute("display", "block");
-	const f = render(obj, undefined, inline);
+	const f = render(obj);
 	mathEl.append(f);
 	return mathEl;
 }

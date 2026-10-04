@@ -145,7 +145,357 @@ const opl: { id: string; str?: string; limits?: boolean }[] = [
 ];
 
 const limits_f = [];
+
+// 官方核对（typst v0.11.1；语法解析一律以 0.11.1 为准）：
+// 依据 typst v0.11.1 `crates/typst/src/math/attach.rs::Limits::for_char` —— 底座字符的 Unicode
+// 数学类为 Relation 时 `Limits::Always`（`_`/`^` 落正上/正下，与 display 无关）；Large 类为
+// `Limits::Display`（积分特例 Never）；其余一律 scripts。类表即 v0.11.1 Cargo.lock 锁定的
+// unicode-math-class 0.1.0（Unicode MathClass-15.txt，REVISION 15）。
+// 注意：typst 会在 fragment.rs::Glyph::with_id 里把 ':' 特例成 Relation、把 '⋯'/'⋮'/'⋱'/'⋰' 特例成
+// Normal，但那只改间距用的 class；limits 查的是 for_char 里未经特例的原始类，故 ':' 仍走 scripts。
+// 实测核对（2026-10-05）：rel_names ∪ 官方全部 Relation 名共 426 个字符，用 v0.11.1 二进制
+// `measure()` 量帧宽差 —— limits 取 max(底座, 附着) 宽、scripts 另加 space_after_script，
+// 故 d = a - w - wref 在 limits 时 ≈ -(w+space) < -w/2、scripts 时 ≈ 0；实测 425 个 Relation 全走
+// limits（ratio ≥ 2.07）、唯一非 Relation 的 ':' 全走 scripts（ratio 0.00），与类表 100% 吻合。
+// 据此修正：移除误写的 `colon`，补入 22 项漏写的官方 Relation（bag*/bot/bowtie/dots*/
+// harpoon(s)/mustache*/or.dot/parallel.slanted/prec.curly/succ.curly/tack/tack.t/tilde）。
+// `arrow.*` 官方同为 Relation，但由下面 is_limit 的前缀规则覆盖，不在此列；
+// `arrows.*` 前缀不同（split('.')[0] 是 "arrows"），必须靠本表生效。
+// 版本敏感：同一探针在 typst 0.15.1 上已漂移 11 个字符 —— `:` 由 scripts 翻成 limits、
+// ⟆⊥⋯⋱⋰⋮⎱⟇（8 个）由 limits 翻成 scripts、⟅⎰ 直接禁止附角标；故升级 typst 属"版本升级任务"，
+// 必须用新版本二进制重跑核对；平时 symbols.json 随 0.15.1 增长，本表判定仍按 0.11.1。
+// 本表按 名称 -> 字符 -> 官方类 三段判定，名称集来自 symbols.json（codex v0.15.1），
+// 上游新增 Relation 名时需同步补入本表。
+const rel_names = new Set([
+	"angle.azimuth",
+	"angzarr",
+	"approx",
+	"approx.eq",
+	"approx.hat",
+	"approx.not",
+	"arrows.bb",
+	"arrows.bt",
+	"arrows.ll",
+	"arrows.lll",
+	"arrows.lr",
+	"arrows.rl",
+	"arrows.rr",
+	"arrows.rrr",
+	"arrows.tb",
+	"arrows.tt",
+	"asymp",
+	"asymp.not",
+	"bag",
+	"bag.l",
+	"bag.r",
+	"because",
+	"bot",
+	"bowtie",
+	"bowtie.filled",
+	"bowtie.filled.l",
+	"bowtie.filled.r",
+	"bowtie.stroked",
+	"colon.double",
+	"colon.double.eq",
+	"colon.eq",
+	"dagger",
+	"dagger.double",
+	"dash.colon",
+	"divides",
+	"divides.not",
+	"divides.not.rev",
+	"divides.struck",
+	"dots",
+	"dots.down",
+	"dots.h.c",
+	"dots.up",
+	"dots.v",
+	"eq",
+	"eq.ast",
+	"eq.colon",
+	"eq.def",
+	"eq.delta",
+	"eq.dot",
+	"eq.dots",
+	"eq.dots.down",
+	"eq.dots.up",
+	"eq.equi",
+	"eq.est",
+	"eq.gt",
+	"eq.lt",
+	"eq.m",
+	"eq.not",
+	"eq.prec",
+	"eq.quad",
+	"eq.quest",
+	"eq.star",
+	"eq.succ",
+	"eq.triple",
+	"eq.triple.not",
+	"equiv",
+	"equiv.not",
+	"forces",
+	"forces.not",
+	"frown",
+	"gt",
+	"gt.approx",
+	"gt.arc",
+	"gt.arc.eq",
+	"gt.closed",
+	"gt.closed.eq",
+	"gt.closed.eq.not",
+	"gt.closed.not",
+	"gt.dot",
+	"gt.double",
+	"gt.double.nested",
+	"gt.eq",
+	"gt.eq.lt",
+	"gt.eq.not",
+	"gt.eq.slant",
+	"gt.equiv",
+	"gt.lt",
+	"gt.lt.not",
+	"gt.napprox",
+	"gt.neq",
+	"gt.nequiv",
+	"gt.not",
+	"gt.ntilde",
+	"gt.quest",
+	"gt.tilde",
+	"gt.tilde.not",
+	"gt.tri",
+	"gt.tri.eq",
+	"gt.tri.eq.not",
+	"gt.tri.not",
+	"gt.triple",
+	"gt.triple.nested",
+	"harpoon",
+	"harpoon.bl",
+	"harpoon.bl.bar",
+	"harpoon.bl.stop",
+	"harpoon.br",
+	"harpoon.br.bar",
+	"harpoon.br.stop",
+	"harpoon.lb",
+	"harpoon.lb.bar",
+	"harpoon.lb.rb",
+	"harpoon.lb.rt",
+	"harpoon.lb.stop",
+	"harpoon.lt",
+	"harpoon.lt.bar",
+	"harpoon.lt.rb",
+	"harpoon.lt.rt",
+	"harpoon.lt.stop",
+	"harpoon.rb",
+	"harpoon.rb.bar",
+	"harpoon.rb.stop",
+	"harpoon.rt",
+	"harpoon.rt.bar",
+	"harpoon.rt.stop",
+	"harpoon.tl",
+	"harpoon.tl.bar",
+	"harpoon.tl.bl",
+	"harpoon.tl.br",
+	"harpoon.tl.stop",
+	"harpoon.tr",
+	"harpoon.tr.bar",
+	"harpoon.tr.bl",
+	"harpoon.tr.br",
+	"harpoon.tr.stop",
+	"harpoons",
+	"harpoons.blbr",
+	"harpoons.bltr",
+	"harpoons.lbrb",
+	"harpoons.ltlb",
+	"harpoons.ltrb",
+	"harpoons.ltrt",
+	"harpoons.rblb",
+	"harpoons.rtlb",
+	"harpoons.rtlt",
+	"harpoons.rtrb",
+	"harpoons.tlbr",
+	"harpoons.tltr",
+	"image",
+	"in",
+	"in.not",
+	"in.rev",
+	"in.rev.not",
+	"in.rev.small",
+	"in.small",
+	"lat",
+	"lat.eq",
+	"lt",
+	"lt.approx",
+	"lt.arc",
+	"lt.arc.eq",
+	"lt.closed",
+	"lt.closed.eq",
+	"lt.closed.eq.not",
+	"lt.closed.not",
+	"lt.dot",
+	"lt.double",
+	"lt.double.nested",
+	"lt.eq",
+	"lt.eq.gt",
+	"lt.eq.not",
+	"lt.eq.slant",
+	"lt.equiv",
+	"lt.gt",
+	"lt.gt.not",
+	"lt.napprox",
+	"lt.neq",
+	"lt.nequiv",
+	"lt.not",
+	"lt.ntilde",
+	"lt.quest",
+	"lt.tilde",
+	"lt.tilde.not",
+	"lt.tri",
+	"lt.tri.eq",
+	"lt.tri.eq.not",
+	"lt.tri.not",
+	"lt.triple",
+	"lt.triple.nested",
+	"mapsfrom",
+	"mapsfrom.long",
+	"mapsto",
+	"mapsto.long",
+	"minus.tilde",
+	"models",
+	"multimap",
+	"multimap.double",
+	"mustache",
+	"mustache.l",
+	"mustache.r",
+	"or.dot",
+	"original",
+	"parallel",
+	"parallel.eq",
+	"parallel.equiv",
+	"parallel.not",
+	"parallel.slanted",
+	"parallel.slanted.eq",
+	"parallel.slanted.eq.tilde",
+	"parallel.slanted.equiv",
+	"parallel.struck",
+	"parallel.tilde",
+	"perp",
+	"plus.o.arrow",
+	"prec",
+	"prec.approx",
+	"prec.curly",
+	"prec.curly.eq",
+	"prec.curly.eq.not",
+	"prec.double",
+	"prec.eq",
+	"prec.equiv",
+	"prec.napprox",
+	"prec.neq",
+	"prec.nequiv",
+	"prec.not",
+	"prec.ntilde",
+	"prec.tilde",
+	"prop",
+	"ratio",
+	"semi.rev",
+	"smile",
+	"smt",
+	"smt.eq",
+	"subset",
+	"subset.approx",
+	"subset.closed",
+	"subset.closed.eq",
+	"subset.dot",
+	"subset.double",
+	"subset.eq",
+	"subset.eq.dot",
+	"subset.eq.not",
+	"subset.eq.sq",
+	"subset.eq.sq.not",
+	"subset.equiv",
+	"subset.neq",
+	"subset.nequiv",
+	"subset.not",
+	"subset.plus",
+	"subset.sq",
+	"subset.sq.neq",
+	"subset.tilde",
+	"subset.times",
+	"succ",
+	"succ.approx",
+	"succ.curly",
+	"succ.curly.eq",
+	"succ.curly.eq.not",
+	"succ.double",
+	"succ.eq",
+	"succ.equiv",
+	"succ.napprox",
+	"succ.neq",
+	"succ.nequiv",
+	"succ.not",
+	"succ.ntilde",
+	"succ.tilde",
+	"supset",
+	"supset.approx",
+	"supset.closed",
+	"supset.closed.eq",
+	"supset.dot",
+	"supset.double",
+	"supset.eq",
+	"supset.eq.dot",
+	"supset.eq.not",
+	"supset.eq.sq",
+	"supset.eq.sq.not",
+	"supset.equiv",
+	"supset.neq",
+	"supset.nequiv",
+	"supset.not",
+	"supset.plus",
+	"supset.sq",
+	"supset.sq.neq",
+	"supset.tilde",
+	"supset.times",
+	"tack",
+	"tack.b.double",
+	"tack.b.short",
+	"tack.bb",
+	"tack.l",
+	"tack.l.double",
+	"tack.l.long",
+	"tack.l.r",
+	"tack.l.short",
+	"tack.ll",
+	"tack.r",
+	"tack.r.double",
+	"tack.r.double.not",
+	"tack.r.long",
+	"tack.r.not",
+	"tack.r.short",
+	"tack.rr",
+	"tack.rr.not",
+	"tack.rrr",
+	"tack.t",
+	"tack.t.double",
+	"tack.t.short",
+	"tack.tt",
+	"therefore",
+	"tilde",
+	"tilde.dot",
+	"tilde.eq",
+	"tilde.eq.not",
+	"tilde.eq.rev",
+	"tilde.equiv",
+	"tilde.equiv.not",
+	"tilde.nequiv",
+	"tilde.not",
+	"tilde.op",
+	"tilde.rev",
+	"tilde.rev.equiv",
+	"tilde.triple",
+]);
+// 大算符：0.11.1 实测 inline 走角标、block(display) 才走上下
 const limits_sy = [
+	// 大算符：0.11.1 实测 inline 走角标、block(display) 才走上下
 	"∏",
 	"∐",
 	"∑",
@@ -153,6 +503,10 @@ const limits_sy = [
 	"⋁",
 	"⋂",
 	"⋃",
+	"⟕",
+	"⟖",
+	"⟗",
+	"⧸",
 	"⨀",
 	"⨁",
 	"⨂",
@@ -160,6 +514,11 @@ const limits_sy = [
 	"⨄",
 	"⨅",
 	"⨆",
+	"⨉",
+	"⨝",
+	"⨼",
+	"⟘",
+	"⨊",
 ];
 for (const i in ss) {
 	for (const j of limits_sy) {
@@ -205,28 +564,54 @@ function is_br(x: tree[0]) {
 	return x && x.value === "br" && x.esc;
 }
 
+const rel_sy = new Set<string>();
+{
+	const taken = new Set<string>();
+	for (const k in ss) {
+		const v = ss[k];
+		if (!rel_names.has(k)) {
+			if (rel_sy.has(v)) taken.add(v); // 角标类符号抢占了关系类的字形
+			continue;
+		}
+		rel_sy.add(v);
+	}
+	for (const c of taken) rel_sy.delete(c);
+}
+
+// display/inline 是整条公式的属性，不是单个节点的：由 toMMLV 在渲染前设置一次，
+// 嵌套子树（如 lr(sum_1^2) 里的 sum）自动继承，无需把标志穿过 40 个 render 调用点。
+let display = true;
+export function setDisplay(d: boolean) {
+	display = d;
+}
+
+export function isDisplay() {
+	return display;
+}
+
 function is_limit(tree: tree) {
 	if (tree.length === 1) {
 		const x = tree[0];
 		if (x.type === "f") {
-			if (limits_f.includes(x.value)) {
-				return true;
-			}
-			if (x.value.split(".").at(0) === "arrow") return true;
-			for (const i of opl) {
-				if (i.limits && x.value === i.id) {
-					return true;
+			// 只有裸符号才算子；`tilde(x)` 这类调用里 x.value 同名但不是运算符本体
+			if (!x.children || x.children.length === 0) {
+				if (rel_names.has(x.value)) return true;
+				if (limits_f.includes(x.value)) return display;
+				if (x.value.split(".").at(0) === "arrow") return true;
+				for (const i of opl) {
+					if (i.limits && x.value === i.id) return display;
 				}
 			}
 			if (x.value === "scripts") return false;
 			if (x.value === "limits") return true;
 			if (x.value === "op") {
 				const { dic } = f_attr(x);
-				return is_true(dic.limits);
+				return is_true(dic.limits) && display;
 			}
 		}
-		if (x.type === "v" && limits_sy.includes(x.value)) {
-			return true;
+		if (x.type === "v") {
+			if (rel_sy.has(x.value)) return true;
+			if (limits_sy.includes(x.value)) return display;
 		}
 	} else {
 		return false;

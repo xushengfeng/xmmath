@@ -4,6 +4,8 @@ vitest作为测试 pnpm安装
 
 symbols和emoji与上游同步到0.15.1，src语法解析渲染与上游同步到0.11.1
 
+任何语法解析严格参照0.11.1，除非进行版本升级任务
+
 语法解析后用vdom渲染，最后才是mathml，可能需要css实现更多装饰
 
 火狐浏览器渲染的mathml不错，其他浏览器多少有细节问题
@@ -21,3 +23,5 @@ pnpm review 打开 test/review/index.html，只做对照不记录反馈：每例
 旧的人类测试 test/typst/more_test.html 保留作历史参考，现改为读 math.json，需经 pnpm dev 打开（/test/typst/more_test.html）
 
 sync:symbols脚本用于同步emoji和symbols，render:typst可以自定typst版本，查看官方标准渲染结果的图片
+
+版本升级任务（动 version.lan 之前）先读 docs/math-syntax-typst-diff.md 第 8 节：`_`/`^` 上下位置规则的源码坐标（0.11.1 vs 0.15.1）、帧宽差探针脚本与判据、0.11→0.15 的 11 个字符漂移清单；升级后先重跑探针、再改 src/normalize.ts 的 rel_names 及其注释

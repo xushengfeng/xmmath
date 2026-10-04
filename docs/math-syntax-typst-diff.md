@@ -156,3 +156,106 @@
 - codex 符号数据：`https://github.com/typst/codex/blob/v0.3.0/{CHANGELOG.md,src/modules/sym.txt,src/modules/emoji.txt}`
 
 > 唯一未证实项（据实说明）：v0.11.1 下单个 `~` 的确切输出未在 changelog 与可定位源码中找到，故 0.12 的 `~` 重绑以"绑定发生变化"表述，其余均有来源佐证。
+
+---
+
+## 8. 版本升级操作：`_`/`^` 上下位置（`rel_names`）的规则同步
+
+> 适用：任何把 `version.lan` 从 0.11.1 上调的**版本升级任务**。平时只 `sync:symbols`（数据层）**不用**动本节。
+> 关联代码：`src/normalize.ts` → `rel_names` + `is_limit`；该集合上方注释记录了 2026-10-05 的核对结论与本节 8.4 的漂移清单。
+> 判定链：**符号名 → 字符 → 官方数学类 → `limits`（正上正下）还是 `scripts`（右上右下）**。运行时真源只有 `rel_names` 一份，Unicode 类表只在核对时临时用，不进 `src`。
+
+### 8.1 规则写在哪（源码坐标随版本搬家）
+
+| | v0.11.1（现基线） | v0.15.1 |
+|---|---|---|
+| 规则本体 | `crates/typst/src/math/attach.rs :: Limits::for_char` (:202) · `for_class` (:217) | `crates/typst-library/src/math/attach.rs :: Limits::for_char` (:160) → `for_char_with_class` (:165) |
+| class 输入 | **直接查底表** `unicode_math_class::class(c)` | `crates/typst-utils/src/lib.rs:385 :: default_math_class(c)`：typst 自己的逐字符 override 表（`':'`→Relation、`'⋯⋱⋰⋮'`→Normal、`'⊥'`→Normal、`'⟇'`→Binary、`'⎰⟅'`→Opening、`'⎱⟆'`→Closing、`'⅋'`→Binary…，每条挂 issue/PR 链接），末尾才 fallback 底表 |
+| 调用点 | `crates/typst/src/math/fragment.rs :: Glyph::with_id:269`（`limits: Limits::for_char(c)`）；同函数 :249-255 的 `':'`/`'⋯⋮⋱⋰'` 特例**只进间距 class，不进 limits** | `crates/typst-layout/src/math/ir/item.rs:957-958`（`class = default_math_class(c); limits = for_char_with_class(c, class)`）——特例**同时进了 limits** |
+| 底表 | `Cargo.lock → unicode-math-class 0.1.0`（MathClass-15.txt, rev 15） | 同版本、同 checksum（**底表没变**） |
+| 手动强制入口 | `crates/typst/src/math/class.rs:42` `set_limits(Limits::for_class(class))` | `crates/typst-library/src/math/ir/resolve.rs:1198` 同式 |
+
+**规则形状两版一致**：`Relation → Always`（上下，与 display 无关）/ `Large → Display`（积分特例 `Never`）/ 其余 `Never`。
+→ 会漂移的从来不是这条 `match`，而是**喂给它的 class**：0.11 只把 typst 的字符特例写在间距路径上，0.15 把它们并进了 `default_math_class`，于是 limits 跟着变。
+
+### 8.2 升级流程（读 diff → 导出名单 → 改 `rel_names`）
+
+```bash
+OLD=v0.11.1 NEW=v0.15.1
+git diff $OLD..$NEW -- '**/math/attach.rs'                       # ① 规则形状
+git diff $OLD..$NEW -- crates/typst-utils/src/lib.rs              # ② class 输入（0.15 起；0.11 看 fragment.rs::Glyph::with_id）
+git diff $OLD..$NEW -- Cargo.lock | grep -A2 unicode-math-class   # ③ 底表版本
+pnpm sync:symbols                                                 # ④ 新符号名 → 决定 rel_names 候选集合
+TYPST_BIN=~/.cache/xmmath/typst/$NEW/typst node <探针>            # ⑤ 导出实测表（见 8.3）
+```
+
+⑤ 的输出与 ①②③ 对齐后，改 `src/normalize.ts` 的 `rel_names` 及其注释（版本、日期、漂移清单），再走 AGENTS.md 的快照流程：`pnpm test` 变红 → `pnpm snap:update` → `pnpm review:changes` → `pnpm review` 逐例看图。
+
+### 8.3 为什么非重跑实测不可（要重跑，不用重新设计）
+
+1. **typst 没暴露 class/limits 查询**：`query` 只能取 `metadata`、`eval` 读不到内部属性，「哪些字符落在哪一档」只能靠一次实测导出成名单。
+2. **漂移可能是行为级而非档位级**：0.15.1 把 `⟅`/`⎰` 归 `Opening` 后 `$⟅_1^2$` 直接 `error: unexpected underscore`（附着被语法禁止），读表看不出来，只有编译一次才知道。
+3. **探针要自校准**：判据依赖布局的宽度公式（0.15 把布局搬到 `typst-layout`），每次都要带控制组，控制组翻了就是公式变了、判据得重写。
+
+判据来自同一份源码，是**帧宽差**而非尺寸比例：
+
+| 模式 | 附着后的帧宽 | 源码 |
+|---|---|---|
+| `limits` | `max(底座宽, 附着宽)`（上下附着居中叠放） | `attach_top_and_bottom` |
+| `scripts` | `底座宽 + 附着宽 + space_after_script` | `layout_attachments` |
+
+自包含探针（脚注用 20 位数字保证 `附着宽 ≫ 底座宽`；`wref` 基准取 `+`，官方 class=Vary ⇒ 必走 scripts）：
+
+```js
+// 存成 rel-probe.mjs：TYPST_BIN=~/.cache/xmmath/typst/v0.15.1/typst node rel-probe.mjs '<' '≈' ':' …
+import { writeFileSync } from "node:fs";
+import { spawnSync } from "node:child_process";
+const BIN = process.env.TYPST_BIN;
+const S = "01234567890123456789";
+const chars = process.argv.slice(2); // 由 rel_names ∪ 官方 Relation 名展开；关系符号里没有 \ $ # _ ^ { } 等需转义字符
+writeFileSync(
+	"/tmp/rel-probe.typ",
+	"#set page(width: auto, height: auto, margin: 5pt)\n" +
+		chars
+			.map(
+				(c) => `#context {
+  let wref = measure($ +_${S}^${S} $).width - measure($ + $).width
+  let w = measure($ ${c} $).width
+  let a = measure($ ${c}_${S}^${S} $).width
+  [#metadata((w: w, d: a - w - wref)) <p>]
+}`,
+			)
+			.join("\n"),
+);
+const r = spawnSync(BIN, ["query", "/tmp/rel-probe.typ", "<p>", "--field", "value"], {
+	encoding: "utf8",
+});
+if (r.status !== 0) {
+	console.error(r.stderr);
+	process.exit(1);
+}
+JSON.parse(r.stdout).forEach((x, i) => {
+	const w = parseFloat(x.w);
+	const d = parseFloat(x.d);
+	console.log(chars[i], d < -w / 2 ? "limits" : "scripts", `w=${w} d=${d}`);
+});
+```
+
+判定 `d < -w/2` ⇒ `limits`（limits 下 `d ≈ -(w+space)`，scripts 下 `d ≈ 0`）。**2026-10-05 实测裕度：limits 组 `d/(-w/2) ≥ 2.07`、scripts 组 `0.00`，两组中间是空的**，无临界样本。控制组：`<`、`≈` 必须 limits；`+`、`:`（0.11.1 下）必须 scripts。
+
+### 8.4 0.11.1 → 0.15.1 实测漂移清单（11 个字符，升级时的核对起点）
+
+| 字符 | 0.11.1 | 0.15.1 | 0.15 起因（`default_math_class`） |
+|---|---|---|---|
+| `:` | scripts | **limits** | `':' → Relation`（commit 2e039cb；0.11 只在间距路径有此特例） |
+| `⋯ ⋱ ⋰ ⋮` | limits | scripts | `→ Normal`（PR 1726） |
+| `⊥` | limits | scripts | `→ Normal`（PR 5714，与 `⟂` 区分） |
+| `⟇` | limits | scripts | `→ Binary`（issue 5764） |
+| `⎱ ⟆` | limits | scripts | `→ Closing`（issue 5764） |
+| `⟅ ⎰` | limits | ❌ `error: unexpected underscore` | `→ Opening`，Opening 底座不可附着 |
+
+对 `rel_names` 的落点（真升级时）：`colon` 要**加回**；`bag` `bag.l` `bag.r` `mustache` `mustache.l` `mustache.r` `bot` `tack.t` `dots` `dots.h.c` `dots.v` `dots.down` `dots.up` `or.dot` 共 **14 项**需删/改判（前 4 项还牵涉"是否允许附着"的裁决）；`bowtie` `harpoon` `harpoons` `parallel.slanted` `prec.curly` `succ.curly` `tack` `tilde` **8 项**跨版本稳定。
+
+### 8.5 现状与待办
+
+- 8.3 的探针是**一次性脚本，不入库**；判据、源码坐标、漂移清单都在本文档，升级时照 8.3 现场重建（几分钟的事）。

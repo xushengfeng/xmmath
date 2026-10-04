@@ -45,3 +45,61 @@ describe("custom - 已知缺陷（修好前用 it.fails 占位）", () => {
 		expect(arityOf("munder", "underline(x)")).toEqual([2]);
 	});
 });
+
+describe("custom - display/inline 上下文", () => {
+	const html = (s: string, inline: boolean) => toHtml(toMMLV(s, inline));
+
+	it("大算符只在 display 走上下，inline 走角标", () => {
+		expect(html("sum_1^2", false)).toContain("<munderover>");
+		expect(html("sum_1^2", true)).toContain("<msubsup>");
+	});
+
+	it("嵌套在 lr/abs/sqrt/mat 里的子树继承同一模式", () => {
+		for (const s of [
+			"lr(sum_1^2)",
+			"abs(sum_1^2)",
+			"sqrt(sum_1^2)",
+			"mat(sum_1^2, 2)",
+		]) {
+			expect(html(s, true), s).toContain("<msubsup>");
+			expect(html(s, false), s).toContain("<munderover>");
+		}
+	});
+
+	it("mat/vec 单元格始终居中，与 display 无关", () => {
+		for (const inline of [true, false])
+			expect(html("vec(1, 222222)", inline)).toContain('columnalign="center"');
+	});
+
+	it("关系类算子的上下不受模式影响", () => {
+		for (const inline of [true, false])
+			expect(html('a =^"def" c', inline), String(inline)).toContain(
+				"<munderover>",
+			);
+	});
+
+	it("函数调用形式的同名符号不算运算符本体（tilde(x) 的脚本走角标）", () => {
+		expect(html("tilde(integral)_a^b", false)).toContain("<msubsup>");
+	});
+});
+
+describe("custom - 关系/箭头类的上下判定（语料无覆盖，靠这里兜住）", () => {
+	const html = (s: string) => toHtml(toMMLV(s, false));
+
+	it("tack/harpoon/arrows/tilde 变体作基底时脚本走上下", () => {
+		for (const base of [
+			"tack.r",
+			"tack.l",
+			"harpoon.rt",
+			"harpoons.rtlb",
+			"arrows.rr",
+			"tilde.equiv",
+			"dash.colon",
+		])
+			expect(html(`a ${base}^b c`), base).toMatch(/<m(over|underover)/);
+	});
+
+	it("同族符号的脚本仍可被 scripts() 强制回角标", () => {
+		expect(html("a scripts(tack.r)^b c")).toContain("<msup>");
+	});
+});
