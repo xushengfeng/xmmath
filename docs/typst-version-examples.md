@@ -249,6 +249,7 @@ $pi(1, 2)$   // 实测：OK；0.15 起 pi 非函数时不渲染为调用
 ```bash
 npm run render:typst -- --typst v0.12.0 --expr 'mat(delim: "||", 1, 2; 3, 4)' --json
 npm run render:typst -- --expr 'arrow.r(x, y: 1)' --json        # 当前系统 typst
+npm run render:typst -- --expr 'sum_(i=1)^n i' --inline --json   # 行内 $…$（默认是块级 $ … $）
 npm run render:typst -- --code $'#set page(width:auto,height:auto)\n$accent(i, hat, dotless: #true)$' --out /tmp/m.png
 ```
-> 注意：`--typst <旧版本>` 需能下载对应 release 二进制；本网络下载 GitHub release 会超时，旧版本核验请预先缓存或 `--bin` 指定本地二进制。`--expr` 会自动包进 `$ … $`，代码模式请用 `--code`/`--file`。
+> 注意：`--typst <旧版本>` 需能下载对应 release 二进制；本网络下载 GitHub release 会超时，旧版本核验请预先缓存或 `--bin` 指定本地二进制。`--expr` 会自动包进 `$ … $`（块级），加 `--inline` 改成 `$…$`（行内）——typst 只按 `$` 旁空白判定 inline/block，与独占一行无关；代码模式请用 `--code`/`--file`。

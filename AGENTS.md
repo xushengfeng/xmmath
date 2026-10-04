@@ -24,6 +24,8 @@ pnpm review 打开 test/review/index.html，只做对照不记录反馈：每例
 
 sync:symbols脚本用于同步emoji和symbols
 
-render:typst可以自定typst版本，查看官方标准渲染结果的图片，如 `pnpm run render:typst --typst v0.11.1 --expr '1+1' 注意inline和block
+render:typst可以自定typst版本，查看官方标准渲染结果的图片，如 `pnpm run render:typst --typst v0.11.1 --expr '1+1' 注意inline和block——`--expr` 默认包成 `$ … $`（块级 display），加 `--inline` 才是 `$…$`（行内）；typst 只看 `$` 旁有没有空白，与独占一行、`#box` 无关
+
+render:xmmath用本库渲染同一表达式做对照：`pnpm render:xmmath --expr 'sum_(i=1)^n i' [--inline]`，默认出 PNG（`--out` 扩展名或 `--format` 可换 html，html 只写 MathML+CSS 不需要浏览器）；PNG 默认走**无头 firefox**（`--bin`/`$XMMATH_BROWSER` 可换，chrome 会自动加 `--no-sandbox` 重试），两趟：本机 http 上的页面在字体 ready 后才显示并回报自身盒尺寸（firefox 没有 `--dump-dom`，spawn 必须异步否则 server 卡死收不到回报）→ 按该窗口截图；`--dpi` 默认 150 用 CSS `zoom` 放大（firefox 忽略 `layout.css.devPixelsPerPx`、也没有 `--force-device-scale-factor`）；`--size WxH` 跳过测量用固定窗口，四周留白可接受、任何情况都不裁剪
 
 版本升级任务（动 version.lan 之前）先读 docs/math-syntax-typst-diff.md 第 8 节：`_`/`^` 上下位置规则的源码坐标（0.11.1 vs 0.15.1）、帧宽差探针脚本与判据、0.11→0.15 的 11 个字符漂移清单；升级后先重跑探针、再改 src/normalize.ts 的 rel_names 及其注释

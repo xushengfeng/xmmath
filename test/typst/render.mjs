@@ -10,6 +10,9 @@
 //   # Pin a specific typst version (downloads + caches the release binary):
 //   node test/typst/render.mjs --typst v0.12.0 --expr 'mat(delim: "||", 1, 2; 3, 4)'
 //
+//   # Inline math instead of the default block math ($…$ vs $ … $):
+//   node test/typst/render.mjs --expr 'sum_(i=1)^n i' --inline
+//
 //   # Use an explicit binary:
 //   node test/typst/render.mjs --bin /usr/bin/typst --code '$√2$'
 //
@@ -31,6 +34,7 @@ function parseArgs(argv) {
 		const next = () => argv[++i];
 		switch (a) {
 			case "--expr": o.expr = next(); break;
+			case "--inline": o.inline = true; break;
 			case "--code": o.code = next(); break;
 			case "--file": o.file = next(); break;
 			case "--out": o.out = next(); break;
@@ -54,6 +58,8 @@ function parseArgs(argv) {
 const HELP = `typst render -> PNG (for AI inspection)
 
   --expr <str>    bare math/text expression, auto-wrapped into a standalone doc
+  --inline        with --expr: wrap as $…$ (inline math) instead of $ … $ (block math)
+                  (typst picks inline/block by the whitespace next to $, not by line layout)
   --code <str>    full typst source (used verbatim)
   --file <path>   read typst source from a file
   --out <path>    output PNG path (default: <cache>/render-<n>.png)
@@ -183,10 +189,13 @@ function buildSource(opts) {
 	if (opts.code != null) return opts.code;
 	if (opts.expr != null) {
 		if (!opts.wrap) return opts.expr;
+		// typst decides inline vs block by the whitespace next to `$`: "$ … $" is
+		// block (display), "$…$" is inline — independent of line/paragraph layout.
+		const math = opts.inline ? `$${opts.expr.trim()}$` : `$ ${opts.expr} $`;
 		return [
 			"#set page(width: auto, height: auto, margin: 6pt)",
 			"#set text(size: 14pt)",
-			`$ ${opts.expr} $`,
+			math,
 		].join("\n");
 	}
 	return null;
