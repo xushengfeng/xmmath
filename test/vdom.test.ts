@@ -3,6 +3,7 @@
 import { describe, it, expect } from "vitest";
 import { toMMLV, toMMLHTML } from "../src/main.js";
 import { toHtml, type VEl } from "../src/vdom.js";
+import { allCases, knownBroken } from "./corpus/_shared.js";
 
 describe("vdom render - no DOM required", () => {
 	it("document is undefined in this environment", () => {
@@ -43,32 +44,14 @@ describe("vdom render - no DOM required", () => {
 	});
 
 	it("full corpus serializes without throwing (except known unimplemented)", () => {
-		const cases = loadCorpus();
-		let threw = 0;
-		for (const { text } of cases) {
+		const threw: string[] = [];
+		for (const { id, text } of allCases()) {
 			try {
 				toMMLHTML(text);
 			} catch {
-				threw++;
+				threw.push(id);
 			}
 		}
-		// only the handful of unimplemented-function crashes are allowed
-		expect(threw).toBeLessThanOrEqual(5);
+		expect(threw.sort()).toEqual([...knownBroken].sort());
 	});
 });
-
-function loadCorpus(): { text: string; category: string }[] {
-	const cases: { text: string; category: string }[] = [];
-	try {
-		const fs = require("fs");
-		const path = require("path");
-		const code = fs.readFileSync(path.resolve(__dirname, "typst/math.js"), "utf8");
-		const data = new Function(`${code}; return test;`)();
-		for (const [category, items] of Object.entries(data)) {
-			for (const item of items as { text: string }[]) cases.push({ text: item.text, category });
-		}
-	} catch {
-		/* corpus unavailable */
-	}
-	return cases;
-}

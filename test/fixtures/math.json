@@ -1,0 +1,2481 @@
+{
+	"meta": {
+		"source": "typst tests/suite/math（test/typst/get.mjs 抽取）",
+		"categories": 23,
+		"cases": 412
+	},
+	"cases": [
+		{
+			"id": "accent-01",
+			"cat": "accent",
+			"text": "grave(a), acute(b), hat(f), tilde(§), macron(ä), diaer(a), ä \\\n breve(\\&), dot(!), circle(a), caron(@), arrow(Z), arrow.l(Z)",
+			"block": false
+		},
+		{
+			"id": "accent-02",
+			"cat": "accent",
+			"text": "x &= p \\ dot(x) &= v \\ dot.double(x) &= a \\ dot.triple(x) &= j \\ dot.quad(x) &= s",
+			"block": true
+		},
+		{
+			"id": "accent-03",
+			"cat": "accent",
+			"text": "accent(ö, .), accent(v, <-), accent(ZZ, \\u{0303})",
+			"block": false
+		},
+		{
+			"id": "accent-04",
+			"cat": "accent",
+			"text": "sqrt(tilde(T)) + hat(f)/hat(g)",
+			"block": false
+		},
+		{
+			"id": "accent-05",
+			"cat": "accent",
+			"text": "arrow(\"ABC\" + d), tilde(sum)",
+			"block": false
+		},
+		{
+			"id": "accent-06",
+			"cat": "accent",
+			"text": "A^x != hat(A)^x != hat(hat(A))^x",
+			"block": false
+		},
+		{
+			"id": "accent-07",
+			"cat": "accent",
+			"text": "tilde(integral), tilde(integral)_a^b, tilde(integral_a^b)",
+			"block": true
+		},
+		{
+			"id": "accent-08",
+			"cat": "accent",
+			"text": "tilde(sum), tilde(sum, size: #50%), accent(H, hat, size: #200%)",
+			"block": false
+		},
+		{
+			"id": "alignment-01",
+			"cat": "alignment",
+			"text": "\"a\" &= c \\\n&= c + 1 & \"By definition\" \\\n&= d + 100 + 1000 \\\n&= x && \"Even longer\" \\",
+			"block": true
+		},
+		{
+			"id": "alignment-02",
+			"cat": "alignment",
+			"text": "& \"right\" \\\n\"a very long line\" \\\n\"left\" \\",
+			"block": true
+		},
+		{
+			"id": "alignment-03",
+			"cat": "alignment",
+			"text": "\"right\" \\\n\"a very long line\" \\\n\"left\" \\",
+			"block": true
+		},
+		{
+			"id": "alignment-04",
+			"cat": "alignment",
+			"text": "a &=b & quad c&=d \\\ne &=f & g&=h",
+			"block": true
+		},
+		{
+			"id": "alignment-05",
+			"cat": "alignment",
+			"text": "a + b &= c \\\n      e &= f + g + h",
+			"block": true
+		},
+		{
+			"id": "alignment-06",
+			"cat": "alignment",
+			"text": "a &= b + c \\\n  e + f + g &= h",
+			"block": true
+		},
+		{
+			"id": "attach-01",
+			"cat": "attach",
+			"text": "f_x + t^b + V_1^2 + attach(A, t: alpha, b: beta)",
+			"block": false
+		},
+		{
+			"id": "attach-02",
+			"cat": "attach",
+			"text": "attach(upright(O), bl: 8, tl: 16, br: 2, tr: 2-),\nattach(\"Pb\", bl: 82, tl: 207) + attach(upright(e), bl: -1, tl: 0) + macron(v)_e \\",
+			"block": true
+		},
+		{
+			"id": "attach-03",
+			"cat": "attach",
+			"text": "attach(a, tl: u),   attach(a, tr: v),   attach(a, bl: x),\nattach(a, br: y),   limits(a)^t,        limits(a)_b \\\n\nattach(a, tr: v, t: t),\nattach(a, tr: v, br: y),\nattach(a, br: y, b: b),\nattach(limits(a), b: b, bl: x),\nattach(a, tl: u, bl: x),\nattach(limits(a), t: t, tl: u) \\\n\nattach(a, tl: u, tr: v),\nattach(limits(a), t: t, br: y),\nattach(limits(a), b: b, tr: v),\nattach(a, bl: x, br: y),\nattach(limits(a), b: b, tl: u),\nattach(limits(a), t: t, bl: u),\nlimits(a)^t_b \\\n\nattach(a, tl: u, tr: v, bl: x, br: y),\nattach(limits(a), t: t, bl: x, br: y, b: b),\nattach(limits(a), t: t, tl: u, tr: v, b: b),\nattach(limits(a), tl: u, bl: x, t: t, b: b),\nattach(limits(a), t: t, b: b, tr: v, br: y),\nattach(a, tl: u, t: t, tr: v, bl: x, b: b, br: y)",
+			"block": true
+		},
+		{
+			"id": "attach-04",
+			"cat": "attach",
+			"text": "pi_1(Y), a_f(x), a^zeta (x), a^abs(b)_sqrt(c) \\\n a^subset.eq (x), a_(zeta(x)), pi_(1(Y)), a^(abs(b))_(sqrt(c))",
+			"block": false
+		},
+		{
+			"id": "attach-05",
+			"cat": "attach",
+			"text": "1/(V^2^3^4^5),\n  frac(\n    attach(\n      limits(V), br: attach(2, br: 3), b: attach(limits(2), b: 3)),\n    attach(\n      limits(V), tl: attach(2, tl: 3), t: attach(limits(2), t: 3))),\n  attach(Omega,\n    tl: attach(2, tl: attach(3, tl: attach(4, tl: 5))),\n    tr: attach(2, tr: attach(3, tr: attach(4, tr: 5))),\n    bl: attach(2, bl: attach(3, bl: attach(4, bl: 5))),\n    br: attach(2, br: attach(3, br: attach(4, br: 5))),\n  )",
+			"block": true
+		},
+		{
+			"id": "attach-06",
+			"cat": "attach",
+			"text": "sqrt(a_(1/2)^zeta), sqrt(a_alpha^(1/2)), sqrt(a_(1/2)^(3/4)) \\\n  sqrt(attach(a, tl: 1/2, bl: 3/4)),\n  sqrt(attach(a, tl: 1/2, bl: 3/4, tr: 1/2, br: 3/4))",
+			"block": true
+		},
+		{
+			"id": "attach-07",
+			"cat": "attach",
+			"text": "sup_(x in P_i) quad inf_(x in P_i)",
+			"block": true
+		},
+		{
+			"id": "attach-08",
+			"cat": "attach",
+			"text": "op(\"fff\",limits: #true)^(y) quad op(\"yyy\", limits:#true)_(f)",
+			"block": true
+		},
+		{
+			"id": "attach-09",
+			"cat": "attach",
+			"text": "(-1)^n + (1/2 + 3)^(-1/2)",
+			"block": true
+		},
+		{
+			"id": "attach-10",
+			"cat": "attach",
+			"text": "x_1 p_1 frak(p)_1 2_1 dot_1 lg_1 !_1 \\\\_1 ]_1 \"ip\"_1 op(\"iq\")_1 \\\n  x^1 b^1 frak(b)^1 2^1 dot^1 lg^1 !^1 \\\\^1 ]^1 \"ib\"^1 op(\"id\")^1 \\\n  x_1 y_1 \"_\"_1 x^1 l^1 \"`\"^1 attach(I,tl:1,bl:1,tr:1,br:1)\n  scripts(sum)_1^1 integral_1^1 abs(1/2)_1^1 \\\n  x^1_1, \"(\"b y\")\"^1_1 != (b y)^1_1, \"[∫]\"_1 [integral]_1",
+			"block": true
+		},
+		{
+			"id": "attach-11",
+			"cat": "attach",
+			"text": "lim_(n->oo \\ n \"grows\") sum_(k=0 \\ k in NN)^n k",
+			"block": true
+		},
+		{
+			"id": "attach-12",
+			"cat": "attach",
+			"text": "limits(A)_1^2 != A_1^2",
+			"block": true
+		},
+		{
+			"id": "attach-13",
+			"cat": "attach",
+			"text": "scripts(sum)_1^2 != sum_1^2",
+			"block": true
+		},
+		{
+			"id": "attach-14",
+			"cat": "attach",
+			"text": "limits(integral)_a^b != integral_a^b",
+			"block": true
+		},
+		{
+			"id": "attach-15",
+			"cat": "attach",
+			"text": "attach(A, t: #context oops)",
+			"block": true
+		},
+		{
+			"id": "attach-16",
+			"cat": "attach",
+			"text": "∫_a^b iota_a^b",
+			"block": true
+		},
+		{
+			"id": "attach-17",
+			"cat": "attach",
+			"text": "iota_a^b",
+			"block": false
+		},
+		{
+			"id": "attach-18",
+			"cat": "attach",
+			"text": "a =^\"def\" b quad a lt.eq_\"really\" b quad  a arrow.r.long.squiggly^\"slowly\" b",
+			"block": true
+		},
+		{
+			"id": "attach-19",
+			"cat": "attach",
+			"text": "a =^\"def\" b quad a lt.eq_\"really\" b quad a arrow.r.long.squiggly^\"slowly\" b",
+			"block": false
+		},
+		{
+			"id": "attach-20",
+			"cat": "attach",
+			"text": "a scripts(=)^\"def\" b quad a scripts(lt.eq)_\"really\" b quad a scripts(arrow.r.long.squiggly)^\"slowly\" b",
+			"block": false
+		},
+		{
+			"id": "attach-21",
+			"cat": "attach",
+			"text": "integral.sect_a^b  quad \\u{2a1b}_a^b quad limits(\\u{2a1b})_a^b",
+			"block": true
+		},
+		{
+			"id": "attach-22",
+			"cat": "attach",
+			"text": "integral.sect_a^b quad \\u{2a1b}_a^b quad limits(\\u{2a1b})_a^b",
+			"block": false
+		},
+		{
+			"id": "attach-23",
+			"cat": "attach",
+			"text": "tack.t.big_0^1 quad \\u{02A0A}_0^1 quad join_0^1",
+			"block": true
+		},
+		{
+			"id": "attach-24",
+			"cat": "attach",
+			"text": "tack.t.big_0^1 quad \\u{02A0A}_0^1 quad join_0^1",
+			"block": false
+		},
+		{
+			"id": "call-01",
+			"cat": "call",
+			"text": "pi(a)",
+			"block": true
+		},
+		{
+			"id": "call-02",
+			"cat": "call",
+			"text": "pi(a,)",
+			"block": true
+		},
+		{
+			"id": "call-03",
+			"cat": "call",
+			"text": "pi(a,b)",
+			"block": true
+		},
+		{
+			"id": "call-04",
+			"cat": "call",
+			"text": "pi(a,b,)",
+			"block": true
+		},
+		{
+			"id": "call-05",
+			"cat": "call",
+			"text": "args(a)",
+			"block": false
+		},
+		{
+			"id": "call-06",
+			"cat": "call",
+			"text": "args(a,)",
+			"block": false
+		},
+		{
+			"id": "call-07",
+			"cat": "call",
+			"text": "args(a,b)",
+			"block": false
+		},
+		{
+			"id": "call-08",
+			"cat": "call",
+			"text": "args(a,b,)",
+			"block": false
+		},
+		{
+			"id": "call-09",
+			"cat": "call",
+			"text": "args(,a,b,,,)",
+			"block": false
+		},
+		{
+			"id": "call-10",
+			"cat": "call",
+			"text": "pi(a;b)",
+			"block": true
+		},
+		{
+			"id": "call-11",
+			"cat": "call",
+			"text": "mat(#\"math\" ; \"wins\")",
+			"block": true
+		},
+		{
+			"id": "call-12",
+			"cat": "call",
+			"text": "mat(#\"code\"; \"wins\")",
+			"block": true
+		},
+		{
+			"id": "call-13",
+			"cat": "call",
+			"text": "args(a;b)",
+			"block": false
+		},
+		{
+			"id": "call-14",
+			"cat": "call",
+			"text": "args(a,b;c)",
+			"block": false
+		},
+		{
+			"id": "call-15",
+			"cat": "call",
+			"text": "args(a,b;c,d;e,f)",
+			"block": false
+		},
+		{
+			"id": "call-16",
+			"cat": "call",
+			"text": "args( a; b; )",
+			"block": false
+		},
+		{
+			"id": "call-17",
+			"cat": "call",
+			"text": "args(a;  ; c)",
+			"block": false
+		},
+		{
+			"id": "call-18",
+			"cat": "call",
+			"text": "args(a b,/**/; b)",
+			"block": false
+		},
+		{
+			"id": "call-19",
+			"cat": "call",
+			"text": "args(a/**/b, ; b)",
+			"block": false
+		},
+		{
+			"id": "call-20",
+			"cat": "call",
+			"text": "args( ;/**/a/**/b/**/; )",
+			"block": false
+		},
+		{
+			"id": "call-21",
+			"cat": "call",
+			"text": "args( ; , ; )",
+			"block": false
+		},
+		{
+			"id": "call-22",
+			"cat": "call",
+			"text": "args(/**/; // funky whitespace/trivia\n    ,   /**/  ;/**/)",
+			"block": false
+		},
+		{
+			"id": "call-23",
+			"cat": "call",
+			"text": "sin(,x,y,,,)",
+			"block": true
+		},
+		{
+			"id": "call-24",
+			"cat": "call",
+			"text": "sin( ,/**/x/**/, , /**/y, ,/**/, )",
+			"block": true
+		},
+		{
+			"id": "call-25",
+			"cat": "call",
+			"text": "args(,x,,y,,)",
+			"block": false
+		},
+		{
+			"id": "call-26",
+			"cat": "call",
+			"text": "args( ,/**/x/**/, , /**/y, ,/**/, )",
+			"block": false
+		},
+		{
+			"id": "call-27",
+			"cat": "call",
+			"text": "sin(1)",
+			"block": true
+		},
+		{
+			"id": "call-28",
+			"cat": "call",
+			"text": "sin(#1)",
+			"block": true
+		},
+		{
+			"id": "call-29",
+			"cat": "call",
+			"text": "x y   &&quad     x (y z)   &quad     x y^z  \\\n  id(x y)  &&quad  id(x (y z))  &quad  id(x y^z) \\\n  eq(x y)  &&quad  eq(x (y z))  &quad  eq(x y^z) \\\n  bx(x y)  &&quad  bx(x (y z))  &quad  bx(x y^z) \\",
+			"block": true
+		},
+		{
+			"id": "call-30",
+			"cat": "call",
+			"text": "mat(;,)",
+			"block": true
+		},
+		{
+			"id": "call-31",
+			"cat": "call",
+			"text": "mat(; ,)",
+			"block": true
+		},
+		{
+			"id": "call-32",
+			"cat": "call",
+			"text": "mat(;/**/,)",
+			"block": true
+		},
+		{
+			"id": "call-33",
+			"cat": "call",
+			"text": "mat(;\n,)",
+			"block": true
+		},
+		{
+			"id": "call-34",
+			"cat": "call",
+			"text": "mat(;// line comment\n,)",
+			"block": true
+		},
+		{
+			"id": "call-35",
+			"cat": "call",
+			"text": "mat(\n  1, , ;\n   ,1, ;\n   , ,1;\n)",
+			"block": true
+		},
+		{
+			"id": "cancel-01",
+			"cat": "cancel",
+			"text": "a + 5 + cancel(x) + b - cancel(x)",
+			"block": false
+		},
+		{
+			"id": "cancel-02",
+			"cat": "cancel",
+			"text": "c + (a dot.c cancel(b dot.c c))/(cancel(b dot.c c))",
+			"block": false
+		},
+		{
+			"id": "cancel-03",
+			"cat": "cancel",
+			"text": "a + b + cancel(b + c) - cancel(b) - cancel(c) - 5 + cancel(6) - cancel(6)",
+			"block": true
+		},
+		{
+			"id": "cancel-04",
+			"cat": "cancel",
+			"text": "e + (a dot.c cancel((b + c + d)))/(cancel(b + c + d))",
+			"block": true
+		},
+		{
+			"id": "cancel-05",
+			"cat": "cancel",
+			"text": "a + cancel(x, inverted: #true) - cancel(x, inverted: #true) + 10 + cancel(y) - cancel(y)",
+			"block": false
+		},
+		{
+			"id": "cancel-06",
+			"cat": "cancel",
+			"text": "x + cancel(\"abcdefg\", inverted: #true)",
+			"block": true
+		},
+		{
+			"id": "cancel-07",
+			"cat": "cancel",
+			"text": "a + cancel(b + c + d, cross: #true, stroke: #red) + e",
+			"block": false
+		},
+		{
+			"id": "cancel-08",
+			"cat": "cancel",
+			"text": "a + cancel(b + c + d, cross: #true) + e",
+			"block": true
+		},
+		{
+			"id": "cancel-09",
+			"cat": "cancel",
+			"text": "a + cancel(x, length: #200%) - cancel(x, length: #50%, stroke: #(red + 1.1pt))",
+			"block": false
+		},
+		{
+			"id": "cancel-10",
+			"cat": "cancel",
+			"text": "b + cancel(x, length: #150%) - cancel(a + b + c, length: #50%, stroke: #(blue + 1.2pt))",
+			"block": true
+		},
+		{
+			"id": "cancel-11",
+			"cat": "cancel",
+			"text": "cancel(x, angle: #0deg) + cancel(x, angle: #45deg) + cancel(x, angle: #90deg) + cancel(x, angle: #135deg)",
+			"block": false
+		},
+		{
+			"id": "cancel-12",
+			"cat": "cancel",
+			"text": "x + cancel(y, angle: #{angle => angle + 90deg}) - cancel(z, angle: #(angle => angle + 135deg))",
+			"block": false
+		},
+		{
+			"id": "cancel-13",
+			"cat": "cancel",
+			"text": "e + cancel((j + e)/(f + e)) - cancel((j + e)/(f + e), angle: #(angle => angle + 30deg))",
+			"block": true
+		},
+		{
+			"id": "cases-01",
+			"cat": "cases",
+			"text": "f(x, y) := cases(\n  1 quad &\"if\" (x dot y)/2 <= 0,\n  2 &\"if\" x divides 2,\n  3 &\"if\" x in NN,\n  4 &\"else\",\n)",
+			"block": true
+		},
+		{
+			"id": "cases-02",
+			"cat": "cases",
+			"text": "x = cases(1, 2)",
+			"block": true
+		},
+		{
+			"id": "class-01",
+			"cat": "class",
+			"text": "a class(\"normal\", +) b \\\n  a class(\"binary\", .) b \\\n  lr(class(\"opening\", \\/) a/b class(\"closing\", \\\\)) \\\n  { x class(\"fence\", \\;) x > 0} \\\n  a class(\"large\", \\/) b \\\n  a class(\"punctuation\", :) b \\\n  a class(\"relation\", ~) b \\\n  a + class(\"unary\", times) b \\\n  class(\"vary\", :) a class(\"vary\", :) b",
+			"block": true
+		},
+		{
+			"id": "class-02",
+			"cat": "class",
+			"text": "a dotsq b \\\n  a class(\"normal\", dotsq) b \\\n  a class(\"vary\", dotsq) b \\\n  a + class(\"vary\", dotsq) b \\\n  a class(\"punctuation\", dotsq) b",
+			"block": true
+		},
+		{
+			"id": "class-03",
+			"cat": "class",
+			"text": "class(\"binary\", normal(+) normal(=))",
+			"block": false
+		},
+		{
+			"id": "class-04",
+			"cat": "class",
+			"text": "a pluseq 5",
+			"block": true
+		},
+		{
+			"id": "class-05",
+			"cat": "class",
+			"text": "sqrt(3)\\/2 quad d_0.d_1d_2 dots",
+			"block": true
+		},
+		{
+			"id": "class-06",
+			"cat": "class",
+			"text": "class(\"normal\", ->)_a",
+			"block": true
+		},
+		{
+			"id": "class-07",
+			"cat": "class",
+			"text": "class(\"relation\", x)_a",
+			"block": false
+		},
+		{
+			"id": "class-08",
+			"cat": "class",
+			"text": "class(\"large\", x)_a",
+			"block": true
+		},
+		{
+			"id": "class-09",
+			"cat": "class",
+			"text": "class(\"large\", ->)_a",
+			"block": false
+		},
+		{
+			"id": "class-10",
+			"cat": "class",
+			"text": "limits(class(\"normal\", ->))_a",
+			"block": false
+		},
+		{
+			"id": "class-11",
+			"cat": "class",
+			"text": "scripts(class(\"relation\", x))_a",
+			"block": true
+		},
+		{
+			"id": "delimited-01",
+			"cat": "delimited",
+			"text": "(a) + {b/2} + abs(a)/2 + (b)",
+			"block": true
+		},
+		{
+			"id": "delimited-02",
+			"cat": "delimited",
+			"text": "f(x/2) < zeta(c^2 + abs(a + b/2))",
+			"block": false
+		},
+		{
+			"id": "delimited-03",
+			"cat": "delimited",
+			"text": "[1,2[ = [1,2) != zeta\\(x/2\\)",
+			"block": false
+		},
+		{
+			"id": "delimited-04",
+			"cat": "delimited",
+			"text": "[|a/b|] != lr(|]a/b|]) != [a/b)",
+			"block": true
+		},
+		{
+			"id": "delimited-05",
+			"cat": "delimited",
+			"text": "lr(| ]1,2\\[ + 1/2|)",
+			"block": true
+		},
+		{
+			"id": "delimited-06",
+			"cat": "delimited",
+			"text": "|x + |y| + z/a| \\\n  lr(|x + |y| + z/a|)",
+			"block": true
+		},
+		{
+			"id": "delimited-07",
+			"cat": "delimited",
+			"text": "bracket.l a/b bracket.r\n  = lr(bracket.l a/b bracket.r)",
+			"block": true
+		},
+		{
+			"id": "delimited-08",
+			"cat": "delimited",
+			"text": "lr(a/b\\]) = a = lr(\\{a/b)",
+			"block": true
+		},
+		{
+			"id": "delimited-09",
+			"cat": "delimited",
+			"text": "lr(]sum_(x=1)^n x], size: #70%)\n  < lr((1, 2), size: #200%)",
+			"block": true
+		},
+		{
+			"id": "delimited-10",
+			"cat": "delimited",
+			"text": "floor(x/2), ceil(x/2), abs(x), norm(x)",
+			"block": false
+		},
+		{
+			"id": "delimited-11",
+			"cat": "delimited",
+			"text": "lr(\n    text(\"(\", fill: #green) a/b\n    text(\")\", fill: #blue)\n  )",
+			"block": true
+		},
+		{
+			"id": "delimited-12",
+			"cat": "delimited",
+			"text": "{ x mid(|) sum_(i=1)^oo phi_i (x) < 1 } \\\n  { integral |dot|\n      mid(bar.v.double)\n    floor(hat(I) mid(slash) { dot mid(|) dot } mid(|) I/n) }",
+			"block": true
+		},
+		{
+			"id": "delimited-13",
+			"cat": "delimited",
+			"text": "1/(2 (x)",
+			"block": true
+		},
+		{
+			"id": "delimited-14",
+			"cat": "delimited",
+			"text": "1_(2 y (x) ()",
+			"block": true
+		},
+		{
+			"id": "delimited-15",
+			"cat": "delimited",
+			"text": "1/(2 y (x) (2(3))",
+			"block": true
+		},
+		{
+			"id": "delimited-16",
+			"cat": "delimited",
+			"text": "[#h(1em, weak: true)A(dif x, f(x) dif x)sum#h(1em, weak: true)]",
+			"block": true
+		},
+		{
+			"id": "equation-01",
+			"cat": "equation",
+			"text": "x",
+			"block": false
+		},
+		{
+			"id": "equation-02",
+			"cat": "equation",
+			"text": "phi.alt := (1 + sqrt(5)) / 2",
+			"block": true
+		},
+		{
+			"id": "equation-03",
+			"cat": "equation",
+			"text": "F_n = round(1 / sqrt(5) phi.alt^n)",
+			"block": true
+		},
+		{
+			"id": "equation-04",
+			"cat": "equation",
+			"text": "v := vec(1 + 2, 2 - 4, sqrt(3), arrow(x)) + 1",
+			"block": true
+		},
+		{
+			"id": "equation-05",
+			"cat": "equation",
+			"text": "sum_(i=0)^n",
+			"block": false
+		},
+		{
+			"id": "equation-06",
+			"cat": "equation",
+			"text": "sum_(i=0)^n",
+			"block": false
+		},
+		{
+			"id": "equation-07",
+			"cat": "equation",
+			"text": "a + b = c",
+			"block": true
+		},
+		{
+			"id": "equation-08",
+			"cat": "equation",
+			"text": "a + b = c",
+			"block": true
+		},
+		{
+			"id": "equation-09",
+			"cat": "equation",
+			"text": "a + b = c",
+			"block": true
+		},
+		{
+			"id": "equation-10",
+			"cat": "equation",
+			"text": "a + b = c",
+			"block": true
+		},
+		{
+			"id": "equation-11",
+			"cat": "equation",
+			"text": "a + b = c",
+			"block": true
+		},
+		{
+			"id": "equation-12",
+			"cat": "equation",
+			"text": "a + b = c",
+			"block": true
+		},
+		{
+			"id": "equation-13",
+			"cat": "equation",
+			"text": "a + b = c",
+			"block": true
+		},
+		{
+			"id": "equation-14",
+			"cat": "equation",
+			"text": "a + b = c",
+			"block": true
+		},
+		{
+			"id": "equation-15",
+			"cat": "equation",
+			"text": "a + b = c",
+			"block": true
+		},
+		{
+			"id": "equation-16",
+			"cat": "equation",
+			"text": "a + b = c",
+			"block": true
+		},
+		{
+			"id": "equation-17",
+			"cat": "equation",
+			"text": "a + b = c",
+			"block": true
+		},
+		{
+			"id": "equation-18",
+			"cat": "equation",
+			"text": "a + b = c",
+			"block": true
+		},
+		{
+			"id": "equation-19",
+			"cat": "equation",
+			"text": "a + b = c",
+			"block": true
+		},
+		{
+			"id": "equation-20",
+			"cat": "equation",
+			"text": "a + b = c",
+			"block": true
+		},
+		{
+			"id": "equation-21",
+			"cat": "equation",
+			"text": "a + b = c",
+			"block": true
+		},
+		{
+			"id": "equation-22",
+			"cat": "equation",
+			"text": "a + b = c",
+			"block": true
+		},
+		{
+			"id": "equation-23",
+			"cat": "equation",
+			"text": "a + b = c",
+			"block": true
+		},
+		{
+			"id": "equation-24",
+			"cat": "equation",
+			"text": "a + b = c",
+			"block": true
+		},
+		{
+			"id": "equation-25",
+			"cat": "equation",
+			"text": "a + b = c",
+			"block": true
+		},
+		{
+			"id": "equation-26",
+			"cat": "equation",
+			"text": "a + b = c",
+			"block": true
+		},
+		{
+			"id": "equation-27",
+			"cat": "equation",
+			"text": "a + b = c",
+			"block": true
+		},
+		{
+			"id": "equation-28",
+			"cat": "equation",
+			"text": "a + b = c",
+			"block": true
+		},
+		{
+			"id": "equation-29",
+			"cat": "equation",
+			"text": "a + b = c",
+			"block": true
+		},
+		{
+			"id": "equation-30",
+			"cat": "equation",
+			"text": "a + b = c",
+			"block": true
+		},
+		{
+			"id": "equation-31",
+			"cat": "equation",
+			"text": "a + b = c",
+			"block": true
+		},
+		{
+			"id": "equation-32",
+			"cat": "equation",
+			"text": "a + b = c",
+			"block": true
+		},
+		{
+			"id": "equation-33",
+			"cat": "equation",
+			"text": "a + b = c",
+			"block": true
+		},
+		{
+			"id": "equation-34",
+			"cat": "equation",
+			"text": "a + b = c",
+			"block": true
+		},
+		{
+			"id": "equation-35",
+			"cat": "equation",
+			"text": "a + b = c",
+			"block": true
+		},
+		{
+			"id": "equation-36",
+			"cat": "equation",
+			"text": "a + b = c",
+			"block": true
+		},
+		{
+			"id": "equation-37",
+			"cat": "equation",
+			"text": "a + b = c",
+			"block": true
+		},
+		{
+			"id": "equation-38",
+			"cat": "equation",
+			"text": "a + b = c",
+			"block": true
+		},
+		{
+			"id": "equation-39",
+			"cat": "equation",
+			"text": "p &= ln a b \\\n    &= ln a + ln b",
+			"block": true
+		},
+		{
+			"id": "equation-40",
+			"cat": "equation",
+			"text": "p &= ln a b \\\n    &= ln a + ln b",
+			"block": true
+		},
+		{
+			"id": "equation-41",
+			"cat": "equation",
+			"text": "q &= ln sqrt(a b) \\\n    &= 1/2 (ln a + ln b)",
+			"block": true
+		},
+		{
+			"id": "equation-42",
+			"cat": "equation",
+			"text": "- &- - \\\n  a &= b",
+			"block": true
+		},
+		{
+			"id": "equation-43",
+			"cat": "equation",
+			"text": "- - -",
+			"block": true
+		},
+		{
+			"id": "equation-44",
+			"cat": "equation",
+			"text": "a &= b \\\n  - &- -",
+			"block": true
+		},
+		{
+			"id": "equation-45",
+			"cat": "equation",
+			"text": "Delta = b^2 - 4 a c",
+			"block": true
+		},
+		{
+			"id": "equation-46",
+			"cat": "equation",
+			"text": "a_n",
+			"block": false
+		},
+		{
+			"id": "equation-47",
+			"cat": "equation",
+			"text": "[a_n: 1, 1/2, 1/3, dots]",
+			"block": false
+		},
+		{
+			"id": "frac-01",
+			"cat": "frac",
+			"text": "x = 1/2 = a/(a h) = a/a = a/(1/2)",
+			"block": true
+		},
+		{
+			"id": "frac-02",
+			"cat": "frac",
+			"text": "(|x| + |y|)/2 < [1+2]/3",
+			"block": true
+		},
+		{
+			"id": "frac-03",
+			"cat": "frac",
+			"text": "x = (-b plus.minus sqrt(b^2 - 4a c))/(2a)",
+			"block": true
+		},
+		{
+			"id": "frac-04",
+			"cat": "frac",
+			"text": "binom(circle, square)",
+			"block": true
+		},
+		{
+			"id": "frac-05",
+			"cat": "frac",
+			"text": "binom(n, k_1, k_2, k_3)",
+			"block": true
+		},
+		{
+			"id": "frac-06",
+			"cat": "frac",
+			"text": "binom(x^2)",
+			"block": true
+		},
+		{
+			"id": "frac-07",
+			"cat": "frac",
+			"text": "(dif y)/(dif x), dif/x, x/dif, dif/dif \\\n  frac(dif y, dif x), frac(dif, x), frac(x, dif), frac(dif, dif)",
+			"block": true
+		},
+		{
+			"id": "frac-08",
+			"cat": "frac",
+			"text": "1/2/3 = (1/2)/3 = 1/(2/3)",
+			"block": true
+		},
+		{
+			"id": "frac-09",
+			"cat": "frac",
+			"text": "a_1/b_2, 1/f(x), zeta(x)/2, \"foo\"[|x|]/2 \\\n  1.2/3.7, 2.3^3.4 \\\n  🏳️‍🌈[x]/2, f [x]/2, phi [x]/2, 🏳️‍🌈 [x]/2 \\\n  +[x]/2, 1(x)/2, 2[x]/2 \\\n  (a)b/2, b(a)[b]/2 \\\n  n!/2, 5!/2, n !/2, 1/n!, 1/5!",
+			"block": true
+		},
+		{
+			"id": "interactions-01",
+			"cat": "interactions",
+			"text": "sum_(i=#emoji.apple)^#emoji.apple.red i + monkey/2",
+			"block": true
+		},
+		{
+			"id": "interactions-02",
+			"cat": "interactions",
+			"text": "x := #table(columns: 2)[x][y]/mat(1, 2, 3)\n     = #table[A][B][C]",
+			"block": true
+		},
+		{
+			"id": "interactions-03",
+			"cat": "interactions",
+			"text": "a",
+			"block": false
+		},
+		{
+			"id": "interactions-04",
+			"cat": "interactions",
+			"text": "#here[f] := #here[Hi there]",
+			"block": false
+		},
+		{
+			"id": "interactions-05",
+			"cat": "interactions",
+			"text": "a #box(stroke: 0.2pt,",
+			"block": false
+		},
+		{
+			"id": "interactions-06",
+			"cat": "interactions",
+			"text": ")",
+			"block": false
+		},
+		{
+			"id": "interactions-07",
+			"cat": "interactions",
+			"text": "a #box(stroke: 0.2pt,",
+			"block": false
+		},
+		{
+			"id": "interactions-08",
+			"cat": "interactions",
+			"text": ")",
+			"block": false
+		},
+		{
+			"id": "interactions-09",
+			"cat": "interactions",
+			"text": "g #box(stroke: 0.2pt,",
+			"block": false
+		},
+		{
+			"id": "interactions-10",
+			"cat": "interactions",
+			"text": ")",
+			"block": false
+		},
+		{
+			"id": "interactions-11",
+			"cat": "interactions",
+			"text": "a #box(baseline:0.5em, stroke: 0.2pt,",
+			"block": false
+		},
+		{
+			"id": "interactions-12",
+			"cat": "interactions",
+			"text": ")",
+			"block": false
+		},
+		{
+			"id": "interactions-13",
+			"cat": "interactions",
+			"text": "x",
+			"block": false
+		},
+		{
+			"id": "interactions-14",
+			"cat": "interactions",
+			"text": "1",
+			"block": false
+		},
+		{
+			"id": "interactions-15",
+			"cat": "interactions",
+			"text": "1",
+			"block": false
+		},
+		{
+			"id": "interactions-16",
+			"cat": "interactions",
+			"text": "1",
+			"block": false
+		},
+		{
+			"id": "interactions-17",
+			"cat": "interactions",
+			"text": "x",
+			"block": false
+		},
+		{
+			"id": "interactions-18",
+			"cat": "interactions",
+			"text": "y",
+			"block": false
+		},
+		{
+			"id": "interactions-19",
+			"cat": "interactions",
+			"text": "#h(1em) it #h(1em)",
+			"block": false
+		},
+		{
+			"id": "interactions-20",
+			"cat": "interactions",
+			"text": "a tack b",
+			"block": true
+		},
+		{
+			"id": "interactions-21",
+			"cat": "interactions",
+			"text": "pi",
+			"block": false
+		},
+		{
+			"id": "interactions-22",
+			"cat": "interactions",
+			"text": "pi a",
+			"block": true
+		},
+		{
+			"id": "interactions-23",
+			"cat": "interactions",
+			"text": "my a",
+			"block": true
+		},
+		{
+			"id": "interactions-24",
+			"cat": "interactions",
+			"text": "1 + sqrt(x/2) + sqrt(#hide(",
+			"block": true
+		},
+		{
+			"id": "interactions-25",
+			"cat": "interactions",
+			"text": "))",
+			"block": false
+		},
+		{
+			"id": "interactions-26",
+			"cat": "interactions",
+			"text": "a x #link(\"url\",",
+			"block": true
+		},
+		{
+			"id": "interactions-27",
+			"cat": "interactions",
+			"text": ")",
+			"block": false
+		},
+		{
+			"id": "interactions-28",
+			"cat": "interactions",
+			"text": "f f1 f2",
+			"block": true
+		},
+		{
+			"id": "interactions-29",
+			"cat": "interactions",
+			"text": "vec(1,2) * 2",
+			"block": true
+		},
+		{
+			"id": "interactions-30",
+			"cat": "interactions",
+			"text": "x^2 #hide[",
+			"block": true
+		},
+		{
+			"id": "interactions-31",
+			"cat": "interactions",
+			"text": "] z^2",
+			"block": false
+		},
+		{
+			"id": "interactions-32",
+			"cat": "interactions",
+			"text": "x",
+			"block": false
+		},
+		{
+			"id": "interactions-33",
+			"cat": "interactions",
+			"text": "f(x) := x^2",
+			"block": true
+		},
+		{
+			"id": "interactions-34",
+			"cat": "interactions",
+			"text": "v1 v2^2",
+			"block": false
+		},
+		{
+			"id": "interactions-35",
+			"cat": "interactions",
+			"text": "v1 v2^2",
+			"block": true
+		},
+		{
+			"id": "interactions-36",
+			"cat": "interactions",
+			"text": "hat(#x)",
+			"block": false
+		},
+		{
+			"id": "interactions-37",
+			"cat": "interactions",
+			"text": "2 foo(alpha, (M+foo(a, b)))",
+			"block": false
+		},
+		{
+			"id": "interactions-38",
+			"cat": "interactions",
+			"text": "2 bar(alpha, (M+foo(a, b)))",
+			"block": false
+		},
+		{
+			"id": "interactions-39",
+			"cat": "interactions",
+			"text": "2 baz(x,y,baz(u, v))",
+			"block": false
+		},
+		{
+			"id": "interactions-40",
+			"cat": "interactions",
+			"text": "2 foo(alpha, (M+foo(a, b)))",
+			"block": true
+		},
+		{
+			"id": "interactions-41",
+			"cat": "interactions",
+			"text": "2 bar(alpha, (M+foo(a, b)))",
+			"block": true
+		},
+		{
+			"id": "interactions-42",
+			"cat": "interactions",
+			"text": "2 baz(x,y,baz(u, v))",
+			"block": true
+		},
+		{
+			"id": "mat-01",
+			"cat": "mat",
+			"text": "mat() dot\n mat(;) dot\n mat(1, 2) dot\n mat(1, 2;) \\\n mat(1; 2) dot\n mat(1, 2; 3, 4) dot\n mat(1 + &2, 1/2; &3, 4)",
+			"block": false
+		},
+		{
+			"id": "mat-02",
+			"cat": "mat",
+			"text": "mat(\n  1, 2, ..., 10;\n  2, 2, ..., 10;\n  dots.v, dots.v, dots.down, dots.v;\n  10, 10, ..., 10;\n)",
+			"block": true
+		},
+		{
+			"id": "mat-03",
+			"cat": "mat",
+			"text": "mat(\n  a, b^2;\n  sum_(x \\ y) x, a^(1/2);\n  zeta, alpha;\n)",
+			"block": true
+		},
+		{
+			"id": "mat-04",
+			"cat": "mat",
+			"text": "mat(1, 2; 3, 4)",
+			"block": true
+		},
+		{
+			"id": "mat-05",
+			"cat": "mat",
+			"text": "a + mat(delim: #none, 1, 2; 3, 4) + b",
+			"block": true
+		},
+		{
+			"id": "mat-06",
+			"cat": "mat",
+			"text": "mat(1, 2, delim: \"[\")",
+			"block": true
+		},
+		{
+			"id": "mat-07",
+			"cat": "mat",
+			"text": "mat(1, 2; delim: \"[\")",
+			"block": true
+		},
+		{
+			"id": "mat-08",
+			"cat": "mat",
+			"text": "mat(delim: \"[\", 1, 2)",
+			"block": true
+		},
+		{
+			"id": "mat-09",
+			"cat": "mat",
+			"text": "mat(1; 2; delim: \"[\")",
+			"block": true
+		},
+		{
+			"id": "mat-10",
+			"cat": "mat",
+			"text": "mat(1; delim: \"[\", 2)",
+			"block": true
+		},
+		{
+			"id": "mat-11",
+			"cat": "mat",
+			"text": "mat(delim: \"[\", 1; 2)",
+			"block": true
+		},
+		{
+			"id": "mat-12",
+			"cat": "mat",
+			"text": "mat(1, 2; delim: \"[\", 3, 4)",
+			"block": true
+		},
+		{
+			"id": "mat-13",
+			"cat": "mat",
+			"text": "mat(delim: \"[\", 1, 2; 3, 4)",
+			"block": true
+		},
+		{
+			"id": "mat-14",
+			"cat": "mat",
+			"text": "mat(1, 2; 3, 4; delim: \"[\")",
+			"block": true
+		},
+		{
+			"id": "mat-15",
+			"cat": "mat",
+			"text": "mat(1, 2; 3, 4)",
+			"block": true
+		},
+		{
+			"id": "mat-16",
+			"cat": "mat",
+			"text": "mat(1, 2; 3, 4)",
+			"block": true
+		},
+		{
+			"id": "mat-17",
+			"cat": "mat",
+			"text": "mat(10, 2, 3, 4; 5, 6, 7, 8; augment: #3)",
+			"block": true
+		},
+		{
+			"id": "mat-18",
+			"cat": "mat",
+			"text": "mat(10, 2, 3, 4; 5, 6, 7, 8; augment: #(-1))",
+			"block": true
+		},
+		{
+			"id": "mat-19",
+			"cat": "mat",
+			"text": "mat(100, 2, 3; 4, 5, 6; 7, 8, 9; augment: #(hline: 2))",
+			"block": true
+		},
+		{
+			"id": "mat-20",
+			"cat": "mat",
+			"text": "mat(100, 2, 3; 4, 5, 6; 7, 8, 9; augment: #(hline: -1))",
+			"block": true
+		},
+		{
+			"id": "mat-21",
+			"cat": "mat",
+			"text": "mat(100, 2, 3; 4, 5, 6; 7, 8, 9; augment: #(hline: 1, vline: 1))",
+			"block": true
+		},
+		{
+			"id": "mat-22",
+			"cat": "mat",
+			"text": "mat(100, 2, 3; 4, 5, 6; 7, 8, 9; augment: #(hline: -2, vline: -2))",
+			"block": true
+		},
+		{
+			"id": "mat-23",
+			"cat": "mat",
+			"text": "mat(100, 2, 3; 4, 5, 6; 7, 8, 9; augment: #(vline: 2, stroke: 1pt + blue))",
+			"block": true
+		},
+		{
+			"id": "mat-24",
+			"cat": "mat",
+			"text": "mat(100, 2, 3; 4, 5, 6; 7, 8, 9; augment: #(vline: -1, stroke: 1pt + blue))",
+			"block": true
+		},
+		{
+			"id": "mat-25",
+			"cat": "mat",
+			"text": "mat(1, 0, 0, 0; 0, 1, 0, 0; 0, 0, 1, 1)",
+			"block": true
+		},
+		{
+			"id": "mat-26",
+			"cat": "mat",
+			"text": "mat(1, 0, 0, 0; 0, 1, 0, 0; 0, 0, 1, 1)",
+			"block": true
+		},
+		{
+			"id": "mat-27",
+			"cat": "mat",
+			"text": "mat(1, 0, 0; 0, 1, 1; augment: #3)",
+			"block": true
+		},
+		{
+			"id": "mat-28",
+			"cat": "mat",
+			"text": "mat(\n  \"a\" & \"a a a\" & \"a a\";\n  \"a a\" & \"a a\" & \"a\";\n  \"a a a\" & \"a\" & \"a a a\";\n)",
+			"block": true
+		},
+		{
+			"id": "mat-29",
+			"cat": "mat",
+			"text": "mat(\n  \"a\", \"a a a\", \"a a\";\n  \"a a\", \"a a\", \"a\";\n  \"a a a\", \"a\", \"a a a\";\n)",
+			"block": true
+		},
+		{
+			"id": "mat-30",
+			"cat": "mat",
+			"text": "mat(\n  &\"a\", &\"a a a\", &\"a a\";\n  &\"a a\", &\"a a\", &\"a\";\n  &\"a a a\", &\"a\", &\"a a a\";\n)",
+			"block": true
+		},
+		{
+			"id": "mat-31",
+			"cat": "mat",
+			"text": "mat(\n  \"a\"&, \"a a a\"&, \"a a\"&;\n  \"a a\"&, \"a a\"&, \"a\"&;\n  \"a a a\"&, \"a\"&, \"a a a\"&;\n)",
+			"block": true
+		},
+		{
+			"id": "mat-32",
+			"cat": "mat",
+			"text": ".",
+			"block": false
+		},
+		{
+			"id": "mat-33",
+			"cat": "mat",
+			"text": "mat(&a+b,c;&d, e)",
+			"block": true
+		},
+		{
+			"id": "mat-34",
+			"cat": "mat",
+			"text": "mat(&a+b&,c;&d&, e)",
+			"block": true
+		},
+		{
+			"id": "mat-35",
+			"cat": "mat",
+			"text": "mat(&&&a+b,c;&&&d, e)",
+			"block": true
+		},
+		{
+			"id": "mat-36",
+			"cat": "mat",
+			"text": "mat(stop &a+b&stop,c;...stop stop&d&...stop stop, e)",
+			"block": true
+		},
+		{
+			"id": "mat-37",
+			"cat": "mat",
+			"text": "mat(-1, 1, 1; 1, -1, 1; 1, 1, -1)",
+			"block": true
+		},
+		{
+			"id": "mat-38",
+			"cat": "mat",
+			"text": "mat(-1&, 1&, 1&; 1&, -1&, 1&; 1&, 1&, -1&)",
+			"block": true
+		},
+		{
+			"id": "mat-39",
+			"cat": "mat",
+			"text": "mat(-1&, 1&, 1&; 1, -1, 1; 1, 1, -1)",
+			"block": true
+		},
+		{
+			"id": "mat-40",
+			"cat": "mat",
+			"text": "mat(&-1, &1, &1; 1, -1, 1; 1, 1, -1)",
+			"block": true
+		},
+		{
+			"id": "mat-41",
+			"cat": "mat",
+			"text": "mat(1, 2; 3, 4, delim: \"[\")",
+			"block": true
+		},
+		{
+			"id": "mat-42",
+			"cat": "mat",
+			"text": "mat(B, A B)",
+			"block": true
+		},
+		{
+			"id": "mat-43",
+			"cat": "mat",
+			"text": "mat(B, A B, dots)",
+			"block": true
+		},
+		{
+			"id": "mat-44",
+			"cat": "mat",
+			"text": "mat(B, A B, dots;)",
+			"block": true
+		},
+		{
+			"id": "mat-45",
+			"cat": "mat",
+			"text": "mat(#1, #(foo: \"bar\"))",
+			"block": true
+		},
+		{
+			"id": "mat-46",
+			"cat": "mat",
+			"text": "mat(augment: #1, M, v) arrow.r.squiggly mat(augment: #1, R, b)",
+			"block": false
+		},
+		{
+			"id": "multiline-01",
+			"cat": "multiline",
+			"text": "x &= x + y \\\n    &= x + 2z \\\n    &= sum x dot 2z",
+			"block": true
+		},
+		{
+			"id": "multiline-02",
+			"cat": "multiline",
+			"text": "x + 1 &= a^2 + b^2 \\\n      y &= a + b^2 \\\n      z &= alpha dot beta",
+			"block": true
+		},
+		{
+			"id": "multiline-03",
+			"cat": "multiline",
+			"text": "a + b &= 2 + 3 &= 5 \\\n      b &= c     &= 3",
+			"block": true
+		},
+		{
+			"id": "multiline-04",
+			"cat": "multiline",
+			"text": "f := cases(\n  1 + 2 &\"iff\" &x,\n  3     &\"if\"  &y,\n)",
+			"block": true
+		},
+		{
+			"id": "multiline-05",
+			"cat": "multiline",
+			"text": "\"abc\" &= c \\\n   &= d + 1 \\\n   = x",
+			"block": true
+		},
+		{
+			"id": "multiline-06",
+			"cat": "multiline",
+			"text": "sum_(n in NN \\ n <= 5) n = (5(5+1))/2 = 15",
+			"block": true
+		},
+		{
+			"id": "multiline-07",
+			"cat": "multiline",
+			"text": "\"abc\" &= c",
+			"block": true
+		},
+		{
+			"id": "multiline-08",
+			"cat": "multiline",
+			"text": "\"abc\" &= c \\",
+			"block": true
+		},
+		{
+			"id": "multiline-09",
+			"cat": "multiline",
+			"text": "\"abc\" &= c \\ \\ \\",
+			"block": true
+		},
+		{
+			"id": "multiline-10",
+			"cat": "multiline",
+			"text": "e^(pi i)+1 = 0",
+			"block": false
+		},
+		{
+			"id": "multiline-11",
+			"cat": "multiline",
+			"text": "e^(pi i)+1 = 0",
+			"block": false
+		},
+		{
+			"id": "multiline-12",
+			"cat": "multiline",
+			"text": "e^(pi i)+1 = 0",
+			"block": false
+		},
+		{
+			"id": "multiline-13",
+			"cat": "multiline",
+			"text": "a+b",
+			"block": false
+		},
+		{
+			"id": "multiline-14",
+			"cat": "multiline",
+			"text": "(a+b)",
+			"block": false
+		},
+		{
+			"id": "multiline-15",
+			"cat": "multiline",
+			"text": "paren.l a+b paren.r",
+			"block": false
+		},
+		{
+			"id": "multiline-16",
+			"cat": "multiline",
+			"text": "a + b \\ c + d",
+			"block": false
+		},
+		{
+			"id": "multiline-17",
+			"cat": "multiline",
+			"text": "e^(pi i)+1 = 0\\",
+			"block": false
+		},
+		{
+			"id": "multiline-18",
+			"cat": "multiline",
+			"text": "a+b",
+			"block": false
+		},
+		{
+			"id": "multiline-19",
+			"cat": "multiline",
+			"text": "a < = b",
+			"block": false
+		},
+		{
+			"id": "multiline-20",
+			"cat": "multiline",
+			"text": "a < = b",
+			"block": false
+		},
+		{
+			"id": "multiline-21",
+			"cat": "multiline",
+			"text": "<;",
+			"block": false
+		},
+		{
+			"id": "multiline-22",
+			"cat": "multiline",
+			"text": "<;",
+			"block": false
+		},
+		{
+			"id": "multiline-23",
+			"cat": "multiline",
+			"text": "<)",
+			"block": false
+		},
+		{
+			"id": "multiline-24",
+			"cat": "multiline",
+			"text": "<)",
+			"block": false
+		},
+		{
+			"id": "multiline-25",
+			"cat": "multiline",
+			"text": "",
+			"block": true
+		},
+		{
+			"id": "multiline-26",
+			"cat": "multiline",
+			"text": "",
+			"block": true
+		},
+		{
+			"id": "multiline-27",
+			"cat": "multiline",
+			"text": "x := \"a\\nb\\nc\\nd\\ne\"",
+			"block": true
+		},
+		{
+			"id": "op-01",
+			"cat": "op",
+			"text": "max_(1<=n<=m) n",
+			"block": true
+		},
+		{
+			"id": "op-02",
+			"cat": "op",
+			"text": "&sin x + log_2 x \\\n = &sin(x) + log_2(x)",
+			"block": true
+		},
+		{
+			"id": "op-03",
+			"cat": "op",
+			"text": "lim_(n->oo) 1/n",
+			"block": false
+		},
+		{
+			"id": "op-04",
+			"cat": "op",
+			"text": "lim_(n->infinity) 1/n = 0",
+			"block": true
+		},
+		{
+			"id": "op-05",
+			"cat": "op",
+			"text": "op(\"myop\", limits: #false)_(x:=1) x \\\n  op(\"myop\", limits: #true)_(x:=1) x",
+			"block": true
+		},
+		{
+			"id": "op-06",
+			"cat": "op",
+			"text": "bold(op(\"bold\", limits: #true))_x y",
+			"block": true
+		},
+		{
+			"id": "op-07",
+			"cat": "op",
+			"text": "op(#underline[ul]) a",
+			"block": true
+		},
+		{
+			"id": "primes-01",
+			"cat": "primes",
+			"text": "a'",
+			"block": false
+		},
+		{
+			"id": "primes-02",
+			"cat": "primes",
+			"text": "a'''_b",
+			"block": false
+		},
+		{
+			"id": "primes-03",
+			"cat": "primes",
+			"text": "'",
+			"block": false
+		},
+		{
+			"id": "primes-04",
+			"cat": "primes",
+			"text": "'''''''",
+			"block": false
+		},
+		{
+			"id": "primes-05",
+			"cat": "primes",
+			"text": "a' ' '",
+			"block": false
+		},
+		{
+			"id": "primes-06",
+			"cat": "primes",
+			"text": "' ' '",
+			"block": false
+		},
+		{
+			"id": "primes-07",
+			"cat": "primes",
+			"text": "a' '/b",
+			"block": false
+		},
+		{
+			"id": "primes-08",
+			"cat": "primes",
+			"text": "a'_b^c",
+			"block": false
+		},
+		{
+			"id": "primes-09",
+			"cat": "primes",
+			"text": "a_b'^c",
+			"block": false
+		},
+		{
+			"id": "primes-10",
+			"cat": "primes",
+			"text": "a_b^c'",
+			"block": false
+		},
+		{
+			"id": "primes-11",
+			"cat": "primes",
+			"text": "a_b'^c'^d'",
+			"block": false
+		},
+		{
+			"id": "primes-12",
+			"cat": "primes",
+			"text": "(a'_b')^(c'_d')",
+			"block": false
+		},
+		{
+			"id": "primes-13",
+			"cat": "primes",
+			"text": "a'/b'",
+			"block": false
+		},
+		{
+			"id": "primes-14",
+			"cat": "primes",
+			"text": "a_b'/c_d'",
+			"block": false
+		},
+		{
+			"id": "primes-15",
+			"cat": "primes",
+			"text": "∫'",
+			"block": false
+		},
+		{
+			"id": "primes-16",
+			"cat": "primes",
+			"text": "∑'",
+			"block": false
+		},
+		{
+			"id": "primes-17",
+			"cat": "primes",
+			"text": "∑'_S'",
+			"block": true
+		},
+		{
+			"id": "primes-18",
+			"cat": "primes",
+			"text": "a' = a^', a_', a_'''^''^'",
+			"block": false
+		},
+		{
+			"id": "primes-19",
+			"cat": "primes",
+			"text": "x'",
+			"block": true
+		},
+		{
+			"id": "primes-20",
+			"cat": "primes",
+			"text": "x^'",
+			"block": true
+		},
+		{
+			"id": "primes-21",
+			"cat": "primes",
+			"text": "attach(x, t: ')",
+			"block": true
+		},
+		{
+			"id": "primes-22",
+			"cat": "primes",
+			"text": "<'",
+			"block": true
+		},
+		{
+			"id": "primes-23",
+			"cat": "primes",
+			"text": "attach(<, br: ')",
+			"block": true
+		},
+		{
+			"id": "primes-24",
+			"cat": "primes",
+			"text": "op(<, limits: #true)'",
+			"block": true
+		},
+		{
+			"id": "primes-25",
+			"cat": "primes",
+			"text": "limits(<)'",
+			"block": true
+		},
+		{
+			"id": "primes-26",
+			"cat": "primes",
+			"text": "attach(<, t: ')",
+			"block": true
+		},
+		{
+			"id": "primes-27",
+			"cat": "primes",
+			"text": "<^'",
+			"block": true
+		},
+		{
+			"id": "primes-28",
+			"cat": "primes",
+			"text": "attach(<, b: ')",
+			"block": true
+		},
+		{
+			"id": "primes-29",
+			"cat": "primes",
+			"text": "<_'",
+			"block": true
+		},
+		{
+			"id": "primes-30",
+			"cat": "primes",
+			"text": "limits(x)^'",
+			"block": true
+		},
+		{
+			"id": "primes-31",
+			"cat": "primes",
+			"text": "attach(limits(x), t: ')",
+			"block": true
+		},
+		{
+			"id": "primes-32",
+			"cat": "primes",
+			"text": "f",
+			"block": false
+		},
+		{
+			"id": "primes-33",
+			"cat": "primes",
+			"text": "f",
+			"block": false
+		},
+		{
+			"id": "primes-34",
+			"cat": "primes",
+			"text": "#(g)' #g' #g ' \\\n  #g''''''''''''''''' \\\n  gg'",
+			"block": true
+		},
+		{
+			"id": "root-01",
+			"cat": "root",
+			"text": "A = sqrt(x + y) = c",
+			"block": false
+		},
+		{
+			"id": "root-02",
+			"cat": "root",
+			"text": "sqrt(a) quad\n  sqrt(f) quad\n  sqrt(q) quad\n  sqrt(a^2) \\\n  sqrt(n_0) quad\n  sqrt(b^()) quad\n  sqrt(b^2) quad\n  sqrt(q_1^2)",
+			"block": true
+		},
+		{
+			"id": "root-03",
+			"cat": "root",
+			"text": "sqrt(x)",
+			"block": false
+		},
+		{
+			"id": "root-04",
+			"cat": "root",
+			"text": "root(2, x)",
+			"block": false
+		},
+		{
+			"id": "root-05",
+			"cat": "root",
+			"text": "root(3, x)",
+			"block": false
+		},
+		{
+			"id": "root-06",
+			"cat": "root",
+			"text": "root(4, x)",
+			"block": false
+		},
+		{
+			"id": "root-07",
+			"cat": "root",
+			"text": "root(5, x)",
+			"block": false
+		},
+		{
+			"id": "root-08",
+			"cat": "root",
+			"text": "sqrt([|x|]^2 + [|y|]^2) < [|z|]",
+			"block": true
+		},
+		{
+			"id": "root-09",
+			"cat": "root",
+			"text": "v = sqrt((1/2) / (4/5))\n   = root(3, (1/2/3) / (4/5/6))\n   = root(4, ((1/2) / (3/4)) / ((1/2) / (3/4)))",
+			"block": true
+		},
+		{
+			"id": "root-10",
+			"cat": "root",
+			"text": "root(2, x) quad\n  root(3/(2/1), x) quad\n  root(1/11, x) quad\n  root(1/2/3, 1)",
+			"block": true
+		},
+		{
+			"id": "root-11",
+			"cat": "root",
+			"text": "√2^3 = sqrt(2^3)",
+			"block": true
+		},
+		{
+			"id": "root-12",
+			"cat": "root",
+			"text": "√(x+y) quad ∛x quad ∜x",
+			"block": true
+		},
+		{
+			"id": "root-13",
+			"cat": "root",
+			"text": "(√2+3) = (sqrt(2)+3)",
+			"block": true
+		},
+		{
+			"id": "size-01",
+			"cat": "size",
+			"text": "a/b, display(a/b), display(a)/display(b), inline(a/b), script(a/b), sscript(a/b) \\\n mono(script(a/b)), script(mono(a/b))\\\n script(a^b, cramped: #true), script(a^b, cramped: #false)",
+			"block": false
+		},
+		{
+			"id": "size-02",
+			"cat": "size",
+			"text": "#rect[",
+			"block": true
+		},
+		{
+			"id": "size-03",
+			"cat": "size",
+			"text": "]",
+			"block": false
+		},
+		{
+			"id": "size-04",
+			"cat": "size",
+			"text": "#rect[",
+			"block": false
+		},
+		{
+			"id": "size-05",
+			"cat": "size",
+			"text": "]",
+			"block": false
+		},
+		{
+			"id": "spacing-01",
+			"cat": "spacing",
+			"text": "ä, +, c, (, )",
+			"block": false
+		},
+		{
+			"id": "spacing-02",
+			"cat": "spacing",
+			"text": "=), (+), {times}",
+			"block": false
+		},
+		{
+			"id": "spacing-03",
+			"cat": "spacing",
+			"text": "⟧<⟦, abs(-), [=",
+			"block": false
+		},
+		{
+			"id": "spacing-04",
+			"cat": "spacing",
+			"text": "a=b, a==b",
+			"block": false
+		},
+		{
+			"id": "spacing-05",
+			"cat": "spacing",
+			"text": "-a, +a",
+			"block": false
+		},
+		{
+			"id": "spacing-06",
+			"cat": "spacing",
+			"text": "a not b",
+			"block": false
+		},
+		{
+			"id": "spacing-07",
+			"cat": "spacing",
+			"text": "a+b, a*b",
+			"block": false
+		},
+		{
+			"id": "spacing-08",
+			"cat": "spacing",
+			"text": "sum x, sum(x)",
+			"block": false
+		},
+		{
+			"id": "spacing-09",
+			"cat": "spacing",
+			"text": "sum product x",
+			"block": false
+		},
+		{
+			"id": "spacing-10",
+			"cat": "spacing",
+			"text": "f(x), zeta(x), \"frac\"(x)",
+			"block": false
+		},
+		{
+			"id": "spacing-11",
+			"cat": "spacing",
+			"text": "a+dots.c+b",
+			"block": false
+		},
+		{
+			"id": "spacing-12",
+			"cat": "spacing",
+			"text": "f(x) sin(y)",
+			"block": false
+		},
+		{
+			"id": "spacing-13",
+			"cat": "spacing",
+			"text": "f (x), f(x)",
+			"block": false
+		},
+		{
+			"id": "spacing-14",
+			"cat": "spacing",
+			"text": "[a|b], [a | b]",
+			"block": false
+		},
+		{
+			"id": "spacing-15",
+			"cat": "spacing",
+			"text": "a\"is\"b, a \"is\" b",
+			"block": false
+		},
+		{
+			"id": "spacing-16",
+			"cat": "spacing",
+			"text": "a thin b, a med b, a thick b, a quad b",
+			"block": false
+		},
+		{
+			"id": "spacing-17",
+			"cat": "spacing",
+			"text": "a = thin b",
+			"block": false
+		},
+		{
+			"id": "spacing-18",
+			"cat": "spacing",
+			"text": "a - b equiv c quad (mod 2)",
+			"block": false
+		},
+		{
+			"id": "spacing-19",
+			"cat": "spacing",
+			"text": "{ x in RR | x \"is natural\" and x < 10 }",
+			"block": true
+		},
+		{
+			"id": "spacing-20",
+			"cat": "spacing",
+			"text": "a equiv b + c - d => e log 5 op(\"ln\") 6",
+			"block": false
+		},
+		{
+			"id": "spacing-21",
+			"cat": "spacing",
+			"text": "a cancel(equiv) b overline(+) c arrow(-) d hat(=>) e cancel(log) 5 dot(op(\"ln\")) 6",
+			"block": false
+		},
+		{
+			"id": "spacing-22",
+			"cat": "spacing",
+			"text": "a overbrace(equiv) b underline(+) c grave(-) d underbracket(=>) e circle(log) 5 caron(op(\"ln\")) 6",
+			"block": false
+		},
+		{
+			"id": "spacing-23",
+			"cat": "spacing",
+			"text": "a attach(equiv, tl: a, tr: b) b attach(limits(+), t: a, b: b) c tilde(-) d breve(=>) e attach(limits(log), t: a, b: b) 5 attach(op(\"ln\"), tr: a, bl: b) 6",
+			"block": false
+		},
+		{
+			"id": "spacing-24",
+			"cat": "spacing",
+			"text": "integral f(x) dif x",
+			"block": false
+		},
+		{
+			"id": "spacing-25",
+			"cat": "spacing",
+			"text": "integral f(x) thin dif x",
+			"block": false
+		},
+		{
+			"id": "spacing-26",
+			"cat": "spacing",
+			"text": "integral f(x) #h(0.166em, weak: true)dif x",
+			"block": false
+		},
+		{
+			"id": "spacing-27",
+			"cat": "spacing",
+			"text": "10degree \\\n10 degree \\\n10.1degree \\\n10.1 degree",
+			"block": true
+		},
+		{
+			"id": "style-01",
+			"cat": "style",
+			"text": "a, A, delta, ϵ, diff, Delta, ϴ",
+			"block": false
+		},
+		{
+			"id": "style-02",
+			"cat": "style",
+			"text": "A, italic(A), upright(A), bold(A), bold(upright(A)), \\\n serif(A), sans(A), cal(A), frak(A), mono(A), bb(A), \\\n italic(diff), upright(diff), \\\n bb(\"hello\") + bold(cal(\"world\")), \\\n mono(\"SQRT\")(x) wreath mono(123 + 456)",
+			"block": false
+		},
+		{
+			"id": "style-03",
+			"cat": "style",
+			"text": "h, bb(N), cal(R), Theta, italic(Theta), sans(Theta), sans(italic(Theta)) \\\n bb(d), bb(italic(d)), italic(bb(d)), bb(e), bb(italic(e)), italic(bb(e)) \\\n bb(i), bb(italic(i)), italic(bb(i)), bb(j), bb(italic(j)), italic(bb(j)) \\\n bb(D), bb(italic(D)), italic(bb(D))",
+			"block": false
+		},
+		{
+			"id": "style-04",
+			"cat": "style",
+			"text": "bb(Gamma) , bb(gamma), bb(Pi), bb(pi), bb(sum)",
+			"block": false
+		},
+		{
+			"id": "style-05",
+			"cat": "style",
+			"text": "aleph, beth, gimel, daleth",
+			"block": false
+		},
+		{
+			"id": "style-06",
+			"cat": "style",
+			"text": "sin(x) \"abc\"",
+			"block": false
+		},
+		{
+			"id": "style-07",
+			"cat": "style",
+			"text": "italic(sin(x) \"abc\" #box[abc])",
+			"block": false
+		},
+		{
+			"id": "style-08",
+			"cat": "style",
+			"text": "sin(x) \"abc\"",
+			"block": false
+		},
+		{
+			"id": "style-09",
+			"cat": "style",
+			"text": "bold(sin(x) \"abc\" #box[abc])",
+			"block": false
+		},
+		{
+			"id": "syntax-01",
+			"cat": "syntax",
+			"text": "∑_(i=0)^ℕ a ∘ b = \\u{2211}_(i=0)^NN a compose b",
+			"block": true
+		},
+		{
+			"id": "syntax-02",
+			"cat": "syntax",
+			"text": "underline(f' : NN -> RR) \\\n  n |-> cases(\n    [|1|] &\"if\" n >>> 10,\n    2 * 3 &\"if\" n != 5,\n    1 - 0 thick &...,\n  )",
+			"block": true
+		},
+		{
+			"id": "syntax-03",
+			"cat": "syntax",
+			"text": "dot \\ dots \\ ast \\ tilde \\ star",
+			"block": true
+		},
+		{
+			"id": "syntax-04",
+			"cat": "syntax",
+			"text": "floor(phi.alt.)",
+			"block": false
+		},
+		{
+			"id": "syntax-05",
+			"cat": "syntax",
+			"text": "floor(phi.alt. )",
+			"block": false
+		},
+		{
+			"id": "syntax-06",
+			"cat": "syntax",
+			"text": "a",
+			"block": false
+		},
+		{
+			"id": "text-01",
+			"cat": "text",
+			"text": "よ and 🏳️‍🌈",
+			"block": true
+		},
+		{
+			"id": "text-02",
+			"cat": "text",
+			"text": "text(#red, \"time\"^2) + sqrt(\"place\")",
+			"block": false
+		},
+		{
+			"id": "text-03",
+			"cat": "text",
+			"text": "nothing",
+			"block": true
+		},
+		{
+			"id": "text-04",
+			"cat": "text",
+			"text": "\"hi ∅ hey\"",
+			"block": true
+		},
+		{
+			"id": "text-05",
+			"cat": "text",
+			"text": "sum_(i in NN) 1 + i",
+			"block": true
+		},
+		{
+			"id": "text-06",
+			"cat": "text",
+			"text": "nothing",
+			"block": true
+		},
+		{
+			"id": "text-07",
+			"cat": "text",
+			"text": "\"hi ∅ hey\"",
+			"block": true
+		},
+		{
+			"id": "text-08",
+			"cat": "text",
+			"text": "sum_(i in NN) 1 + i",
+			"block": true
+		},
+		{
+			"id": "text-09",
+			"cat": "text",
+			"text": "e^(e^(e^(e)))",
+			"block": true
+		},
+		{
+			"id": "text-10",
+			"cat": "text",
+			"text": "e^(e^(e^(e)))",
+			"block": false
+		},
+		{
+			"id": "text-11",
+			"cat": "text",
+			"text": "y^dprime-2y^prime + y = 0",
+			"block": true
+		},
+		{
+			"id": "text-12",
+			"cat": "text",
+			"text": "y^dprime-2y^prime + y = 0",
+			"block": false
+		},
+		{
+			"id": "text-13",
+			"cat": "text",
+			"text": "y^tprime_3 + g^(prime 2)",
+			"block": true
+		},
+		{
+			"id": "text-14",
+			"cat": "text",
+			"text": "scripts(sum_(k in NN))^prime 1/k^2",
+			"block": true
+		},
+		{
+			"id": "text-15",
+			"cat": "text",
+			"text": "sum_(k in NN)^prime 1/k^2",
+			"block": false
+		},
+		{
+			"id": "text-16",
+			"cat": "text",
+			"text": "1/(x^A)",
+			"block": true
+		},
+		{
+			"id": "text-17",
+			"cat": "text",
+			"text": "1/(x^A)",
+			"block": false
+		},
+		{
+			"id": "text-18",
+			"cat": "text",
+			"text": "x^A",
+			"block": false
+		},
+		{
+			"id": "underover-01",
+			"cat": "underover",
+			"text": "x = underbrace(\n  1 + 2 + ... + 5,\n  underbrace(\"numbers\", x + y)\n)",
+			"block": true
+		},
+		{
+			"id": "underover-02",
+			"cat": "underover",
+			"text": "x = overbracket(\n  overline(underline(x + y)),\n  1 + 2 + ... + 5,\n)",
+			"block": true
+		},
+		{
+			"id": "underover-03",
+			"cat": "underover",
+			"text": "underbracket([1, 2/3], \"relevant stuff\")\n          arrow.l.r.double.long\n  overbracket([4/5,6], \"irrelevant stuff\")",
+			"block": true
+		},
+		{
+			"id": "vec-01",
+			"cat": "vec",
+			"text": "vec(1, 2)",
+			"block": true
+		},
+		{
+			"id": "vec-02",
+			"cat": "vec",
+			"text": "vec(\n  \"a\" & \"a a a\" & \"a a\",\n  \"a a\" & \"a a\" & \"a\",\n  \"a a a\" & \"a\" & \"a a a\",\n)",
+			"block": true
+		},
+		{
+			"id": "vec-03",
+			"cat": "vec",
+			"text": "v = vec(1, 2+3, 4)",
+			"block": true
+		},
+		{
+			"id": "vec-04",
+			"cat": "vec",
+			"text": "vec(1, 2)",
+			"block": true
+		}
+	]
+}

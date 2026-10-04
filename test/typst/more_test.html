@@ -32,28 +32,40 @@
     }
   </style>
   <script src="../../dist/xmmath.umd.js"></script>
-  <script src="math.js"></script>
   <script>
     xmmath.init({
       emoji: true,
     });
-    for (let n in test) {
-      document.body.append(document.createElement('hr'))
-      document.body.append(document.createElement('h3').innerText = n)
-      for (let i of test[n]) {
-        let div = document.createElement('div')
-        let p = document.createElement('pre')
-        p.innerText = i.text
-        div.append(p)
-        try {
-          div.append(xmmath.toMML(i.text, !i.block))
-
-        } catch (error) {
-          div.classList.add('error')
+    // 语料来自 test/fixtures/math.json，需经 dev server 打开：pnpm dev 后访问 /test/typst/more_test.html
+    fetch('../fixtures/math.json')
+      .then((r) => r.json())
+      .then(({ cases }) => {
+        let n = '';
+        for (const i of cases) {
+          if (i.cat !== n) {
+            n = i.cat;
+            document.body.append(document.createElement('hr'));
+            const h = document.createElement('h3');
+            h.innerText = n;
+            document.body.append(h);
+          }
+          const div = document.createElement('div');
+          const p = document.createElement('pre');
+          p.innerText = i.text;
+          div.append(p);
+          try {
+            div.append(xmmath.toMML(i.text, !i.block));
+          } catch {
+            div.classList.add('error');
+          }
+          document.body.append(div);
         }
-        document.body.append(div)
-      }
-    }
+      })
+      .catch((e) => {
+        const p = document.createElement('pre');
+        p.textContent = `读取 math.json 失败（请用 pnpm dev 打开本页）：${e}`;
+        document.body.append(p);
+      });
   </script>
 </body>
 

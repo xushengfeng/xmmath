@@ -1,5 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { ast } from "../src/ast.js";
+import { allCases } from "./corpus/_shared.js";
 
 describe("ast() - basic tokenization", () => {
 	it("single variable", () => {
@@ -193,42 +194,22 @@ describe("ast() - determinism and robustness", () => {
 });
 
 describe("ast() - full corpus robustness", () => {
-	const testCases = loadCorpus();
+	const testCases = allCases();
 
 	it("no throw on all corpus entries", () => {
-		for (const { text, category } of testCases) {
+		for (const { text, cat } of testCases) {
 			expect(
 				() => ast(text),
-				`category: ${category}, input: ${text}`,
+				`category: ${cat}, input: ${text}`,
 			).not.toThrow();
 		}
 	});
 
 	it("deterministic on all corpus entries", () => {
-		for (const { text, category } of testCases) {
+		for (const { text, cat } of testCases) {
 			const a = JSON.stringify(ast(text));
 			const b = JSON.stringify(ast(text));
-			expect(a, `category: ${category}, input: ${text}`).toBe(b);
+			expect(a, `category: ${cat}, input: ${text}`).toBe(b);
 		}
 	});
 });
-
-function loadCorpus(): { text: string; category: string }[] {
-	const cases: { text: string; category: string }[] = [];
-	try {
-		const fs = require("fs");
-		const path = require("path");
-		const mathPath = path.resolve(__dirname, "typst/math.js");
-		const code = fs.readFileSync(mathPath, "utf8");
-		const fn = new Function(`${code}; return test;`);
-		const data = fn();
-		for (const [category, items] of Object.entries(data)) {
-			for (const item of items as { text: string; block: boolean }[]) {
-				cases.push({ text: item.text, category });
-			}
-		}
-	} catch {
-		// corpus file not available, skip
-	}
-	return cases;
-}

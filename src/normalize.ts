@@ -642,8 +642,6 @@ function ast3(tree: tree) {
 							x.value = v;
 						}
 					} else {
-						console.log("+1", tree[n + 1]);
-
 						x.value = tree[n + 1]?.value;
 						if (tree[n + 2]?.type === "f") {
 							x.value += tree[n + 2].value;
@@ -827,8 +825,6 @@ function ast3(tree: tree) {
 							i += 2 - 1;
 						}
 					}
-					console.log(1, tmp);
-
 					t.push(tmp);
 				}
 				n += index[0][1] - index[0][0];

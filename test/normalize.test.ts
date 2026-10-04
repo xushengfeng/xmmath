@@ -1,6 +1,7 @@
 import { describe, it, expect } from "vitest";
 import { ast } from "../src/ast.js";
 import { ast2, ast3 } from "../src/normalize.js";
+import { allCases } from "./corpus/_shared.js";
 
 // 无 DOM 环境（node）即可运行：证明 ast2/ast3 归一化阶段不依赖 document
 function normalize(str: string) {
@@ -149,39 +150,19 @@ describe("ast3() - prime and factorial", () => {
 });
 
 describe("normalize pipeline - determinism and robustness", () => {
-	const cases = loadCorpus();
+	const cases = allCases();
 
 	it("no throw and deterministic on all corpus entries", () => {
-		for (const { text, category } of cases) {
+		for (const { text, cat } of cases) {
 			let a: string;
 			try {
 				a = JSON.stringify(normalize(text));
 			} catch (e) {
-				expect.fail(`category ${category} threw: ${e}`);
+				expect.fail(`category ${cat} threw: ${e}`);
 				continue;
 			}
 			const b = JSON.stringify(normalize(text));
-			expect(a, `category: ${category}, input: ${text}`).toBe(b);
+			expect(a, `category: ${cat}, input: ${text}`).toBe(b);
 		}
 	});
 });
-
-function loadCorpus(): { text: string; category: string }[] {
-	const cases: { text: string; category: string }[] = [];
-	try {
-		const fs = require("fs");
-		const path = require("path");
-		const mathPath = path.resolve(__dirname, "typst/math.js");
-		const code = fs.readFileSync(mathPath, "utf8");
-		const fn = new Function(`${code}; return test;`);
-		const data = fn();
-		for (const [category, items] of Object.entries(data)) {
-			for (const item of items as { text: string; block: boolean }[]) {
-				cases.push({ text: item.text, category });
-			}
-		}
-	} catch {
-		// corpus not available
-	}
-	return cases;
-}

@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>xmmath review</title>
+	<style>
+		@font-face {
+			font-family: lmmath;
+			src: url('../../docs/latinmodern-math.otf');
+		}
+
+		:root {
+			--bg: #eee;
+			--card: #fff;
+			--line: #ddd;
+			--dim: #666;
+			--bad: #fdd;
+			--ok: #e6f6e6;
+			--warn: #fff6dd;
+		}
+
+		* {
+			box-sizing: border-box;
+		}
+
+		body {
+			margin: 0;
+			background: var(--bg);
+			color: #111;
+			font: 14px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif;
+		}
+
+		math {
+			font-family: lmmath, "Latin Modern Math", serif;
+			/* 与 typst 源码里的 #set text(size: 14pt) 对齐，两边字号才可比 */
+			font-size: 14pt;
+		}
+
+		header {
+			position: sticky;
+			top: 0;
+			z-index: 10;
+			display: flex;
+			gap: 12px;
+			align-items: center;
+			flex-wrap: wrap;
+			padding: 8px 14px;
+			background: #fff;
+			border-bottom: 1px solid var(--line);
+		}
+
+		header h1 {
+			font-size: 15px;
+			margin: 0;
+		}
+
+		.tabs {
+			display: flex;
+			gap: 4px;
+		}
+
+		.tabs button,
+		.toolbar button,
+		.card button {
+			font: inherit;
+			padding: 3px 10px;
+			border: 1px solid var(--line);
+			background: #fafafa;
+			border-radius: 4px;
+			cursor: pointer;
+		}
+
+		.tabs button[aria-selected="true"] {
+			background: #111;
+			color: #fff;
+			border-color: #111;
+		}
+
+		.badge {
+			font-size: 12px;
+			color: var(--dim);
+			border: 1px solid var(--line);
+			border-radius: 10px;
+			padding: 1px 8px;
+			background: #fafafa;
+		}
+
+		main {
+			display: grid;
+			grid-template-columns: 210px 1fr;
+			gap: 12px;
+			padding: 12px 14px;
+			align-items: start;
+		}
+
+		main.single {
+			grid-template-columns: 1fr;
+		}
+
+		aside {
+			position: sticky;
+			top: 52px;
+			background: var(--card);
+			border: 1px solid var(--line);
+			border-radius: 6px;
+			padding: 8px;
+			max-height: calc(100vh - 70px);
+			overflow: auto;
+		}
+
+		aside input[type="search"] {
+			width: 100%;
+			font: inherit;
+			padding: 3px 6px;
+			margin-bottom: 6px;
+		}
+
+		aside select {
+			width: 100%;
+			font: inherit;
+			margin-bottom: 6px;
+		}
+
+		.catlist {
+			list-style: none;
+			margin: 0;
+			padding: 0;
+		}
+
+		.catlist li button {
+			width: 100%;
+			text-align: left;
+			font: inherit;
+			padding: 2px 6px;
+			border: 0;
+			background: none;
+			cursor: pointer;
+			border-radius: 4px;
+			display: flex;
+			justify-content: space-between;
+			gap: 6px;
+		}
+
+		.catlist li button[aria-current="true"] {
+			background: #111;
+			color: #fff;
+		}
+
+		.catlist .n {
+			color: var(--dim);
+			font-size: 12px;
+		}
+
+		.catlist li button[aria-current="true"] .n {
+			color: #bbb;
+		}
+
+		.card {
+			background: var(--card);
+			border: 1px solid var(--line);
+			border-radius: 6px;
+			padding: 8px 10px;
+			margin-bottom: 10px;
+		}
+
+		.chead {
+			display: flex;
+			gap: 8px;
+			align-items: center;
+			flex-wrap: wrap;
+			margin-bottom: 4px;
+		}
+
+		.chead .id {
+			font-weight: 600;
+			font-family: ui-monospace, monospace;
+		}
+
+		.chead select {
+			font: inherit;
+			font-size: 12px;
+		}
+
+		pre.src {
+			margin: 4px 0;
+			padding: 4px 6px;
+			background: #f6f6f6;
+			border-radius: 4px;
+			font-family: ui-monospace, monospace;
+			font-size: 12px;
+			white-space: pre-wrap;
+			word-break: break-word;
+			color: #333;
+		}
+
+		.panes {
+			display: grid;
+			/* minmax(0,1fr)：否则宽的 MathML 会撑开左列、挤压右列 */
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+			align-items: stretch;
+			gap: 8px;
+		}
+
+		.pane {
+			border: 1px dashed var(--line);
+			border-radius: 4px;
+			padding: 6px;
+			min-height: 46px;
+			min-width: 0;
+			overflow: auto;
+			background: #fff;
+		}
+
+		.pane .render {
+			min-height: 34px;
+			display: flex;
+			align-items: center;
+			/* typst 页边距 6pt，位图按 72dpi 折算后正好是 8px，两边内容起点对齐 */
+			padding: 8px;
+		}
+
+		.pane>label {
+			display: block;
+			font-size: 11px;
+			color: var(--dim);
+			margin-bottom: 4px;
+		}
+
+		.pane img {
+			display: block;
+			max-width: 100%;
+			height: auto;
+			background: #fff;
+		}
+
+		.pane.err {
+			background: var(--bad);
+		}
+
+		.pane.pending {
+			background: var(--warn);
+		}
+
+		.ml {
+			font-family: ui-monospace, monospace;
+			font-size: 11px;
+			white-space: pre-wrap;
+			word-break: break-all;
+			color: #444;
+			max-height: 140px;
+			overflow: auto;
+			margin: 4px 0 0;
+		}
+
+		.diag {
+			font-size: 11px;
+			color: #933;
+			white-space: pre-wrap;
+		}
+
+		.diffrow {
+			font-family: ui-monospace, monospace;
+			font-size: 12px;
+			white-space: pre-wrap;
+			word-break: break-all;
+		}
+
+		.diffrow.add {
+			background: #e6ffed;
+		}
+
+		.diffrow.del {
+			background: #ffeef0;
+		}
+
+		.muted {
+			color: var(--dim);
+		}
+
+		.toolbar {
+			display: flex;
+			gap: 6px;
+			align-items: center;
+			flex-wrap: wrap;
+			margin-bottom: 8px;
+		}
+
+		textarea.big {
+			width: 100%;
+			font-family: ui-monospace, monospace;
+			font-size: 13px;
+			min-height: 90px;
+		}
+	</style>
+</head>
+
+<body>
+	<header>
+		<h1>xmmath review</h1>
+		<div class="tabs" id="tabs"></div>
+		<span class="badge" id="typst-badge">typst …</span>
+		<span class="badge" id="ua-badge"></span>
+	</header>
+	<main id="main"></main>
+	<script type="module" src="./app.ts"></script>
+</body>
+
+</html>

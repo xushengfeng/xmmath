@@ -1,3 +1,5 @@
 dist
 node_modules
 test/typst/math/*.typ
+# review 页的 typst 渲染图缓存与快照变更清单（由 hash + typst 版本重建，不入库）
+test/review/cache/

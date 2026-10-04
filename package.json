@@ -16,6 +16,9 @@
 	"scripts": {
 		"test": "vitest run",
 		"test:watch": "vitest",
+		"snap:update": "vitest run -u test/corpus",
+		"review": "vite --host 0.0.0.0 --open /test/review/index.html",
+		"review:changes": "node test/review/changes.mjs",
 		"sync:symbols": "node test/symbols/gen.mjs",
 		"render:typst": "node test/typst/render.mjs",
 		"dev": "vite --host 0.0.0.0",
