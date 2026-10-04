@@ -1,7 +1,4 @@
-import { mkdirSync, writeFileSync } from "node:fs";
-import { dirname, resolve } from "node:path";
-import { fileURLToPath } from "node:url";
-import { afterAll, describe, expect, it } from "vitest";
+import { describe, expect, it } from "vitest";
 import { toMMLV } from "../../src/main.js";
 import { toHtml, type VNode } from "../../src/vdom.js";
 import math from "../fixtures/math.json";
@@ -49,32 +46,14 @@ function run(c: CorpusCase): Record<string, unknown> {
 	}
 }
 
-const CURRENT = resolve(
-	dirname(fileURLToPath(import.meta.url)),
-	"../review/cache/current.json",
-);
-
 // 一个文件跑完整份 math.json：每个分类一个 describe，每例一个 it + 快照。
-// 同时把「本次实际输出」写进 test/review/cache/current.json（不进 git），
-// 让 review:changes 能在测试失败时就拿新旧对比，不必先 -u 接受预期。
+// 渲染抛错的用例把错误写进快照，避免整批中断，也让已知缺口可见。
 export function describeCorpus() {
-	const collected = new Map<string, Record<string, unknown>>();
-
-	afterAll(() => {
-		mkdirSync(dirname(CURRENT), { recursive: true });
-		writeFileSync(
-			CURRENT,
-			`${JSON.stringify({ at: new Date().toISOString(), cases: Object.fromEntries(collected) }, null, "\t")}\n`,
-		);
-	});
-
 	for (const cat of [...new Set(ALL.map((c) => c.cat))]) {
 		describe(`corpus/${cat}`, () => {
 			for (const c of casesOf(cat)) {
 				it(c.id, () => {
-					const out = { text: c.text, block: c.block, ...run(c) };
-					collected.set(c.id, out);
-					expect(out).toMatchSnapshot();
+					expect({ text: c.text, block: c.block, ...run(c) }).toMatchSnapshot();
 				});
 			}
 		});

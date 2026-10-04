@@ -143,6 +143,8 @@ function paneTypst(c: Case) {
 		el("label", { text: "typst 官方（PNG）" }),
 	);
 	const load = async () => {
+		if (pane.dataset.loading) return;
+		pane.dataset.loading = "1";
 		await slot();
 		try {
 			const u = `/__review/typst?text=${encodeURIComponent(c.text)}&block=${c.block ? 1 : 0}`;
@@ -188,6 +190,8 @@ function paneTypst(c: Case) {
 		}
 	};
 	(pane as HTMLElement & { load?: () => void }).load = load;
+	// 谁用这个面板谁都不用记得登记：滚到附近就自己加载
+	observe(pane);
 	return pane;
 }
 
@@ -213,7 +217,6 @@ function caseCard(c: Case) {
 		el("pre", { className: "src", textContent: c.text }),
 		el("div", { className: "panes" }, paneOurs(c), typstPane),
 	);
-	observe(typstPane);
 	return card;
 }
 
@@ -230,6 +233,24 @@ const io = new IntersectionObserver(
 );
 function observe(node: HTMLElement) {
 	io.observe(node);
+}
+
+// IntersectionObserver 只在页面可见时触发；这个按钮给一个确定性的「全部载入」入口
+function loadAllTypstButton(scope: () => HTMLElement) {
+	const btn = el("button", { textContent: "全部载入 typst 图" });
+	btn.onclick = async () => {
+		const panes = [
+			...scope().querySelectorAll<HTMLElement & { load?: () => Promise<void> }>(
+				".pane",
+			),
+		].filter((p) => p.load);
+		btn.setAttribute("disabled", "");
+		btn.textContent = `载入中 ${panes.length} …`;
+		await Promise.all(panes.map((p) => p.load?.()));
+		btn.removeAttribute("disabled");
+		btn.textContent = `已载入 ${panes.length} 张`;
+	};
+	return btn;
 }
 
 // ---- 视图：语料对照 ----
@@ -328,7 +349,11 @@ function viewCorpus() {
 		batchBtn.textContent = "已生成，重新载入即可命中缓存";
 		batchBtn.removeAttribute("disabled");
 	};
-	toolbar.append(count, batchBtn);
+	toolbar.append(
+		count,
+		batchBtn,
+		loadAllTypstButton(() => byId("cards")),
+	);
 	body.append(toolbar, el("div", { id: "cards" }));
 
 	main.append(aside, body);
@@ -501,6 +526,8 @@ function viewChanges() {
 	const box = el("div");
 	const note = el("div", { className: "muted" });
 	const render = () => {
+		io.disconnect();
+		for (const u of blobUrls.splice(0)) URL.revokeObjectURL(u);
 		const shown = filtered.slice(0, CAP);
 		note.textContent =
 			filtered.length > CAP
@@ -509,6 +536,7 @@ function viewChanges() {
 		box.textContent = "";
 		for (const it of shown) {
 			const src = state.cases.find((x) => x.id === it.id);
+			const tp = src ? paneTypst(src) : null;
 			const diff = el("details", {}, el("summary", { text: "快照 diff" }));
 			diff.addEventListener("toggle", () => {
 				if (diff.dataset.built || !diff.open) return;
@@ -531,6 +559,15 @@ function viewChanges() {
 					el("span", { className: "id", textContent: it.id }),
 					el("span", { className: "badge", textContent: it.status }),
 					el("span", { className: "badge", textContent: it.cat }),
+					...(tp
+						? [
+								el("button", {
+									textContent: "载入 typst 图",
+									onclick: () =>
+										(tp as HTMLElement & { load: () => void }).load(),
+								}),
+							]
+						: []),
 					src
 						? el("button", {
 								textContent: "在语料中查看",
@@ -552,9 +589,10 @@ function viewChanges() {
 					: document.createTextNode(""),
 				el(
 					"div",
-					{ className: "panes" },
+					{ className: src ? "panes three" : "panes" },
 					paneHtml("旧快照渲染", it.oldHtml, it.oldError),
 					paneHtml("新快照渲染", it.newHtml, it.newError),
+					...(tp ? [tp] : []),
 				),
 				diff,
 			);
@@ -583,14 +621,17 @@ function viewChanges() {
 		el(
 			"div",
 			{ className: "card" },
-			el("h3", { textContent: `快照变更（基线 ${sm.base}）` }),
-			el("div", {
-				className: sm.mode === "pending" ? "diag" : "muted",
-				textContent:
-					sm.mode === "pending"
-						? "下面是本次测试的实际输出，尚未写入快照。逐例确认无误后运行 pnpm snap:update 接受；有不对的就回去改代码。"
-						: "快照已更新（snap:update），下面是新旧快照的差异。",
-			}),
+			el("h3", { textContent: `快照变更（基线 ${sm.base} → 工作区）` }),
+			Number(sm.baselineCases) > 0
+				? el("div", {
+						className: "muted",
+						textContent:
+							"旧 = git 里已提交的快照，新 = 工作区当前预期。改代码后测试变红就 pnpm snap:update 并接受提交，基线永远在 git 里。",
+					})
+				: el("div", {
+						className: "diag",
+						textContent: `基线 ${sm.base} 里没有快照文件，全部会被算成新增。先把 test/corpus/__snapshots__/math.test.ts.snap 提交进 git（或 --base <ref>）。`,
+					}),
 			el("div", {
 				className: "muted",
 				textContent: `变更 ${sm.changed} · 新增 ${sm.added} · 删除 ${sm.removed} · 未变 ${sm.unchanged} · 生成于 ${sm.generatedAt}`,
@@ -599,6 +640,7 @@ function viewChanges() {
 				"div",
 				{ className: "toolbar" },
 				statusSel,
+				loadAllTypstButton(() => box),
 				el("button", {
 					textContent: "清除 ids 过滤",
 					onclick: () => {

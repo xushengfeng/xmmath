@@ -3,7 +3,7 @@
 exports[`corpus/accent > accent-01 1`] = `
 {
   "block": false,
-  "html": "<math><mtable columnalign="right" columnspacing="0"><mtr><mtd><mover accent="true"><mrow><mi>a</mi></mrow><mrow><mo>̀</mo></mrow></mover><mo>,</mo><mover accent="true"><mrow><mi>b</mi></mrow><mrow><mo>́</mo></mrow></mover><mo>,</mo><mover accent="true"><mrow><mi>f</mi></mrow><mrow><mo>̂</mo></mrow></mover><mo>,</mo><mover accent="true"><mrow><mo>§</mo></mrow><mrow><mo>̃</mo></mrow></mover><mo>,</mo><mover accent="true"><mrow><mo>ä</mo></mrow><mrow><mo>̄</mo></mrow></mover><mo>,</mo><mover accent="true"><mrow><mi>a</mi></mrow><mrow><mo>̈</mo></mrow></mover><mo>,</mo><mo>ä</mo></mtd></mtr><mtr><mtd><mover accent="true"><mrow><mo>&amp;</mo></mrow><mrow><mo>̆</mo></mrow></mover><mo>,</mo><mover accent="true"><mrow><mo>!</mo></mrow><mrow><mo>̇</mo></mrow></mover><mo>,</mo><mover accent="true"><mrow><mi>a</mi></mrow><mrow><mo>̊</mo></mrow></mover><mo>,</mo><mover accent="true"><mrow><mo>@</mo></mrow><mrow><mo>̌</mo></mrow></mover><mo>,</mo><mover accent="true"><mrow><mi>Z</mi></mrow><mrow><mo>⃗</mo></mrow></mover><mo>,</mo><mover accent="true"><mrow><mi>Z</mi></mrow><mrow><mo>⃖</mo></mrow></mover></mtd></mtr></mtable></math>",
+  "html": "<math><mtable columnalign="left" columnspacing="0"><mtr><mtd><mover accent="true"><mrow><mi>a</mi></mrow><mrow><mo>̀</mo></mrow></mover><mo>,</mo><mover accent="true"><mrow><mi>b</mi></mrow><mrow><mo>́</mo></mrow></mover><mo>,</mo><mover accent="true"><mrow><mi>f</mi></mrow><mrow><mo>̂</mo></mrow></mover><mo>,</mo><mover accent="true"><mrow><mo>§</mo></mrow><mrow><mo>̃</mo></mrow></mover><mo>,</mo><mover accent="true"><mrow><mo>ä</mo></mrow><mrow><mo>̄</mo></mrow></mover><mo>,</mo><mover accent="true"><mrow><mi>a</mi></mrow><mrow><mo>̈</mo></mrow></mover><mo>,</mo><mo>ä</mo></mtd></mtr><mtr><mtd><mover accent="true"><mrow><mo>&amp;</mo></mrow><mrow><mo>̆</mo></mrow></mover><mo>,</mo><mover accent="true"><mrow><mo>!</mo></mrow><mrow><mo>̇</mo></mrow></mover><mo>,</mo><mover accent="true"><mrow><mi>a</mi></mrow><mrow><mo>̊</mo></mrow></mover><mo>,</mo><mover accent="true"><mrow><mo>@</mo></mrow><mrow><mo>̌</mo></mrow></mover><mo>,</mo><mover accent="true"><mrow><mi>Z</mi></mrow><mrow><mo>⃗</mo></mrow></mover><mo>,</mo><mover accent="true"><mrow><mi>Z</mi></mrow><mrow><mo>⃖</mo></mrow></mover></mtd></mtr></mtable></math>",
   "text": "grave(a), acute(b), hat(f), tilde(§), macron(ä), diaer(a), ä \\
  breve(\\&), dot(!), circle(a), caron(@), arrow(Z), arrow.l(Z)",
   "vdom": [
@@ -11,7 +11,7 @@ exports[`corpus/accent > accent-01 1`] = `
     [
       "mtable",
       {
-        "columnalign": "right",
+        "columnalign": "left",
         "columnspacing": "0",
       },
       [
@@ -1266,7 +1266,7 @@ exports[`corpus/alignment > alignment-02 1`] = `
 exports[`corpus/alignment > alignment-03 1`] = `
 {
   "block": true,
-  "html": "<math display="block"><mtable columnalign="right" columnspacing="0"><mtr><mtd><ms>right</ms></mtd></mtr><mtr><mtd><ms>a very long line</ms></mtd></mtr><mtr><mtd><ms>left</ms></mtd></mtr></mtable></math>",
+  "html": "<math display="block"><mtable columnalign="center" columnspacing="0"><mtr><mtd><ms>right</ms></mtd></mtr><mtr><mtd><ms>a very long line</ms></mtd></mtr><mtr><mtd><ms>left</ms></mtd></mtr></mtable></math>",
   "text": ""right" \\
 "a very long line" \\
 "left" \\",
@@ -1278,7 +1278,7 @@ exports[`corpus/alignment > alignment-03 1`] = `
     [
       "mtable",
       {
-        "columnalign": "right",
+        "columnalign": "center",
         "columnspacing": "0",
       },
       [
@@ -1893,7 +1893,7 @@ attach("Pb", bl: 82, tl: 207) + attach(upright(e), bl: -1, tl: 0) + macron(v)_e 
 exports[`corpus/attach > attach-03 1`] = `
 {
   "block": true,
-  "html": "<math display="block"><mtable columnalign="right" columnspacing="0"><mtr><mtd><mmultiscripts><mrow><mi>a</mi></mrow><mrow></mrow><mrow></mrow><mprescripts></mprescripts><mrow></mrow><mrow><mi>u</mi></mrow></mmultiscripts><mo>,</mo><msup><mrow><mi>a</mi></mrow><mrow><mi>v</mi></mrow></msup><mo>,</mo><mmultiscripts><mrow><mi>a</mi></mrow><mrow></mrow><mrow></mrow><mprescripts></mprescripts><mrow><mi>x</mi></mrow><mrow></mrow></mmultiscripts><mo>,</mo><msub><mrow><mi>a</mi></mrow><mrow><mi>y</mi></mrow></msub><mo>,</mo><munderover><mrow><mi>a</mi></mrow><mrow></mrow><mrow><mi>t</mi></mrow></munderover><mo>,</mo><munderover><mrow><mi>a</mi></mrow><mrow><mi>b</mi></mrow><mrow></mrow></munderover></mtd></mtr><mtr><mtd><munderover><msup><mrow><mi>a</mi></mrow><mrow><mi>v</mi></mrow></msup><mrow></mrow><mrow><mi>t</mi></mrow></munderover><mo>,</mo><msubsup><mrow><mi>a</mi></mrow><mrow><mi>y</mi></mrow><mrow><mi>v</mi></mrow></msubsup><mo>,</mo><munderover><msub><mrow><mi>a</mi></mrow><mrow><mi>y</mi></mrow></msub><mrow><mi>b</mi></mrow><mrow></mrow></munderover><mo>,</mo><munderover><mmultiscripts><mrow><mi>a</mi></mrow><mrow></mrow><mrow></mrow><mprescripts></mprescripts><mrow><mi>x</mi></mrow><mrow></mrow></mmultiscripts><mrow><mi>b</mi></mrow><mrow></mrow></munderover><mo>,</mo><mmultiscripts><mrow><mi>a</mi></mrow><mrow></mrow><mrow></mrow><mprescripts></mprescripts><mrow><mi>x</mi></mrow><mrow><mi>u</mi></mrow></mmultiscripts><mo>,</mo><munderover><mmultiscripts><mrow><mi>a</mi></mrow><mrow></mrow><mrow></mrow><mprescripts></mprescripts><mrow></mrow><mrow><mi>u</mi></mrow></mmultiscripts><mrow></mrow><mrow><mi>t</mi></mrow></munderover></mtd></mtr><mtr><mtd><mmultiscripts><mrow><mi>a</mi></mrow><mrow></mrow><mrow><mi>v</mi></mrow><mprescripts></mprescripts><mrow></mrow><mrow><mi>u</mi></mrow></mmultiscripts><mo>,</mo><munderover><msub><mrow><mi>a</mi></mrow><mrow><mi>y</mi></mrow></msub><mrow></mrow><mrow><mi>t</mi></mrow></munderover><mo>,</mo><munderover><msup><mrow><mi>a</mi></mrow><mrow><mi>v</mi></mrow></msup><mrow><mi>b</mi></mrow><mrow></mrow></munderover><mo>,</mo><mmultiscripts><mrow><mi>a</mi></mrow><mrow><mi>y</mi></mrow><mrow></mrow><mprescripts></mprescripts><mrow><mi>x</mi></mrow><mrow></mrow></mmultiscripts><mo>,</mo><munderover><mmultiscripts><mrow><mi>a</mi></mrow><mrow></mrow><mrow></mrow><mprescripts></mprescripts><mrow></mrow><mrow><mi>u</mi></mrow></mmultiscripts><mrow><mi>b</mi></mrow><mrow></mrow></munderover><mo>,</mo><munderover><mmultiscripts><mrow><mi>a</mi></mrow><mrow></mrow><mrow></mrow><mprescripts></mprescripts><mrow><mi>u</mi></mrow><mrow></mrow></mmultiscripts><mrow></mrow><mrow><mi>t</mi></mrow></munderover><mo>,</mo><munderover><mrow><mi>a</mi></mrow><mrow><mi>b</mi></mrow><mrow><mi>t</mi></mrow></munderover></mtd></mtr><mtr><mtd><mmultiscripts><mrow><mi>a</mi></mrow><mrow><mi>y</mi></mrow><mrow><mi>v</mi></mrow><mprescripts></mprescripts><mrow><mi>x</mi></mrow><mrow><mi>u</mi></mrow></mmultiscripts><mo>,</mo><munderover><mmultiscripts><mrow><mi>a</mi></mrow><mrow><mi>y</mi></mrow><mrow></mrow><mprescripts></mprescripts><mrow><mi>x</mi></mrow><mrow></mrow></mmultiscripts><mrow><mi>b</mi></mrow><mrow><mi>t</mi></mrow></munderover><mo>,</mo><munderover><mmultiscripts><mrow><mi>a</mi></mrow><mrow></mrow><mrow><mi>v</mi></mrow><mprescripts></mprescripts><mrow></mrow><mrow><mi>u</mi></mrow></mmultiscripts><mrow><mi>b</mi></mrow><mrow><mi>t</mi></mrow></munderover><mo>,</mo><munderover><mmultiscripts><mrow><mi>a</mi></mrow><mrow></mrow><mrow></mrow><mprescripts></mprescripts><mrow><mi>x</mi></mrow><mrow><mi>u</mi></mrow></mmultiscripts><mrow><mi>b</mi></mrow><mrow><mi>t</mi></mrow></munderover><mo>,</mo><munderover><msubsup><mrow><mi>a</mi></mrow><mrow><mi>y</mi></mrow><mrow><mi>v</mi></mrow></msubsup><mrow><mi>b</mi></mrow><mrow><mi>t</mi></mrow></munderover><mo>,</mo><munderover><mmultiscripts><mrow><mi>a</mi></mrow><mrow><mi>y</mi></mrow><mrow><mi>v</mi></mrow><mprescripts></mprescripts><mrow><mi>x</mi></mrow><mrow><mi>u</mi></mrow></mmultiscripts><mrow><mi>b</mi></mrow><mrow><mi>t</mi></mrow></munderover></mtd></mtr></mtable></math>",
+  "html": "<math display="block"><mtable columnalign="center" columnspacing="0"><mtr><mtd><mmultiscripts><mrow><mi>a</mi></mrow><mrow></mrow><mrow></mrow><mprescripts></mprescripts><mrow></mrow><mrow><mi>u</mi></mrow></mmultiscripts><mo>,</mo><msup><mrow><mi>a</mi></mrow><mrow><mi>v</mi></mrow></msup><mo>,</mo><mmultiscripts><mrow><mi>a</mi></mrow><mrow></mrow><mrow></mrow><mprescripts></mprescripts><mrow><mi>x</mi></mrow><mrow></mrow></mmultiscripts><mo>,</mo><msub><mrow><mi>a</mi></mrow><mrow><mi>y</mi></mrow></msub><mo>,</mo><munderover><mrow><mi>a</mi></mrow><mrow></mrow><mrow><mi>t</mi></mrow></munderover><mo>,</mo><munderover><mrow><mi>a</mi></mrow><mrow><mi>b</mi></mrow><mrow></mrow></munderover></mtd></mtr><mtr><mtd><munderover><msup><mrow><mi>a</mi></mrow><mrow><mi>v</mi></mrow></msup><mrow></mrow><mrow><mi>t</mi></mrow></munderover><mo>,</mo><msubsup><mrow><mi>a</mi></mrow><mrow><mi>y</mi></mrow><mrow><mi>v</mi></mrow></msubsup><mo>,</mo><munderover><msub><mrow><mi>a</mi></mrow><mrow><mi>y</mi></mrow></msub><mrow><mi>b</mi></mrow><mrow></mrow></munderover><mo>,</mo><munderover><mmultiscripts><mrow><mi>a</mi></mrow><mrow></mrow><mrow></mrow><mprescripts></mprescripts><mrow><mi>x</mi></mrow><mrow></mrow></mmultiscripts><mrow><mi>b</mi></mrow><mrow></mrow></munderover><mo>,</mo><mmultiscripts><mrow><mi>a</mi></mrow><mrow></mrow><mrow></mrow><mprescripts></mprescripts><mrow><mi>x</mi></mrow><mrow><mi>u</mi></mrow></mmultiscripts><mo>,</mo><munderover><mmultiscripts><mrow><mi>a</mi></mrow><mrow></mrow><mrow></mrow><mprescripts></mprescripts><mrow></mrow><mrow><mi>u</mi></mrow></mmultiscripts><mrow></mrow><mrow><mi>t</mi></mrow></munderover></mtd></mtr><mtr><mtd><mmultiscripts><mrow><mi>a</mi></mrow><mrow></mrow><mrow><mi>v</mi></mrow><mprescripts></mprescripts><mrow></mrow><mrow><mi>u</mi></mrow></mmultiscripts><mo>,</mo><munderover><msub><mrow><mi>a</mi></mrow><mrow><mi>y</mi></mrow></msub><mrow></mrow><mrow><mi>t</mi></mrow></munderover><mo>,</mo><munderover><msup><mrow><mi>a</mi></mrow><mrow><mi>v</mi></mrow></msup><mrow><mi>b</mi></mrow><mrow></mrow></munderover><mo>,</mo><mmultiscripts><mrow><mi>a</mi></mrow><mrow><mi>y</mi></mrow><mrow></mrow><mprescripts></mprescripts><mrow><mi>x</mi></mrow><mrow></mrow></mmultiscripts><mo>,</mo><munderover><mmultiscripts><mrow><mi>a</mi></mrow><mrow></mrow><mrow></mrow><mprescripts></mprescripts><mrow></mrow><mrow><mi>u</mi></mrow></mmultiscripts><mrow><mi>b</mi></mrow><mrow></mrow></munderover><mo>,</mo><munderover><mmultiscripts><mrow><mi>a</mi></mrow><mrow></mrow><mrow></mrow><mprescripts></mprescripts><mrow><mi>u</mi></mrow><mrow></mrow></mmultiscripts><mrow></mrow><mrow><mi>t</mi></mrow></munderover><mo>,</mo><munderover><mrow><mi>a</mi></mrow><mrow><mi>b</mi></mrow><mrow><mi>t</mi></mrow></munderover></mtd></mtr><mtr><mtd><mmultiscripts><mrow><mi>a</mi></mrow><mrow><mi>y</mi></mrow><mrow><mi>v</mi></mrow><mprescripts></mprescripts><mrow><mi>x</mi></mrow><mrow><mi>u</mi></mrow></mmultiscripts><mo>,</mo><munderover><mmultiscripts><mrow><mi>a</mi></mrow><mrow><mi>y</mi></mrow><mrow></mrow><mprescripts></mprescripts><mrow><mi>x</mi></mrow><mrow></mrow></mmultiscripts><mrow><mi>b</mi></mrow><mrow><mi>t</mi></mrow></munderover><mo>,</mo><munderover><mmultiscripts><mrow><mi>a</mi></mrow><mrow></mrow><mrow><mi>v</mi></mrow><mprescripts></mprescripts><mrow></mrow><mrow><mi>u</mi></mrow></mmultiscripts><mrow><mi>b</mi></mrow><mrow><mi>t</mi></mrow></munderover><mo>,</mo><munderover><mmultiscripts><mrow><mi>a</mi></mrow><mrow></mrow><mrow></mrow><mprescripts></mprescripts><mrow><mi>x</mi></mrow><mrow><mi>u</mi></mrow></mmultiscripts><mrow><mi>b</mi></mrow><mrow><mi>t</mi></mrow></munderover><mo>,</mo><munderover><msubsup><mrow><mi>a</mi></mrow><mrow><mi>y</mi></mrow><mrow><mi>v</mi></mrow></msubsup><mrow><mi>b</mi></mrow><mrow><mi>t</mi></mrow></munderover><mo>,</mo><munderover><mmultiscripts><mrow><mi>a</mi></mrow><mrow><mi>y</mi></mrow><mrow><mi>v</mi></mrow><mprescripts></mprescripts><mrow><mi>x</mi></mrow><mrow><mi>u</mi></mrow></mmultiscripts><mrow><mi>b</mi></mrow><mrow><mi>t</mi></mrow></munderover></mtd></mtr></mtable></math>",
   "text": "attach(a, tl: u),   attach(a, tr: v),   attach(a, bl: x),
 attach(a, br: y),   limits(a)^t,        limits(a)_b \\
 
@@ -1926,7 +1926,7 @@ attach(a, tl: u, t: t, tr: v, bl: x, b: b, br: y)",
     [
       "mtable",
       {
-        "columnalign": "right",
+        "columnalign": "center",
         "columnspacing": "0",
       },
       [
@@ -2902,7 +2902,7 @@ attach(a, tl: u, t: t, tr: v, bl: x, b: b, br: y)",
 exports[`corpus/attach > attach-04 1`] = `
 {
   "block": false,
-  "html": "<math><mtable columnalign="right" columnspacing="0"><mtr><mtd><msub><mrow><mi>π</mi></mrow><mrow><mn>1</mn></mrow></msub><mrow><mo>(</mo><mi>Y</mi><mo>)</mo></mrow><mo>,</mo><msub><mrow><mi>a</mi></mrow><mrow><mi>f</mi></mrow></msub><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>,</mo><msup><mrow><mi>a</mi></mrow><mrow><mi>ζ</mi></mrow></msup><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>,</mo><msubsup><mrow><mi>a</mi></mrow><mrow><mroot><mrow><mi>c</mi></mrow><mrow></mrow></mroot></mrow><mrow><mrow><mo>|</mo><mi>b</mi><mo>|</mo></mrow></mrow></msubsup></mtd></mtr><mtr><mtd><msup><mrow><mi>a</mi></mrow><mrow><mo>⊆</mo></mrow></msup><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>,</mo><msub><mrow><mi>a</mi></mrow><mrow><mi>ζ</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow></mrow></msub><mo>,</mo><msub><mrow><mi>π</mi></mrow><mrow><mn>1</mn><mrow><mo>(</mo><mi>Y</mi><mo>)</mo></mrow></mrow></msub><mo>,</mo><msubsup><mrow><mi>a</mi></mrow><mrow><mroot><mrow><mi>c</mi></mrow><mrow></mrow></mroot></mrow><mrow><mrow><mo>|</mo><mi>b</mi><mo>|</mo></mrow></mrow></msubsup></mtd></mtr></mtable></math>",
+  "html": "<math><mtable columnalign="left" columnspacing="0"><mtr><mtd><msub><mrow><mi>π</mi></mrow><mrow><mn>1</mn></mrow></msub><mrow><mo>(</mo><mi>Y</mi><mo>)</mo></mrow><mo>,</mo><msub><mrow><mi>a</mi></mrow><mrow><mi>f</mi></mrow></msub><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>,</mo><msup><mrow><mi>a</mi></mrow><mrow><mi>ζ</mi></mrow></msup><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>,</mo><msubsup><mrow><mi>a</mi></mrow><mrow><mroot><mrow><mi>c</mi></mrow><mrow></mrow></mroot></mrow><mrow><mrow><mo>|</mo><mi>b</mi><mo>|</mo></mrow></mrow></msubsup></mtd></mtr><mtr><mtd><msup><mrow><mi>a</mi></mrow><mrow><mo>⊆</mo></mrow></msup><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>,</mo><msub><mrow><mi>a</mi></mrow><mrow><mi>ζ</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow></mrow></msub><mo>,</mo><msub><mrow><mi>π</mi></mrow><mrow><mn>1</mn><mrow><mo>(</mo><mi>Y</mi><mo>)</mo></mrow></mrow></msub><mo>,</mo><msubsup><mrow><mi>a</mi></mrow><mrow><mroot><mrow><mi>c</mi></mrow><mrow></mrow></mroot></mrow><mrow><mrow><mo>|</mo><mi>b</mi><mo>|</mo></mrow></mrow></msubsup></mtd></mtr></mtable></math>",
   "text": "pi_1(Y), a_f(x), a^zeta (x), a^abs(b)_sqrt(c) \\
  a^subset.eq (x), a_(zeta(x)), pi_(1(Y)), a^(abs(b))_(sqrt(c))",
   "vdom": [
@@ -2910,7 +2910,7 @@ exports[`corpus/attach > attach-04 1`] = `
     [
       "mtable",
       {
-        "columnalign": "right",
+        "columnalign": "left",
         "columnspacing": "0",
       },
       [
@@ -3759,7 +3759,7 @@ exports[`corpus/attach > attach-05 1`] = `
 exports[`corpus/attach > attach-06 1`] = `
 {
   "block": true,
-  "html": "<math display="block"><mtable columnalign="right" columnspacing="0"><mtr><mtd><mroot><mrow><msubsup><mrow><mi>a</mi></mrow><mrow><mfrac><mrow><mn>1</mn></mrow><mrow><mn>2</mn></mrow></mfrac></mrow><mrow><mi>ζ</mi></mrow></msubsup></mrow><mrow></mrow></mroot><mo>,</mo><mroot><mrow><msubsup><mrow><mi>a</mi></mrow><mrow><mi>α</mi></mrow><mrow><mfrac><mrow><mn>1</mn></mrow><mrow><mn>2</mn></mrow></mfrac></mrow></msubsup></mrow><mrow></mrow></mroot><mo>,</mo><mroot><mrow><msubsup><mrow><mi>a</mi></mrow><mrow><mfrac><mrow><mn>1</mn></mrow><mrow><mn>2</mn></mrow></mfrac></mrow><mrow><mfrac><mrow><mn>3</mn></mrow><mrow><mn>4</mn></mrow></mfrac></mrow></msubsup></mrow><mrow></mrow></mroot></mtd></mtr><mtr><mtd><mroot><mrow><mmultiscripts><mrow><mi>a</mi></mrow><mrow></mrow><mrow></mrow><mprescripts></mprescripts><mrow><mfrac><mrow><mn>3</mn></mrow><mrow><mn>4</mn></mrow></mfrac></mrow><mrow><mfrac><mrow><mn>1</mn></mrow><mrow><mn>2</mn></mrow></mfrac></mrow></mmultiscripts></mrow><mrow></mrow></mroot><mo>,</mo><mroot><mrow><mmultiscripts><mrow><mi>a</mi></mrow><mrow><mfrac><mrow><mn>3</mn></mrow><mrow><mn>4</mn></mrow></mfrac></mrow><mrow><mfrac><mrow><mn>1</mn></mrow><mrow><mn>2</mn></mrow></mfrac></mrow><mprescripts></mprescripts><mrow><mfrac><mrow><mn>3</mn></mrow><mrow><mn>4</mn></mrow></mfrac></mrow><mrow><mfrac><mrow><mn>1</mn></mrow><mrow><mn>2</mn></mrow></mfrac></mrow></mmultiscripts></mrow><mrow></mrow></mroot></mtd></mtr></mtable></math>",
+  "html": "<math display="block"><mtable columnalign="center" columnspacing="0"><mtr><mtd><mroot><mrow><msubsup><mrow><mi>a</mi></mrow><mrow><mfrac><mrow><mn>1</mn></mrow><mrow><mn>2</mn></mrow></mfrac></mrow><mrow><mi>ζ</mi></mrow></msubsup></mrow><mrow></mrow></mroot><mo>,</mo><mroot><mrow><msubsup><mrow><mi>a</mi></mrow><mrow><mi>α</mi></mrow><mrow><mfrac><mrow><mn>1</mn></mrow><mrow><mn>2</mn></mrow></mfrac></mrow></msubsup></mrow><mrow></mrow></mroot><mo>,</mo><mroot><mrow><msubsup><mrow><mi>a</mi></mrow><mrow><mfrac><mrow><mn>1</mn></mrow><mrow><mn>2</mn></mrow></mfrac></mrow><mrow><mfrac><mrow><mn>3</mn></mrow><mrow><mn>4</mn></mrow></mfrac></mrow></msubsup></mrow><mrow></mrow></mroot></mtd></mtr><mtr><mtd><mroot><mrow><mmultiscripts><mrow><mi>a</mi></mrow><mrow></mrow><mrow></mrow><mprescripts></mprescripts><mrow><mfrac><mrow><mn>3</mn></mrow><mrow><mn>4</mn></mrow></mfrac></mrow><mrow><mfrac><mrow><mn>1</mn></mrow><mrow><mn>2</mn></mrow></mfrac></mrow></mmultiscripts></mrow><mrow></mrow></mroot><mo>,</mo><mroot><mrow><mmultiscripts><mrow><mi>a</mi></mrow><mrow><mfrac><mrow><mn>3</mn></mrow><mrow><mn>4</mn></mrow></mfrac></mrow><mrow><mfrac><mrow><mn>1</mn></mrow><mrow><mn>2</mn></mrow></mfrac></mrow><mprescripts></mprescripts><mrow><mfrac><mrow><mn>3</mn></mrow><mrow><mn>4</mn></mrow></mfrac></mrow><mrow><mfrac><mrow><mn>1</mn></mrow><mrow><mn>2</mn></mrow></mfrac></mrow></mmultiscripts></mrow><mrow></mrow></mroot></mtd></mtr></mtable></math>",
   "text": "sqrt(a_(1/2)^zeta), sqrt(a_alpha^(1/2)), sqrt(a_(1/2)^(3/4)) \\
   sqrt(attach(a, tl: 1/2, bl: 3/4)),
   sqrt(attach(a, tl: 1/2, bl: 3/4, tr: 1/2, br: 3/4))",
@@ -3771,7 +3771,7 @@ exports[`corpus/attach > attach-06 1`] = `
     [
       "mtable",
       {
-        "columnalign": "right",
+        "columnalign": "center",
         "columnspacing": "0",
       },
       [
@@ -4429,7 +4429,7 @@ exports[`corpus/attach > attach-09 1`] = `
 exports[`corpus/attach > attach-10 1`] = `
 {
   "block": true,
-  "html": "<math display="block"><mtable columnalign="right" columnspacing="0"><mtr><mtd><msub><mrow><mi>x</mi></mrow><mrow><mn>1</mn></mrow></msub><msub><mrow><mi>p</mi></mrow><mrow><mn>1</mn></mrow></msub><msub><mrow><mi>𝔭</mi></mrow><mrow><mn>1</mn></mrow></msub><msub><mrow><mn>2</mn></mrow><mrow><mn>1</mn></mrow></msub><msub><mrow><mo>⋅</mo></mrow><mrow><mn>1</mn></mrow></msub><msub><mrow><mrow><ms><ms>lg</ms></ms></mrow></mrow><mrow><mn>1</mn></mrow></msub><msub><mrow><mo>!</mo></mrow><mrow><mn>1</mn></mrow></msub><msub><mrow><mo>\\</mo></mrow><mrow><mn>1</mn></mrow></msub><msub><mrow><mo>]</mo></mrow><mrow><mn>1</mn></mrow></msub><mspace width="0.36em"> </mspace><msub><mrow><ms>ip</ms></mrow><mrow><mn>1</mn></mrow></msub><msub><mrow><mrow><ms><ms>iq</ms></ms></mrow></mrow><mrow><mn>1</mn></mrow></msub></mtd></mtr><mtr><mtd><msup><mrow><mi>x</mi></mrow><mrow><mn>1</mn></mrow></msup><msup><mrow><mi>b</mi></mrow><mrow><mn>1</mn></mrow></msup><msup><mrow><mi>𝔟</mi></mrow><mrow><mn>1</mn></mrow></msup><msup><mrow><mn>2</mn></mrow><mrow><mn>1</mn></mrow></msup><msup><mrow><mo>⋅</mo></mrow><mrow><mn>1</mn></mrow></msup><msup><mrow><mrow><ms><ms>lg</ms></ms></mrow></mrow><mrow><mn>1</mn></mrow></msup><msup><mrow><mo>!</mo></mrow><mrow><mn>1</mn></mrow></msup><msup><mrow><mo>\\</mo></mrow><mrow><mn>1</mn></mrow></msup><msup><mrow><mo>]</mo></mrow><mrow><mn>1</mn></mrow></msup><mspace width="0.36em"> </mspace><msup><mrow><ms>ib</ms></mrow><mrow><mn>1</mn></mrow></msup><msup><mrow><mrow><ms><ms>id</ms></ms></mrow></mrow><mrow><mn>1</mn></mrow></msup></mtd></mtr><mtr><mtd><msub><mrow><mi>x</mi></mrow><mrow><mn>1</mn></mrow></msub><msub><mrow><mi>y</mi></mrow><mrow><mn>1</mn></mrow></msub><mspace width="0.36em"> </mspace><msub><mrow><ms>_</ms></mrow><mrow><mn>1</mn></mrow></msub><msup><mrow><mi>x</mi></mrow><mrow><mn>1</mn></mrow></msup><msup><mrow><mi>l</mi></mrow><mrow><mn>1</mn></mrow></msup><mspace width="0.36em"> </mspace><msup><mrow><ms>\`</ms></mrow><mrow><mn>1</mn></mrow></msup><mmultiscripts><mrow><mi>I</mi></mrow><mrow><mn>1</mn></mrow><mrow><mn>1</mn></mrow><mprescripts></mprescripts><mrow><mn>1</mn></mrow><mrow><mn>1</mn></mrow></mmultiscripts><msubsup><mrow><mo>∑</mo></mrow><mrow><mn>1</mn></mrow><mrow><mn>1</mn></mrow></msubsup><msubsup><mrow><mo>∫</mo></mrow><mrow><mn>1</mn></mrow><mrow><mn>1</mn></mrow></msubsup><msubsup><mrow><mrow><mo>|</mo><mfrac><mrow><mn>1</mn></mrow><mrow><mn>2</mn></mrow></mfrac><mo>|</mo></mrow></mrow><mrow><mn>1</mn></mrow><mrow><mn>1</mn></mrow></msubsup></mtd></mtr><mtr><mtd><msubsup><mrow><mi>x</mi></mrow><mrow><mn>1</mn></mrow><mrow><mn>1</mn></mrow></msubsup><mo>,</mo><mspace width="0.36em"> </mspace><ms>(</ms><mi>b</mi><mi>y</mi><msubsup><mrow><ms>)</ms></mrow><mrow><mn>1</mn></mrow><mrow><mn>1</mn></mrow></msubsup><mo>≠</mo><msubsup><mrow><mrow><mo>(</mo><mi>b</mi><mi>y</mi><mo>)</mo></mrow></mrow><mrow><mn>1</mn></mrow><mrow><mn>1</mn></mrow></msubsup><mo>,</mo><mspace width="0.36em"> </mspace><msub><mrow><ms>[∫]</ms></mrow><mrow><mn>1</mn></mrow></msub><msub><mrow><mrow><mo>[</mo><mo>∫</mo><mo>]</mo></mrow></mrow><mrow><mn>1</mn></mrow></msub></mtd></mtr></mtable></math>",
+  "html": "<math display="block"><mtable columnalign="center" columnspacing="0"><mtr><mtd><msub><mrow><mi>x</mi></mrow><mrow><mn>1</mn></mrow></msub><msub><mrow><mi>p</mi></mrow><mrow><mn>1</mn></mrow></msub><msub><mrow><mi>𝔭</mi></mrow><mrow><mn>1</mn></mrow></msub><msub><mrow><mn>2</mn></mrow><mrow><mn>1</mn></mrow></msub><msub><mrow><mo>⋅</mo></mrow><mrow><mn>1</mn></mrow></msub><msub><mrow><mrow><ms><ms>lg</ms></ms></mrow></mrow><mrow><mn>1</mn></mrow></msub><msub><mrow><mo>!</mo></mrow><mrow><mn>1</mn></mrow></msub><msub><mrow><mo>\\</mo></mrow><mrow><mn>1</mn></mrow></msub><msub><mrow><mo>]</mo></mrow><mrow><mn>1</mn></mrow></msub><mspace width="0.36em"> </mspace><msub><mrow><ms>ip</ms></mrow><mrow><mn>1</mn></mrow></msub><msub><mrow><mrow><ms><ms>iq</ms></ms></mrow></mrow><mrow><mn>1</mn></mrow></msub></mtd></mtr><mtr><mtd><msup><mrow><mi>x</mi></mrow><mrow><mn>1</mn></mrow></msup><msup><mrow><mi>b</mi></mrow><mrow><mn>1</mn></mrow></msup><msup><mrow><mi>𝔟</mi></mrow><mrow><mn>1</mn></mrow></msup><msup><mrow><mn>2</mn></mrow><mrow><mn>1</mn></mrow></msup><msup><mrow><mo>⋅</mo></mrow><mrow><mn>1</mn></mrow></msup><msup><mrow><mrow><ms><ms>lg</ms></ms></mrow></mrow><mrow><mn>1</mn></mrow></msup><msup><mrow><mo>!</mo></mrow><mrow><mn>1</mn></mrow></msup><msup><mrow><mo>\\</mo></mrow><mrow><mn>1</mn></mrow></msup><msup><mrow><mo>]</mo></mrow><mrow><mn>1</mn></mrow></msup><mspace width="0.36em"> </mspace><msup><mrow><ms>ib</ms></mrow><mrow><mn>1</mn></mrow></msup><msup><mrow><mrow><ms><ms>id</ms></ms></mrow></mrow><mrow><mn>1</mn></mrow></msup></mtd></mtr><mtr><mtd><msub><mrow><mi>x</mi></mrow><mrow><mn>1</mn></mrow></msub><msub><mrow><mi>y</mi></mrow><mrow><mn>1</mn></mrow></msub><mspace width="0.36em"> </mspace><msub><mrow><ms>_</ms></mrow><mrow><mn>1</mn></mrow></msub><msup><mrow><mi>x</mi></mrow><mrow><mn>1</mn></mrow></msup><msup><mrow><mi>l</mi></mrow><mrow><mn>1</mn></mrow></msup><mspace width="0.36em"> </mspace><msup><mrow><ms>\`</ms></mrow><mrow><mn>1</mn></mrow></msup><mmultiscripts><mrow><mi>I</mi></mrow><mrow><mn>1</mn></mrow><mrow><mn>1</mn></mrow><mprescripts></mprescripts><mrow><mn>1</mn></mrow><mrow><mn>1</mn></mrow></mmultiscripts><msubsup><mrow><mo>∑</mo></mrow><mrow><mn>1</mn></mrow><mrow><mn>1</mn></mrow></msubsup><msubsup><mrow><mo>∫</mo></mrow><mrow><mn>1</mn></mrow><mrow><mn>1</mn></mrow></msubsup><msubsup><mrow><mrow><mo>|</mo><mfrac><mrow><mn>1</mn></mrow><mrow><mn>2</mn></mrow></mfrac><mo>|</mo></mrow></mrow><mrow><mn>1</mn></mrow><mrow><mn>1</mn></mrow></msubsup></mtd></mtr><mtr><mtd><msubsup><mrow><mi>x</mi></mrow><mrow><mn>1</mn></mrow><mrow><mn>1</mn></mrow></msubsup><mo>,</mo><mspace width="0.36em"> </mspace><ms>(</ms><mi>b</mi><mi>y</mi><msubsup><mrow><ms>)</ms></mrow><mrow><mn>1</mn></mrow><mrow><mn>1</mn></mrow></msubsup><mo>≠</mo><msubsup><mrow><mrow><mo>(</mo><mi>b</mi><mi>y</mi><mo>)</mo></mrow></mrow><mrow><mn>1</mn></mrow><mrow><mn>1</mn></mrow></msubsup><mo>,</mo><mspace width="0.36em"> </mspace><msub><mrow><ms>[∫]</ms></mrow><mrow><mn>1</mn></mrow></msub><msub><mrow><mrow><mo>[</mo><mo>∫</mo><mo>]</mo></mrow></mrow><mrow><mn>1</mn></mrow></msub></mtd></mtr></mtable></math>",
   "text": "x_1 p_1 frak(p)_1 2_1 dot_1 lg_1 !_1 \\\\_1 ]_1 "ip"_1 op("iq")_1 \\
   x^1 b^1 frak(b)^1 2^1 dot^1 lg^1 !^1 \\\\^1 ]^1 "ib"^1 op("id")^1 \\
   x_1 y_1 "_"_1 x^1 l^1 "\`"^1 attach(I,tl:1,bl:1,tr:1,br:1)
@@ -4443,7 +4443,7 @@ exports[`corpus/attach > attach-10 1`] = `
     [
       "mtable",
       {
-        "columnalign": "right",
+        "columnalign": "center",
         "columnspacing": "0",
       },
       [
@@ -5313,7 +5313,7 @@ exports[`corpus/attach > attach-10 1`] = `
 exports[`corpus/attach > attach-11 1`] = `
 {
   "block": true,
-  "html": "<math display="block"><munderover><mrow><mrow><ms><ms>lim</ms></ms></mrow></mrow><mrow><mtable columnalign="right" columnspacing="0"><mtr><mtd><mi>n</mi><mo>→</mo><mo>∞</mo></mtd></mtr><mtr><mtd><mi>n</mi><mspace width="0.36em"> </mspace><ms>grows</ms></mtd></mtr></mtable></mrow><mrow></mrow></munderover><munderover><mrow><mo>∑</mo></mrow><mrow><mi>k</mi><mo>=</mo><mn>0</mn><mo>&nbsp;</mo><mi>k</mi><mo>∈</mo><mo>ℕ</mo></mrow><mrow><mi>n</mi></mrow></munderover><mi>k</mi></math>",
+  "html": "<math display="block"><munderover><mrow><mrow><ms><ms>lim</ms></ms></mrow></mrow><mrow><mtable columnalign="center" columnspacing="0"><mtr><mtd><mi>n</mi><mo>→</mo><mo>∞</mo></mtd></mtr><mtr><mtd><mi>n</mi><mspace width="0.36em"> </mspace><ms>grows</ms></mtd></mtr></mtable></mrow><mrow></mrow></munderover><munderover><mrow><mo>∑</mo></mrow><mrow><mi>k</mi><mo>=</mo><mn>0</mn><mo>&nbsp;</mo><mi>k</mi><mo>∈</mo><mo>ℕ</mo></mrow><mrow><mi>n</mi></mrow></munderover><mi>k</mi></math>",
   "text": "lim_(n->oo \\ n "grows") sum_(k=0 \\ k in NN)^n k",
   "vdom": [
     "math",
@@ -5340,7 +5340,7 @@ exports[`corpus/attach > attach-11 1`] = `
         [
           "mtable",
           {
-            "columnalign": "right",
+            "columnalign": "center",
             "columnspacing": "0",
           },
           [
@@ -9142,7 +9142,7 @@ exports[`corpus/class > class-01 1`] = `
 exports[`corpus/class > class-02 1`] = `
 {
   "block": true,
-  "html": "<math display="block"><mtable columnalign="right" columnspacing="0"><mtr><mtd><mi>a</mi><mi>b</mi></mtd></mtr><mtr><mtd><mi>a</mi><mi>b</mi></mtd></mtr><mtr><mtd><mi>a</mi><mi>b</mi></mtd></mtr><mtr><mtd><mi>a</mi><mo>+</mo><mi>b</mi></mtd></mtr><mtr><mtd><mi>a</mi><mi>b</mi></mtd></mtr></mtable></math>",
+  "html": "<math display="block"><mtable columnalign="center" columnspacing="0"><mtr><mtd><mi>a</mi><mi>b</mi></mtd></mtr><mtr><mtd><mi>a</mi><mi>b</mi></mtd></mtr><mtr><mtd><mi>a</mi><mi>b</mi></mtd></mtr><mtr><mtd><mi>a</mi><mo>+</mo><mi>b</mi></mtd></mtr><mtr><mtd><mi>a</mi><mi>b</mi></mtd></mtr></mtable></math>",
   "text": "a dotsq b \\
   a class("normal", dotsq) b \\
   a class("vary", dotsq) b \\
@@ -9156,7 +9156,7 @@ exports[`corpus/class > class-02 1`] = `
     [
       "mtable",
       {
-        "columnalign": "right",
+        "columnalign": "center",
         "columnspacing": "0",
       },
       [
@@ -10024,7 +10024,7 @@ exports[`corpus/delimited > delimited-05 1`] = `
 exports[`corpus/delimited > delimited-06 1`] = `
 {
   "block": true,
-  "html": "<math display="block"><mtable columnalign="right" columnspacing="0"><mtr><mtd><mo>|</mo><mi>x</mi><mo>+</mo><mo>|</mo><mi>y</mi><mo>|</mo><mo>+</mo><mfrac><mrow><mi>z</mi></mrow><mrow><mi>a</mi></mrow></mfrac><mo>|</mo></mtd></mtr><mtr><mtd><mrow><mo>|</mo><mi>x</mi><mo>+</mo><mo>|</mo><mi>y</mi><mo>|</mo><mo>+</mo><mfrac><mrow><mi>z</mi></mrow><mrow><mi>a</mi></mrow></mfrac><mo>|</mo></mrow></mtd></mtr></mtable></math>",
+  "html": "<math display="block"><mtable columnalign="center" columnspacing="0"><mtr><mtd><mo>|</mo><mi>x</mi><mo>+</mo><mo>|</mo><mi>y</mi><mo>|</mo><mo>+</mo><mfrac><mrow><mi>z</mi></mrow><mrow><mi>a</mi></mrow></mfrac><mo>|</mo></mtd></mtr><mtr><mtd><mrow><mo>|</mo><mi>x</mi><mo>+</mo><mo>|</mo><mi>y</mi><mo>|</mo><mo>+</mo><mfrac><mrow><mi>z</mi></mrow><mrow><mi>a</mi></mrow></mfrac><mo>|</mo></mrow></mtd></mtr></mtable></math>",
   "text": "|x + |y| + z/a| \\
   lr(|x + |y| + z/a|)",
   "vdom": [
@@ -10035,7 +10035,7 @@ exports[`corpus/delimited > delimited-06 1`] = `
     [
       "mtable",
       {
-        "columnalign": "right",
+        "columnalign": "center",
         "columnspacing": "0",
       },
       [
@@ -10556,7 +10556,7 @@ exports[`corpus/delimited > delimited-11 1`] = `
 exports[`corpus/delimited > delimited-12 1`] = `
 {
   "block": true,
-  "html": "<math display="block"><mtable columnalign="right" columnspacing="0"><mtr><mtd><mrow><mo>{</mo><mi>x</mi><mo stretchy="true">|</mo><munderover><mrow><mo>∑</mo></mrow><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mrow><mo>∞</mo></mrow></munderover><msub><mrow><mi>φ</mi></mrow><mrow><mi>i</mi></mrow></msub><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>&lt;</mo><mn>1</mn><mo>}</mo></mrow></mtd></mtr><mtr><mtd><mrow><mo>{</mo><mo>∫</mo><mo>|</mo><mo>⋅</mo><mo>|</mo><mo stretchy="true">bar</mo><mrow><mo>⌊</mo><mover accent="true"><mrow><mi>I</mi></mrow><mrow><mo>̂</mo></mrow></mover><mo stretchy="true">slash</mo><mrow><mo>{</mo><mo>⋅</mo><mo stretchy="true">|</mo><mo>⋅</mo><mo>}</mo></mrow><mo stretchy="true">|</mo><mfrac><mrow><mi>I</mi></mrow><mrow><mi>n</mi></mrow></mfrac><mo>⌋</mo></mrow><mo>}</mo></mrow></mtd></mtr></mtable></math>",
+  "html": "<math display="block"><mtable columnalign="center" columnspacing="0"><mtr><mtd><mrow><mo>{</mo><mi>x</mi><mo stretchy="true">|</mo><munderover><mrow><mo>∑</mo></mrow><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mrow><mo>∞</mo></mrow></munderover><msub><mrow><mi>φ</mi></mrow><mrow><mi>i</mi></mrow></msub><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>&lt;</mo><mn>1</mn><mo>}</mo></mrow></mtd></mtr><mtr><mtd><mrow><mo>{</mo><mo>∫</mo><mo>|</mo><mo>⋅</mo><mo>|</mo><mo stretchy="true">bar</mo><mrow><mo>⌊</mo><mover accent="true"><mrow><mi>I</mi></mrow><mrow><mo>̂</mo></mrow></mover><mo stretchy="true">slash</mo><mrow><mo>{</mo><mo>⋅</mo><mo stretchy="true">|</mo><mo>⋅</mo><mo>}</mo></mrow><mo stretchy="true">|</mo><mfrac><mrow><mi>I</mi></mrow><mrow><mi>n</mi></mrow></mfrac><mo>⌋</mo></mrow><mo>}</mo></mrow></mtd></mtr></mtable></math>",
   "text": "{ x mid(|) sum_(i=1)^oo phi_i (x) < 1 } \\
   { integral |dot|
       mid(bar.v.double)
@@ -10569,7 +10569,7 @@ exports[`corpus/delimited > delimited-12 1`] = `
     [
       "mtable",
       {
-        "columnalign": "right",
+        "columnalign": "center",
         "columnspacing": "0",
       },
       [
@@ -11316,7 +11316,7 @@ exports[`corpus/equation > equation-03 1`] = `
 exports[`corpus/equation > equation-04 1`] = `
 {
   "block": true,
-  "html": "<math display="block"><mi>v</mi><mo>≔</mo><mrow><mo>(</mo><mtable columnalign="right" columnspacing="0.5em" rowspacing="0.5em"><mtr><mtd><mn>1</mn><mo>+</mo><mn>2</mn></mtd></mtr><mtr><mtd><mn>2</mn><mo>−</mo><mn>4</mn></mtd></mtr><mtr><mtd><mroot><mrow><mn>3</mn></mrow><mrow></mrow></mroot></mtd></mtr><mtr><mtd><mover accent="true"><mrow><mi>x</mi></mrow><mrow><mo>⃗</mo></mrow></mover></mtd></mtr></mtable><mo>)</mo></mrow><mo>+</mo><mn>1</mn></math>",
+  "html": "<math display="block"><mi>v</mi><mo>≔</mo><mrow><mo>(</mo><mtable columnalign="center" columnspacing="0.5em" rowspacing="0.5em"><mtr><mtd><mn>1</mn><mo>+</mo><mn>2</mn></mtd></mtr><mtr><mtd><mn>2</mn><mo>−</mo><mn>4</mn></mtd></mtr><mtr><mtd><mroot><mrow><mn>3</mn></mrow><mrow></mrow></mroot></mtd></mtr><mtr><mtd><mover accent="true"><mrow><mi>x</mi></mrow><mrow><mo>⃗</mo></mrow></mover></mtd></mtr></mtable><mo>)</mo></mrow><mo>+</mo><mn>1</mn></math>",
   "text": "v := vec(1 + 2, 2 - 4, sqrt(3), arrow(x)) + 1",
   "vdom": [
     "math",
@@ -11340,7 +11340,7 @@ exports[`corpus/equation > equation-04 1`] = `
       [
         "mtable",
         {
-          "columnalign": "right",
+          "columnalign": "center",
           "columnspacing": "0.5em",
           "rowspacing": "0.5em",
         },
@@ -13803,7 +13803,7 @@ exports[`corpus/frac > frac-06 1`] = `
 exports[`corpus/frac > frac-07 1`] = `
 {
   "block": true,
-  "html": "<math display="block"><mtable columnalign="right" columnspacing="0"><mtr><mtd><mfrac><mrow><mrow><ms><ms>d</ms></ms></mrow><mi>y</mi></mrow><mrow><mrow><ms><ms>d</ms></ms></mrow><mi>x</mi></mrow></mfrac><mo>,</mo><mfrac><mrow><mrow><ms><ms>d</ms></ms></mrow></mrow><mrow><mi>x</mi></mrow></mfrac><mo>,</mo><mfrac><mrow><mi>x</mi></mrow><mrow><mrow><ms><ms>d</ms></ms></mrow></mrow></mfrac><mo>,</mo><mfrac><mrow><mrow><ms><ms>d</ms></ms></mrow></mrow><mrow><mrow><ms><ms>d</ms></ms></mrow></mrow></mfrac></mtd></mtr><mtr><mtd><mfrac><mrow><mrow><ms><ms>d</ms></ms></mrow><mi>y</mi></mrow><mrow><mrow><ms><ms>d</ms></ms></mrow><mi>x</mi></mrow></mfrac><mo>,</mo><mfrac><mrow><mrow><ms><ms>d</ms></ms></mrow></mrow><mrow><mi>x</mi></mrow></mfrac><mo>,</mo><mfrac><mrow><mi>x</mi></mrow><mrow><mrow><ms><ms>d</ms></ms></mrow></mrow></mfrac><mo>,</mo><mfrac><mrow><mrow><ms><ms>d</ms></ms></mrow></mrow><mrow><mrow><ms><ms>d</ms></ms></mrow></mrow></mfrac></mtd></mtr></mtable></math>",
+  "html": "<math display="block"><mtable columnalign="center" columnspacing="0"><mtr><mtd><mfrac><mrow><mrow><ms><ms>d</ms></ms></mrow><mi>y</mi></mrow><mrow><mrow><ms><ms>d</ms></ms></mrow><mi>x</mi></mrow></mfrac><mo>,</mo><mfrac><mrow><mrow><ms><ms>d</ms></ms></mrow></mrow><mrow><mi>x</mi></mrow></mfrac><mo>,</mo><mfrac><mrow><mi>x</mi></mrow><mrow><mrow><ms><ms>d</ms></ms></mrow></mrow></mfrac><mo>,</mo><mfrac><mrow><mrow><ms><ms>d</ms></ms></mrow></mrow><mrow><mrow><ms><ms>d</ms></ms></mrow></mrow></mfrac></mtd></mtr><mtr><mtd><mfrac><mrow><mrow><ms><ms>d</ms></ms></mrow><mi>y</mi></mrow><mrow><mrow><ms><ms>d</ms></ms></mrow><mi>x</mi></mrow></mfrac><mo>,</mo><mfrac><mrow><mrow><ms><ms>d</ms></ms></mrow></mrow><mrow><mi>x</mi></mrow></mfrac><mo>,</mo><mfrac><mrow><mi>x</mi></mrow><mrow><mrow><ms><ms>d</ms></ms></mrow></mrow></mfrac><mo>,</mo><mfrac><mrow><mrow><ms><ms>d</ms></ms></mrow></mrow><mrow><mrow><ms><ms>d</ms></ms></mrow></mrow></mfrac></mtd></mtr></mtable></math>",
   "text": "(dif y)/(dif x), dif/x, x/dif, dif/dif \\
   frac(dif y, dif x), frac(dif, x), frac(x, dif), frac(dif, dif)",
   "vdom": [
@@ -13814,7 +13814,7 @@ exports[`corpus/frac > frac-07 1`] = `
     [
       "mtable",
       {
-        "columnalign": "right",
+        "columnalign": "center",
         "columnspacing": "0",
       },
       [
@@ -14197,7 +14197,7 @@ exports[`corpus/frac > frac-08 1`] = `
 exports[`corpus/frac > frac-09 1`] = `
 {
   "block": true,
-  "html": "<math display="block"><mtable columnalign="right" columnspacing="0"><mtr><mtd><mfrac><mrow><msub><mrow><mi>a</mi></mrow><mrow><mn>1</mn></mrow></msub></mrow><mrow><msub><mrow><mi>b</mi></mrow><mrow><mn>2</mn></mrow></msub></mrow></mfrac><mo>,</mo><mfrac><mrow><mn>1</mn></mrow><mrow><mi>f</mi></mrow></mfrac><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>,</mo><mfrac><mrow><mi>ζ</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow></mrow><mrow><mn>2</mn></mrow></mfrac><mo>,</mo><mspace width="0.36em"> </mspace><mfrac><mrow><ms>foo</ms><mrow><mo>⟦</mo><mi>x</mi><mo>⟧</mo></mrow></mrow><mrow><mn>2</mn></mrow></mfrac></mtd></mtr><mtr><mtd><mfrac><mrow><mn>1.2</mn></mrow><mrow><mn>3.7</mn></mrow></mfrac><mo>,</mo><msup><mrow><mn>2.3</mn></mrow><mrow><mn>3.4</mn></mrow></msup></mtd></mtr><mtr><mtd><mfrac><mrow><mo>🏳️‍🌈</mo><mrow><mo>[</mo><mi>x</mi><mo>]</mo></mrow></mrow><mrow><mn>2</mn></mrow></mfrac><mo>,</mo><mi>f</mi><mfrac><mrow><mrow><mo>[</mo><mi>x</mi><mo>]</mo></mrow></mrow><mrow><mn>2</mn></mrow></mfrac><mo>,</mo><mi>φ</mi><mfrac><mrow><mrow><mo>[</mo><mi>x</mi><mo>]</mo></mrow></mrow><mrow><mn>2</mn></mrow></mfrac><mo>,</mo><mo>🏳️‍🌈</mo><mfrac><mrow><mrow><mo>[</mo><mi>x</mi><mo>]</mo></mrow></mrow><mrow><mn>2</mn></mrow></mfrac></mtd></mtr><mtr><mtd><mo>+</mo><mfrac><mrow><mrow><mo>[</mo><mi>x</mi><mo>]</mo></mrow></mrow><mrow><mn>2</mn></mrow></mfrac><mo>,</mo><mn>1</mn><mfrac><mrow><mi>x</mi></mrow><mrow><mn>2</mn></mrow></mfrac><mo>,</mo><mn>2</mn><mfrac><mrow><mrow><mo>[</mo><mi>x</mi><mo>]</mo></mrow></mrow><mrow><mn>2</mn></mrow></mfrac></mtd></mtr><mtr><mtd><mrow><mo>(</mo><mi>a</mi><mo>)</mo></mrow><mfrac><mrow><mi>b</mi></mrow><mrow><mn>2</mn></mrow></mfrac><mo>,</mo><mi>b</mi><mrow><mo>(</mo><mi>a</mi><mo>)</mo></mrow><mfrac><mrow><mrow><mo>[</mo><mi>b</mi><mo>]</mo></mrow></mrow><mrow><mn>2</mn></mrow></mfrac></mtd></mtr><mtr><mtd><mfrac><mrow><mi>n</mi><mo>!</mo></mrow><mrow><mn>2</mn></mrow></mfrac><mo>,</mo><mfrac><mrow><mn>5</mn><mo>!</mo></mrow><mrow><mn>2</mn></mrow></mfrac><mo>,</mo><mi>n</mi><mfrac><mrow><mo>!</mo></mrow><mrow><mn>2</mn></mrow></mfrac><mo>,</mo><mfrac><mrow><mn>1</mn></mrow><mrow><mi>n</mi><mo>!</mo></mrow></mfrac><mo>,</mo><mfrac><mrow><mn>1</mn></mrow><mrow><mn>5</mn><mo>!</mo></mrow></mfrac></mtd></mtr></mtable></math>",
+  "html": "<math display="block"><mtable columnalign="center" columnspacing="0"><mtr><mtd><mfrac><mrow><msub><mrow><mi>a</mi></mrow><mrow><mn>1</mn></mrow></msub></mrow><mrow><msub><mrow><mi>b</mi></mrow><mrow><mn>2</mn></mrow></msub></mrow></mfrac><mo>,</mo><mfrac><mrow><mn>1</mn></mrow><mrow><mi>f</mi></mrow></mfrac><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>,</mo><mfrac><mrow><mi>ζ</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow></mrow><mrow><mn>2</mn></mrow></mfrac><mo>,</mo><mspace width="0.36em"> </mspace><mfrac><mrow><ms>foo</ms><mrow><mo>⟦</mo><mi>x</mi><mo>⟧</mo></mrow></mrow><mrow><mn>2</mn></mrow></mfrac></mtd></mtr><mtr><mtd><mfrac><mrow><mn>1.2</mn></mrow><mrow><mn>3.7</mn></mrow></mfrac><mo>,</mo><msup><mrow><mn>2.3</mn></mrow><mrow><mn>3.4</mn></mrow></msup></mtd></mtr><mtr><mtd><mfrac><mrow><mo>🏳️‍🌈</mo><mrow><mo>[</mo><mi>x</mi><mo>]</mo></mrow></mrow><mrow><mn>2</mn></mrow></mfrac><mo>,</mo><mi>f</mi><mfrac><mrow><mrow><mo>[</mo><mi>x</mi><mo>]</mo></mrow></mrow><mrow><mn>2</mn></mrow></mfrac><mo>,</mo><mi>φ</mi><mfrac><mrow><mrow><mo>[</mo><mi>x</mi><mo>]</mo></mrow></mrow><mrow><mn>2</mn></mrow></mfrac><mo>,</mo><mo>🏳️‍🌈</mo><mfrac><mrow><mrow><mo>[</mo><mi>x</mi><mo>]</mo></mrow></mrow><mrow><mn>2</mn></mrow></mfrac></mtd></mtr><mtr><mtd><mo>+</mo><mfrac><mrow><mrow><mo>[</mo><mi>x</mi><mo>]</mo></mrow></mrow><mrow><mn>2</mn></mrow></mfrac><mo>,</mo><mn>1</mn><mfrac><mrow><mi>x</mi></mrow><mrow><mn>2</mn></mrow></mfrac><mo>,</mo><mn>2</mn><mfrac><mrow><mrow><mo>[</mo><mi>x</mi><mo>]</mo></mrow></mrow><mrow><mn>2</mn></mrow></mfrac></mtd></mtr><mtr><mtd><mrow><mo>(</mo><mi>a</mi><mo>)</mo></mrow><mfrac><mrow><mi>b</mi></mrow><mrow><mn>2</mn></mrow></mfrac><mo>,</mo><mi>b</mi><mrow><mo>(</mo><mi>a</mi><mo>)</mo></mrow><mfrac><mrow><mrow><mo>[</mo><mi>b</mi><mo>]</mo></mrow></mrow><mrow><mn>2</mn></mrow></mfrac></mtd></mtr><mtr><mtd><mfrac><mrow><mi>n</mi><mo>!</mo></mrow><mrow><mn>2</mn></mrow></mfrac><mo>,</mo><mfrac><mrow><mn>5</mn><mo>!</mo></mrow><mrow><mn>2</mn></mrow></mfrac><mo>,</mo><mi>n</mi><mfrac><mrow><mo>!</mo></mrow><mrow><mn>2</mn></mrow></mfrac><mo>,</mo><mfrac><mrow><mn>1</mn></mrow><mrow><mi>n</mi><mo>!</mo></mrow></mfrac><mo>,</mo><mfrac><mrow><mn>1</mn></mrow><mrow><mn>5</mn><mo>!</mo></mrow></mfrac></mtd></mtr></mtable></math>",
   "text": "a_1/b_2, 1/f(x), zeta(x)/2, "foo"[|x|]/2 \\
   1.2/3.7, 2.3^3.4 \\
   🏳️‍🌈[x]/2, f [x]/2, phi [x]/2, 🏳️‍🌈 [x]/2 \\
@@ -14212,7 +14212,7 @@ exports[`corpus/frac > frac-09 1`] = `
     [
       "mtable",
       {
-        "columnalign": "right",
+        "columnalign": "center",
         "columnspacing": "0",
       },
       [
@@ -15670,7 +15670,7 @@ exports[`corpus/interactions > interactions-28 1`] = `
 exports[`corpus/interactions > interactions-29 1`] = `
 {
   "block": true,
-  "html": "<math display="block"><mrow><mo>(</mo><mtable columnalign="right" columnspacing="0.5em" rowspacing="0.5em"><mtr><mtd><mn>1</mn></mtd></mtr><mtr><mtd><mn>2</mn></mtd></mtr></mtable><mo>)</mo></mrow><mo>∗</mo><mn>2</mn></math>",
+  "html": "<math display="block"><mrow><mo>(</mo><mtable columnalign="center" columnspacing="0.5em" rowspacing="0.5em"><mtr><mtd><mn>1</mn></mtd></mtr><mtr><mtd><mn>2</mn></mtd></mtr></mtable><mo>)</mo></mrow><mo>∗</mo><mn>2</mn></math>",
   "text": "vec(1,2) * 2",
   "vdom": [
     "math",
@@ -15686,7 +15686,7 @@ exports[`corpus/interactions > interactions-29 1`] = `
       [
         "mtable",
         {
-          "columnalign": "right",
+          "columnalign": "center",
           "columnspacing": "0.5em",
           "rowspacing": "0.5em",
         },
@@ -16168,7 +16168,7 @@ exports[`corpus/interactions > interactions-42 1`] = `
 exports[`corpus/mat > mat-01 1`] = `
 {
   "block": false,
-  "html": "<math><mtable columnalign="right" columnspacing="0"><mtr><mtd><mrow><mo>(</mo><mtable columnspacing="0.5em" rowspacing="0.5em"><mtr></mtr></mtable><mo>)</mo></mrow><mo>⋅</mo><mrow><mo>(</mo><mtable columnspacing="0.5em" rowspacing="0.5em"><mtr><mtd></mtd></mtr></mtable><mo>)</mo></mrow><mo>⋅</mo><mrow><mo>(</mo><mtable columnspacing="0.5em" rowspacing="0.5em"><mtr><mtd><mn>1</mn></mtd><mtd><mn>2</mn></mtd></mtr></mtable><mo>)</mo></mrow><mo>⋅</mo><mrow><mo>(</mo><mtable columnspacing="0.5em" rowspacing="0.5em"><mtr><mtd><mn>1</mn></mtd><mtd><mn>2</mn></mtd></mtr></mtable><mo>)</mo></mrow></mtd></mtr><mtr><mtd><mrow><mo>(</mo><mtable columnspacing="0.5em" rowspacing="0.5em"><mtr><mtd><mn>1</mn></mtd></mtr><mtr><mtd><mn>2</mn></mtd></mtr></mtable><mo>)</mo></mrow><mo>⋅</mo><mrow><mo>(</mo><mtable columnspacing="0.5em" rowspacing="0.5em"><mtr><mtd><mn>1</mn></mtd><mtd><mn>2</mn></mtd></mtr><mtr><mtd><mn>3</mn></mtd><mtd><mn>4</mn></mtd></mtr></mtable><mo>)</mo></mrow><mo>⋅</mo><mrow><mo>(</mo><mtable columnspacing="0.5em" rowspacing="0.5em"><mtr><mtd><mn>1</mn><mo>+</mo><mn>2</mn></mtd><mtd><mfrac><mrow><mn>1</mn></mrow><mrow><mn>2</mn></mrow></mfrac></mtd></mtr><mtr><mtd><mn>3</mn></mtd><mtd><mn>4</mn></mtd></mtr></mtable><mo>)</mo></mrow></mtd></mtr></mtable></math>",
+  "html": "<math><mtable columnalign="left" columnspacing="0"><mtr><mtd><mrow><mo>(</mo><mtable columnspacing="0.5em" rowspacing="0.5em"><mtr></mtr></mtable><mo>)</mo></mrow><mo>⋅</mo><mrow><mo>(</mo><mtable columnspacing="0.5em" rowspacing="0.5em"><mtr><mtd></mtd></mtr></mtable><mo>)</mo></mrow><mo>⋅</mo><mrow><mo>(</mo><mtable columnspacing="0.5em" rowspacing="0.5em"><mtr><mtd><mn>1</mn></mtd><mtd><mn>2</mn></mtd></mtr></mtable><mo>)</mo></mrow><mo>⋅</mo><mrow><mo>(</mo><mtable columnspacing="0.5em" rowspacing="0.5em"><mtr><mtd><mn>1</mn></mtd><mtd><mn>2</mn></mtd></mtr></mtable><mo>)</mo></mrow></mtd></mtr><mtr><mtd><mrow><mo>(</mo><mtable columnspacing="0.5em" rowspacing="0.5em"><mtr><mtd><mn>1</mn></mtd></mtr><mtr><mtd><mn>2</mn></mtd></mtr></mtable><mo>)</mo></mrow><mo>⋅</mo><mrow><mo>(</mo><mtable columnspacing="0.5em" rowspacing="0.5em"><mtr><mtd><mn>1</mn></mtd><mtd><mn>2</mn></mtd></mtr><mtr><mtd><mn>3</mn></mtd><mtd><mn>4</mn></mtd></mtr></mtable><mo>)</mo></mrow><mo>⋅</mo><mrow><mo>(</mo><mtable columnspacing="0.5em" rowspacing="0.5em"><mtr><mtd><mn>1</mn><mo>+</mo><mn>2</mn></mtd><mtd><mfrac><mrow><mn>1</mn></mrow><mrow><mn>2</mn></mrow></mfrac></mtd></mtr><mtr><mtd><mn>3</mn></mtd><mtd><mn>4</mn></mtd></mtr></mtable><mo>)</mo></mrow></mtd></mtr></mtable></math>",
   "text": "mat() dot
  mat(;) dot
  mat(1, 2) dot
@@ -16181,7 +16181,7 @@ exports[`corpus/mat > mat-01 1`] = `
     [
       "mtable",
       {
-        "columnalign": "right",
+        "columnalign": "left",
         "columnspacing": "0",
       },
       [
@@ -16669,7 +16669,7 @@ exports[`corpus/mat > mat-02 1`] = `
 exports[`corpus/mat > mat-03 1`] = `
 {
   "block": true,
-  "html": "<math display="block"><mrow><mo>(</mo><mtable columnspacing="0.5em" rowspacing="0.5em"><mtr><mtd><mi>a</mi></mtd><mtd><msup><mrow><mi>b</mi></mrow><mrow><mn>2</mn></mrow></msup></mtd></mtr><mtr><mtd><munderover><mrow><mo>∑</mo></mrow><mrow><mtable columnalign="right" columnspacing="0"><mtr><mtd><mi>x</mi></mtd></mtr><mtr><mtd><mi>y</mi></mtd></mtr></mtable></mrow><mrow></mrow></munderover><mi>x</mi></mtd><mtd><msup><mrow><mi>a</mi></mrow><mrow><mfrac><mrow><mn>1</mn></mrow><mrow><mn>2</mn></mrow></mfrac></mrow></msup></mtd></mtr><mtr><mtd><mi>ζ</mi></mtd><mtd><mi>α</mi></mtd></mtr><mtr><mtd></mtd></mtr></mtable><mo>)</mo></mrow></math>",
+  "html": "<math display="block"><mrow><mo>(</mo><mtable columnspacing="0.5em" rowspacing="0.5em"><mtr><mtd><mi>a</mi></mtd><mtd><msup><mrow><mi>b</mi></mrow><mrow><mn>2</mn></mrow></msup></mtd></mtr><mtr><mtd><munderover><mrow><mo>∑</mo></mrow><mrow><mtable columnalign="center" columnspacing="0"><mtr><mtd><mi>x</mi></mtd></mtr><mtr><mtd><mi>y</mi></mtd></mtr></mtable></mrow><mrow></mrow></munderover><mi>x</mi></mtd><mtd><msup><mrow><mi>a</mi></mrow><mrow><mfrac><mrow><mn>1</mn></mrow><mrow><mn>2</mn></mrow></mfrac></mrow></msup></mtd></mtr><mtr><mtd><mi>ζ</mi></mtd><mtd><mi>α</mi></mtd></mtr><mtr><mtd></mtd></mtr></mtable><mo>)</mo></mrow></math>",
   "text": "mat(
   a, b^2;
   sum_(x \\ y) x, a^(1/2);
@@ -16740,7 +16740,7 @@ exports[`corpus/mat > mat-03 1`] = `
                 [
                   "mtable",
                   {
-                    "columnalign": "right",
+                    "columnalign": "center",
                     "columnspacing": "0",
                   },
                   [
@@ -21014,7 +21014,7 @@ exports[`corpus/multiline > multiline-05 1`] = `
 exports[`corpus/multiline > multiline-06 1`] = `
 {
   "block": true,
-  "html": "<math display="block"><munderover><mrow><mo>∑</mo></mrow><mrow><mtable columnalign="right" columnspacing="0"><mtr><mtd><mi>n</mi><mo>∈</mo><mo>ℕ</mo></mtd></mtr><mtr><mtd><mi>n</mi><mo>≤</mo><mn>5</mn></mtd></mtr></mtable></mrow><mrow></mrow></munderover><mi>n</mi><mo>=</mo><mfrac><mrow><mn>5</mn><mrow><mo>(</mo><mn>5</mn><mo>+</mo><mn>1</mn><mo>)</mo></mrow></mrow><mrow><mn>2</mn></mrow></mfrac><mo>=</mo><mn>15</mn></math>",
+  "html": "<math display="block"><munderover><mrow><mo>∑</mo></mrow><mrow><mtable columnalign="center" columnspacing="0"><mtr><mtd><mi>n</mi><mo>∈</mo><mo>ℕ</mo></mtd></mtr><mtr><mtd><mi>n</mi><mo>≤</mo><mn>5</mn></mtd></mtr></mtable></mrow><mrow></mrow></munderover><mi>n</mi><mo>=</mo><mfrac><mrow><mn>5</mn><mrow><mo>(</mo><mn>5</mn><mo>+</mo><mn>1</mn><mo>)</mo></mrow></mrow><mrow><mn>2</mn></mrow></mfrac><mo>=</mo><mn>15</mn></math>",
   "text": "sum_(n in NN \\ n <= 5) n = (5(5+1))/2 = 15",
   "vdom": [
     "math",
@@ -21035,7 +21035,7 @@ exports[`corpus/multiline > multiline-06 1`] = `
         [
           "mtable",
           {
-            "columnalign": "right",
+            "columnalign": "center",
             "columnspacing": "0",
           },
           [
@@ -21495,14 +21495,14 @@ exports[`corpus/multiline > multiline-15 1`] = `
 exports[`corpus/multiline > multiline-16 1`] = `
 {
   "block": false,
-  "html": "<math><mtable columnalign="right" columnspacing="0"><mtr><mtd><mi>a</mi><mo>+</mo><mi>b</mi></mtd></mtr><mtr><mtd><mi>c</mi><mo>+</mo><mi>d</mi></mtd></mtr></mtable></math>",
+  "html": "<math><mtable columnalign="left" columnspacing="0"><mtr><mtd><mi>a</mi><mo>+</mo><mi>b</mi></mtd></mtr><mtr><mtd><mi>c</mi><mo>+</mo><mi>d</mi></mtd></mtr></mtable></math>",
   "text": "a + b \\ c + d",
   "vdom": [
     "math",
     [
       "mtable",
       {
-        "columnalign": "right",
+        "columnalign": "left",
         "columnspacing": "0",
       },
       [
@@ -22155,7 +22155,7 @@ exports[`corpus/op > op-04 1`] = `
 exports[`corpus/op > op-05 1`] = `
 {
   "block": true,
-  "html": "<math display="block"><mtable columnalign="right" columnspacing="0"><mtr><mtd><msub><mrow><mrow><ms><ms>myop</ms></ms></mrow></mrow><mrow><mi>x</mi><mo>=</mo><mn>1</mn></mrow></msub><mi>x</mi></mtd></mtr><mtr><mtd><munderover><mrow><mrow><ms><ms>myop</ms></ms></mrow></mrow><mrow><mi>x</mi><mo>=</mo><mn>1</mn></mrow><mrow></mrow></munderover><mi>x</mi></mtd></mtr></mtable></math>",
+  "html": "<math display="block"><mtable columnalign="center" columnspacing="0"><mtr><mtd><msub><mrow><mrow><ms><ms>myop</ms></ms></mrow></mrow><mrow><mi>x</mi><mo>=</mo><mn>1</mn></mrow></msub><mi>x</mi></mtd></mtr><mtr><mtd><munderover><mrow><mrow><ms><ms>myop</ms></ms></mrow></mrow><mrow><mi>x</mi><mo>=</mo><mn>1</mn></mrow><mrow></mrow></munderover><mi>x</mi></mtd></mtr></mtable></math>",
   "text": "op("myop", limits: #false)_(x:=1) x \\
   op("myop", limits: #true)_(x:=1) x",
   "vdom": [
@@ -22166,7 +22166,7 @@ exports[`corpus/op > op-05 1`] = `
     [
       "mtable",
       {
-        "columnalign": "right",
+        "columnalign": "center",
         "columnspacing": "0",
       },
       [
@@ -23732,7 +23732,7 @@ exports[`corpus/primes > primes-33 1`] = `
 exports[`corpus/primes > primes-34 1`] = `
 {
   "block": true,
-  "html": "<math display="block"><mtable columnalign="right" columnspacing="0"><mtr><mtd><msup><mrow><mi>g</mi></mrow><mrow><mo>′</mo></mrow></msup><mi>gprime</mi><mi>g</mi><mo>′</mo></mtd></mtr><mtr><mtd><msup><mrow><mi>gprime</mi></mrow><mrow><mo>′′′′′′′′′′′′′′′′</mo></mrow></msup></mtd></mtr><mtr><mtd><msup><mrow></mrow><mrow><mo>′</mo></mrow></msup></mtd></mtr></mtable></math>",
+  "html": "<math display="block"><mtable columnalign="center" columnspacing="0"><mtr><mtd><msup><mrow><mi>g</mi></mrow><mrow><mo>′</mo></mrow></msup><mi>gprime</mi><mi>g</mi><mo>′</mo></mtd></mtr><mtr><mtd><msup><mrow><mi>gprime</mi></mrow><mrow><mo>′′′′′′′′′′′′′′′′</mo></mrow></msup></mtd></mtr><mtr><mtd><msup><mrow></mrow><mrow><mo>′</mo></mrow></msup></mtd></mtr></mtable></math>",
   "text": "#(g)' #g' #g ' \\
   #g''''''''''''''''' \\
   gg'",
@@ -23744,7 +23744,7 @@ exports[`corpus/primes > primes-34 1`] = `
     [
       "mtable",
       {
-        "columnalign": "right",
+        "columnalign": "center",
         "columnspacing": "0",
       },
       [
@@ -23880,7 +23880,7 @@ exports[`corpus/root > root-01 1`] = `
 exports[`corpus/root > root-02 1`] = `
 {
   "block": true,
-  "html": "<math display="block"><mtable columnalign="right" columnspacing="0"><mtr><mtd><mroot><mrow><mi>a</mi></mrow><mrow></mrow></mroot><mspace width="1em"></mspace><mroot><mrow><mi>f</mi></mrow><mrow></mrow></mroot><mspace width="1em"></mspace><mroot><mrow><mi>q</mi></mrow><mrow></mrow></mroot><mspace width="1em"></mspace><mroot><mrow><msup><mrow><mi>a</mi></mrow><mrow><mn>2</mn></mrow></msup></mrow><mrow></mrow></mroot></mtd></mtr><mtr><mtd><mroot><mrow><msub><mrow><mi>n</mi></mrow><mrow><mn>0</mn></mrow></msub></mrow><mrow></mrow></mroot><mspace width="1em"></mspace><mroot><mrow><msup><mrow><mi>b</mi></mrow><mrow></mrow></msup></mrow><mrow></mrow></mroot><mspace width="1em"></mspace><mroot><mrow><msup><mrow><mi>b</mi></mrow><mrow><mn>2</mn></mrow></msup></mrow><mrow></mrow></mroot><mspace width="1em"></mspace><mroot><mrow><msubsup><mrow><mi>q</mi></mrow><mrow><mn>1</mn></mrow><mrow><mn>2</mn></mrow></msubsup></mrow><mrow></mrow></mroot></mtd></mtr></mtable></math>",
+  "html": "<math display="block"><mtable columnalign="center" columnspacing="0"><mtr><mtd><mroot><mrow><mi>a</mi></mrow><mrow></mrow></mroot><mspace width="1em"></mspace><mroot><mrow><mi>f</mi></mrow><mrow></mrow></mroot><mspace width="1em"></mspace><mroot><mrow><mi>q</mi></mrow><mrow></mrow></mroot><mspace width="1em"></mspace><mroot><mrow><msup><mrow><mi>a</mi></mrow><mrow><mn>2</mn></mrow></msup></mrow><mrow></mrow></mroot></mtd></mtr><mtr><mtd><mroot><mrow><msub><mrow><mi>n</mi></mrow><mrow><mn>0</mn></mrow></msub></mrow><mrow></mrow></mroot><mspace width="1em"></mspace><mroot><mrow><msup><mrow><mi>b</mi></mrow><mrow></mrow></msup></mrow><mrow></mrow></mroot><mspace width="1em"></mspace><mroot><mrow><msup><mrow><mi>b</mi></mrow><mrow><mn>2</mn></mrow></msup></mrow><mrow></mrow></mroot><mspace width="1em"></mspace><mroot><mrow><msubsup><mrow><mi>q</mi></mrow><mrow><mn>1</mn></mrow><mrow><mn>2</mn></mrow></msubsup></mrow><mrow></mrow></mroot></mtd></mtr></mtable></math>",
   "text": "sqrt(a) quad
   sqrt(f) quad
   sqrt(q) quad
@@ -23897,7 +23897,7 @@ exports[`corpus/root > root-02 1`] = `
     [
       "mtable",
       {
-        "columnalign": "right",
+        "columnalign": "center",
         "columnspacing": "0",
       },
       [
@@ -25041,7 +25041,7 @@ exports[`corpus/root > root-13 1`] = `
 exports[`corpus/size > size-01 1`] = `
 {
   "block": false,
-  "html": "<math><mtable columnalign="right" columnspacing="0"><mtr><mtd><mfrac><mrow><mi>a</mi></mrow><mrow><mi>b</mi></mrow></mfrac><mo>,</mo><mrow displaystyle="true"><mfrac><mrow><mi>a</mi></mrow><mrow><mi>b</mi></mrow></mfrac></mrow><mo>,</mo><mfrac><mrow><mrow displaystyle="true"><mi>a</mi></mrow></mrow><mrow><mrow displaystyle="true"><mi>b</mi></mrow></mrow></mfrac><mo>,</mo><mrow displaystyle="false" scriptlevel="0"><mfrac><mrow><mi>a</mi></mrow><mrow><mi>b</mi></mrow></mfrac></mrow><mo>,</mo><mrow displaystyle="false" scriptlevel="1"><mfrac><mrow><mi>a</mi></mrow><mrow><mi>b</mi></mrow></mfrac></mrow><mo>,</mo><mrow displaystyle="false" scriptlevel="2"><mfrac><mrow><mi>a</mi></mrow><mrow><mi>b</mi></mrow></mfrac></mrow></mtd></mtr><mtr><mtd><mrow displaystyle="false" scriptlevel="1"><mfrac><mrow><mi>𝚊</mi></mrow><mrow><mi>𝚋</mi></mrow></mfrac></mrow><mo>,</mo><mrow displaystyle="false" scriptlevel="1"><mfrac><mrow><mi>𝚊</mi></mrow><mrow><mi>𝚋</mi></mrow></mfrac></mrow></mtd></mtr><mtr><mtd><mrow displaystyle="false" scriptlevel="1"><msup><mrow><mi>a</mi></mrow><mrow><mi>b</mi></mrow></msup></mrow><mo>,</mo><mrow displaystyle="false" scriptlevel="1"><msup><mrow><mi>a</mi></mrow><mrow><mi>b</mi></mrow></msup></mrow></mtd></mtr></mtable></math>",
+  "html": "<math><mtable columnalign="left" columnspacing="0"><mtr><mtd><mfrac><mrow><mi>a</mi></mrow><mrow><mi>b</mi></mrow></mfrac><mo>,</mo><mrow displaystyle="true"><mfrac><mrow><mi>a</mi></mrow><mrow><mi>b</mi></mrow></mfrac></mrow><mo>,</mo><mfrac><mrow><mrow displaystyle="true"><mi>a</mi></mrow></mrow><mrow><mrow displaystyle="true"><mi>b</mi></mrow></mrow></mfrac><mo>,</mo><mrow displaystyle="false" scriptlevel="0"><mfrac><mrow><mi>a</mi></mrow><mrow><mi>b</mi></mrow></mfrac></mrow><mo>,</mo><mrow displaystyle="false" scriptlevel="1"><mfrac><mrow><mi>a</mi></mrow><mrow><mi>b</mi></mrow></mfrac></mrow><mo>,</mo><mrow displaystyle="false" scriptlevel="2"><mfrac><mrow><mi>a</mi></mrow><mrow><mi>b</mi></mrow></mfrac></mrow></mtd></mtr><mtr><mtd><mrow displaystyle="false" scriptlevel="1"><mfrac><mrow><mi>𝚊</mi></mrow><mrow><mi>𝚋</mi></mrow></mfrac></mrow><mo>,</mo><mrow displaystyle="false" scriptlevel="1"><mfrac><mrow><mi>𝚊</mi></mrow><mrow><mi>𝚋</mi></mrow></mfrac></mrow></mtd></mtr><mtr><mtd><mrow displaystyle="false" scriptlevel="1"><msup><mrow><mi>a</mi></mrow><mrow><mi>b</mi></mrow></msup></mrow><mo>,</mo><mrow displaystyle="false" scriptlevel="1"><msup><mrow><mi>a</mi></mrow><mrow><mi>b</mi></mrow></msup></mrow></mtd></mtr></mtable></math>",
   "text": "a/b, display(a/b), display(a)/display(b), inline(a/b), script(a/b), sscript(a/b) \\
  mono(script(a/b)), script(mono(a/b))\\
  script(a^b, cramped: #true), script(a^b, cramped: #false)",
@@ -25050,7 +25050,7 @@ exports[`corpus/size > size-01 1`] = `
     [
       "mtable",
       {
-        "columnalign": "right",
+        "columnalign": "left",
         "columnspacing": "0",
       },
       [
@@ -27124,7 +27124,7 @@ exports[`corpus/spacing > spacing-26 1`] = `
 exports[`corpus/spacing > spacing-27 1`] = `
 {
   "block": true,
-  "html": "<math display="block"><mtable columnalign="right" columnspacing="0"><mtr><mtd><mn>10</mn><mo>°</mo></mtd></mtr><mtr><mtd><mn>10</mn><mo>°</mo></mtd></mtr><mtr><mtd><mn>10.1</mn><mo>°</mo></mtd></mtr><mtr><mtd><mn>10.1</mn><mo>°</mo></mtd></mtr></mtable></math>",
+  "html": "<math display="block"><mtable columnalign="center" columnspacing="0"><mtr><mtd><mn>10</mn><mo>°</mo></mtd></mtr><mtr><mtd><mn>10</mn><mo>°</mo></mtd></mtr><mtr><mtd><mn>10.1</mn><mo>°</mo></mtd></mtr><mtr><mtd><mn>10.1</mn><mo>°</mo></mtd></mtr></mtable></math>",
   "text": "10degree \\
 10 degree \\
 10.1degree \\
@@ -27137,7 +27137,7 @@ exports[`corpus/spacing > spacing-27 1`] = `
     [
       "mtable",
       {
-        "columnalign": "right",
+        "columnalign": "center",
         "columnspacing": "0",
       },
       [
@@ -27263,7 +27263,7 @@ exports[`corpus/style > style-01 1`] = `
 exports[`corpus/style > style-02 1`] = `
 {
   "block": false,
-  "html": "<math><mtable columnalign="right" columnspacing="0"><mtr><mtd><mi>A</mi><mo>,</mo><mrow><mi mathvariant="italic">A</mi></mrow><mo>,</mo><mrow><mi mathvariant="normal">A</mi></mrow><mo>,</mo><mrow style="font-weight: bold"><mi>A</mi></mrow><mo>,</mo><mrow style="font-weight: bold"><mrow><mi mathvariant="normal">A</mi></mrow></mrow><mo>,</mo></mtd></mtr><mtr><mtd><mi>A</mi><mo>,</mo><mi>𝖠</mi><mo>,</mo><mi>𝒜</mi><mo>,</mo><mi>𝔄</mi><mo>,</mo><mi>𝙰</mi><mo>,</mo><mi>𝔸</mi><mo>,</mo></mtd></mtr><mtr><mtd><mrow></mrow><mo>,</mo><mrow></mrow><mo>,</mo></mtd></mtr><mtr><mtd><ms>𝕙𝕖𝕝𝕝𝕠</ms><mo>+</mo><mrow style="font-weight: bold"><ms>𝓌ℴ𝓇𝓁𝒹</ms></mrow><mo>,</mo></mtd></mtr><mtr><mtd><ms>𝚂𝚀𝚁𝚃</ms><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>≀</mo><mn>𝟷𝟸𝟹</mn><mo>+</mo><mn>𝟺𝟻𝟼</mn></mtd></mtr></mtable></math>",
+  "html": "<math><mtable columnalign="left" columnspacing="0"><mtr><mtd><mi>A</mi><mo>,</mo><mrow><mi mathvariant="italic">A</mi></mrow><mo>,</mo><mrow><mi mathvariant="normal">A</mi></mrow><mo>,</mo><mrow style="font-weight: bold"><mi>A</mi></mrow><mo>,</mo><mrow style="font-weight: bold"><mrow><mi mathvariant="normal">A</mi></mrow></mrow><mo>,</mo></mtd></mtr><mtr><mtd><mi>A</mi><mo>,</mo><mi>𝖠</mi><mo>,</mo><mi>𝒜</mi><mo>,</mo><mi>𝔄</mi><mo>,</mo><mi>𝙰</mi><mo>,</mo><mi>𝔸</mi><mo>,</mo></mtd></mtr><mtr><mtd><mrow></mrow><mo>,</mo><mrow></mrow><mo>,</mo></mtd></mtr><mtr><mtd><ms>𝕙𝕖𝕝𝕝𝕠</ms><mo>+</mo><mrow style="font-weight: bold"><ms>𝓌ℴ𝓇𝓁𝒹</ms></mrow><mo>,</mo></mtd></mtr><mtr><mtd><ms>𝚂𝚀𝚁𝚃</ms><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>≀</mo><mn>𝟷𝟸𝟹</mn><mo>+</mo><mn>𝟺𝟻𝟼</mn></mtd></mtr></mtable></math>",
   "text": "A, italic(A), upright(A), bold(A), bold(upright(A)), \\
  serif(A), sans(A), cal(A), frak(A), mono(A), bb(A), \\
  italic(diff), upright(diff), \\
@@ -27274,7 +27274,7 @@ exports[`corpus/style > style-02 1`] = `
     [
       "mtable",
       {
-        "columnalign": "right",
+        "columnalign": "left",
         "columnspacing": "0",
       },
       [
@@ -27510,7 +27510,7 @@ exports[`corpus/style > style-02 1`] = `
 exports[`corpus/style > style-03 1`] = `
 {
   "block": false,
-  "html": "<math><mtable columnalign="right" columnspacing="0"><mtr><mtd><mi>h</mi><mo>,</mo><mi>ℕ</mi><mo>,</mo><mi>ℛ</mi><mo>,</mo><mi>Θ</mi><mo>,</mo><mrow><mi mathvariant="italic">Θ</mi></mrow><mo>,</mo><mi>Θ</mi><mo>,</mo><mrow><mi mathvariant="italic">Θ</mi></mrow></mtd></mtr><mtr><mtd><mi>𝕕</mi><mo>,</mo><mrow><mi mathvariant="italic">𝕕</mi></mrow><mo>,</mo><mrow><mi mathvariant="italic">𝕕</mi></mrow><mo>,</mo><mi>𝕖</mi><mo>,</mo><mrow><mi mathvariant="italic">𝕖</mi></mrow><mo>,</mo><mrow><mi mathvariant="italic">𝕖</mi></mrow></mtd></mtr><mtr><mtd><mi>𝕚</mi><mo>,</mo><mrow><mi mathvariant="italic">𝕚</mi></mrow><mo>,</mo><mrow><mi mathvariant="italic">𝕚</mi></mrow><mo>,</mo><mi>𝕛</mi><mo>,</mo><mrow><mi mathvariant="italic">𝕛</mi></mrow><mo>,</mo><mrow><mi mathvariant="italic">𝕛</mi></mrow></mtd></mtr><mtr><mtd><mi>𝔻</mi><mo>,</mo><mrow><mi mathvariant="italic">𝔻</mi></mrow><mo>,</mo><mrow><mi mathvariant="italic">𝔻</mi></mrow></mtd></mtr></mtable></math>",
+  "html": "<math><mtable columnalign="left" columnspacing="0"><mtr><mtd><mi>h</mi><mo>,</mo><mi>ℕ</mi><mo>,</mo><mi>ℛ</mi><mo>,</mo><mi>Θ</mi><mo>,</mo><mrow><mi mathvariant="italic">Θ</mi></mrow><mo>,</mo><mi>Θ</mi><mo>,</mo><mrow><mi mathvariant="italic">Θ</mi></mrow></mtd></mtr><mtr><mtd><mi>𝕕</mi><mo>,</mo><mrow><mi mathvariant="italic">𝕕</mi></mrow><mo>,</mo><mrow><mi mathvariant="italic">𝕕</mi></mrow><mo>,</mo><mi>𝕖</mi><mo>,</mo><mrow><mi mathvariant="italic">𝕖</mi></mrow><mo>,</mo><mrow><mi mathvariant="italic">𝕖</mi></mrow></mtd></mtr><mtr><mtd><mi>𝕚</mi><mo>,</mo><mrow><mi mathvariant="italic">𝕚</mi></mrow><mo>,</mo><mrow><mi mathvariant="italic">𝕚</mi></mrow><mo>,</mo><mi>𝕛</mi><mo>,</mo><mrow><mi mathvariant="italic">𝕛</mi></mrow><mo>,</mo><mrow><mi mathvariant="italic">𝕛</mi></mrow></mtd></mtr><mtr><mtd><mi>𝔻</mi><mo>,</mo><mrow><mi mathvariant="italic">𝔻</mi></mrow><mo>,</mo><mrow><mi mathvariant="italic">𝔻</mi></mrow></mtd></mtr></mtable></math>",
   "text": "h, bb(N), cal(R), Theta, italic(Theta), sans(Theta), sans(italic(Theta)) \\
  bb(d), bb(italic(d)), italic(bb(d)), bb(e), bb(italic(e)), italic(bb(e)) \\
  bb(i), bb(italic(i)), italic(bb(i)), bb(j), bb(italic(j)), italic(bb(j)) \\
@@ -27520,7 +27520,7 @@ exports[`corpus/style > style-03 1`] = `
     [
       "mtable",
       {
-        "columnalign": "right",
+        "columnalign": "left",
         "columnspacing": "0",
       },
       [
@@ -28168,7 +28168,7 @@ exports[`corpus/syntax > syntax-01 1`] = `
 exports[`corpus/syntax > syntax-02 1`] = `
 {
   "block": true,
-  "html": "<math display="block"><mtable columnalign="right" columnspacing="0"><mtr><mtd><munder accentunder="true"><mrow style="border-bottom: 1px solid black"><msup><mrow><mi>f</mi></mrow><mrow><mo>′</mo></mrow></msup><mo>:</mo><mo>ℕ</mo><mo>→</mo><mo>ℝ</mo></mrow></munder></mtd></mtr><mtr><mtd><mi>n</mi><mo>↦</mo><mrow><mo>{</mo><mtable columnalign="left" columnspacing="0" rowspacing="0.5em"><mtr><mtd><mrow><mo>⟦</mo><mn>1</mn><mo>⟧</mo></mrow></mtd><mtd><ms>if</ms><mspace width="0.36em"> </mspace><mi>n</mi><mo>⋙</mo><mn>10</mn></mtd></mtr><mtr><mtd><mn>2</mn><mo>∗</mo><mn>3</mn></mtd><mtd><ms>if</ms><mspace width="0.36em"> </mspace><mi>n</mi><mo>≠</mo><mn>5</mn></mtd></mtr><mtr><mtd><mn>1</mn><mo>−</mo><mn>0</mn><mspace width="0.28em"></mspace></mtd><mtd><mo>…</mo></mtd></mtr><mtr><mtd></mtd></mtr></mtable></mrow></mtd></mtr></mtable></math>",
+  "html": "<math display="block"><mtable columnalign="center" columnspacing="0"><mtr><mtd><munder accentunder="true"><mrow style="border-bottom: 1px solid black"><msup><mrow><mi>f</mi></mrow><mrow><mo>′</mo></mrow></msup><mo>:</mo><mo>ℕ</mo><mo>→</mo><mo>ℝ</mo></mrow></munder></mtd></mtr><mtr><mtd><mi>n</mi><mo>↦</mo><mrow><mo>{</mo><mtable columnalign="left" columnspacing="0" rowspacing="0.5em"><mtr><mtd><mrow><mo>⟦</mo><mn>1</mn><mo>⟧</mo></mrow></mtd><mtd><ms>if</ms><mspace width="0.36em"> </mspace><mi>n</mi><mo>⋙</mo><mn>10</mn></mtd></mtr><mtr><mtd><mn>2</mn><mo>∗</mo><mn>3</mn></mtd><mtd><ms>if</ms><mspace width="0.36em"> </mspace><mi>n</mi><mo>≠</mo><mn>5</mn></mtd></mtr><mtr><mtd><mn>1</mn><mo>−</mo><mn>0</mn><mspace width="0.28em"></mspace></mtd><mtd><mo>…</mo></mtd></mtr><mtr><mtd></mtd></mtr></mtable></mrow></mtd></mtr></mtable></math>",
   "text": "underline(f' : NN -> RR) \\
   n |-> cases(
     [|1|] &"if" n >>> 10,
@@ -28183,7 +28183,7 @@ exports[`corpus/syntax > syntax-02 1`] = `
     [
       "mtable",
       {
-        "columnalign": "right",
+        "columnalign": "center",
         "columnspacing": "0",
       },
       [
@@ -28404,7 +28404,7 @@ exports[`corpus/syntax > syntax-02 1`] = `
 exports[`corpus/syntax > syntax-03 1`] = `
 {
   "block": true,
-  "html": "<math display="block"><mtable columnalign="right" columnspacing="0"><mtr><mtd><mo>⋅</mo></mtd></mtr><mtr><mtd><mo>⋯</mo></mtd></mtr><mtr><mtd><mo>∗</mo></mtd></mtr><mtr><mtd><mo>∼</mo></mtd></mtr><mtr><mtd><mo>⋆</mo></mtd></mtr></mtable></math>",
+  "html": "<math display="block"><mtable columnalign="center" columnspacing="0"><mtr><mtd><mo>⋅</mo></mtd></mtr><mtr><mtd><mo>⋯</mo></mtd></mtr><mtr><mtd><mo>∗</mo></mtd></mtr><mtr><mtd><mo>∼</mo></mtd></mtr><mtr><mtd><mo>⋆</mo></mtd></mtr></mtable></math>",
   "text": "dot \\ dots \\ ast \\ tilde \\ star",
   "vdom": [
     "math",
@@ -28414,7 +28414,7 @@ exports[`corpus/syntax > syntax-03 1`] = `
     [
       "mtable",
       {
-        "columnalign": "right",
+        "columnalign": "center",
         "columnspacing": "0",
       },
       [
@@ -29699,7 +29699,7 @@ exports[`corpus/underover > underover-03 1`] = `
 exports[`corpus/vec > vec-01 1`] = `
 {
   "block": true,
-  "html": "<math display="block"><mrow><mo>(</mo><mtable columnalign="right" columnspacing="0.5em" rowspacing="0.5em"><mtr><mtd><mn>1</mn></mtd></mtr><mtr><mtd><mn>2</mn></mtd></mtr></mtable><mo>)</mo></mrow></math>",
+  "html": "<math display="block"><mrow><mo>(</mo><mtable columnalign="center" columnspacing="0.5em" rowspacing="0.5em"><mtr><mtd><mn>1</mn></mtd></mtr><mtr><mtd><mn>2</mn></mtd></mtr></mtable><mo>)</mo></mrow></math>",
   "text": "vec(1, 2)",
   "vdom": [
     "math",
@@ -29715,7 +29715,7 @@ exports[`corpus/vec > vec-01 1`] = `
       [
         "mtable",
         {
-          "columnalign": "right",
+          "columnalign": "center",
           "columnspacing": "0.5em",
           "rowspacing": "0.5em",
         },
@@ -29867,7 +29867,7 @@ exports[`corpus/vec > vec-02 1`] = `
 exports[`corpus/vec > vec-03 1`] = `
 {
   "block": true,
-  "html": "<math display="block"><mi>v</mi><mo>=</mo><mrow><mo>(</mo><mtable columnalign="right" columnspacing="0.5em" rowspacing="0.5em"><mtr><mtd><mn>1</mn></mtd></mtr><mtr><mtd><mn>2</mn><mo>+</mo><mn>3</mn></mtd></mtr><mtr><mtd><mn>4</mn></mtd></mtr></mtable><mo>)</mo></mrow></math>",
+  "html": "<math display="block"><mi>v</mi><mo>=</mo><mrow><mo>(</mo><mtable columnalign="center" columnspacing="0.5em" rowspacing="0.5em"><mtr><mtd><mn>1</mn></mtd></mtr><mtr><mtd><mn>2</mn><mo>+</mo><mn>3</mn></mtd></mtr><mtr><mtd><mn>4</mn></mtd></mtr></mtable><mo>)</mo></mrow></math>",
   "text": "v = vec(1, 2+3, 4)",
   "vdom": [
     "math",
@@ -29891,7 +29891,7 @@ exports[`corpus/vec > vec-03 1`] = `
       [
         "mtable",
         {
-          "columnalign": "right",
+          "columnalign": "center",
           "columnspacing": "0.5em",
           "rowspacing": "0.5em",
         },
@@ -29946,7 +29946,7 @@ exports[`corpus/vec > vec-03 1`] = `
 exports[`corpus/vec > vec-04 1`] = `
 {
   "block": true,
-  "html": "<math display="block"><mrow><mo>(</mo><mtable columnalign="right" columnspacing="0.5em" rowspacing="0.5em"><mtr><mtd><mn>1</mn></mtd></mtr><mtr><mtd><mn>2</mn></mtd></mtr></mtable><mo>)</mo></mrow></math>",
+  "html": "<math display="block"><mrow><mo>(</mo><mtable columnalign="center" columnspacing="0.5em" rowspacing="0.5em"><mtr><mtd><mn>1</mn></mtd></mtr><mtr><mtd><mn>2</mn></mtd></mtr></mtable><mo>)</mo></mrow></math>",
   "text": "vec(1, 2)",
   "vdom": [
     "math",
@@ -29962,7 +29962,7 @@ exports[`corpus/vec > vec-04 1`] = `
       [
         "mtable",
         {
-          "columnalign": "right",
+          "columnalign": "center",
           "columnspacing": "0.5em",
           "rowspacing": "0.5em",
         },

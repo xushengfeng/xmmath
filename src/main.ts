@@ -385,7 +385,7 @@ const f: {
 	},
 };
 
-function x_table(trees: tree[], e?: fonts) {
+function x_table(trees: tree[], e?: fonts, inline?: boolean) {
 	let max = 0;
 	const t = createMath("mtable");
 	for (const i of trees) {
@@ -410,14 +410,12 @@ function x_table(trees: tree[], e?: fonts) {
 			d.append(render(i, e));
 		}
 
-		// 交替对齐
+		// 有 & 时围绕对齐点 right/left 交替；没有 & 时 typst 块级居中、行内贴左
+		// （mat/vec 的单元格不随块/行内变化，始终居中，MathML 默认列对齐也是 center）
 		const al = [];
 		for (let i = 0; i <= max; i++) {
-			if (i % 2 === 0) {
-				al.push("right");
-			} else {
-				al.push("left");
-			}
+			if (max > 0) al.push(i % 2 === 0 ? "right" : "left");
+			else al.push(inline ? "left" : "center");
 		}
 		t.setAttribute("columnalign", al.join(" "));
 		t.setAttribute("columnspacing", "0");
@@ -731,7 +729,7 @@ function font(str: string, type: fonts = "serif") {
 	return str;
 }
 
-function render(tree: tree, e?: fonts): VEl | VFragment {
+function render(tree: tree, e?: fonts, inline?: boolean): VEl | VFragment {
 	const fragment = createFragment();
 
 	tree = ast2(tree);
@@ -757,7 +755,7 @@ function render(tree: tree, e?: fonts): VEl | VFragment {
 					trees.at(-1).push(i);
 				}
 			}
-			return x_table(trees);
+			return x_table(trees, undefined, inline);
 		}
 	}
 
@@ -894,7 +892,7 @@ function toMMLV(str: string, inline?: boolean): VEl {
 
 	const mathEl = createMath("math");
 	if (!inline) mathEl.setAttribute("display", "block");
-	const f = render(obj);
+	const f = render(obj, undefined, inline);
 	mathEl.append(f);
 	return mathEl;
 }

@@ -1,17 +1,14 @@
-// 快照变更提取：给出「旧预期 vs 本次实际输出」的用例清单，写 test/review/cache/changes.json
-// 供 review 页「变更」标签使用，同时打印摘要给 AI/人直接读。
+// 快照变更清单：对比 git 里的快照（默认 HEAD）与工作区的快照文件，
+// 写 test/review/cache/changes.json 供 review 页「变更」标签使用，并打印摘要。
 //
-//   pnpm test                # 跑测试（顺带写出 cache/current.json = 本次实际输出）
-//   pnpm review:changes      # 对比 git 基线
+// 约定：改代码后测试变红就立刻 pnpm snap:update 并接受、提交快照，
+// 于是 git 里那份永远是「上一次认可的预期」，这里只比 git vs 工作区。
+//
+//   pnpm review:changes                 # HEAD vs 工作区
 //   node test/review/changes.mjs --base v1.0.9
-//   node test/review/changes.mjs --base ""        # 基线用暂存区（index）而非 HEAD
+//   node test/review/changes.mjs --base ""          # 基线取暂存区
 //   node test/review/changes.mjs --only root-01,mat-03
 //   node test/review/changes.mjs --json
-//
-// 两种模式：
-//   accepted —— 工作区 .snap 已与基线不同（跑过 -u），比较两个 .snap，diff 精确
-//   pending  —— 测试失败但 .snap 未更新，比较基线 .snap 与 current.json，
-//               即「尚未被接受的新输出」，确认后 pnpm snap:update
 import { spawnSync } from "node:child_process";
 import {
 	existsSync,
@@ -26,7 +23,7 @@ import { fileURLToPath } from "node:url";
 const here = dirname(fileURLToPath(import.meta.url));
 const root = resolve(here, "../..");
 const SNAP_REL = "test/corpus/__snapshots__/math.test.ts.snap";
-const CURRENT = join(here, "cache/current.json");
+const SNAP_ABS = join(root, SNAP_REL);
 const OUT = join(here, "cache/changes.json");
 
 const argv = process.argv.slice(2);
@@ -42,21 +39,12 @@ for (let i = 0; i < argv.length; i++) {
 	else if (a === "--json") opt.json = true;
 	else if (a === "-h" || a === "--help") {
 		console.log(
-			"用法: changes.mjs [--base <ref>] [--only id1,id2] [--json]\n默认对比 HEAD，结果写入 test/review/cache/changes.json",
+			"用法: changes.mjs [--base <ref>] [--only id1,id2] [--json]\n基线默认 HEAD，与工作区的 " +
+				SNAP_REL +
+				" 对比",
 		);
 		process.exit(0);
 	}
-}
-
-// 与 pretty-format 一致：对象键按字母序
-function sortKeys(_k, v) {
-	if (v && typeof v === "object" && !Array.isArray(v))
-		return Object.fromEntries(
-			Object.keys(v)
-				.sort()
-				.map((k) => [k, v[k]]),
-		);
-	return v;
 }
 
 // ---- vitest .snap 解析 ----
@@ -82,21 +70,21 @@ function parseSnap(text) {
 	return out;
 }
 
-// 快照体不是合法 JSON（pretty-format 不转义字符串内的引号），按行取单行字段
+// 快照体不是合法 JSON（pretty-format 不转义字符串内的引号），按行取单行字段。
+// pretty-format 会把反斜杠转义成 \\，这里还原，否则含 `\` 的输出会被误报为变更。
 function field(body, key) {
 	const m = body.match(new RegExp(`^  "${key}": "(.*)",?$`, "m"));
-	return m ? m[1] : null;
+	return m ? m[1].replace(/\\\\/g, "\\") : null;
 }
 
-function snapEntry(e) {
-	return e
-		? {
-				cat: e.cat,
-				body: e.body,
-				html: field(e.body, "html"),
-				error: field(e.body, "error"),
-			}
-		: null;
+function toEntry(e) {
+	if (!e) return null;
+	return {
+		cat: e.cat,
+		body: e.body,
+		html: field(e.body, "html"),
+		error: field(e.body, "error"),
+	};
 }
 
 function gitShow(ref, relPath) {
@@ -110,59 +98,23 @@ function gitShow(ref, relPath) {
 
 const baseline = parseSnap(gitShow(opt.base, SNAP_REL));
 const worktree = parseSnap(
-	existsSync(join(root, SNAP_REL))
-		? readFileSync(join(root, SNAP_REL), "utf8")
-		: "",
+	existsSync(SNAP_ABS) ? readFileSync(SNAP_ABS, "utf8") : "",
 );
-let actual = null;
-try {
-	actual = JSON.parse(readFileSync(CURRENT, "utf8")).cases || {};
-} catch {
-	actual = null;
-}
-
-// 工作区 .snap 与基线不同 → 已接受预期；否则用本次实际输出（尚未接受）
-const acceptedDiffers = [
-	...new Set([...baseline.keys(), ...worktree.keys()]),
-].some((id) => baseline.get(id)?.body !== worktree.get(id)?.body);
-const mode = !acceptedDiffers && actual ? "pending" : "accepted";
-
-function nowEntry(id) {
-	if (mode === "accepted") return snapEntry(worktree.get(id));
-	const a = actual[id];
-	if (!a) return null;
-	return {
-		cat: id.replace(/-\d+$/, ""),
-		body: JSON.stringify(
-			{
-				block: a.block,
-				error: a.error,
-				html: a.html,
-				text: a.text,
-				vdom: a.vdom,
-			},
-			sortKeys,
-			2,
-		),
-		html: a.html ?? null,
-		error: a.error ?? null,
-	};
-}
 
 const items = [];
 let unchanged = 0;
-const ids = [
-	...new Set([
-		...baseline.keys(),
-		...Object.keys(actual || {}),
-		...worktree.keys(),
-	]),
-].sort();
-for (const id of ids) {
-	const a = snapEntry(baseline.get(id));
-	const b = nowEntry(id);
-	const same = !!a && !!b && a.html === b.html && a.error === b.error;
-	let status = !a ? "added" : !b ? "removed" : same ? "same" : "changed";
+for (const id of [
+	...new Set([...baseline.keys(), ...worktree.keys()]),
+].sort()) {
+	const a = toEntry(baseline.get(id));
+	const b = toEntry(worktree.get(id));
+	let status = !a
+		? "added"
+		: !b
+			? "removed"
+			: a.body !== b.body
+				? "changed"
+				: "same";
 	if (status === "same") {
 		unchanged++;
 		if (!opt.only?.includes(id)) continue;
@@ -172,19 +124,19 @@ for (const id of ids) {
 		id,
 		cat: (b || a).cat,
 		status,
-		oldHtml: a ? a.html : null,
-		newHtml: b ? b.html : null,
-		oldError: a ? a.error : null,
-		newError: b ? b.error : null,
-		oldSnap: a ? a.body : null,
-		newSnap: b ? b.body : null,
+		oldHtml: a?.html ?? null,
+		newHtml: b?.html ?? null,
+		oldError: a?.error ?? null,
+		newError: b?.error ?? null,
+		oldSnap: a?.body ?? null,
+		newSnap: b?.body ?? null,
 	});
 }
 
 const summary = {
-	base: opt.base,
-	mode,
+	base: opt.base || "(暂存区)",
 	generatedAt: new Date().toISOString(),
+	baselineCases: baseline.size,
 	changed: items.filter((i) => i.status === "changed").length,
 	added: items.filter((i) => i.status === "added").length,
 	removed: items.filter((i) => i.status === "removed").length,
@@ -197,25 +149,30 @@ const tmp = `${OUT}.tmp`;
 writeFileSync(tmp, `${JSON.stringify(payload, null, "\t")}\n`);
 renameSync(tmp, OUT);
 
-if (opt.json) {
-	console.log(JSON.stringify(payload, null, 2));
-} else {
+if (opt.json) console.log(JSON.stringify(payload, null, 2));
+else {
+	if (!baseline.size)
+		console.log(
+			`警告：基线 ${opt.base} 里没有 ${SNAP_REL}，全部会被算成新增。快照要先提交进 git 才有可比的历史。`,
+		);
 	const byCat = {};
 	for (const i of items) byCat[i.cat] = (byCat[i.cat] || 0) + 1;
 	console.log(
-		`基线 ${opt.base} → ${mode === "pending" ? "本次实际输出（尚未写入快照）" : "已接受快照"}：变更 ${summary.changed}，新增 ${summary.added}，删除 ${summary.removed}，未变 ${summary.unchanged}`,
+		`基线 ${summary.base} → 工作区：变更 ${summary.changed}，新增 ${summary.added}，删除 ${summary.removed}，未变 ${summary.unchanged}`,
 	);
 	if (Object.keys(byCat).length)
 		console.log(`按分类：${JSON.stringify(byCat)}`);
-	for (const i of items.slice(0, 30)) {
-		const old_ = i.oldError
-			? `error: ${i.oldError}`
-			: (i.oldHtml || "").slice(0, 90);
-		const now_ = i.newError
-			? `error: ${i.newError}`
-			: (i.newHtml || "").slice(0, 90);
-		console.log(`\n[${i.status}] ${i.id}\n  旧: ${old_}\n  新: ${now_}`);
-	}
+	for (const i of items.slice(0, 30))
+		console.log(
+			`\n[${i.status}] ${i.id}\n  旧: ${(i.oldError ? `error: ${i.oldError}` : i.oldHtml) || ""}`.slice(
+				0,
+				200,
+			) +
+				`\n  新: ${(i.newError ? `error: ${i.newError}` : i.newHtml) || ""}`.slice(
+					0,
+					200,
+				),
+		);
 	if (items.length > 30)
 		console.log(`\n…另有 ${items.length - 30} 条，见 ${OUT}`);
 	console.log(`\n已写入 ${OUT}（review 页「变更」标签读取此文件）`);
