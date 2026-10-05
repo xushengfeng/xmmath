@@ -538,7 +538,9 @@ function out_kh(x: tree[0]) {
 }
 
 function transfer_kh(list: tree) {
-	if (list.length === 1 && list[0].type === "group")
+	// 未闭合组（kh 只有开括号）原样保留：由 render 的 group 分支只画开括号，
+	// 这里补 v_f(kh[1]) 会造出 value=undefined 的假右括号。
+	if (list.length === 1 && list[0].type === "group" && list[0].kh.length > 1)
 		list = [v_f(list[0].kh[0]), ...list[0].children, v_f(list[0].kh[1])];
 	return list;
 }
@@ -947,7 +949,10 @@ function ast3(tree: tree) {
 					n++;
 					continue;
 				} else {
-					if (next.kh[0] === "(") {
+					// 未闭合的开括号组（kh 只有开括号）不能当参数收编：typst
+					// 那里是 unclosed delimiter 错误，本库保持原来的并列渲染，
+					// 组本身留给下一轮出栈，否则内容会被吞进 f 再渲染不出来。
+					if (next.kh.length > 1 && next.kh[0] === "(") {
 						// 向后找
 						const tt: tree = [];
 						tt.push(...next.children);
@@ -992,6 +997,7 @@ function ast3(tree: tree) {
 			"@",
 			"%",
 			"*",
+			"/",
 			"(",
 			")",
 			"-",
@@ -1010,6 +1016,8 @@ function ast3(tree: tree) {
 			".",
 			"?",
 		]; // typst 似乎是直接排除了这些字符，不排除转义，shorthand之类的
+		// `/` 也必须排除（unicode-math-class=Binary，typst continuable=false）：
+		// 否则 `1/(2 (x)` 里的 `/` 会和后面的未闭合组粘成一个 token，`/` 就不再是分数算子。
 		for (let n = 0; n < tree.length; n++) {
 			const x = tree[n];
 			const next = tree[n + 1];
@@ -1020,6 +1028,9 @@ function ast3(tree: tree) {
 				!x.value.match(/[0-9]/) &&
 				!is_sub(x) &&
 				!is_sup(x) &&
+				// `#box(...)` 的名字归下面的「处理#」（它吃 tree[n+1] 的值），
+				// 这里抢先粘成 group1 会让 sharp 变成空值、名字连同参数被丢掉
+				tree[n - 1]?.type !== "sharp" &&
 				(!(
 					(is_type(x, "f") && un_list_str.includes(x.src)) ||
 					(is_type(x, "v") && un_list_str.includes(x.value))

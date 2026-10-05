@@ -9773,12 +9773,15 @@ exports[`corpus/delimited > delimited-02 1`] = `
 exports[`corpus/delimited > delimited-03 1`] = `
 {
   "block": false,
-  "html": "<math><mo>[</mo><mn>1</mn><mo>,</mo><mn>2</mn><mo>[</mo><mo>=</mo><mrow><mo>[</mo><mn>1</mn><mo>,</mo><mn>2</mn><mo>)</mo></mrow><mo>≠</mo><mi>ζ</mi><mo>(</mo><mfrac><mrow><mi>x</mi></mrow><mrow><mn>2</mn></mrow></mfrac><mo>)</mo></math>",
+  "html": "<math><mo stretchy="false">[</mo><mn>1</mn><mo>,</mo><mn>2</mn><mo stretchy="false">[</mo><mo>=</mo><mrow><mo>[</mo><mn>1</mn><mo>,</mo><mn>2</mn><mo>)</mo></mrow><mo>≠</mo><mi>ζ</mi><mo>(</mo><mfrac><mrow><mi>x</mi></mrow><mrow><mn>2</mn></mrow></mfrac><mo>)</mo></math>",
   "text": "[1,2[ = [1,2) != zeta\\(x/2\\)",
   "vdom": [
     "math",
     [
       "mo",
+      {
+        "stretchy": "false",
+      },
       "[",
     ],
     [
@@ -9795,6 +9798,9 @@ exports[`corpus/delimited > delimited-03 1`] = `
     ],
     [
       "mo",
+      {
+        "stretchy": "false",
+      },
       "[",
     ],
     [
@@ -10820,7 +10826,7 @@ exports[`corpus/delimited > delimited-12 1`] = `
 exports[`corpus/delimited > delimited-13 1`] = `
 {
   "block": true,
-  "html": "<math display="block"><mfrac><mrow><mn>1</mn></mrow><mrow><mo>(</mo></mrow></mfrac><mn>2</mn><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow></math>",
+  "html": "<math display="block"><mfrac><mrow><mn>1</mn></mrow><mrow><mo stretchy="false">(</mo><mn>2</mn><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow></mrow></mfrac></math>",
   "text": "1/(2 (x)",
   "vdom": [
     "math",
@@ -10840,27 +10846,30 @@ exports[`corpus/delimited > delimited-13 1`] = `
         "mrow",
         [
           "mo",
+          {
+            "stretchy": "false",
+          },
           "(",
         ],
-      ],
-    ],
-    [
-      "mn",
-      "2",
-    ],
-    [
-      "mrow",
-      [
-        "mo",
-        "(",
-      ],
-      [
-        "mi",
-        "x",
-      ],
-      [
-        "mo",
-        ")",
+        [
+          "mn",
+          "2",
+        ],
+        [
+          "mrow",
+          [
+            "mo",
+            "(",
+          ],
+          [
+            "mi",
+            "x",
+          ],
+          [
+            "mo",
+            ")",
+          ],
+        ],
       ],
     ],
   ],
@@ -10870,7 +10879,7 @@ exports[`corpus/delimited > delimited-13 1`] = `
 exports[`corpus/delimited > delimited-14 1`] = `
 {
   "block": true,
-  "html": "<math display="block"><msub><mrow><mn>1</mn></mrow><mrow><mo>(</mo></mrow></msub><mn>2</mn><mi>y</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mrow><mo>(</mo><mo>)</mo></mrow></math>",
+  "html": "<math display="block"><msub><mrow><mn>1</mn></mrow><mrow><mo stretchy="false">(</mo><mn>2</mn><mi>y</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mrow><mo>(</mo><mo>)</mo></mrow></mrow></msub></math>",
   "text": "1_(2 y (x) ()",
   "vdom": [
     "math",
@@ -10890,42 +10899,45 @@ exports[`corpus/delimited > delimited-14 1`] = `
         "mrow",
         [
           "mo",
+          {
+            "stretchy": "false",
+          },
           "(",
         ],
-      ],
-    ],
-    [
-      "mn",
-      "2",
-    ],
-    [
-      "mi",
-      "y",
-    ],
-    [
-      "mrow",
-      [
-        "mo",
-        "(",
-      ],
-      [
-        "mi",
-        "x",
-      ],
-      [
-        "mo",
-        ")",
-      ],
-    ],
-    [
-      "mrow",
-      [
-        "mo",
-        "(",
-      ],
-      [
-        "mo",
-        ")",
+        [
+          "mn",
+          "2",
+        ],
+        [
+          "mi",
+          "y",
+        ],
+        [
+          "mrow",
+          [
+            "mo",
+            "(",
+          ],
+          [
+            "mi",
+            "x",
+          ],
+          [
+            "mo",
+            ")",
+          ],
+        ],
+        [
+          "mrow",
+          [
+            "mo",
+            "(",
+          ],
+          [
+            "mo",
+            ")",
+          ],
+        ],
       ],
     ],
   ],
@@ -10935,7 +10947,7 @@ exports[`corpus/delimited > delimited-14 1`] = `
 exports[`corpus/delimited > delimited-15 1`] = `
 {
   "block": true,
-  "html": "<math display="block"><mfrac><mrow><mn>1</mn></mrow><mrow><mo>(</mo></mrow></mfrac><mn>2</mn><mi>y</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mrow><mo>(</mo><mn>2</mn><mrow><mo>(</mo><mn>3</mn><mo>)</mo></mrow><mo>)</mo></mrow></math>",
+  "html": "<math display="block"><mfrac><mrow><mn>1</mn></mrow><mrow><mo stretchy="false">(</mo><mn>2</mn><mi>y</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mrow><mo>(</mo><mn>2</mn><mrow><mo>(</mo><mn>3</mn><mo>)</mo></mrow><mo>)</mo></mrow></mrow></mfrac></math>",
   "text": "1/(2 y (x) (2(3))",
   "vdom": [
     "math",
@@ -10955,61 +10967,64 @@ exports[`corpus/delimited > delimited-15 1`] = `
         "mrow",
         [
           "mo",
-          "(",
-        ],
-      ],
-    ],
-    [
-      "mn",
-      "2",
-    ],
-    [
-      "mi",
-      "y",
-    ],
-    [
-      "mrow",
-      [
-        "mo",
-        "(",
-      ],
-      [
-        "mi",
-        "x",
-      ],
-      [
-        "mo",
-        ")",
-      ],
-    ],
-    [
-      "mrow",
-      [
-        "mo",
-        "(",
-      ],
-      [
-        "mn",
-        "2",
-      ],
-      [
-        "mrow",
-        [
-          "mo",
+          {
+            "stretchy": "false",
+          },
           "(",
         ],
         [
           "mn",
-          "3",
+          "2",
         ],
         [
-          "mo",
-          ")",
+          "mi",
+          "y",
         ],
-      ],
-      [
-        "mo",
-        ")",
+        [
+          "mrow",
+          [
+            "mo",
+            "(",
+          ],
+          [
+            "mi",
+            "x",
+          ],
+          [
+            "mo",
+            ")",
+          ],
+        ],
+        [
+          "mrow",
+          [
+            "mo",
+            "(",
+          ],
+          [
+            "mn",
+            "2",
+          ],
+          [
+            "mrow",
+            [
+              "mo",
+              "(",
+            ],
+            [
+              "mn",
+              "3",
+            ],
+            [
+              "mo",
+              ")",
+            ],
+          ],
+          [
+            "mo",
+            ")",
+          ],
+        ],
       ],
     ],
   ],
@@ -14971,7 +14986,7 @@ exports[`corpus/interactions > interactions-01 1`] = `
 exports[`corpus/interactions > interactions-02 1`] = `
 {
   "block": true,
-  "html": "<math display="block"><mi>x</mi><mo>≔</mo><mo></mo><mfrac><mrow><mrow><mo>[</mo><mi>y</mi><mo>]</mo></mrow></mrow><mrow><mrow><mo>(</mo><mtable columnspacing="0.5em" rowspacing="0.5em"><mtr><mtd><mn>1</mn></mtd><mtd><mn>2</mn></mtd><mtd><mn>3</mn></mtd></mtr></mtable><mo>)</mo></mrow></mrow></mfrac><mo>=</mo><mo></mo><mrow><mo>[</mo><mi>B</mi><mo>]</mo></mrow><mrow><mo>[</mo><mi>C</mi><mo>]</mo></mrow></math>",
+  "html": "<math display="block"><mi>x</mi><mo>≔</mo><mi>table</mi><mrow><mo>[</mo><mi>x</mi><mo>]</mo></mrow><mfrac><mrow><mrow><mo>[</mo><mi>y</mi><mo>]</mo></mrow></mrow><mrow><mrow><mo>(</mo><mtable columnspacing="0.5em" rowspacing="0.5em"><mtr><mtd><mn>1</mn></mtd><mtd><mn>2</mn></mtd><mtd><mn>3</mn></mtd></mtr></mtable><mo>)</mo></mrow></mrow></mfrac><mo>=</mo><mi>table</mi><mrow><mo>[</mo><mi>A</mi><mo>]</mo></mrow><mrow><mo>[</mo><mi>B</mi><mo>]</mo></mrow><mrow><mo>[</mo><mi>C</mi><mo>]</mo></mrow></math>",
   "text": "x := #table(columns: 2)[x][y]/mat(1, 2, 3)
      = #table[A][B][C]",
   "vdom": [
@@ -14988,7 +15003,23 @@ exports[`corpus/interactions > interactions-02 1`] = `
       "≔",
     ],
     [
-      "mo",
+      "mi",
+      "table",
+    ],
+    [
+      "mrow",
+      [
+        "mo",
+        "[",
+      ],
+      [
+        "mi",
+        "x",
+      ],
+      [
+        "mo",
+        "]",
+      ],
     ],
     [
       "mfrac",
@@ -15061,7 +15092,23 @@ exports[`corpus/interactions > interactions-02 1`] = `
       "=",
     ],
     [
-      "mo",
+      "mi",
+      "table",
+    ],
+    [
+      "mrow",
+      [
+        "mo",
+        "[",
+      ],
+      [
+        "mi",
+        "A",
+      ],
+      [
+        "mo",
+        "]",
+      ],
     ],
     [
       "mrow",
@@ -15115,19 +15162,47 @@ exports[`corpus/interactions > interactions-03 1`] = `
 exports[`corpus/interactions > interactions-04 1`] = `
 {
   "block": false,
-  "html": "<math><mo></mo><mo>≔</mo><mo></mo></math>",
+  "html": "<math><mi>here</mi><mrow><mo>[</mo><mi>f</mi><mo>]</mo></mrow><mo>≔</mo><mi>here</mi><mrow><mo>[</mo><mo>]</mo></mrow></math>",
   "text": "#here[f] := #here[Hi there]",
   "vdom": [
     "math",
     [
-      "mo",
+      "mi",
+      "here",
+    ],
+    [
+      "mrow",
+      [
+        "mo",
+        "[",
+      ],
+      [
+        "mi",
+        "f",
+      ],
+      [
+        "mo",
+        "]",
+      ],
     ],
     [
       "mo",
       "≔",
     ],
     [
-      "mo",
+      "mi",
+      "here",
+    ],
+    [
+      "mrow",
+      [
+        "mo",
+        "[",
+      ],
+      [
+        "mo",
+        "]",
+      ],
     ],
   ],
 }
@@ -15136,7 +15211,7 @@ exports[`corpus/interactions > interactions-04 1`] = `
 exports[`corpus/interactions > interactions-05 1`] = `
 {
   "block": false,
-  "html": "<math><mi>a</mi><mi>box</mi><mo>(</mo><mo>:</mo><mn>0.2</mn><mo>,</mo></math>",
+  "html": "<math><mi>a</mi><mi>box</mi><mo stretchy="false">(</mo><mo>:</mo><mn>0.2</mn><mo>,</mo></math>",
   "text": "a #box(stroke: 0.2pt,",
   "vdom": [
     "math",
@@ -15150,6 +15225,9 @@ exports[`corpus/interactions > interactions-05 1`] = `
     ],
     [
       "mo",
+      {
+        "stretchy": "false",
+      },
       "(",
     ],
     [
@@ -15186,7 +15264,7 @@ exports[`corpus/interactions > interactions-06 1`] = `
 exports[`corpus/interactions > interactions-07 1`] = `
 {
   "block": false,
-  "html": "<math><mi>a</mi><mi>box</mi><mo>(</mo><mo>:</mo><mn>0.2</mn><mo>,</mo></math>",
+  "html": "<math><mi>a</mi><mi>box</mi><mo stretchy="false">(</mo><mo>:</mo><mn>0.2</mn><mo>,</mo></math>",
   "text": "a #box(stroke: 0.2pt,",
   "vdom": [
     "math",
@@ -15200,6 +15278,9 @@ exports[`corpus/interactions > interactions-07 1`] = `
     ],
     [
       "mo",
+      {
+        "stretchy": "false",
+      },
       "(",
     ],
     [
@@ -15236,7 +15317,7 @@ exports[`corpus/interactions > interactions-08 1`] = `
 exports[`corpus/interactions > interactions-09 1`] = `
 {
   "block": false,
-  "html": "<math><mi>g</mi><mi>box</mi><mo>(</mo><mo>:</mo><mn>0.2</mn><mo>,</mo></math>",
+  "html": "<math><mi>g</mi><mi>box</mi><mo stretchy="false">(</mo><mo>:</mo><mn>0.2</mn><mo>,</mo></math>",
   "text": "g #box(stroke: 0.2pt,",
   "vdom": [
     "math",
@@ -15250,6 +15331,9 @@ exports[`corpus/interactions > interactions-09 1`] = `
     ],
     [
       "mo",
+      {
+        "stretchy": "false",
+      },
       "(",
     ],
     [
@@ -15286,7 +15370,7 @@ exports[`corpus/interactions > interactions-10 1`] = `
 exports[`corpus/interactions > interactions-11 1`] = `
 {
   "block": false,
-  "html": "<math><mi>a</mi><mi>box</mi><mo>(</mo><mo>:</mo><mn>0.5</mn><mo>,</mo><mo>:</mo><mn>0.2</mn><mo>,</mo></math>",
+  "html": "<math><mi>a</mi><mi>box</mi><mo stretchy="false">(</mo><mo>:</mo><mn>0.5</mn><mo>,</mo><mo>:</mo><mn>0.2</mn><mo>,</mo></math>",
   "text": "a #box(baseline:0.5em, stroke: 0.2pt,",
   "vdom": [
     "math",
@@ -15300,6 +15384,9 @@ exports[`corpus/interactions > interactions-11 1`] = `
     ],
     [
       "mo",
+      {
+        "stretchy": "false",
+      },
       "(",
     ],
     [
@@ -15595,7 +15682,7 @@ exports[`corpus/interactions > interactions-25 1`] = `
 exports[`corpus/interactions > interactions-26 1`] = `
 {
   "block": true,
-  "html": "<math display="block"><mi>a</mi><mi>x</mi><mi>link</mi><mo>(</mo><ms>url</ms><mo>,</mo></math>",
+  "html": "<math display="block"><mi>a</mi><mi>x</mi><mi>link</mi><mo stretchy="false">(</mo><ms>url</ms><mo>,</mo></math>",
   "text": "a x #link("url",",
   "vdom": [
     "math",
@@ -15616,6 +15703,9 @@ exports[`corpus/interactions > interactions-26 1`] = `
     ],
     [
       "mo",
+      {
+        "stretchy": "false",
+      },
       "(",
     ],
     [
@@ -15743,7 +15833,7 @@ exports[`corpus/interactions > interactions-29 1`] = `
 exports[`corpus/interactions > interactions-30 1`] = `
 {
   "block": true,
-  "html": "<math display="block"><msup><mrow><mi>x</mi></mrow><mrow><mn>2</mn></mrow></msup><mi>hide</mi><mo>[</mo></math>",
+  "html": "<math display="block"><msup><mrow><mi>x</mi></mrow><mrow><mn>2</mn></mrow></msup><mi>hide</mi><mo stretchy="false">[</mo></math>",
   "text": "x^2 #hide[",
   "vdom": [
     "math",
@@ -15773,6 +15863,9 @@ exports[`corpus/interactions > interactions-30 1`] = `
     ],
     [
       "mo",
+      {
+        "stretchy": "false",
+      },
       "[",
     ],
   ],
@@ -22320,7 +22413,7 @@ exports[`corpus/op > op-06 1`] = `
 exports[`corpus/op > op-07 1`] = `
 {
   "block": true,
-  "html": "<math display="block"><mrow><ms><mo></mo></ms></mrow><mi>a</mi></math>",
+  "html": "<math display="block"><mrow><ms><mi>underline</mi><mrow><mo>[</mo><mo>]</mo></mrow></ms></mrow><mi>a</mi></math>",
   "text": "op(#underline[ul]) a",
   "vdom": [
     "math",
@@ -22332,7 +22425,19 @@ exports[`corpus/op > op-07 1`] = `
       [
         "ms",
         [
-          "mo",
+          "mi",
+          "underline",
+        ],
+        [
+          "mrow",
+          [
+            "mo",
+            "[",
+          ],
+          [
+            "mo",
+            "]",
+          ],
         ],
       ],
     ],
@@ -25328,7 +25433,7 @@ exports[`corpus/size > size-01 1`] = `
 exports[`corpus/size > size-02 1`] = `
 {
   "block": true,
-  "html": "<math display="block"><mi>rect</mi><mo>[</mo></math>",
+  "html": "<math display="block"><mi>rect</mi><mo stretchy="false">[</mo></math>",
   "text": "#rect[",
   "vdom": [
     "math",
@@ -25341,6 +25446,9 @@ exports[`corpus/size > size-02 1`] = `
     ],
     [
       "mo",
+      {
+        "stretchy": "false",
+      },
       "[",
     ],
   ],
@@ -25365,7 +25473,7 @@ exports[`corpus/size > size-03 1`] = `
 exports[`corpus/size > size-04 1`] = `
 {
   "block": false,
-  "html": "<math><mi>rect</mi><mo>[</mo></math>",
+  "html": "<math><mi>rect</mi><mo stretchy="false">[</mo></math>",
   "text": "#rect[",
   "vdom": [
     "math",
@@ -25375,6 +25483,9 @@ exports[`corpus/size > size-04 1`] = `
     ],
     [
       "mo",
+      {
+        "stretchy": "false",
+      },
       "[",
     ],
   ],
@@ -25506,7 +25617,7 @@ exports[`corpus/spacing > spacing-02 1`] = `
 exports[`corpus/spacing > spacing-03 1`] = `
 {
   "block": false,
-  "html": "<math><mo>⟧</mo><mo>&lt;</mo><mo>⟦</mo><mo>,</mo><mrow><mo>|</mo><mo>−</mo><mo>|</mo></mrow><mo>,</mo><mo>[</mo><mo>=</mo></math>",
+  "html": "<math><mo>⟧</mo><mo>&lt;</mo><mo>⟦</mo><mo>,</mo><mrow><mo>|</mo><mo>−</mo><mo>|</mo></mrow><mo>,</mo><mo stretchy="false">[</mo><mo>=</mo></math>",
   "text": "⟧<⟦, abs(-), [=",
   "vdom": [
     "math",
@@ -25547,6 +25658,9 @@ exports[`corpus/spacing > spacing-03 1`] = `
     ],
     [
       "mo",
+      {
+        "stretchy": "false",
+      },
       "[",
     ],
     [
@@ -27897,7 +28011,7 @@ exports[`corpus/style > style-06 1`] = `
 exports[`corpus/style > style-07 1`] = `
 {
   "block": false,
-  "html": "<math><mrow><mrow><ms mathvariant="italic"><ms mathvariant="italic">sin</ms></ms></mrow><mrow><mo>(</mo><mi mathvariant="italic">x</mi><mo>)</mo></mrow><ms mathvariant="italic">abc</ms><mo></mo></mrow></math>",
+  "html": "<math><mrow><mrow><ms mathvariant="italic"><ms mathvariant="italic">sin</ms></ms></mrow><mrow><mo>(</mo><mi mathvariant="italic">x</mi><mo>)</mo></mrow><ms mathvariant="italic">abc</ms><mi mathvariant="italic">box</mi><mrow><mo>[</mo><mo>]</mo></mrow></mrow></math>",
   "text": "italic(sin(x) "abc" #box[abc])",
   "vdom": [
     "math",
@@ -27945,7 +28059,22 @@ exports[`corpus/style > style-07 1`] = `
         "abc",
       ],
       [
-        "mo",
+        "mi",
+        {
+          "mathvariant": "italic",
+        },
+        "box",
+      ],
+      [
+        "mrow",
+        [
+          "mo",
+          "[",
+        ],
+        [
+          "mo",
+          "]",
+        ],
       ],
     ],
   ],
@@ -27995,7 +28124,7 @@ exports[`corpus/style > style-08 1`] = `
 exports[`corpus/style > style-09 1`] = `
 {
   "block": false,
-  "html": "<math><mrow style="font-weight: bold"><mrow><ms><ms>sin</ms></ms></mrow><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><ms>abc</ms><mo></mo></mrow></math>",
+  "html": "<math><mrow style="font-weight: bold"><mrow><ms><ms>sin</ms></ms></mrow><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><ms>abc</ms><mi>box</mi><mrow><mo>[</mo><mo>]</mo></mrow></mrow></math>",
   "text": "bold(sin(x) "abc" #box[abc])",
   "vdom": [
     "math",
@@ -28036,7 +28165,19 @@ exports[`corpus/style > style-09 1`] = `
         "abc",
       ],
       [
-        "mo",
+        "mi",
+        "box",
+      ],
+      [
+        "mrow",
+        [
+          "mo",
+          "[",
+        ],
+        [
+          "mo",
+          "]",
+        ],
       ],
     ],
   ],

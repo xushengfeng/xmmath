@@ -41,49 +41,6 @@ export function ast(str: string): tree {
 		return String.fromCodePoint(codePoint);
 	});
 
-	const lkh_stack: number[] = [];
-	const rkh_stack: number[] = [];
-	for (let i = 0; i < str.length; i++) {
-		const t = str[i];
-		const last = str[i - 1];
-		if (t === '"' && last !== "\\" && !ignore) {
-			if (type !== "str") {
-				type = "str";
-			} else {
-				type = "";
-			}
-			continue;
-		}
-		if (type === "str") {
-			continue;
-		} else {
-			const next = str[i + 1];
-			if (t === "/" && next === "/") ignore = "line";
-			if (ignore === "line" && t === "\n") {
-				ignore = false;
-				continue;
-			}
-			if (t === "/" && next === "*") ignore = "block";
-			if (ignore === "block" && t === "*" && next === "/") {
-				i++;
-				ignore = false;
-				continue;
-			}
-		}
-
-		if (t.match(khl) && !ignore && last !== "\\") {
-			lkh_stack.push(i);
-		}
-		if (t.match(khr) && !ignore && last !== "\\") {
-			if (lkh_stack.length === 0) {
-				rkh_stack.push(i);
-			} else {
-				lkh_stack.pop();
-			}
-		}
-	}
-	ignore = false;
-
 	let strl = init_c.emoji
 		? init_c.emoji(str)
 		: Array.from(segmenter.segment(str)).map((w) => w.segment);
@@ -172,9 +129,11 @@ export function ast(str: string): tree {
 		if (t.match(khl)) {
 			if (strl[i - 1] === "\\") {
 				now_tree.push({ type: "v", value: t, esc: true });
-			} else if (lkh_stack.includes(i)) {
-				now_tree.push({ type: "v", value: t });
 			} else {
+				// 开括号一律起组，直到遇到闭括号；到行尾仍没遇到（typst
+				// `math_delimited` 走到 eof 的分支）就留成未闭合组，由渲染
+				// 阶段只画开括号。旧实现把未配对的开括号退化成普通字符，
+				// 会让 `1/(2 (x)` 的分母只剩一个 `(`。
 				p_tree.push({ tree: now_tree, close: false });
 				now_tree.push({ type: "group", value: tmp_str, children: [], kh: t });
 				now_tree = now_tree.at(-1).children;

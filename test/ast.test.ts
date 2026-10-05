@@ -69,9 +69,21 @@ describe("ast() - brackets and groups", () => {
 		expect(result[0].children[0].kh).toBe("()");
 	});
 
-	it("unmatched open bracket becomes literal", () => {
-		const result = ast("(");
-		expect(result).toEqual([{ type: "v", value: "(" }]);
+	it("unmatched open bracket stays an unclosed group", () => {
+		// typst math_delimited 走到行尾没等到闭括号时会把开括号连同后面
+		// 的内容一起收成一段（Math 行），不是退化成普通字符：
+		// `1/(2 (x)` 的分母是整段 `(2 (x)`。
+		expect(ast("(")).toEqual([
+			{ type: "group", value: "", children: [], kh: "(" },
+		]);
+		expect(ast("(a")).toEqual([
+			{
+				type: "group",
+				value: "",
+				children: [{ type: "v", value: "a" }],
+				kh: "(",
+			},
+		]);
 	});
 
 	it("unmatched close bracket becomes literal", () => {

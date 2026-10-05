@@ -886,7 +886,15 @@ function render(tree: tree, e?: fonts): VEl | VFragment {
 		}
 
 		if (x.type === "group") {
-			fragment.append(f.lr([[x]], null, e));
+			// 未闭合组：typst 只剩开括号（math_delimited 走到行尾没等到闭括号），
+			// 不再包一层 mrow（typst 同样平铺，由外层需要单个元素时才包，
+			// 比如 mfrac 的分母），开括号也不参与拉伸。
+			if (x.kh && x.kh.length === 1) {
+				fragment.append(createMath("mo", x.kh, { stretchy: "false" }));
+				fragment.append(render(x.children, e));
+			} else {
+				fragment.append(f.lr([[x]], null, e));
+			}
 		}
 	}
 
