@@ -924,8 +924,9 @@ function toMML(str: string, inline?: boolean): MathMLElement {
 	return toDom(toMMLV(str, inline)) as MathMLElement;
 }
 
-function toMMLHTML(str: string) {
-	return toHtml(toMMLV(str));
+// String MathML (DOM-free)。inline=true 输出行内（无 display 属性），默认块级。
+function toMMLHTML(str: string, inline?: boolean) {
+	return toHtml(toMMLV(str, inline));
 }
 
 const version = {

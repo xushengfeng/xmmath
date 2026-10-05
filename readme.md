@@ -87,11 +87,12 @@ For more details, please go to [typst docs](https://typst.app/docs) for more inf
 ## 使用（use）
 
 ```typescript
-xmmath.toMMLHTML("e^(i pi)=-1"); // 输出html
+xmmath.toMMLHTML("e^(i pi)=-1"); // 输出html（默认块级 display="block"）
+xmmath.toMMLHTML("e^(i pi)=-1", true); // 行内：不写 display 属性
 ```
 
 ```typescript
-xmmath.toMML("e^(i pi)=-1"); // 输出mathml元素
+xmmath.toMML("e^(i pi)=-1"); // 输出mathml元素（第二个参数同样可传 inline）
 ```
 
 ```typescript

@@ -30,9 +30,16 @@ describe("custom - 已确认行为", () => {
 	});
 
 	it("行内与块级由 display 属性区分", () => {
-		// 注意 toMMLHTML 目前恒为 block（内部调用 toMMLV 时没传 inline）
 		expect(toHtml(toMMLV("x", true))).not.toContain('display="block"');
 		expect(toHtml(toMMLV("x", false))).toContain('display="block"');
+		// toMMLHTML 透传 inline：默认块级，true 走行内
+		expect(toMMLHTML("x")).toContain('display="block"');
+		expect(toMMLHTML("x", true)).not.toContain('display="block"');
+	});
+
+	it("inline 上下文下大算符走角标（toMMLHTML 透传）", () => {
+		expect(toMMLHTML("sum_1^2")).toContain("<munderover>");
+		expect(toMMLHTML("sum_1^2", true)).toContain("<msubsup>");
 	});
 });
 
