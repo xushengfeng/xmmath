@@ -11,6 +11,9 @@
 		}
 	},
 	"homepage": "https://github.com/xushengfeng/xmmath",
+	"repository": {
+		"url": "https://github.com/xushengfeng/xmmath"
+	},
 	"type": "module",
 	"types": "./src/main.ts",
 	"scripts": {
