@@ -1754,6 +1754,13 @@
 			"block": true
 		},
 		{
+			"id": "op-x1",
+			"cat": "op",
+			"text": "op(\"a\") quad op(\"muti\") quad limits(op(\"a\")) quad limits(op(\"muti\"))",
+			"block": true,
+			"desc": "0.11.1下op单字符是手写体，后面typst会修复"
+		},
+		{
 			"id": "op-06",
 			"cat": "op",
 			"text": "bold(op(\"bold\", limits: #true))_x y",
