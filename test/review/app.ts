@@ -10,6 +10,8 @@ type Case = {
 	cat: string;
 	text: string;
 	block: boolean;
+	// 该例钉住的规则说明（可选，来自 math.json 的 desc），卡片上原样显示
+	desc?: string;
 	knownBroken?: boolean;
 };
 // 一条变更 = 同一输入在 HEAD 版与工作区版输出不同（错误信息也算输出）
@@ -418,6 +420,9 @@ function caseCard(c: Case) {
 				onclick: () => (typstPane as HTMLElement & { load: () => void }).load(),
 			}),
 		),
+		c.desc
+			? el("div", { className: "desc", textContent: c.desc })
+			: document.createTextNode(""),
 		el("pre", { className: "src", textContent: c.text }),
 		el("div", { className: "panes" }, paneOurs(c), typstPane),
 	);
@@ -888,6 +893,9 @@ function viewChanges() {
 				),
 				src
 					? el("pre", { className: "src", textContent: src.text })
+					: document.createTextNode(""),
+				src?.desc
+					? el("div", { className: "desc", textContent: src.desc })
 					: document.createTextNode(""),
 				el(
 					"div",

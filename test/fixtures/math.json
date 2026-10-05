@@ -2478,6 +2478,55 @@
 			"cat": "vec",
 			"text": "vec(1, 2)",
 			"block": true
+		},
+		{
+			"id": "attach-smart-1",
+			"cat": "attach-smart",
+			"text": "attach(A, t: α, b: β)",
+			"block": true,
+			"desc": "聪明定位总纲：底座 limits 不生效（普通字母）时 t/b 让位到右上/右下脚标位 —— 官方是 msubsup，不是 munderover"
+		},
+		{
+			"id": "attach-smart-2",
+			"cat": "attach-smart",
+			"text": "attach(a, t: t), attach(a, b: b), attach(a, t: t, b: b) quad a^t, a_b, a_b^t",
+			"block": false,
+			"desc": "单/双侧让位，并列 _/^ 同式对照：a^t 与 attach(a, t: t) 走同一套 tr/br 判定，输出应逐字相同（msup / msub / msubsup）"
+		},
+		{
+			"id": "attach-smart-3",
+			"cat": "attach-smart",
+			"text": "attach(a, tr: v, t: t), attach(a, br: y, b: b), attach(a, tr: v, br: y, t: t, b: b) \\\nattach(a, tl: u, t: t), attach(a, tr: v, b: b), attach(a, tl: u, bl: x, t: t, b: b)",
+			"block": false,
+			"desc": "tr/br 已被占用 → t/b 退不掉，留在正上/正下（外套 mover/munder/munderover 壳）；tl/bl 占位不拦，t 照样进右上脚标位；tr 在时 b 仍让给 br"
+		},
+		{
+			"id": "attach-smart-4",
+			"cat": "attach-smart",
+			"text": "attach(sum, t: t, b: b) quad attach(limits(a), t: t, b: b) quad attach(eq, t: t, b: b) quad attach(scripts(sum), t: t, b: b)",
+			"block": true,
+			"desc": "limits 生效才落正上/正下：Large 类 sum（仅 display）、limits() 强制、Relation eq 恒生效；scripts(sum) 是反例，压回脚标位"
+		},
+		{
+			"id": "attach-smart-5",
+			"cat": "attach-smart",
+			"text": "attach(sum, t: t, b: b) quad attach(limits(a), t: t, b: b) quad attach(eq, t: t, b: b) quad attach(scripts(sum), t: t, b: b)",
+			"block": false,
+			"desc": "与 attach-smart-4 同式、改成行内：Limits::Display 让 sum 退回脚标，limits()(默认 inline: #true) 与 Relation 不变 —— display/inline 的差别只在这条"
+		},
+		{
+			"id": "attach-smart-6",
+			"cat": "attach-smart",
+			"text": "attach(sum, t: t) quad sum^t quad attach(limits(a), b: b) quad limits(a)_b \\\nattach(eq, t: t) quad attach(scripts(sum), b: b)",
+			"block": true,
+			"desc": "只给单边时的正上/正下壳：官方是 mover/munder，与 sum^t、limits(a)_b 同式对照；再带 Relation 恒真与 scripts 恒假两个反例"
+		},
+		{
+			"id": "attach-smart-7",
+			"cat": "attach-smart",
+			"text": "attach(op(\"f\", limits: #true), t: t, b: b) quad op(\"f\", limits: #true)_b^t \\\nattach(op(\"f\"), t: t, b: b) quad op(\"f\")_b^t",
+			"block": true,
+			"desc": "op(limits) 开关：#true 才按 limits 判且仍受 display 约束，attach 版与 _/^ 版同式对照；无开关的 op(\"f\") 应压回脚标位"
 		}
 	]
 }
