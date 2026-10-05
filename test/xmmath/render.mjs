@@ -32,8 +32,10 @@
 //   - Screenshot pass: window = that box (content + 6pt margin, typst's
 //     `#set page(margin: 6pt)`), at --dpi via CSS `zoom` (firefox ignores
 //     layout.css.devPixelsPerPx and has no --force-device-scale-factor).
-//     A browser-enforced minimum window size can leave extra white margin;
-//     that is accepted rather than cropped.
+//     It loads `/?shot` — same math, same CSS, but never hidden: the size is
+//     already known, so hiding it only raced the capture and produced blank
+//     PNGs. A browser-enforced minimum window size can leave extra white
+//     margin; that is accepted rather than cropped.
 //   - Needs a browser on PATH (or --bin / $XMMATH_BROWSER); the HTML format
 //     needs no browser at all.
 import { spawn, spawnSync } from "node:child_process";
@@ -235,7 +237,10 @@ ${pageCss({ fontSrc, scale })}</style>${head}
 }
 
 // ---- local server (page + font + measure beacon) ----
-async function servePage(html) {
+// 两份页面共用一个端口：`/` 是测量页（字体就绪前隐藏，量到尺寸就发信标），
+// `/?shot` 是截图页（始终可见——测量页那份 `visibility: hidden` 会在 firefox
+// 截图的瞬间还没等到信标时把画面截成空白）。
+async function servePage(html, shotHtml) {
 	let settle = null;
 	const measured = new Promise((res) => {
 		settle = res;
@@ -272,7 +277,7 @@ async function servePage(html) {
 		if (url === "/" || url.startsWith("/?")) {
 			res
 				.writeHead(200, { "Content-Type": "text/html; charset=utf-8" })
-				.end(html);
+				.end(url.startsWith("/?shot") ? shotHtml : html);
 			return;
 		}
 		res.writeHead(404).end();
@@ -586,6 +591,7 @@ export async function render(argv = process.argv.slice(2)) {
 	try {
 		page = await servePage(
 			buildHtml(mathml, { measure: true, fontSrc: FONT_ROUTE, scale }),
+			buildHtml(mathml, { measure: false, fontSrc: FONT_ROUTE, scale }),
 		);
 	} catch (e) {
 		await cleanup(null);
@@ -629,7 +635,7 @@ export async function render(argv = process.argv.slice(2)) {
 	const args = browserArgs(browser.engine, profile, [
 		`--screenshot=${outPng}`,
 		`--window-size=${win.width},${win.height}`,
-		`${page.origin}/`,
+		`${page.origin}/?shot`,
 	]);
 	const shot = await screenshot(browser, args, opts);
 	await cleanup(page);

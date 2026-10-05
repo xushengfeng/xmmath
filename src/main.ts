@@ -11,6 +11,7 @@ import {
 	type fdic,
 	in_kh,
 	is_br,
+	is_limit,
 	is_true,
 	isDisplay,
 	opl,
@@ -40,6 +41,22 @@ const delimPair = {
 	"": ["", ""],
 };
 
+// attach 底座的 limits 是否生效。子树要等 render 才做 ast3 的「处理f」收编，
+// 这里 dispatch 到 attach 时 `limits(a)` 还是 [f(limits), group(a)] 两个并列节点，
+// 故先按 ast3 同样的规则收编（f 紧跟 kh === "()" 的组；prime 除外）再判定，
+// 使 `limits(a)`/`scripts(a)`/`op(.., limits: #true)` 与 `_`/`^` 走同一口径。
+function limits_active(base: tree) {
+	const t: tree =
+		base.length === 2 &&
+		base[0].type === "f" &&
+		base[0].value !== "prime" &&
+		base[1].type === "group" &&
+		base[1].kh === "()"
+			? [{ ...base[0], children: base[1].children }]
+			: base;
+	return !!is_limit(t);
+}
+
 function delim(dic: fdic, _default: string) {
 	const d = get_value(dic, "delim") as string;
 	let x = "";
@@ -64,25 +81,43 @@ const f: {
 		return over;
 	},
 	attach: (attr: tree[], dic: fdic, e) => {
+		// typst v0.11.1 attach.rs::layout_math 的「聪明定位」：
+		//   let limits = base.limits().active(styles);
+		//   let (t, tr) = if limits || tr.is_some() { (t, tr) } else { (None, t) };
+		//   let (b, br) = if limits || br.is_some() { (b, br) } else { (None, b) };
+		// 即底座 limits 不生效时 t/b 让位到右上/右下脚标位（与 `_`/`^` 同一套判定），
+		// 只有 tr/br 已被占用时才留在正上/正下（外层套 mover/munder）；
+		// limits 生效时 t/b 恒落正上/正下，角标仍各占自己的角。
+		const d: fdic = { ...dic };
+		if (!limits_active(attr[0])) {
+			if (d.t && !d.tr) {
+				d.tr = d.t;
+				delete d.t;
+			}
+			if (d.b && !d.br) {
+				d.br = d.b;
+				delete d.b;
+			}
+		}
 		const base = createMath("mrow");
 		base.append(render(attr[0]));
 		let el: VEl;
 		const tl = createMath("mrow");
-		if (dic.tl) tl.append(render(dic.tl, e));
+		if (d.tl) tl.append(render(d.tl, e));
 		const bl = createMath("mrow");
-		if (dic.bl) bl.append(render(dic.bl, e));
+		if (d.bl) bl.append(render(d.bl, e));
 		const tr = createMath("mrow");
-		if (dic.tr) tr.append(render(dic.tr, e));
+		if (d.tr) tr.append(render(d.tr, e));
 		const br = createMath("mrow");
-		if (dic.br) br.append(render(dic.br, e));
-		if (dic.tl || dic.bl || dic.tr || dic.br) {
-			if (dic.tl || dic.bl) {
+		if (d.br) br.append(render(d.br, e));
+		if (d.tl || d.bl || d.tr || d.br) {
+			if (d.tl || d.bl) {
 				el = createMath("mmultiscripts");
 				el.append(base, br, tr, createMath("mprescripts"), bl, tl);
-			} else if (dic.tr && dic.br) {
+			} else if (d.tr && d.br) {
 				el = createMath("msubsup");
 				el.append(base, br, tr);
-			} else if (dic.tr) {
+			} else if (d.tr) {
 				el = createMath("msup");
 				el.append(base, tr);
 			} else {
@@ -90,7 +125,7 @@ const f: {
 				el.append(base, br);
 			}
 		}
-		if (dic.t || dic.b) {
+		if (d.t || d.b) {
 			const uo = createMath("munderover");
 			if (!el) {
 				uo.append(base);
@@ -98,9 +133,9 @@ const f: {
 				uo.append(el);
 			}
 			const t = createMath("mrow");
-			if (dic.t) t.append(render(dic.t, e));
+			if (d.t) t.append(render(d.t, e));
 			const b = createMath("mrow");
-			if (dic.b) b.append(render(dic.b, e));
+			if (d.b) b.append(render(d.b, e));
 			uo.append(b, t);
 			el = uo;
 		}

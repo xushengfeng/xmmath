@@ -1595,7 +1595,7 @@ exports[`corpus/alignment > alignment-06 1`] = `
 exports[`corpus/attach > attach-01 1`] = `
 {
   "block": false,
-  "html": "<math><msub><mrow><mi>f</mi></mrow><mrow><mi>x</mi></mrow></msub><mo>+</mo><msup><mrow><mi>t</mi></mrow><mrow><mi>b</mi></mrow></msup><mo>+</mo><msubsup><mrow><mi>V</mi></mrow><mrow><mn>1</mn></mrow><mrow><mn>2</mn></mrow></msubsup><mo>+</mo><munderover><mrow><mi>A</mi></mrow><mrow><mi>β</mi></mrow><mrow><mi>α</mi></mrow></munderover></math>",
+  "html": "<math><msub><mrow><mi>f</mi></mrow><mrow><mi>x</mi></mrow></msub><mo>+</mo><msup><mrow><mi>t</mi></mrow><mrow><mi>b</mi></mrow></msup><mo>+</mo><msubsup><mrow><mi>V</mi></mrow><mrow><mn>1</mn></mrow><mrow><mn>2</mn></mrow></msubsup><mo>+</mo><msubsup><mrow><mi>A</mi></mrow><mrow><mi>β</mi></mrow><mrow><mi>α</mi></mrow></msubsup></math>",
   "text": "f_x + t^b + V_1^2 + attach(A, t: alpha, b: beta)",
   "vdom": [
     "math",
@@ -1670,7 +1670,7 @@ exports[`corpus/attach > attach-01 1`] = `
       "+",
     ],
     [
-      "munderover",
+      "msubsup",
       [
         "mrow",
         [
@@ -5597,7 +5597,7 @@ exports[`corpus/attach > attach-14 1`] = `
 exports[`corpus/attach > attach-15 1`] = `
 {
   "block": true,
-  "html": "<math display="block"><munderover><mrow><mi>A</mi></mrow><mrow></mrow><mrow><mi>context</mi></mrow></munderover></math>",
+  "html": "<math display="block"><msup><mrow><mi>A</mi></mrow><mrow><mi>context</mi></mrow></msup></math>",
   "text": "attach(A, t: #context oops)",
   "vdom": [
     "math",
@@ -5605,16 +5605,13 @@ exports[`corpus/attach > attach-15 1`] = `
       "display": "block",
     },
     [
-      "munderover",
+      "msup",
       [
         "mrow",
         [
           "mi",
           "A",
         ],
-      ],
-      [
-        "mrow",
       ],
       [
         "mrow",
@@ -23339,7 +23336,7 @@ exports[`corpus/primes > primes-20 1`] = `
 exports[`corpus/primes > primes-21 1`] = `
 {
   "block": true,
-  "html": "<math display="block"><munderover><mrow><mi>x</mi></mrow><mrow></mrow><mrow><mo>′</mo></mrow></munderover></math>",
+  "html": "<math display="block"><msup><mrow><mi>x</mi></mrow><mrow><mo>′</mo></mrow></msup></math>",
   "text": "attach(x, t: ')",
   "vdom": [
     "math",
@@ -23347,16 +23344,13 @@ exports[`corpus/primes > primes-21 1`] = `
       "display": "block",
     },
     [
-      "munderover",
+      "msup",
       [
         "mrow",
         [
           "mi",
           "x",
         ],
-      ],
-      [
-        "mrow",
       ],
       [
         "mrow",
