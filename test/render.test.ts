@@ -121,8 +121,10 @@ describe("render() - full corpus robustness", () => {
 
 	it("no throw on all corpus entries (except known unimplemented functions)", () => {
 		// toMMLHTML is now DOM-free (string path); only unimplemented functions
-		// (class / #hide) still crash. They are recorded as `error` in the
-		// test/corpus snapshots, so the gap stays visible instead of hidden here.
+		// (class / #hide) still crash. They are recorded as `knownBroken`, so the
+		// gap stays visible instead of hidden here. Rendering regressions across
+		// commits are found in pnpm review's changes tab (HEAD vs worktree), not
+		// by stored snapshots.
 		for (const { id, text, cat } of testCases) {
 			if (knownBroken.includes(id)) continue;
 			expect(

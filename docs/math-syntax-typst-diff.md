@@ -189,7 +189,7 @@ pnpm sync:symbols                                                 # ④ 新符�
 TYPST_BIN=~/.cache/xmmath/typst/$NEW/typst node <探针>            # ⑤ 导出实测表（见 8.3）
 ```
 
-⑤ 的输出与 ①②③ 对齐后，改 `src/normalize.ts` 的 `rel_names` 及其注释（版本、日期、漂移清单），再走 AGENTS.md 的快照流程：`pnpm test` 变红 → `pnpm snap:update` → `pnpm review:changes` → `pnpm review` 逐例看图。
+⑤ 的输出与 ①②③ 对齐后，改 `src/normalize.ts` 的 `rel_names` 及其注释（版本、日期、漂移清单），再走 AGENTS.md 的 review 流程：`pnpm test` 保住断言 → `pnpm review` 的「变更」标签（HEAD vs 工作区，现场算）逐例看图。
 
 ### 8.3 为什么非重跑实测不可（要重跑，不用重新设计）
 

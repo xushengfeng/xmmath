@@ -1,5 +1,6 @@
 // Review 页的 dev 中间件（仅 vite serve 时挂载）。只做对照，不记录反馈。
-// 提供：typst 官方渲染图（按 hash + typst 版本缓存，不进 git）、快照变更清单。
+// 提供：typst 官方渲染图（按 hash + typst 版本缓存，不进 git，ver 参数可指定旧版本做版本对比）、
+// /base（把 git HEAD 版的 src/ 导出到 cache/base/<sha>/，网页动态 import 后与工作区版并排渲染）。
 import { spawnSync } from "node:child_process";
 import { createHash } from "node:crypto";
 import {
@@ -9,14 +10,14 @@ import {
 	renameSync,
 	writeFileSync,
 } from "node:fs";
-import { dirname, join } from "node:path";
+import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { render } from "../typst/render.mjs";
 
 const here = dirname(fileURLToPath(import.meta.url));
+const root = resolve(here, "../..");
 const CACHE = join(here, "cache");
 const INDEX = join(CACHE, "index.json");
-const CHANGES = join(CACHE, "changes.json");
 const CONFIG_FILE = join(here, "config.json");
 
 const MAX_TEXT = 8000;
@@ -40,6 +41,18 @@ function sha256(s) {
 }
 function slug(s) {
 	return s.replace(/[^A-Za-z0-9._+-]+/g, "_");
+}
+
+// git 子进程：失败抛错，成功返回 stdout（/base 用它导出 HEAD 版 src/）
+function git(args) {
+	const r = spawnSync("git", args, {
+		cwd: root,
+		encoding: "utf8",
+		maxBuffer: 64 * 1024 * 1024,
+	});
+	if (r.status !== 0)
+		throw new Error(`git ${args.join(" ")} 失败：${(r.stderr || "").trim()}`);
+	return r.stdout;
 }
 
 function config() {
@@ -75,9 +88,18 @@ function typstSource(text, block) {
 	return `#set page(width: auto, height: auto, margin: 6pt)\n#set text(size: 14pt)\n${math}\n`;
 }
 
-async function renderTypst(text, block, dpi) {
+// typst 版本标识：不传用 config（当前基准），传了就是对比用的旧版本
+function typstVer(ver) {
+	if (!ver) return null;
+	const v = String(ver).trim();
+	if (!/^v?\d+(\.\d+)*(-[\w.]+)?$/.test(v))
+		throw new Error(`typst 版本号格式不对：${v}`);
+	return `v${v.replace(/^v/, "")}`;
+}
+
+async function renderTypst(text, block, dpi, ver) {
 	const cfg = config();
-	const label = typstLabel(cfg);
+	const label = typstVer(ver) || typstLabel(cfg);
 	const source = typstSource(text, block);
 	const hash = sha256(`${label}|${dpi}|${source}`);
 	const dir = join(CACHE, "typst", slug(label));
@@ -96,7 +118,8 @@ async function renderTypst(text, block, dpi) {
 		String(dpi),
 		"--json",
 	];
-	if (cfg.bin) args.push("--bin", cfg.bin);
+	if (ver) args.push("--typst", label);
+	else if (cfg.bin) args.push("--bin", cfg.bin);
 	else args.push("--typst", cfg.typst);
 	const rep = await render(args);
 	const meta = {
@@ -178,7 +201,34 @@ async function handle(req, res, path, url) {
 		return sendJson(res, 200, {
 			ok: true,
 			config: { typst: typstLabel(cfg), dpi: cfg.dpi, bin: cfg.bin || null },
-			changes: readJson(CHANGES, null),
+		});
+	}
+
+	// 把 git HEAD 版的 src/ 导出到 cache/base/<sha>/src/，返回其 URL 前缀。
+	// 网页动态 import 该前缀下的 main.ts，与工作区版并排渲染做差异对比。
+	if (path === "/base" && req.method === "GET") {
+		const sha = git(["rev-parse", "HEAD"]).trim();
+		const dir = join(CACHE, "base", sha, "src");
+		if (!existsSync(dir)) {
+			const files = git(["ls-tree", "-r", "--name-only", "HEAD", "--", "src"])
+				.split("\n")
+				.filter(Boolean);
+			if (!files.length)
+				return sendJson(res, 500, { ok: false, error: "HEAD 里没有 src/" });
+			for (const rel of files) {
+				const content = git(["show", `HEAD:${rel}`]);
+				const dest = join(CACHE, "base", sha, rel);
+				mkdirSync(dirname(dest), { recursive: true });
+				writeFileSync(dest, content);
+			}
+		}
+		return sendJson(res, 200, {
+			ok: true,
+			sha,
+			prefix: `/test/review/cache/base/${sha}`,
+			dirty: git(["status", "--porcelain", "--", "src"])
+				.split("\n")
+				.filter(Boolean),
 		});
 	}
 
@@ -186,7 +236,8 @@ async function handle(req, res, path, url) {
 		const text = checkText(url.searchParams.get("text") || "");
 		const block = url.searchParams.get("block") === "1";
 		const dpi = Number(url.searchParams.get("dpi")) || cfg.dpi;
-		const r = await renderTypst(text, block, dpi);
+		const ver = url.searchParams.get("ver") || "";
+		const r = await renderTypst(text, block, dpi, ver);
 		if (!r.meta.ok || !existsSync(r.file))
 			return sendJson(res, 502, { ok: false, hash: r.hash, ...r.meta });
 		res.statusCode = 200;
@@ -203,6 +254,7 @@ async function handle(req, res, path, url) {
 		const b = await jsonBody(req);
 		const items = Array.isArray(b.items) ? b.items.slice(0, MAX_BATCH) : [];
 		const dpi = Number(b.dpi) || cfg.dpi;
+		const ver = String(b.ver || "");
 		const done = [];
 		const failed = [];
 		for (const it of items) {
@@ -211,6 +263,7 @@ async function handle(req, res, path, url) {
 					checkText(String(it.text)),
 					!!it.block,
 					dpi,
+					ver,
 				);
 				if (r.meta.ok) done.push(it.id || r.hash);
 				else
@@ -223,16 +276,6 @@ async function handle(req, res, path, url) {
 			}
 		}
 		return sendJson(res, 200, { ok: true, done: done.length, failed });
-	}
-
-	if (path === "/changes" && req.method === "GET") {
-		const c = readJson(CHANGES, null);
-		if (!c)
-			return sendJson(res, 404, {
-				ok: false,
-				error: "先运行 pnpm review:changes",
-			});
-		return sendJson(res, 200, { ok: true, ...c });
 	}
 
 	return sendJson(res, 404, {

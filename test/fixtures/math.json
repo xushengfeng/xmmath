@@ -1,6 +1,6 @@
 {
 	"meta": {
-		"source": "typst tests/suite/math（test/typst/get.mjs 抽取）",
+		"source": "typst tests/suite/math（手工维护：上游有变更时人工比对增补，见 AGENTS.md）",
 		"categories": 23,
 		"cases": 412
 	},
@@ -537,7 +537,8 @@
 			"id": "class-01",
 			"cat": "class",
 			"text": "a class(\"normal\", +) b \\\n  a class(\"binary\", .) b \\\n  lr(class(\"opening\", \\/) a/b class(\"closing\", \\\\)) \\\n  { x class(\"fence\", \\;) x > 0} \\\n  a class(\"large\", \\/) b \\\n  a class(\"punctuation\", :) b \\\n  a class(\"relation\", ~) b \\\n  a + class(\"unary\", times) b \\\n  class(\"vary\", :) a class(\"vary\", :) b",
-			"block": true
+			"block": true,
+			"knownBroken": true
 		},
 		{
 			"id": "class-02",
@@ -1173,7 +1174,8 @@
 			"id": "interactions-24",
 			"cat": "interactions",
 			"text": "1 + sqrt(x/2) + sqrt(#hide(",
-			"block": true
+			"block": true,
+			"knownBroken": true
 		},
 		{
 			"id": "interactions-25",

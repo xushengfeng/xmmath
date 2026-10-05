@@ -10,13 +10,15 @@ symbols和emoji与上游同步到0.15.1，src语法解析渲染与上游同步�
 
 火狐浏览器渲染的mathml不错，其他浏览器多少有细节问题
 
-测试分层：test/corpus/math.test.ts 一个文件跑完整份 test/fixtures/math.json（412 例，每分类一个 describe、每例一个 it + vdom/MathML 快照，快照集中在 __snapshots__/math.test.ts.snap）；test/custom.test.ts 是手工维护的针对性用例，普通 it 断言、不用快照（已知缺陷用 it.fails 占位，修好后它会反过来报警）；阶段单测在 test/{ast,normalize,vdom,render}.test.ts；math.json 是唯一语料来源，可用 test/typst/get.mjs 从上游 tests/suite/math/*.typ 重新抽取
+测试分层：语料 test/fixtures/math.json（412 例）由各阶段单测 test/{ast,normalize,vdom,render}.test.ts 跑（含全语料跑通断言，会抛错的用例在其条目上标 `knownBroken: true`，_shared.ts 从字段派生豁免清单，修好后测试反过来变红逼你摘标记）；test/custom.test.ts 是手工维护的针对性断言（已知缺陷用 it.fails 占位）。渲染结果不存快照——回归靠 review 页「变更」标签现场跑 HEAD 版与工作区版对比（见下）。
 
-快照只是为了防止改了这里导致其他地方发生劣化，见后面流程
+math.json 手工维护，不再有生成脚本（get.mjs 已删）：新增调试用例直接往里加，`id`/`cat` 都可自定义（id 可以写长描述，撞 id 由 review 页顶部警告）；需要跟上游同步时，去 typst 官方 git 看 tests/suite/math 的变更记录，手动把新式子摘进来（test/typst/math/ 里留着上次抽取的上游 .typ 原文，可作比对参考，该目录已 gitignore）。
 
-pnpm review 打开 test/review/index.html，只做对照不记录反馈：每例并排显示本库渲染与 typst 官方 PNG；「自定义」标签是临时输入对照，要长期钉住就写进 test/custom.test.ts。typst 图按 hash+typst版本缓存在 test/review/cache/（不进 git），版本固定在 test/review/config.json，默认 0.11.1（与 src 的 version.lan 一致；改版本会让缓存全部失效重渲染）
+pnpm review 打开 test/review/index.html，只做对照不记录反馈：每例并排显示本库渲染与 typst 官方 PNG；「自定义」标签是临时输入对照，要长期钉住就写进 test/custom.test.ts；「变更」标签现场 import git HEAD 版 src 与工作区版，同一语料各渲染一遍逐例比输出（结果不入库，每次进页现算，服务端 /__review/base 负责把 HEAD 的 src/ 导出到 cache/base/<sha>/）。typst 图按 hash+typst版本缓存在 test/review/cache/（不进 git），版本固定在 test/review/config.json，默认 0.11.1（与 src 的 version.lan 一致；改版本会让缓存全部失效重渲染）
 
-改动语法与渲染，可能影响快照其他测试例导致 pnpm test 变红 → 立刻 pnpm snap:update 接受新预期 → pnpm review:changes 生成「git 基线 vs 工作区快照」的变更清单（cache/changes.json）→ pnpm review 的「变更」标签逐例看旧渲染/新渲染/typst 官方图；发现其他受影响的测试项劣化就回去改代码，下一轮循环会覆盖。在没有pnpm review:changes时changes.json是旧的，不能作为参考
+加 `?oldtypst=<版本>`（如 0.15.1）后每例会多渲一张该版本的 typst 图，浏览器用 canvas 比两图像素：整图 hash 判有无差异，有差异再给差异像素占比与尺寸差；侧栏「仅 typst 版本差异」可过滤，「预生成本列表 typst 图」会把两个版本都预渲染
+
+改动语法与渲染，怕影响其他用例 → pnpm review 的「变更」标签（HEAD vs 工作区，现场算）逐例看旧渲染/新渲染/typst 官方图；发现其他受影响的用例劣化就回去改代码，下一轮循环会覆盖。测出的行为差异要长期钉住就写进 test/custom.test.ts 的断言
 
 语料里有一批 typst 自己也拒绝编译的用例（..args 展开、未定义变量、故意不配对的分隔符、旧符号名），不同版本失败集合不同，对照时按「官方无输出」处理
 
