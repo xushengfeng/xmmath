@@ -25,7 +25,7 @@ describe("vdom render - no DOM required", () => {
 	});
 
 	it("toMMLHTML works without document", () => {
-		expect(toMMLHTML("sqrt(x)")).toContain("<mroot>");
+		expect(toMMLHTML("sqrt(x)")).toContain("<msqrt>");
 	});
 
 	it("style-only nodes (cancel) now serialize without jsdom", () => {

@@ -591,37 +591,31 @@ exports[`corpus/accent > accent-03 1`] = `
 exports[`corpus/accent > accent-04 1`] = `
 {
   "block": false,
-  "html": "<math><mroot><mrow><mover accent="true"><mrow><mi>T</mi></mrow><mrow><mo>̃</mo></mrow></mover></mrow><mrow></mrow></mroot><mo>+</mo><mfrac><mrow><mover accent="true"><mrow><mi>f</mi></mrow><mrow><mo>̂</mo></mrow></mover></mrow><mrow><mover accent="true"><mrow><mi>g</mi></mrow><mrow><mo>̂</mo></mrow></mover></mrow></mfrac></math>",
+  "html": "<math><msqrt><mover accent="true"><mrow><mi>T</mi></mrow><mrow><mo>̃</mo></mrow></mover></msqrt><mo>+</mo><mfrac><mrow><mover accent="true"><mrow><mi>f</mi></mrow><mrow><mo>̂</mo></mrow></mover></mrow><mrow><mover accent="true"><mrow><mi>g</mi></mrow><mrow><mo>̂</mo></mrow></mover></mrow></mfrac></math>",
   "text": "sqrt(tilde(T)) + hat(f)/hat(g)",
   "vdom": [
     "math",
     [
-      "mroot",
+      "msqrt",
       [
-        "mrow",
+        "mover",
+        {
+          "accent": "true",
+        },
         [
-          "mover",
-          {
-            "accent": "true",
-          },
+          "mrow",
           [
-            "mrow",
-            [
-              "mi",
-              "T",
-            ],
-          ],
-          [
-            "mrow",
-            [
-              "mo",
-              "̃",
-            ],
+            "mi",
+            "T",
           ],
         ],
-      ],
-      [
-        "mrow",
+        [
+          "mrow",
+          [
+            "mo",
+            "̃",
+          ],
+        ],
       ],
     ],
     [
@@ -2902,7 +2896,7 @@ attach(a, tl: u, t: t, tr: v, bl: x, b: b, br: y)",
 exports[`corpus/attach > attach-04 1`] = `
 {
   "block": false,
-  "html": "<math><mtable columnalign="left" columnspacing="0"><mtr><mtd><msub><mrow><mi>π</mi></mrow><mrow><mn>1</mn></mrow></msub><mrow><mo>(</mo><mi>Y</mi><mo>)</mo></mrow><mo>,</mo><msub><mrow><mi>a</mi></mrow><mrow><mi>f</mi></mrow></msub><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>,</mo><msup><mrow><mi>a</mi></mrow><mrow><mi>ζ</mi></mrow></msup><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>,</mo><msubsup><mrow><mi>a</mi></mrow><mrow><mroot><mrow><mi>c</mi></mrow><mrow></mrow></mroot></mrow><mrow><mrow><mo>|</mo><mi>b</mi><mo>|</mo></mrow></mrow></msubsup></mtd></mtr><mtr><mtd><msup><mrow><mi>a</mi></mrow><mrow><mo>⊆</mo></mrow></msup><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>,</mo><msub><mrow><mi>a</mi></mrow><mrow><mi>ζ</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow></mrow></msub><mo>,</mo><msub><mrow><mi>π</mi></mrow><mrow><mn>1</mn><mrow><mo>(</mo><mi>Y</mi><mo>)</mo></mrow></mrow></msub><mo>,</mo><msubsup><mrow><mi>a</mi></mrow><mrow><mroot><mrow><mi>c</mi></mrow><mrow></mrow></mroot></mrow><mrow><mrow><mo>|</mo><mi>b</mi><mo>|</mo></mrow></mrow></msubsup></mtd></mtr></mtable></math>",
+  "html": "<math><mtable columnalign="left" columnspacing="0"><mtr><mtd><msub><mrow><mi>π</mi></mrow><mrow><mn>1</mn></mrow></msub><mrow><mo>(</mo><mi>Y</mi><mo>)</mo></mrow><mo>,</mo><msub><mrow><mi>a</mi></mrow><mrow><mi>f</mi></mrow></msub><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>,</mo><msup><mrow><mi>a</mi></mrow><mrow><mi>ζ</mi></mrow></msup><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>,</mo><msubsup><mrow><mi>a</mi></mrow><mrow><msqrt><mi>c</mi></msqrt></mrow><mrow><mrow><mo>|</mo><mi>b</mi><mo>|</mo></mrow></mrow></msubsup></mtd></mtr><mtr><mtd><msup><mrow><mi>a</mi></mrow><mrow><mo>⊆</mo></mrow></msup><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>,</mo><msub><mrow><mi>a</mi></mrow><mrow><mi>ζ</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow></mrow></msub><mo>,</mo><msub><mrow><mi>π</mi></mrow><mrow><mn>1</mn><mrow><mo>(</mo><mi>Y</mi><mo>)</mo></mrow></mrow></msub><mo>,</mo><msubsup><mrow><mi>a</mi></mrow><mrow><msqrt><mi>c</mi></msqrt></mrow><mrow><mrow><mo>|</mo><mi>b</mi><mo>|</mo></mrow></mrow></msubsup></mtd></mtr></mtable></math>",
   "text": "pi_1(Y), a_f(x), a^zeta (x), a^abs(b)_sqrt(c) \\
  a^subset.eq (x), a_(zeta(x)), pi_(1(Y)), a^(abs(b))_(sqrt(c))",
   "vdom": [
@@ -3037,16 +3031,10 @@ exports[`corpus/attach > attach-04 1`] = `
             [
               "mrow",
               [
-                "mroot",
+                "msqrt",
                 [
-                  "mrow",
-                  [
-                    "mi",
-                    "c",
-                  ],
-                ],
-                [
-                  "mrow",
+                  "mi",
+                  "c",
                 ],
               ],
             ],
@@ -3195,16 +3183,10 @@ exports[`corpus/attach > attach-04 1`] = `
             [
               "mrow",
               [
-                "mroot",
+                "msqrt",
                 [
-                  "mrow",
-                  [
-                    "mi",
-                    "c",
-                  ],
-                ],
-                [
-                  "mrow",
+                  "mi",
+                  "c",
                 ],
               ],
             ],
@@ -3759,7 +3741,7 @@ exports[`corpus/attach > attach-05 1`] = `
 exports[`corpus/attach > attach-06 1`] = `
 {
   "block": true,
-  "html": "<math display="block"><mtable columnalign="center" columnspacing="0"><mtr><mtd><mroot><mrow><msubsup><mrow><mi>a</mi></mrow><mrow><mfrac><mrow><mn>1</mn></mrow><mrow><mn>2</mn></mrow></mfrac></mrow><mrow><mi>ζ</mi></mrow></msubsup></mrow><mrow></mrow></mroot><mo>,</mo><mroot><mrow><msubsup><mrow><mi>a</mi></mrow><mrow><mi>α</mi></mrow><mrow><mfrac><mrow><mn>1</mn></mrow><mrow><mn>2</mn></mrow></mfrac></mrow></msubsup></mrow><mrow></mrow></mroot><mo>,</mo><mroot><mrow><msubsup><mrow><mi>a</mi></mrow><mrow><mfrac><mrow><mn>1</mn></mrow><mrow><mn>2</mn></mrow></mfrac></mrow><mrow><mfrac><mrow><mn>3</mn></mrow><mrow><mn>4</mn></mrow></mfrac></mrow></msubsup></mrow><mrow></mrow></mroot></mtd></mtr><mtr><mtd><mroot><mrow><mmultiscripts><mrow><mi>a</mi></mrow><mrow></mrow><mrow></mrow><mprescripts></mprescripts><mrow><mfrac><mrow><mn>3</mn></mrow><mrow><mn>4</mn></mrow></mfrac></mrow><mrow><mfrac><mrow><mn>1</mn></mrow><mrow><mn>2</mn></mrow></mfrac></mrow></mmultiscripts></mrow><mrow></mrow></mroot><mo>,</mo><mroot><mrow><mmultiscripts><mrow><mi>a</mi></mrow><mrow><mfrac><mrow><mn>3</mn></mrow><mrow><mn>4</mn></mrow></mfrac></mrow><mrow><mfrac><mrow><mn>1</mn></mrow><mrow><mn>2</mn></mrow></mfrac></mrow><mprescripts></mprescripts><mrow><mfrac><mrow><mn>3</mn></mrow><mrow><mn>4</mn></mrow></mfrac></mrow><mrow><mfrac><mrow><mn>1</mn></mrow><mrow><mn>2</mn></mrow></mfrac></mrow></mmultiscripts></mrow><mrow></mrow></mroot></mtd></mtr></mtable></math>",
+  "html": "<math display="block"><mtable columnalign="center" columnspacing="0"><mtr><mtd><msqrt><msubsup><mrow><mi>a</mi></mrow><mrow><mfrac><mrow><mn>1</mn></mrow><mrow><mn>2</mn></mrow></mfrac></mrow><mrow><mi>ζ</mi></mrow></msubsup></msqrt><mo>,</mo><msqrt><msubsup><mrow><mi>a</mi></mrow><mrow><mi>α</mi></mrow><mrow><mfrac><mrow><mn>1</mn></mrow><mrow><mn>2</mn></mrow></mfrac></mrow></msubsup></msqrt><mo>,</mo><msqrt><msubsup><mrow><mi>a</mi></mrow><mrow><mfrac><mrow><mn>1</mn></mrow><mrow><mn>2</mn></mrow></mfrac></mrow><mrow><mfrac><mrow><mn>3</mn></mrow><mrow><mn>4</mn></mrow></mfrac></mrow></msubsup></msqrt></mtd></mtr><mtr><mtd><msqrt><mmultiscripts><mrow><mi>a</mi></mrow><mrow></mrow><mrow></mrow><mprescripts></mprescripts><mrow><mfrac><mrow><mn>3</mn></mrow><mrow><mn>4</mn></mrow></mfrac></mrow><mrow><mfrac><mrow><mn>1</mn></mrow><mrow><mn>2</mn></mrow></mfrac></mrow></mmultiscripts></msqrt><mo>,</mo><msqrt><mmultiscripts><mrow><mi>a</mi></mrow><mrow><mfrac><mrow><mn>3</mn></mrow><mrow><mn>4</mn></mrow></mfrac></mrow><mrow><mfrac><mrow><mn>1</mn></mrow><mrow><mn>2</mn></mrow></mfrac></mrow><mprescripts></mprescripts><mrow><mfrac><mrow><mn>3</mn></mrow><mrow><mn>4</mn></mrow></mfrac></mrow><mrow><mfrac><mrow><mn>1</mn></mrow><mrow><mn>2</mn></mrow></mfrac></mrow></mmultiscripts></msqrt></mtd></mtr></mtable></math>",
   "text": "sqrt(a_(1/2)^zeta), sqrt(a_alpha^(1/2)), sqrt(a_(1/2)^(3/4)) \\
   sqrt(attach(a, tl: 1/2, bl: 3/4)),
   sqrt(attach(a, tl: 1/2, bl: 3/4, tr: 1/2, br: 3/4))",
@@ -3779,49 +3761,43 @@ exports[`corpus/attach > attach-06 1`] = `
         [
           "mtd",
           [
-            "mroot",
+            "msqrt",
             [
-              "mrow",
+              "msubsup",
               [
-                "msubsup",
+                "mrow",
                 [
-                  "mrow",
-                  [
-                    "mi",
-                    "a",
-                  ],
+                  "mi",
+                  "a",
                 ],
+              ],
+              [
+                "mrow",
                 [
-                  "mrow",
+                  "mfrac",
                   [
-                    "mfrac",
+                    "mrow",
                     [
-                      "mrow",
-                      [
-                        "mn",
-                        "1",
-                      ],
-                    ],
-                    [
-                      "mrow",
-                      [
-                        "mn",
-                        "2",
-                      ],
+                      "mn",
+                      "1",
                     ],
                   ],
-                ],
-                [
-                  "mrow",
                   [
-                    "mi",
-                    "ζ",
+                    "mrow",
+                    [
+                      "mn",
+                      "2",
+                    ],
                   ],
                 ],
               ],
-            ],
-            [
-              "mrow",
+              [
+                "mrow",
+                [
+                  "mi",
+                  "ζ",
+                ],
+              ],
             ],
           ],
           [
@@ -3829,49 +3805,43 @@ exports[`corpus/attach > attach-06 1`] = `
             ",",
           ],
           [
-            "mroot",
+            "msqrt",
             [
-              "mrow",
+              "msubsup",
               [
-                "msubsup",
+                "mrow",
                 [
-                  "mrow",
-                  [
-                    "mi",
-                    "a",
-                  ],
+                  "mi",
+                  "a",
                 ],
+              ],
+              [
+                "mrow",
                 [
-                  "mrow",
-                  [
-                    "mi",
-                    "α",
-                  ],
+                  "mi",
+                  "α",
                 ],
+              ],
+              [
+                "mrow",
                 [
-                  "mrow",
+                  "mfrac",
                   [
-                    "mfrac",
+                    "mrow",
                     [
-                      "mrow",
-                      [
-                        "mn",
-                        "1",
-                      ],
+                      "mn",
+                      "1",
                     ],
+                  ],
+                  [
+                    "mrow",
                     [
-                      "mrow",
-                      [
-                        "mn",
-                        "2",
-                      ],
+                      "mn",
+                      "2",
                     ],
                   ],
                 ],
               ],
-            ],
-            [
-              "mrow",
             ],
           ],
           [
@@ -3879,62 +3849,56 @@ exports[`corpus/attach > attach-06 1`] = `
             ",",
           ],
           [
-            "mroot",
+            "msqrt",
             [
-              "mrow",
+              "msubsup",
               [
-                "msubsup",
+                "mrow",
                 [
-                  "mrow",
-                  [
-                    "mi",
-                    "a",
-                  ],
+                  "mi",
+                  "a",
                 ],
+              ],
+              [
+                "mrow",
                 [
-                  "mrow",
+                  "mfrac",
                   [
-                    "mfrac",
+                    "mrow",
                     [
-                      "mrow",
-                      [
-                        "mn",
-                        "1",
-                      ],
-                    ],
-                    [
-                      "mrow",
-                      [
-                        "mn",
-                        "2",
-                      ],
+                      "mn",
+                      "1",
                     ],
                   ],
-                ],
-                [
-                  "mrow",
                   [
-                    "mfrac",
+                    "mrow",
                     [
-                      "mrow",
-                      [
-                        "mn",
-                        "3",
-                      ],
-                    ],
-                    [
-                      "mrow",
-                      [
-                        "mn",
-                        "4",
-                      ],
+                      "mn",
+                      "2",
                     ],
                   ],
                 ],
               ],
-            ],
-            [
-              "mrow",
+              [
+                "mrow",
+                [
+                  "mfrac",
+                  [
+                    "mrow",
+                    [
+                      "mn",
+                      "3",
+                    ],
+                  ],
+                  [
+                    "mrow",
+                    [
+                      "mn",
+                      "4",
+                    ],
+                  ],
+                ],
+              ],
             ],
           ],
         ],
@@ -3944,71 +3908,65 @@ exports[`corpus/attach > attach-06 1`] = `
         [
           "mtd",
           [
-            "mroot",
+            "msqrt",
             [
-              "mrow",
+              "mmultiscripts",
               [
-                "mmultiscripts",
+                "mrow",
                 [
-                  "mrow",
+                  "mi",
+                  "a",
+                ],
+              ],
+              [
+                "mrow",
+              ],
+              [
+                "mrow",
+              ],
+              [
+                "mprescripts",
+              ],
+              [
+                "mrow",
+                [
+                  "mfrac",
                   [
-                    "mi",
-                    "a",
-                  ],
-                ],
-                [
-                  "mrow",
-                ],
-                [
-                  "mrow",
-                ],
-                [
-                  "mprescripts",
-                ],
-                [
-                  "mrow",
-                  [
-                    "mfrac",
+                    "mrow",
                     [
-                      "mrow",
-                      [
-                        "mn",
-                        "3",
-                      ],
-                    ],
-                    [
-                      "mrow",
-                      [
-                        "mn",
-                        "4",
-                      ],
+                      "mn",
+                      "3",
                     ],
                   ],
-                ],
-                [
-                  "mrow",
                   [
-                    "mfrac",
+                    "mrow",
                     [
-                      "mrow",
-                      [
-                        "mn",
-                        "1",
-                      ],
-                    ],
-                    [
-                      "mrow",
-                      [
-                        "mn",
-                        "2",
-                      ],
+                      "mn",
+                      "4",
                     ],
                   ],
                 ],
               ],
-            ],
-            [
-              "mrow",
+              [
+                "mrow",
+                [
+                  "mfrac",
+                  [
+                    "mrow",
+                    [
+                      "mn",
+                      "1",
+                    ],
+                  ],
+                  [
+                    "mrow",
+                    [
+                      "mn",
+                      "2",
+                    ],
+                  ],
+                ],
+              ],
             ],
           ],
           [
@@ -4016,105 +3974,99 @@ exports[`corpus/attach > attach-06 1`] = `
             ",",
           ],
           [
-            "mroot",
+            "msqrt",
             [
-              "mrow",
+              "mmultiscripts",
               [
-                "mmultiscripts",
+                "mrow",
                 [
-                  "mrow",
-                  [
-                    "mi",
-                    "a",
-                  ],
+                  "mi",
+                  "a",
                 ],
+              ],
+              [
+                "mrow",
                 [
-                  "mrow",
+                  "mfrac",
                   [
-                    "mfrac",
+                    "mrow",
                     [
-                      "mrow",
-                      [
-                        "mn",
-                        "3",
-                      ],
-                    ],
-                    [
-                      "mrow",
-                      [
-                        "mn",
-                        "4",
-                      ],
+                      "mn",
+                      "3",
                     ],
                   ],
-                ],
-                [
-                  "mrow",
                   [
-                    "mfrac",
+                    "mrow",
                     [
-                      "mrow",
-                      [
-                        "mn",
-                        "1",
-                      ],
-                    ],
-                    [
-                      "mrow",
-                      [
-                        "mn",
-                        "2",
-                      ],
-                    ],
-                  ],
-                ],
-                [
-                  "mprescripts",
-                ],
-                [
-                  "mrow",
-                  [
-                    "mfrac",
-                    [
-                      "mrow",
-                      [
-                        "mn",
-                        "3",
-                      ],
-                    ],
-                    [
-                      "mrow",
-                      [
-                        "mn",
-                        "4",
-                      ],
-                    ],
-                  ],
-                ],
-                [
-                  "mrow",
-                  [
-                    "mfrac",
-                    [
-                      "mrow",
-                      [
-                        "mn",
-                        "1",
-                      ],
-                    ],
-                    [
-                      "mrow",
-                      [
-                        "mn",
-                        "2",
-                      ],
+                      "mn",
+                      "4",
                     ],
                   ],
                 ],
               ],
-            ],
-            [
-              "mrow",
+              [
+                "mrow",
+                [
+                  "mfrac",
+                  [
+                    "mrow",
+                    [
+                      "mn",
+                      "1",
+                    ],
+                  ],
+                  [
+                    "mrow",
+                    [
+                      "mn",
+                      "2",
+                    ],
+                  ],
+                ],
+              ],
+              [
+                "mprescripts",
+              ],
+              [
+                "mrow",
+                [
+                  "mfrac",
+                  [
+                    "mrow",
+                    [
+                      "mn",
+                      "3",
+                    ],
+                  ],
+                  [
+                    "mrow",
+                    [
+                      "mn",
+                      "4",
+                    ],
+                  ],
+                ],
+              ],
+              [
+                "mrow",
+                [
+                  "mfrac",
+                  [
+                    "mrow",
+                    [
+                      "mn",
+                      "1",
+                    ],
+                  ],
+                  [
+                    "mrow",
+                    [
+                      "mn",
+                      "2",
+                    ],
+                  ],
+                ],
+              ],
             ],
           ],
         ],
@@ -9286,7 +9238,7 @@ exports[`corpus/class > class-04 1`] = `
 exports[`corpus/class > class-05 1`] = `
 {
   "block": true,
-  "html": "<math display="block"><mroot><mrow><mn>3</mn></mrow><mrow></mrow></mroot><mo>/</mo><mn>2</mn><mspace width="1em"></mspace><msub><mrow><mi>d</mi></mrow><mrow><mn>0</mn></mrow></msub><mn>.</mn><msub><mrow><mi>d</mi></mrow><mrow><mn>1</mn></mrow></msub><msub><mrow><mi>d</mi></mrow><mrow><mn>2</mn></mrow></msub><mo>⋯</mo></math>",
+  "html": "<math display="block"><msqrt><mn>3</mn></msqrt><mo>/</mo><mn>2</mn><mspace width="1em"></mspace><msub><mrow><mi>d</mi></mrow><mrow><mn>0</mn></mrow></msub><mn>.</mn><msub><mrow><mi>d</mi></mrow><mrow><mn>1</mn></mrow></msub><msub><mrow><mi>d</mi></mrow><mrow><mn>2</mn></mrow></msub><mo>⋯</mo></math>",
   "text": "sqrt(3)\\/2 quad d_0.d_1d_2 dots",
   "vdom": [
     "math",
@@ -9294,16 +9246,10 @@ exports[`corpus/class > class-05 1`] = `
       "display": "block",
     },
     [
-      "mroot",
+      "msqrt",
       [
-        "mrow",
-        [
-          "mn",
-          "3",
-        ],
-      ],
-      [
-        "mrow",
+        "mn",
+        "3",
       ],
     ],
     [
@@ -11198,7 +11144,7 @@ exports[`corpus/equation > equation-01 1`] = `
 exports[`corpus/equation > equation-02 1`] = `
 {
   "block": true,
-  "html": "<math display="block"><mo>ϕ</mo><mo>≔</mo><mfrac><mrow><mn>1</mn><mo>+</mo><mroot><mrow><mn>5</mn></mrow><mrow></mrow></mroot></mrow><mrow><mn>2</mn></mrow></mfrac></math>",
+  "html": "<math display="block"><mo>ϕ</mo><mo>≔</mo><mfrac><mrow><mn>1</mn><mo>+</mo><msqrt><mn>5</mn></msqrt></mrow><mrow><mn>2</mn></mrow></mfrac></math>",
   "text": "phi.alt := (1 + sqrt(5)) / 2",
   "vdom": [
     "math",
@@ -11226,16 +11172,10 @@ exports[`corpus/equation > equation-02 1`] = `
           "+",
         ],
         [
-          "mroot",
+          "msqrt",
           [
-            "mrow",
-            [
-              "mn",
-              "5",
-            ],
-          ],
-          [
-            "mrow",
+            "mn",
+            "5",
           ],
         ],
       ],
@@ -11254,7 +11194,7 @@ exports[`corpus/equation > equation-02 1`] = `
 exports[`corpus/equation > equation-03 1`] = `
 {
   "block": true,
-  "html": "<math display="block"><msub><mrow><mi>F</mi></mrow><mrow><mi>n</mi></mrow></msub><mo>=</mo><mrow><mo>⌊</mo><mfrac><mrow><mn>1</mn></mrow><mrow><mroot><mrow><mn>5</mn></mrow><mrow></mrow></mroot></mrow></mfrac><msup><mrow><mo>ϕ</mo></mrow><mrow><mi>n</mi></mrow></msup><mo>⌉</mo></mrow></math>",
+  "html": "<math display="block"><msub><mrow><mi>F</mi></mrow><mrow><mi>n</mi></mrow></msub><mo>=</mo><mrow><mo>⌊</mo><mfrac><mrow><mn>1</mn></mrow><mrow><msqrt><mn>5</mn></msqrt></mrow></mfrac><msup><mrow><mo>ϕ</mo></mrow><mrow><mi>n</mi></mrow></msup><mo>⌉</mo></mrow></math>",
   "text": "F_n = round(1 / sqrt(5) phi.alt^n)",
   "vdom": [
     "math",
@@ -11300,16 +11240,10 @@ exports[`corpus/equation > equation-03 1`] = `
         [
           "mrow",
           [
-            "mroot",
+            "msqrt",
             [
-              "mrow",
-              [
-                "mn",
-                "5",
-              ],
-            ],
-            [
-              "mrow",
+              "mn",
+              "5",
             ],
           ],
         ],
@@ -11343,7 +11277,7 @@ exports[`corpus/equation > equation-03 1`] = `
 exports[`corpus/equation > equation-04 1`] = `
 {
   "block": true,
-  "html": "<math display="block"><mi>v</mi><mo>≔</mo><mrow><mo>(</mo><mtable columnalign="center" columnspacing="0.5em" rowspacing="0.5em"><mtr><mtd><mn>1</mn><mo>+</mo><mn>2</mn></mtd></mtr><mtr><mtd><mn>2</mn><mo>−</mo><mn>4</mn></mtd></mtr><mtr><mtd><mroot><mrow><mn>3</mn></mrow><mrow></mrow></mroot></mtd></mtr><mtr><mtd><mover accent="true"><mrow><mi>x</mi></mrow><mrow><mo>⃗</mo></mrow></mover></mtd></mtr></mtable><mo>)</mo></mrow><mo>+</mo><mn>1</mn></math>",
+  "html": "<math display="block"><mi>v</mi><mo>≔</mo><mrow><mo>(</mo><mtable columnalign="center" columnspacing="0.5em" rowspacing="0.5em"><mtr><mtd><mn>1</mn><mo>+</mo><mn>2</mn></mtd></mtr><mtr><mtd><mn>2</mn><mo>−</mo><mn>4</mn></mtd></mtr><mtr><mtd><msqrt><mn>3</mn></msqrt></mtd></mtr><mtr><mtd><mover accent="true"><mrow><mi>x</mi></mrow><mrow><mo>⃗</mo></mrow></mover></mtd></mtr></mtable><mo>)</mo></mrow><mo>+</mo><mn>1</mn></math>",
   "text": "v := vec(1 + 2, 2 - 4, sqrt(3), arrow(x)) + 1",
   "vdom": [
     "math",
@@ -11412,16 +11346,10 @@ exports[`corpus/equation > equation-04 1`] = `
           [
             "mtd",
             [
-              "mroot",
+              "msqrt",
               [
-                "mrow",
-                [
-                  "mn",
-                  "3",
-                ],
-              ],
-              [
-                "mrow",
+                "mn",
+                "3",
               ],
             ],
           ],
@@ -12851,7 +12779,7 @@ exports[`corpus/equation > equation-40 1`] = `
 exports[`corpus/equation > equation-41 1`] = `
 {
   "block": true,
-  "html": "<math display="block"><mtable columnalign="right left" columnspacing="0"><mtr><mtd><mi>q</mi></mtd><mtd><mo>=</mo><mrow><ms><ms>ln</ms></ms></mrow><mroot><mrow><mi>a</mi><mi>b</mi></mrow><mrow></mrow></mroot></mtd></mtr><mtr><mtd></mtd><mtd><mo>=</mo><mfrac><mrow><mn>1</mn></mrow><mrow><mn>2</mn></mrow></mfrac><mrow><mo>(</mo><mrow><ms><ms>ln</ms></ms></mrow><mi>a</mi><mo>+</mo><mrow><ms><ms>ln</ms></ms></mrow><mi>b</mi><mo>)</mo></mrow></mtd></mtr></mtable></math>",
+  "html": "<math display="block"><mtable columnalign="right left" columnspacing="0"><mtr><mtd><mi>q</mi></mtd><mtd><mo>=</mo><mrow><ms><ms>ln</ms></ms></mrow><msqrt><mi>a</mi><mi>b</mi></msqrt></mtd></mtr><mtr><mtd></mtd><mtd><mo>=</mo><mfrac><mrow><mn>1</mn></mrow><mrow><mn>2</mn></mrow></mfrac><mrow><mo>(</mo><mrow><ms><ms>ln</ms></ms></mrow><mi>a</mi><mo>+</mo><mrow><ms><ms>ln</ms></ms></mrow><mi>b</mi><mo>)</mo></mrow></mtd></mtr></mtable></math>",
   "text": "q &= ln sqrt(a b) \\
     &= 1/2 (ln a + ln b)",
   "vdom": [
@@ -12891,20 +12819,14 @@ exports[`corpus/equation > equation-41 1`] = `
             ],
           ],
           [
-            "mroot",
+            "msqrt",
             [
-              "mrow",
-              [
-                "mi",
-                "a",
-              ],
-              [
-                "mi",
-                "b",
-              ],
+              "mi",
+              "a",
             ],
             [
-              "mrow",
+              "mi",
+              "b",
             ],
           ],
         ],
@@ -13538,7 +13460,7 @@ exports[`corpus/frac > frac-02 1`] = `
 exports[`corpus/frac > frac-03 1`] = `
 {
   "block": true,
-  "html": "<math display="block"><mi>x</mi><mo>=</mo><mfrac><mrow><mo>−</mo><mi>b</mi><mo>±</mo><mroot><mrow><msup><mrow><mi>b</mi></mrow><mrow><mn>2</mn></mrow></msup><mo>−</mo><mn>4</mn><mi>a</mi><mi>c</mi></mrow><mrow></mrow></mroot></mrow><mrow><mn>2</mn><mi>a</mi></mrow></mfrac></math>",
+  "html": "<math display="block"><mi>x</mi><mo>=</mo><mfrac><mrow><mo>−</mo><mi>b</mi><mo>±</mo><msqrt><msup><mrow><mi>b</mi></mrow><mrow><mn>2</mn></mrow></msup><mo>−</mo><mn>4</mn><mi>a</mi><mi>c</mi></msqrt></mrow><mrow><mn>2</mn><mi>a</mi></mrow></mfrac></math>",
   "text": "x = (-b plus.minus sqrt(b^2 - 4a c))/(2a)",
   "vdom": [
     "math",
@@ -13570,45 +13492,39 @@ exports[`corpus/frac > frac-03 1`] = `
           "±",
         ],
         [
-          "mroot",
+          "msqrt",
           [
-            "mrow",
+            "msup",
             [
-              "msup",
+              "mrow",
               [
-                "mrow",
-                [
-                  "mi",
-                  "b",
-                ],
-              ],
-              [
-                "mrow",
-                [
-                  "mn",
-                  "2",
-                ],
+                "mi",
+                "b",
               ],
             ],
             [
-              "mo",
-              "−",
-            ],
-            [
-              "mn",
-              "4",
-            ],
-            [
-              "mi",
-              "a",
-            ],
-            [
-              "mi",
-              "c",
+              "mrow",
+              [
+                "mn",
+                "2",
+              ],
             ],
           ],
           [
-            "mrow",
+            "mo",
+            "−",
+          ],
+          [
+            "mn",
+            "4",
+          ],
+          [
+            "mi",
+            "a",
+          ],
+          [
+            "mi",
+            "c",
           ],
         ],
       ],
@@ -23921,7 +23837,7 @@ exports[`corpus/primes > primes-34 1`] = `
 exports[`corpus/root > root-01 1`] = `
 {
   "block": false,
-  "html": "<math><mi>A</mi><mo>=</mo><mroot><mrow><mi>x</mi><mo>+</mo><mi>y</mi></mrow><mrow></mrow></mroot><mo>=</mo><mi>c</mi></math>",
+  "html": "<math><mi>A</mi><mo>=</mo><msqrt><mi>x</mi><mo>+</mo><mi>y</mi></msqrt><mo>=</mo><mi>c</mi></math>",
   "text": "A = sqrt(x + y) = c",
   "vdom": [
     "math",
@@ -23934,24 +23850,18 @@ exports[`corpus/root > root-01 1`] = `
       "=",
     ],
     [
-      "mroot",
+      "msqrt",
       [
-        "mrow",
-        [
-          "mi",
-          "x",
-        ],
-        [
-          "mo",
-          "+",
-        ],
-        [
-          "mi",
-          "y",
-        ],
+        "mi",
+        "x",
       ],
       [
-        "mrow",
+        "mo",
+        "+",
+      ],
+      [
+        "mi",
+        "y",
       ],
     ],
     [
@@ -23969,7 +23879,7 @@ exports[`corpus/root > root-01 1`] = `
 exports[`corpus/root > root-02 1`] = `
 {
   "block": true,
-  "html": "<math display="block"><mtable columnalign="center" columnspacing="0"><mtr><mtd><mroot><mrow><mi>a</mi></mrow><mrow></mrow></mroot><mspace width="1em"></mspace><mroot><mrow><mi>f</mi></mrow><mrow></mrow></mroot><mspace width="1em"></mspace><mroot><mrow><mi>q</mi></mrow><mrow></mrow></mroot><mspace width="1em"></mspace><mroot><mrow><msup><mrow><mi>a</mi></mrow><mrow><mn>2</mn></mrow></msup></mrow><mrow></mrow></mroot></mtd></mtr><mtr><mtd><mroot><mrow><msub><mrow><mi>n</mi></mrow><mrow><mn>0</mn></mrow></msub></mrow><mrow></mrow></mroot><mspace width="1em"></mspace><mroot><mrow><msup><mrow><mi>b</mi></mrow><mrow></mrow></msup></mrow><mrow></mrow></mroot><mspace width="1em"></mspace><mroot><mrow><msup><mrow><mi>b</mi></mrow><mrow><mn>2</mn></mrow></msup></mrow><mrow></mrow></mroot><mspace width="1em"></mspace><mroot><mrow><msubsup><mrow><mi>q</mi></mrow><mrow><mn>1</mn></mrow><mrow><mn>2</mn></mrow></msubsup></mrow><mrow></mrow></mroot></mtd></mtr></mtable></math>",
+  "html": "<math display="block"><mtable columnalign="center" columnspacing="0"><mtr><mtd><msqrt><mi>a</mi></msqrt><mspace width="1em"></mspace><msqrt><mi>f</mi></msqrt><mspace width="1em"></mspace><msqrt><mi>q</mi></msqrt><mspace width="1em"></mspace><msqrt><msup><mrow><mi>a</mi></mrow><mrow><mn>2</mn></mrow></msup></msqrt></mtd></mtr><mtr><mtd><msqrt><msub><mrow><mi>n</mi></mrow><mrow><mn>0</mn></mrow></msub></msqrt><mspace width="1em"></mspace><msqrt><msup><mrow><mi>b</mi></mrow><mrow></mrow></msup></msqrt><mspace width="1em"></mspace><msqrt><msup><mrow><mi>b</mi></mrow><mrow><mn>2</mn></mrow></msup></msqrt><mspace width="1em"></mspace><msqrt><msubsup><mrow><mi>q</mi></mrow><mrow><mn>1</mn></mrow><mrow><mn>2</mn></mrow></msubsup></msqrt></mtd></mtr></mtable></math>",
   "text": "sqrt(a) quad
   sqrt(f) quad
   sqrt(q) quad
@@ -23994,16 +23904,10 @@ exports[`corpus/root > root-02 1`] = `
         [
           "mtd",
           [
-            "mroot",
+            "msqrt",
             [
-              "mrow",
-              [
-                "mi",
-                "a",
-              ],
-            ],
-            [
-              "mrow",
+              "mi",
+              "a",
             ],
           ],
           [
@@ -24013,16 +23917,10 @@ exports[`corpus/root > root-02 1`] = `
             },
           ],
           [
-            "mroot",
+            "msqrt",
             [
-              "mrow",
-              [
-                "mi",
-                "f",
-              ],
-            ],
-            [
-              "mrow",
+              "mi",
+              "f",
             ],
           ],
           [
@@ -24032,16 +23930,10 @@ exports[`corpus/root > root-02 1`] = `
             },
           ],
           [
-            "mroot",
+            "msqrt",
             [
-              "mrow",
-              [
-                "mi",
-                "q",
-              ],
-            ],
-            [
-              "mrow",
+              "mi",
+              "q",
             ],
           ],
           [
@@ -24051,29 +23943,23 @@ exports[`corpus/root > root-02 1`] = `
             },
           ],
           [
-            "mroot",
+            "msqrt",
             [
-              "mrow",
+              "msup",
               [
-                "msup",
+                "mrow",
                 [
-                  "mrow",
-                  [
-                    "mi",
-                    "a",
-                  ],
-                ],
-                [
-                  "mrow",
-                  [
-                    "mn",
-                    "2",
-                  ],
+                  "mi",
+                  "a",
                 ],
               ],
-            ],
-            [
-              "mrow",
+              [
+                "mrow",
+                [
+                  "mn",
+                  "2",
+                ],
+              ],
             ],
           ],
         ],
@@ -24083,29 +23969,23 @@ exports[`corpus/root > root-02 1`] = `
         [
           "mtd",
           [
-            "mroot",
+            "msqrt",
             [
-              "mrow",
+              "msub",
               [
-                "msub",
+                "mrow",
                 [
-                  "mrow",
-                  [
-                    "mi",
-                    "n",
-                  ],
-                ],
-                [
-                  "mrow",
-                  [
-                    "mn",
-                    "0",
-                  ],
+                  "mi",
+                  "n",
                 ],
               ],
-            ],
-            [
-              "mrow",
+              [
+                "mrow",
+                [
+                  "mn",
+                  "0",
+                ],
+              ],
             ],
           ],
           [
@@ -24115,25 +23995,19 @@ exports[`corpus/root > root-02 1`] = `
             },
           ],
           [
-            "mroot",
+            "msqrt",
             [
-              "mrow",
+              "msup",
               [
-                "msup",
+                "mrow",
                 [
-                  "mrow",
-                  [
-                    "mi",
-                    "b",
-                  ],
-                ],
-                [
-                  "mrow",
+                  "mi",
+                  "b",
                 ],
               ],
-            ],
-            [
-              "mrow",
+              [
+                "mrow",
+              ],
             ],
           ],
           [
@@ -24143,29 +24017,23 @@ exports[`corpus/root > root-02 1`] = `
             },
           ],
           [
-            "mroot",
+            "msqrt",
             [
-              "mrow",
+              "msup",
               [
-                "msup",
+                "mrow",
                 [
-                  "mrow",
-                  [
-                    "mi",
-                    "b",
-                  ],
-                ],
-                [
-                  "mrow",
-                  [
-                    "mn",
-                    "2",
-                  ],
+                  "mi",
+                  "b",
                 ],
               ],
-            ],
-            [
-              "mrow",
+              [
+                "mrow",
+                [
+                  "mn",
+                  "2",
+                ],
+              ],
             ],
           ],
           [
@@ -24175,36 +24043,30 @@ exports[`corpus/root > root-02 1`] = `
             },
           ],
           [
-            "mroot",
+            "msqrt",
             [
-              "mrow",
+              "msubsup",
               [
-                "msubsup",
+                "mrow",
                 [
-                  "mrow",
-                  [
-                    "mi",
-                    "q",
-                  ],
-                ],
-                [
-                  "mrow",
-                  [
-                    "mn",
-                    "1",
-                  ],
-                ],
-                [
-                  "mrow",
-                  [
-                    "mn",
-                    "2",
-                  ],
+                  "mi",
+                  "q",
                 ],
               ],
-            ],
-            [
-              "mrow",
+              [
+                "mrow",
+                [
+                  "mn",
+                  "1",
+                ],
+              ],
+              [
+                "mrow",
+                [
+                  "mn",
+                  "2",
+                ],
+              ],
             ],
           ],
         ],
@@ -24217,21 +24079,15 @@ exports[`corpus/root > root-02 1`] = `
 exports[`corpus/root > root-03 1`] = `
 {
   "block": false,
-  "html": "<math><mroot><mrow><mi>x</mi></mrow><mrow></mrow></mroot></math>",
+  "html": "<math><msqrt><mi>x</mi></msqrt></math>",
   "text": "sqrt(x)",
   "vdom": [
     "math",
     [
-      "mroot",
+      "msqrt",
       [
-        "mrow",
-        [
-          "mi",
-          "x",
-        ],
-      ],
-      [
-        "mrow",
+        "mi",
+        "x",
       ],
     ],
   ],
@@ -24353,7 +24209,7 @@ exports[`corpus/root > root-07 1`] = `
 exports[`corpus/root > root-08 1`] = `
 {
   "block": true,
-  "html": "<math display="block"><mroot><mrow><msup><mrow><mrow><mo>⟦</mo><mi>x</mi><mo>⟧</mo></mrow></mrow><mrow><mn>2</mn></mrow></msup><mo>+</mo><msup><mrow><mrow><mo>⟦</mo><mi>y</mi><mo>⟧</mo></mrow></mrow><mrow><mn>2</mn></mrow></msup></mrow><mrow></mrow></mroot><mo>&lt;</mo><mrow><mo>⟦</mo><mi>z</mi><mo>⟧</mo></mrow></math>",
+  "html": "<math display="block"><msqrt><msup><mrow><mrow><mo>⟦</mo><mi>x</mi><mo>⟧</mo></mrow></mrow><mrow><mn>2</mn></mrow></msup><mo>+</mo><msup><mrow><mrow><mo>⟦</mo><mi>y</mi><mo>⟧</mo></mrow></mrow><mrow><mn>2</mn></mrow></msup></msqrt><mo>&lt;</mo><mrow><mo>⟦</mo><mi>z</mi><mo>⟧</mo></mrow></math>",
   "text": "sqrt([|x|]^2 + [|y|]^2) < [|z|]",
   "vdom": [
     "math",
@@ -24361,72 +24217,66 @@ exports[`corpus/root > root-08 1`] = `
       "display": "block",
     },
     [
-      "mroot",
+      "msqrt",
       [
-        "mrow",
+        "msup",
         [
-          "msup",
+          "mrow",
           [
             "mrow",
             [
-              "mrow",
-              [
-                "mo",
-                "⟦",
-              ],
-              [
-                "mi",
-                "x",
-              ],
-              [
-                "mo",
-                "⟧",
-              ],
+              "mo",
+              "⟦",
             ],
-          ],
-          [
-            "mrow",
             [
-              "mn",
-              "2",
+              "mi",
+              "x",
+            ],
+            [
+              "mo",
+              "⟧",
             ],
           ],
         ],
         [
-          "mo",
-          "+",
-        ],
-        [
-          "msup",
+          "mrow",
           [
-            "mrow",
-            [
-              "mrow",
-              [
-                "mo",
-                "⟦",
-              ],
-              [
-                "mi",
-                "y",
-              ],
-              [
-                "mo",
-                "⟧",
-              ],
-            ],
-          ],
-          [
-            "mrow",
-            [
-              "mn",
-              "2",
-            ],
+            "mn",
+            "2",
           ],
         ],
       ],
       [
-        "mrow",
+        "mo",
+        "+",
+      ],
+      [
+        "msup",
+        [
+          "mrow",
+          [
+            "mrow",
+            [
+              "mo",
+              "⟦",
+            ],
+            [
+              "mi",
+              "y",
+            ],
+            [
+              "mo",
+              "⟧",
+            ],
+          ],
+        ],
+        [
+          "mrow",
+          [
+            "mn",
+            "2",
+          ],
+        ],
       ],
     ],
     [
@@ -24455,7 +24305,7 @@ exports[`corpus/root > root-08 1`] = `
 exports[`corpus/root > root-09 1`] = `
 {
   "block": true,
-  "html": "<math display="block"><mi>v</mi><mo>=</mo><mroot><mrow><mfrac><mrow><mfrac><mrow><mn>1</mn></mrow><mrow><mn>2</mn></mrow></mfrac></mrow><mrow><mfrac><mrow><mn>4</mn></mrow><mrow><mn>5</mn></mrow></mfrac></mrow></mfrac></mrow><mrow></mrow></mroot><mo>=</mo><mroot><mrow><mfrac><mrow><mfrac><mrow><mfrac><mrow><mn>1</mn></mrow><mrow><mn>2</mn></mrow></mfrac></mrow><mrow><mn>3</mn></mrow></mfrac></mrow><mrow><mfrac><mrow><mfrac><mrow><mn>4</mn></mrow><mrow><mn>5</mn></mrow></mfrac></mrow><mrow><mn>6</mn></mrow></mfrac></mrow></mfrac></mrow><mrow><mn>3</mn></mrow></mroot><mo>=</mo><mroot><mrow><mfrac><mrow><mfrac><mrow><mfrac><mrow><mn>1</mn></mrow><mrow><mn>2</mn></mrow></mfrac></mrow><mrow><mfrac><mrow><mn>3</mn></mrow><mrow><mn>4</mn></mrow></mfrac></mrow></mfrac></mrow><mrow><mfrac><mrow><mfrac><mrow><mn>1</mn></mrow><mrow><mn>2</mn></mrow></mfrac></mrow><mrow><mfrac><mrow><mn>3</mn></mrow><mrow><mn>4</mn></mrow></mfrac></mrow></mfrac></mrow></mfrac></mrow><mrow><mn>4</mn></mrow></mroot></math>",
+  "html": "<math display="block"><mi>v</mi><mo>=</mo><msqrt><mfrac><mrow><mfrac><mrow><mn>1</mn></mrow><mrow><mn>2</mn></mrow></mfrac></mrow><mrow><mfrac><mrow><mn>4</mn></mrow><mrow><mn>5</mn></mrow></mfrac></mrow></mfrac></msqrt><mo>=</mo><mroot><mrow><mfrac><mrow><mfrac><mrow><mfrac><mrow><mn>1</mn></mrow><mrow><mn>2</mn></mrow></mfrac></mrow><mrow><mn>3</mn></mrow></mfrac></mrow><mrow><mfrac><mrow><mfrac><mrow><mn>4</mn></mrow><mrow><mn>5</mn></mrow></mfrac></mrow><mrow><mn>6</mn></mrow></mfrac></mrow></mfrac></mrow><mrow><mn>3</mn></mrow></mroot><mo>=</mo><mroot><mrow><mfrac><mrow><mfrac><mrow><mfrac><mrow><mn>1</mn></mrow><mrow><mn>2</mn></mrow></mfrac></mrow><mrow><mfrac><mrow><mn>3</mn></mrow><mrow><mn>4</mn></mrow></mfrac></mrow></mfrac></mrow><mrow><mfrac><mrow><mfrac><mrow><mn>1</mn></mrow><mrow><mn>2</mn></mrow></mfrac></mrow><mrow><mfrac><mrow><mn>3</mn></mrow><mrow><mn>4</mn></mrow></mfrac></mrow></mfrac></mrow></mfrac></mrow><mrow><mn>4</mn></mrow></mroot></math>",
   "text": "v = sqrt((1/2) / (4/5))
    = root(3, (1/2/3) / (4/5/6))
    = root(4, ((1/2) / (3/4)) / ((1/2) / (3/4)))",
@@ -24473,55 +24323,49 @@ exports[`corpus/root > root-09 1`] = `
       "=",
     ],
     [
-      "mroot",
+      "msqrt",
       [
-        "mrow",
+        "mfrac",
         [
-          "mfrac",
+          "mrow",
           [
-            "mrow",
+            "mfrac",
             [
-              "mfrac",
+              "mrow",
               [
-                "mrow",
-                [
-                  "mn",
-                  "1",
-                ],
-              ],
-              [
-                "mrow",
-                [
-                  "mn",
-                  "2",
-                ],
+                "mn",
+                "1",
               ],
             ],
-          ],
-          [
-            "mrow",
             [
-              "mfrac",
+              "mrow",
               [
-                "mrow",
-                [
-                  "mn",
-                  "4",
-                ],
-              ],
-              [
-                "mrow",
-                [
-                  "mn",
-                  "5",
-                ],
+                "mn",
+                "2",
               ],
             ],
           ],
         ],
-      ],
-      [
-        "mrow",
+        [
+          "mrow",
+          [
+            "mfrac",
+            [
+              "mrow",
+              [
+                "mn",
+                "4",
+              ],
+            ],
+            [
+              "mrow",
+              [
+                "mn",
+                "5",
+              ],
+            ],
+          ],
+        ],
       ],
     ],
     [
@@ -24897,7 +24741,7 @@ exports[`corpus/root > root-10 1`] = `
 exports[`corpus/root > root-11 1`] = `
 {
   "block": true,
-  "html": "<math display="block"><mroot><mrow><msup><mrow><mn>2</mn></mrow><mrow><mn>3</mn></mrow></msup></mrow><mrow></mrow></mroot><mo>=</mo><mroot><mrow><msup><mrow><mn>2</mn></mrow><mrow><mn>3</mn></mrow></msup></mrow><mrow></mrow></mroot></math>",
+  "html": "<math display="block"><msqrt><msup><mrow><mn>2</mn></mrow><mrow><mn>3</mn></mrow></msup></msqrt><mo>=</mo><msqrt><msup><mrow><mn>2</mn></mrow><mrow><mn>3</mn></mrow></msup></msqrt></math>",
   "text": "√2^3 = sqrt(2^3)",
   "vdom": [
     "math",
@@ -24905,29 +24749,23 @@ exports[`corpus/root > root-11 1`] = `
       "display": "block",
     },
     [
-      "mroot",
+      "msqrt",
       [
-        "mrow",
+        "msup",
         [
-          "msup",
+          "mrow",
           [
-            "mrow",
-            [
-              "mn",
-              "2",
-            ],
-          ],
-          [
-            "mrow",
-            [
-              "mn",
-              "3",
-            ],
+            "mn",
+            "2",
           ],
         ],
-      ],
-      [
-        "mrow",
+        [
+          "mrow",
+          [
+            "mn",
+            "3",
+          ],
+        ],
       ],
     ],
     [
@@ -24935,29 +24773,23 @@ exports[`corpus/root > root-11 1`] = `
       "=",
     ],
     [
-      "mroot",
+      "msqrt",
       [
-        "mrow",
+        "msup",
         [
-          "msup",
+          "mrow",
           [
-            "mrow",
-            [
-              "mn",
-              "2",
-            ],
-          ],
-          [
-            "mrow",
-            [
-              "mn",
-              "3",
-            ],
+            "mn",
+            "2",
           ],
         ],
-      ],
-      [
-        "mrow",
+        [
+          "mrow",
+          [
+            "mn",
+            "3",
+          ],
+        ],
       ],
     ],
   ],
@@ -24967,7 +24799,7 @@ exports[`corpus/root > root-11 1`] = `
 exports[`corpus/root > root-12 1`] = `
 {
   "block": true,
-  "html": "<math display="block"><mroot><mrow><mi>x</mi><mo>+</mo><mi>y</mi></mrow><mrow></mrow></mroot><mspace width="1em"></mspace><mroot><mrow><mi>x</mi></mrow><mrow><mn>3</mn></mrow></mroot><mspace width="1em"></mspace><mroot><mrow><mi>x</mi></mrow><mrow><mn>4</mn></mrow></mroot></math>",
+  "html": "<math display="block"><msqrt><mi>x</mi><mo>+</mo><mi>y</mi></msqrt><mspace width="1em"></mspace><mroot><mrow><mi>x</mi></mrow><mrow><mn>3</mn></mrow></mroot><mspace width="1em"></mspace><mroot><mrow><mi>x</mi></mrow><mrow><mn>4</mn></mrow></mroot></math>",
   "text": "√(x+y) quad ∛x quad ∜x",
   "vdom": [
     "math",
@@ -24975,24 +24807,18 @@ exports[`corpus/root > root-12 1`] = `
       "display": "block",
     },
     [
-      "mroot",
+      "msqrt",
       [
-        "mrow",
-        [
-          "mi",
-          "x",
-        ],
-        [
-          "mo",
-          "+",
-        ],
-        [
-          "mi",
-          "y",
-        ],
+        "mi",
+        "x",
       ],
       [
-        "mrow",
+        "mo",
+        "+",
+      ],
+      [
+        "mi",
+        "y",
       ],
     ],
     [
@@ -25048,7 +24874,7 @@ exports[`corpus/root > root-12 1`] = `
 exports[`corpus/root > root-13 1`] = `
 {
   "block": true,
-  "html": "<math display="block"><mrow><mo>(</mo><mroot><mrow><mn>2</mn></mrow><mrow></mrow></mroot><mo>+</mo><mn>3</mn><mo>)</mo></mrow><mo>=</mo><mrow><mo>(</mo><mroot><mrow><mn>2</mn></mrow><mrow></mrow></mroot><mo>+</mo><mn>3</mn><mo>)</mo></mrow></math>",
+  "html": "<math display="block"><mrow><mo>(</mo><msqrt><mn>2</mn></msqrt><mo>+</mo><mn>3</mn><mo>)</mo></mrow><mo>=</mo><mrow><mo>(</mo><msqrt><mn>2</mn></msqrt><mo>+</mo><mn>3</mn><mo>)</mo></mrow></math>",
   "text": "(√2+3) = (sqrt(2)+3)",
   "vdom": [
     "math",
@@ -25062,16 +24888,10 @@ exports[`corpus/root > root-13 1`] = `
         "(",
       ],
       [
-        "mroot",
+        "msqrt",
         [
-          "mrow",
-          [
-            "mn",
-            "2",
-          ],
-        ],
-        [
-          "mrow",
+          "mn",
+          "2",
         ],
       ],
       [
@@ -25098,16 +24918,10 @@ exports[`corpus/root > root-13 1`] = `
         "(",
       ],
       [
-        "mroot",
+        "msqrt",
         [
-          "mrow",
-          [
-            "mn",
-            "2",
-          ],
-        ],
-        [
-          "mrow",
+          "mn",
+          "2",
         ],
       ],
       [
@@ -28685,7 +28499,7 @@ exports[`corpus/text > text-01 1`] = `
 exports[`corpus/text > text-02 1`] = `
 {
   "block": false,
-  "html": "<math><mo>+</mo><mroot><mrow><ms>place</ms></mrow><mrow></mrow></mroot></math>",
+  "html": "<math><mo>+</mo><msqrt><ms>place</ms></msqrt></math>",
   "text": "text(#red, "time"^2) + sqrt("place")",
   "vdom": [
     "math",
@@ -28694,16 +28508,10 @@ exports[`corpus/text > text-02 1`] = `
       "+",
     ],
     [
-      "mroot",
+      "msqrt",
       [
-        "mrow",
-        [
-          "ms",
-          "place",
-        ],
-      ],
-      [
-        "mrow",
+        "ms",
+        "place",
       ],
     ],
   ],

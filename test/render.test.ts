@@ -26,9 +26,9 @@ describe("render() - basic structures", () => {
 		expect(html).toContain("<mfrac>");
 	});
 
-	it("sqrt creates msqrt or mroot", () => {
-		const html = toMMLHTML("sqrt(x)");
-		expect(html).toMatch(/<(msqrt|mroot)>/);
+	it("sqrt creates msqrt (root/nth-root stay mroot)", () => {
+		expect(toMMLHTML("sqrt(x)")).toContain("<msqrt>");
+		expect(toMMLHTML("root(3, x)")).toContain("<mroot>");
 	});
 
 	it("superscript creates msup", () => {

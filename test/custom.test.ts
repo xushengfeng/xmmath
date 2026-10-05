@@ -44,8 +44,9 @@ describe("custom - 已确认行为", () => {
 });
 
 describe("custom - 已知缺陷（修好前用 it.fails 占位）", () => {
-	it.fails("sqrt(x) 应为 msqrt，而不是带空指数的 mroot", () => {
+	it("sqrt(x) 应为 msqrt，而不是带空指数的 mroot", () => {
 		expect(toMMLHTML("sqrt(x)")).toContain("<msqrt>");
+		expect(toMMLHTML("sqrt(x)")).not.toContain("<mroot>");
 	});
 
 	it.fails("munder/mover 必须有两个子元素", () => {

@@ -260,8 +260,12 @@ const f: {
 		root.append(base, row);
 		return root;
 	},
+	// msqrt（与 typst html 导出一致：<msqrt>…</msqrt>），被开方数直接作为子元素，
+	// 不包 mrow、不走 mroot——空指数的 mroot 会被 MathML 校验/渲染当成错误结构。
 	sqrt: (attr: tree[], _dic: fdic, e) => {
-		return f.root([[], attr[0]], null, e);
+		const s = createMath("msqrt");
+		s.append(render(attr[0], e));
+		return s;
 	},
 	display: (attr: tree[], _dic: fdic, e) => {
 		const m = createMath("mrow", null, { displaystyle: "true" });
