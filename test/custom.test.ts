@@ -89,6 +89,57 @@ describe("custom - display/inline 上下文", () => {
 	it("函数调用形式的同名符号不算运算符本体（tilde(x) 的脚本走角标）", () => {
 		expect(html("tilde(integral)_a^b", false)).toContain("<msubsup>");
 	});
+
+	// 语料 display-1 / display-2（typst 0.11.1 逐像素核对）：
+	// inline()/display() 改写的是局部 display 标志，limits 判定跟它走，
+	// 与外层块级/行内无关；gcd（opl.limits）与 sum（Large 类）同判。
+	it("inline()/display() 覆盖外层模式，∑ 与 gcd 同判", () => {
+		expect(html("inline(sum^x_y gcd^x_y)", false)).toContain("<msubsup>");
+		expect(html("inline(sum^x_y gcd^x_y)", false)).not.toContain("<munderover>");
+		expect(html("display(sum^x_y gcd^x_y)", true)).toContain("<munderover>");
+		expect(html("display(sum^x_y gcd^x_y)", true)).not.toContain("<msubsup>");
+	});
+
+	it("script/sscript 同样压回角标（0.11.1 实测与 inline 同效）", () => {
+		expect(html("script(sum_1^2)", false)).toContain("<msubsup>");
+		expect(html("sscript(gcd^x_y)", false)).toContain("<msubsup>");
+	});
+
+	it("局部样式是栈：内层覆盖外层", () => {
+		expect(html("display(script(sum_1^2))", false)).toContain("<msubsup>");
+		expect(html("script(display(sum_1^2))", false)).toContain("<munderover>");
+	});
+
+	it("局部模式向嵌套子树继承（lr/sqrt）", () => {
+		expect(html("inline(lr(sum_1^2))", false)).toContain("<msubsup>");
+		expect(html("display(sqrt(sum_1^2))", true)).toContain("<munderover>");
+	});
+
+	// 未验证、保持现状：x_table 读的是同一个 display 标志，故嵌套在
+	// display()/inline() 里的多行（\\）对齐会跟着局部模式走；官方只核对过
+	// 块级公式里的 inline() 仍居中（≠ 行内贴左），嵌套行内/块级的行对齐
+	// 未逐例核过，语料也无覆盖 —— 不动它，等有官方图再定。
+
+	it("inline() 里关系类算子仍走上/下（Always 不受模式影响）", () => {
+		expect(html('inline(a =^"def" c)', false)).toContain("<munderover>");
+	});
+
+	// MathML Core 里 displaystyle/scriptlevel 是 mstyle 的属性，挂在 mrow 上
+	// 浏览器会忽略（∑ 的大小与脚标层级随之失真）。
+	it("display/inline/script/sscript 用 mstyle 承载 displaystyle/scriptlevel", () => {
+		expect(html("display(sum_1^2)", true)).toContain(
+			'<mstyle displaystyle="true">',
+		);
+		expect(html("inline(sum_1^2)", false)).toContain(
+			'<mstyle displaystyle="false" scriptlevel="0">',
+		);
+		expect(html("script(sum_1^2)", false)).toContain(
+			'<mstyle displaystyle="false" scriptlevel="1">',
+		);
+		expect(html("sscript(sum_1^2)", false)).toContain(
+			'<mstyle displaystyle="false" scriptlevel="2">',
+		);
+	});
 });
 
 describe("custom - 关系/箭头类的上下判定（语料无覆盖，靠这里兜住）", () => {

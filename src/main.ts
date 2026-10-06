@@ -57,6 +57,21 @@ function limits_active(base: tree) {
 	return !!is_limit(t);
 }
 
+// 在 fn() 期间把全局 display 标志换成 d（渲染完恢复），供 display/inline/
+// script/sscript 这类局部样式使用；is_limit 读这个标志，故嵌套子树
+// （lr/abs/mat/attach 的底座…）自动继承局部模式。注意 x_table 的行对齐也
+// 读它 —— 嵌套多行的对齐是否该跟着局部模式走，官方图未逐例核过，先不动，
+// 见 test/custom.test.ts 里的说明。
+function with_display(d: boolean, fn: () => VEl | VFragment) {
+	const prev = isDisplay();
+	setDisplay(d);
+	try {
+		return fn();
+	} finally {
+		setDisplay(prev);
+	}
+}
+
 function delim(dic: fdic, _default: string) {
 	const d = get_value(dic, "delim") as string;
 	let x = "";
@@ -302,35 +317,44 @@ const f: {
 		s.append(render(attr[0], e));
 		return s;
 	},
-	display: (attr: tree[], _dic: fdic, e) => {
-		const m = createMath("mrow", null, { displaystyle: "true" });
-		m.append(render(attr[0], e));
-		return m;
-	},
-	inline: (attr: tree[], _dic: fdic, e) => {
-		const m = createMath("mrow", null, {
-			displaystyle: "false",
-			scriptlevel: "0",
-		});
-		m.append(render(attr[0], e));
-		return m;
-	},
-	script: (attr: tree[], _dic: fdic, e) => {
-		const m = createMath("mrow", null, {
-			displaystyle: "false",
-			scriptlevel: "1",
-		});
-		m.append(render(attr[0], e));
-		return m;
-	},
-	sscript: (attr: tree[], _dic: fdic, e) => {
-		const m = createMath("mrow", null, {
-			displaystyle: "false",
-			scriptlevel: "2",
-		});
-		m.append(render(attr[0], e));
-		return m;
-	},
+	// display/inline/script/sscript 是局部样式（typst 的样式栈：内层覆盖外层，
+	// `display(script(sum_1^2))` 仍走角标）。limits 的判定在 ast3 的「处理^_」
+	// 里读全局 display 标志，故在渲染子树期间改写它、渲染完恢复；wrapper 用
+	// mstyle 而不是 mrow —— MathML Core 里 displaystyle/scriptlevel 是 mstyle
+	// 的属性，挂在 mrow 上浏览器会忽略（∑ 大小/脚标层级都随之失真）。
+	display: (attr: tree[], _dic: fdic, e) =>
+		with_display(true, () => {
+			const m = createMath("mstyle", null, { displaystyle: "true" });
+			m.append(render(attr[0], e));
+			return m;
+		}),
+	inline: (attr: tree[], _dic: fdic, e) =>
+		with_display(false, () => {
+			const m = createMath("mstyle", null, {
+				displaystyle: "false",
+				scriptlevel: "0",
+			});
+			m.append(render(attr[0], e));
+			return m;
+		}),
+	script: (attr: tree[], _dic: fdic, e) =>
+		with_display(false, () => {
+			const m = createMath("mstyle", null, {
+				displaystyle: "false",
+				scriptlevel: "1",
+			});
+			m.append(render(attr[0], e));
+			return m;
+		}),
+	sscript: (attr: tree[], _dic: fdic, e) =>
+		with_display(false, () => {
+			const m = createMath("mstyle", null, {
+				displaystyle: "false",
+				scriptlevel: "2",
+			});
+			m.append(render(attr[0], e));
+			return m;
+		}),
 	upright: (attr: tree[], _dic: fdic, e) => {
 		const r = createMath("mrow");
 		r.append(render(attr[0], e));

@@ -2058,7 +2058,8 @@
 			"id": "size-01",
 			"cat": "size",
 			"text": "a/b, display(a/b), display(a)/display(b), inline(a/b), script(a/b), sscript(a/b) \\\n mono(script(a/b)), script(mono(a/b))\\\n script(a^b, cramped: #true), script(a^b, cramped: #false)",
-			"block": false
+			"block": false,
+			"desc": "display/inline/script/sscript 的字号层级：scriptlevel 由 mstyle 承载后 script/sscript 才真的缩小（0.11.1 实测 41→40→39px @150dpi）"
 		},
 		{
 			"id": "size-02",
@@ -2534,6 +2535,20 @@
 			"text": "attach(op(\"f\", limits: #true), t: t, b: b) quad op(\"f\", limits: #true)_b^t \\\nattach(op(\"f\"), t: t, b: b) quad op(\"f\")_b^t",
 			"block": true,
 			"desc": "op(limits) 开关：#true 才按 limits 判且仍受 display 约束，attach 版与 _/^ 版同式对照；无开关的 op(\"f\") 应压回脚标位"
+		},
+		{
+			"id": "display-1",
+			"cat": "display",
+			"text": "inline(sum^x_y gcd^x_y)",
+			"block": true,
+			"desc": "块级公式里的 inline()：∑（Large 类）与 gcd（opl.limits）都退回脚标位（typst 0.11.1 实测，与外层块级无关）"
+		},
+		{
+			"id": "display-2",
+			"cat": "display",
+			"text": "display(sum^x_y gcd^x_y)",
+			"block": false,
+			"desc": "行内公式里的 display()：∑ 与 gcd 都落正上/正下，且 ∑ 用大号字形（displaystyle 由 mstyle 承载）"
 		}
 	]
 }
