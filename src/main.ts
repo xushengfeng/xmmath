@@ -13,9 +13,7 @@ import {
 	is_br,
 	is_limit,
 	is_true,
-	isDisplay,
 	opl,
-	setDisplay,
 	ss,
 	transfer_kh,
 	trim,
@@ -45,7 +43,7 @@ const delimPair = {
 // 这里 dispatch 到 attach 时 `limits(a)` 还是 [f(limits), group(a)] 两个并列节点，
 // 故先按 ast3 同样的规则收编（f 紧跟 kh === "()" 的组；prime 除外）再判定，
 // 使 `limits(a)`/`scripts(a)`/`op(.., limits: #true)` 与 `_`/`^` 走同一口径。
-function limits_active(base: tree) {
+function limits_active(base: tree, display: boolean) {
 	const t: tree =
 		base.length === 2 &&
 		base[0].type === "f" &&
@@ -54,22 +52,7 @@ function limits_active(base: tree) {
 		base[1].kh === "()"
 			? [{ ...base[0], children: base[1].children }]
 			: base;
-	return !!is_limit(t);
-}
-
-// 在 fn() 期间把全局 display 标志换成 d（渲染完恢复），供 display/inline/
-// script/sscript 这类局部样式使用；is_limit 读这个标志，故嵌套子树
-// （lr/abs/mat/attach 的底座…）自动继承局部模式。注意 x_table 的行对齐也
-// 读它 —— 嵌套多行的对齐是否该跟着局部模式走，官方图未逐例核过，先不动，
-// 见 test/custom.test.ts 里的说明。
-function with_display(d: boolean, fn: () => VEl | VFragment) {
-	const prev = isDisplay();
-	setDisplay(d);
-	try {
-		return fn();
-	} finally {
-		setDisplay(prev);
-	}
+	return !!is_limit(t, display);
 }
 
 function delim(dic: fdic, _default: string) {
@@ -82,20 +65,25 @@ function delim(dic: fdic, _default: string) {
 }
 
 const f: {
-	[name: string]: (attr: tree[], dic?: fdic, e?: fonts) => VEl | VFragment;
+	[name: string]: (
+		attr: tree[],
+		dic: fdic | undefined,
+		e: fonts | undefined,
+		display: boolean,
+	) => VEl | VFragment;
 } = {
-	accent: (attr: tree[], _dic: fdic, e) => {
+	accent: (attr: tree[], _dic: fdic, e, display) => {
 		const base = createMath("mrow");
-		base.append(render(attr[0], e));
+		base.append(render(attr[0], display, e));
 		const a = createMath("mrow");
-		a.append(render(attr[1], e));
+		a.append(render(attr[1], display, e));
 		a.children[0].innerHTML = accent_match_str(a.children[0].innerHTML);
 		const over = createMath("mover");
 		over.setAttribute("accent", "true");
 		over.append(base, a);
 		return over;
 	},
-	attach: (attr: tree[], dic: fdic, e) => {
+	attach: (attr: tree[], dic: fdic, e, display) => {
 		// typst v0.11.1 attach.rs::layout_math 的「聪明定位」：
 		//   let limits = base.limits().active(styles);
 		//   let (t, tr) = if limits || tr.is_some() { (t, tr) } else { (None, t) };
@@ -104,7 +92,7 @@ const f: {
 		// 只有 tr/br 已被占用时才留在正上/正下（外层套 mover/munder）；
 		// limits 生效时 t/b 恒落正上/正下，角标仍各占自己的角。
 		const d: fdic = { ...dic };
-		if (!limits_active(attr[0])) {
+		if (!limits_active(attr[0], display)) {
 			if (d.t && !d.tr) {
 				d.tr = d.t;
 				delete d.t;
@@ -115,16 +103,16 @@ const f: {
 			}
 		}
 		const base = createMath("mrow");
-		base.append(render(attr[0]));
+		base.append(render(attr[0], display));
 		let el: VEl;
 		const tl = createMath("mrow");
-		if (d.tl) tl.append(render(d.tl, e));
+		if (d.tl) tl.append(render(d.tl, display, e));
 		const bl = createMath("mrow");
-		if (d.bl) bl.append(render(d.bl, e));
+		if (d.bl) bl.append(render(d.bl, display, e));
 		const tr = createMath("mrow");
-		if (d.tr) tr.append(render(d.tr, e));
+		if (d.tr) tr.append(render(d.tr, display, e));
 		const br = createMath("mrow");
-		if (d.br) br.append(render(d.br, e));
+		if (d.br) br.append(render(d.br, display, e));
 		if (d.tl || d.bl || d.tr || d.br) {
 			if (d.tl || d.bl) {
 				el = createMath("mmultiscripts");
@@ -148,28 +136,28 @@ const f: {
 				uo.append(el);
 			}
 			const t = createMath("mrow");
-			if (d.t) t.append(render(d.t, e));
+			if (d.t) t.append(render(d.t, display, e));
 			const b = createMath("mrow");
-			if (d.b) b.append(render(d.b, e));
+			if (d.b) b.append(render(d.b, display, e));
 			uo.append(b, t);
 			el = uo;
 		}
 		return el;
 	},
-	scripts: (attr: tree[], _dic: fdic, e) => {
-		return render(attr[0], e);
+	scripts: (attr: tree[], _dic: fdic, e, display) => {
+		return render(attr[0], display, e);
 	},
-	limits: (attr: tree[], _dic: fdic, e) => {
-		return render(attr[0], e);
+	limits: (attr: tree[], _dic: fdic, e, display) => {
+		return render(attr[0], display, e);
 	},
-	binom: (attr: tree[], _dic: fdic, e) => {
+	binom: (attr: tree[], _dic: fdic, e, display) => {
 		const row = createMath("mrow");
 		const a = createMath("mrow");
-		a.append(render(attr[0], e));
+		a.append(render(attr[0], display, e));
 		const b = createMath("mrow");
 		const s: tree = [];
 		for (const x of attr.slice(1)) s.push(...x, dh);
-		b.append(render(s.slice(0, -1), e));
+		b.append(render(s.slice(0, -1), display, e));
 		const f = createMath("mfrac", null, { linethickness: "0" });
 		f.append(a, b);
 		const l = createMath("mo", "(");
@@ -177,7 +165,7 @@ const f: {
 		row.append(l, f, r);
 		return row;
 	},
-	cancel: (attr: tree[], dic: fdic, e) => {
+	cancel: (attr: tree[], dic: fdic, e, display) => {
 		const r = createMath("mrow");
 		const bg = (x: boolean) =>
 			`linear-gradient(to ${
@@ -192,13 +180,13 @@ const f: {
 			s = bg(true);
 		}
 		r.style.backgroundImage = s;
-		r.append(render(attr[0], e));
+		r.append(render(attr[0], display, e));
 		return r;
 	},
-	cases: (attr: tree[], dic: fdic, e) => {
+	cases: (attr: tree[], dic: fdic, e, display) => {
 		const r = createMath("mrow");
 		const d = delim(dic, "{");
-		const t = f.x_table(attr, { cases: [] }, e) as VEl;
+		const t = f.x_table(attr, { cases: [] }, e, display) as VEl;
 		const gap = (get_value(dic, "gap") as string) || "0.5em";
 		t.setAttribute("rowspacing", gap);
 		if (is_true(dic?.reverse)) {
@@ -210,21 +198,21 @@ const f: {
 		}
 		return r;
 	},
-	frac: (attr: tree[], _dic: fdic, e) => {
+	frac: (attr: tree[], _dic: fdic, e, display) => {
 		const a = createMath("mrow");
-		a.append(render(attr[0], e));
+		a.append(render(attr[0], display, e));
 		const b = createMath("mrow");
-		b.append(render(attr[1], e));
+		b.append(render(attr[1], display, e));
 		const f = createMath("mfrac");
 		f.append(a, b);
 		return f;
 	},
-	lr: (attr: tree[], dic: fdic, e) => {
+	lr: (attr: tree[], dic: fdic, e, display) => {
 		const list = attr_join(attr.map((i) => transfer_kh(i)));
 		const tList = trim(list);
 
 		const size = get_value(dic, "size") as string;
-		const c = render(tList, e);
+		const c = render(tList, display, e);
 		const row = createMath("mrow");
 		row.append(c);
 		if (size && size !== "auto") {
@@ -241,7 +229,7 @@ const f: {
 		const o = createMath("mo", attr?.[0]?.[0]?.value, { stretchy: "true" });
 		return o;
 	},
-	mat: (attr: tree[] | tree[][], dic: fdic, e) => {
+	mat: (attr: tree[] | tree[][], dic: fdic, e, display) => {
 		const d = delim(dic, "(");
 		const row = createMath("mrow");
 		const l = createMath("mo", d[0]);
@@ -293,7 +281,7 @@ const f: {
 			const tr = createMath("mtr");
 			for (const j of i) {
 				const td = createMath("mtd");
-				td.append(render(j, e));
+				td.append(render(j, display, e));
 				tr.append(td);
 			}
 			t.append(tr);
@@ -301,63 +289,60 @@ const f: {
 		row.append(l, t, r);
 		return row;
 	},
-	root: (attr: tree[], _dic: fdic, e) => {
+	root: (attr: tree[], _dic: fdic, e, display) => {
 		const row = createMath("mrow");
-		row.append(render(attr[0], e));
+		row.append(render(attr[0], display, e));
 		const base = createMath("mrow");
-		base.append(render(attr[1], e));
+		base.append(render(attr[1], display, e));
 		const root = createMath("mroot");
 		root.append(base, row);
 		return root;
 	},
 	// msqrt（与 typst html 导出一致：<msqrt>…</msqrt>），被开方数直接作为子元素，
 	// 不包 mrow、不走 mroot——空指数的 mroot 会被 MathML 校验/渲染当成错误结构。
-	sqrt: (attr: tree[], _dic: fdic, e) => {
+	sqrt: (attr: tree[], _dic: fdic, e, display) => {
 		const s = createMath("msqrt");
-		s.append(render(attr[0], e));
+		s.append(render(attr[0], display, e));
 		return s;
 	},
 	// display/inline/script/sscript 是局部样式（typst 的样式栈：内层覆盖外层，
 	// `display(script(sum_1^2))` 仍走角标）。limits 的判定在 ast3 的「处理^_」
-	// 里读全局 display 标志，故在渲染子树期间改写它、渲染完恢复；wrapper 用
-	// mstyle 而不是 mrow —— MathML Core 里 displaystyle/scriptlevel 是 mstyle
-	// 的属性，挂在 mrow 上浏览器会忽略（∑ 大小/脚标层级都随之失真）。
-	display: (attr: tree[], _dic: fdic, e) =>
-		with_display(true, () => {
-			const m = createMath("mstyle", null, { displaystyle: "true" });
-			m.append(render(attr[0], e));
-			return m;
-		}),
-	inline: (attr: tree[], _dic: fdic, e) =>
-		with_display(false, () => {
-			const m = createMath("mstyle", null, {
-				displaystyle: "false",
-				scriptlevel: "0",
-			});
-			m.append(render(attr[0], e));
-			return m;
-		}),
-	script: (attr: tree[], _dic: fdic, e) =>
-		with_display(false, () => {
-			const m = createMath("mstyle", null, {
-				displaystyle: "false",
-				scriptlevel: "1",
-			});
-			m.append(render(attr[0], e));
-			return m;
-		}),
-	sscript: (attr: tree[], _dic: fdic, e) =>
-		with_display(false, () => {
-			const m = createMath("mstyle", null, {
-				displaystyle: "false",
-				scriptlevel: "2",
-			});
-			m.append(render(attr[0], e));
-			return m;
-		}),
-	upright: (attr: tree[], _dic: fdic, e) => {
+	// 里读 display 参数，故这里给子树 render 直接传目标值，无需保存/恢复全局
+	// 标志；wrapper 用 mstyle 而不是 mrow —— MathML Core 里 displaystyle/
+	// scriptlevel 是 mstyle 的属性，挂在 mrow 上浏览器会忽略（∑ 大小/脚标层级
+	// 都随之失真）。嵌套多行的行对齐也跟着 display 走（见 custom.test.ts）。
+	display: (attr: tree[], _dic: fdic, e) => {
+		const m = createMath("mstyle", null, { displaystyle: "true" });
+		m.append(render(attr[0], true, e));
+		return m;
+	},
+	inline: (attr: tree[], _dic: fdic, e) => {
+		const m = createMath("mstyle", null, {
+			displaystyle: "false",
+			scriptlevel: "0",
+		});
+		m.append(render(attr[0], false, e));
+		return m;
+	},
+	script: (attr: tree[], _dic: fdic, e) => {
+		const m = createMath("mstyle", null, {
+			displaystyle: "false",
+			scriptlevel: "1",
+		});
+		m.append(render(attr[0], false, e));
+		return m;
+	},
+	sscript: (attr: tree[], _dic: fdic, e) => {
+		const m = createMath("mstyle", null, {
+			displaystyle: "false",
+			scriptlevel: "2",
+		});
+		m.append(render(attr[0], false, e));
+		return m;
+	},
+	upright: (attr: tree[], _dic: fdic, e, display) => {
 		const r = createMath("mrow");
-		r.append(render(attr[0], e));
+		r.append(render(attr[0], display, e));
 		r.querySelectorAll("mi").forEach((el) => {
 			if (!el.getAttribute(mathvariant)) el.setAttribute(mathvariant, "normal");
 		});
@@ -366,9 +351,9 @@ const f: {
 		});
 		return r;
 	},
-	italic: (attr: tree[], _dic: fdic, e) => {
+	italic: (attr: tree[], _dic: fdic, e, display) => {
 		const r = createMath("mrow");
-		r.append(render(attr[0], e));
+		r.append(render(attr[0], display, e));
 		r.querySelectorAll("mi").forEach((el) => {
 			if (!el.getAttribute(mathvariant)) el.setAttribute(mathvariant, "italic");
 		});
@@ -377,61 +362,61 @@ const f: {
 		});
 		return r;
 	},
-	bold: (attr: tree[], _dic: fdic, e) => {
+	bold: (attr: tree[], _dic: fdic, e, display) => {
 		const r = createMath("mrow");
 		r.style.fontWeight = "bold";
-		r.append(render(attr[0], e));
+		r.append(render(attr[0], display, e));
 		return r;
 	},
-	op: (attr: tree[], _dic: fdic, e) => {
+	op: (attr: tree[], _dic: fdic, e, display) => {
 		const f = createMath("mrow");
 		const str = createMath("ms");
-		str.append(render(attr[0], e));
+		str.append(render(attr[0], display, e));
 		f.append(str);
 		return f;
 	},
-	underline: (attr: tree[], _dic: fdic, e) => {
-		return underover_line_f("under", attr[0], e);
+	underline: (attr: tree[], _dic: fdic, e, display) => {
+		return underover_line_f("under", attr[0], e, display);
 	},
-	overline: (attr: tree[], _dic: fdic, e) => {
-		return underover_line_f("over", attr[0], e);
+	overline: (attr: tree[], _dic: fdic, e, display) => {
+		return underover_line_f("over", attr[0], e, display);
 	},
-	underbrace: (attr: tree[], _dic: fdic, e) => {
-		return underover_f("under", attr[0], "⏟", attr?.[1], e);
+	underbrace: (attr: tree[], _dic: fdic, e, display) => {
+		return underover_f("under", attr[0], "⏟", attr?.[1], display, e);
 	},
-	overbrace: (attr: tree[], _dic: fdic, e) => {
-		return underover_f("over", attr[0], "⏞", attr?.[1], e);
+	overbrace: (attr: tree[], _dic: fdic, e, display) => {
+		return underover_f("over", attr[0], "⏞", attr?.[1], display, e);
 	},
-	underbracket: (attr: tree[], _dic: fdic, e) => {
-		return underover_f("under", attr[0], "⎵", attr?.[1], e);
+	underbracket: (attr: tree[], _dic: fdic, e, display) => {
+		return underover_f("under", attr[0], "⎵", attr?.[1], display, e);
 	},
-	overbracket: (attr: tree[], _dic: fdic, e) => {
-		return underover_f("over", attr[0], "⎴", attr?.[1], e);
+	overbracket: (attr: tree[], _dic: fdic, e, display) => {
+		return underover_f("over", attr[0], "⎴", attr?.[1], display, e);
 	},
-	serif: (attr: tree[]) => {
-		return render(attr[0], "serif");
+	serif: (attr: tree[], _dic: fdic, e, display) => {
+		return render(attr[0], display, "serif");
 	},
-	sans: (attr: tree[]) => {
-		return render(attr[0], "sans");
+	sans: (attr: tree[], _dic: fdic, e, display) => {
+		return render(attr[0], display, "sans");
 	},
-	frak: (attr: tree[]) => {
-		return render(attr[0], "frak");
+	frak: (attr: tree[], _dic: fdic, e, display) => {
+		return render(attr[0], display, "frak");
 	},
-	mono: (attr: tree[]) => {
-		return render(attr[0], "mono");
+	mono: (attr: tree[], _dic: fdic, e, display) => {
+		return render(attr[0], display, "mono");
 	},
-	bb: (attr: tree[]) => {
-		return render(attr[0], "bb");
+	bb: (attr: tree[], _dic: fdic, e, display) => {
+		return render(attr[0], display, "bb");
 	},
-	cal: (attr: tree[]) => {
-		return render(attr[0], "cal");
+	cal: (attr: tree[], _dic: fdic, e, display) => {
+		return render(attr[0], display, "cal");
 	},
-	vec: (attr: tree[], dic: fdic, e) => {
+	vec: (attr: tree[], dic: fdic, e, display) => {
 		const d = delim(dic, "(");
 		const row = createMath("mrow");
 		const l = createMath("mo", d[0]);
 		const r = createMath("mo", d[1]);
-		const t = x_table(attr, e);
+		const t = x_table(attr, display, e);
 		const gap = (get_value(dic, "gap") as string) || "0.5em";
 		t.setAttribute("rowspacing", gap);
 		t.setAttribute("columnspacing", "0.5em");
@@ -443,14 +428,17 @@ const f: {
 	},
 	// 额外
 	//
-	x_table: (attr: tree[], dic: fdic) => {
-		const t = x_table(attr);
+	x_table: (attr: tree[], dic: fdic, e, display) => {
+		const t = x_table(attr, display);
 		if (dic.cases) t.setAttribute("columnalign", "left");
 		return t;
 	},
 };
 
-function x_table(trees: tree[], e?: fonts, inline?: boolean) {
+// display 必填（局部模式），e/inline 保持可选；display 放第 2 位避开
+// required-after-optional。inline 仅在多行入口由 render 传入（=!display），
+// 其余调用点（mat/vec/cases 的单元格）不传 —— 恒按块级对齐，与上游一致。
+function x_table(trees: tree[], display: boolean, e?: fonts, inline?: boolean) {
 	let max = 0;
 	const t = createMath("mtable");
 	for (const i of trees) {
@@ -472,7 +460,7 @@ function x_table(trees: tree[], e?: fonts, inline?: boolean) {
 		for (const i of result) {
 			const d = createMath("mtd");
 			r.append(d);
-			d.append(render(i, e));
+			d.append(render(i, display, e));
 		}
 
 		// 有 & 时围绕对齐点 right/left 交替；没有 & 时 typst 块级居中、行内贴左
@@ -502,11 +490,16 @@ function primeRun(n: number) {
 
 function op_f() {
 	for (const i of opl) {
-		f[i.id] = (attr: tree[], _a, e) => {
-			const s = f.op([[{ type: "str", value: i.str || i.id }]], {}, e);
+		f[i.id] = (attr: tree[], _a, e, display) => {
+			const s = f.op(
+				[[{ type: "str", value: i.str || i.id }]],
+				{},
+				e,
+				display,
+			);
 			if (attr) {
 				const f = createFragment();
-				f.append(s, kh(attr_join(attr)));
+				f.append(s, kh(attr_join(attr), display));
 				return f;
 			} else {
 				return s;
@@ -525,8 +518,8 @@ const spaceConst = {
 };
 
 for (const i in spaceConst) {
-	f[i] = () => {
-		return f.h([[{ type: "str", value: spaceConst[i] }]]);
+	f[i] = (_attr, _dic, _e, display) => {
+		return f.h([[{ type: "str", value: spaceConst[i] }]], null, null, display);
 	};
 }
 
@@ -627,8 +620,8 @@ function accent_f() {
 		"harpoon.lt",
 	];
 	for (const i of l) {
-		f[i] = (attr: tree[], _dic, e) => {
-			const s = f.accent([attr[0], [{ type: "f", value: i }]], {}, e);
+		f[i] = (attr: tree[], _dic, e, display) => {
+			const s = f.accent([attr[0], [{ type: "f", value: i }]], {}, e, display);
 			return s;
 		};
 	}
@@ -644,8 +637,8 @@ function lr_f() {
 		{ name: "round", l: v_f("⌊"), r: v_f("⌉") },
 	];
 	for (const i of l) {
-		f[i.name] = (attr: tree[], dic, e) => {
-			const s = f.lr([[i.l, ...attr[0], i.r]], dic, e);
+		f[i.name] = (attr: tree[], dic, e, display) => {
+			const s = f.lr([[i.l, ...attr[0], i.r]], dic, e, display);
 			return s;
 		};
 	}
@@ -657,6 +650,7 @@ function underover_f(
 	tree: tree,
 	x: string,
 	str: tree,
+	display: boolean,
 	e: fonts,
 ) {
 	const m =
@@ -664,10 +658,10 @@ function underover_f(
 			? createMath("munder", null, { accentunder: "true" })
 			: createMath("mover", null, { accent: "true" });
 	const base = createMath("mrow");
-	base.append(render(tree, e));
+	base.append(render(tree, display, e));
 	if (str) {
 		const s = createMath("mrow");
-		s.append(render(str, e));
+		s.append(render(str, display, e));
 		const mm = type === "under" ? createMath("munder") : createMath("mover");
 		const xx = createMath("mo", x);
 		mm.append(xx, s);
@@ -679,13 +673,18 @@ function underover_f(
 	return m;
 }
 
-function underover_line_f(type: "under" | "over", tree: tree, e: fonts) {
+function underover_line_f(
+	type: "under" | "over",
+	tree: tree,
+	e: fonts,
+	display: boolean,
+) {
 	const m =
 		type === "under"
 			? createMath("munder", null, { accentunder: "true" })
 			: createMath("mover", null, { accent: "true" });
 	const base = createMath("mrow");
-	base.append(render(tree, e));
+	base.append(render(tree, display, e));
 	if (type === "under") base.style.borderBottom = "1px solid black";
 	if (type === "over") base.style.borderTop = "1px solid black";
 	m.append(base);
@@ -694,15 +693,17 @@ function underover_line_f(type: "under" | "over", tree: tree, e: fonts) {
 
 const ff: typeof f = {
 	"√": f.sqrt,
-	"∛": (attr, _, e) => f.root([[v_f("3")], attr[0]], null, e),
-	"∜": (attr, _, e) => f.root([[v_f("4")], attr[0]], null, e),
+	"∛": (attr, _, e, display) =>
+		f.root([[v_f("3")], attr[0]], null, e, display),
+	"∜": (attr, _, e, display) =>
+		f.root([[v_f("4")], attr[0]], null, e, display),
 };
 
-function kh(tree: tree) {
+function kh(tree: tree, display: boolean) {
 	const f = createMath("mrow");
 	const l = createMath("mo");
 	l.textContent = "(";
-	const c = render(tree);
+	const c = render(tree, display);
 	const r = createMath("mo");
 	r.textContent = ")";
 	f.append(l, c, r);
@@ -805,7 +806,7 @@ function font(str: string, type: fonts = "serif") {
 	return str;
 }
 
-function render(tree: tree, e?: fonts): VEl | VFragment {
+function render(tree: tree, display: boolean, e?: fonts): VEl | VFragment {
 	const fragment = createFragment();
 
 	tree = ast2(tree);
@@ -831,13 +832,13 @@ function render(tree: tree, e?: fonts): VEl | VFragment {
 					trees.at(-1).push(i);
 				}
 			}
-			return x_table(trees, undefined, !isDisplay());
+			return x_table(trees, display, undefined, !display);
 		}
 	}
 
 	// 单行
 
-	tree = ast3(tree);
+	tree = ast3(tree, display);
 
 	{
 		const t: tree = [];
@@ -871,16 +872,16 @@ function render(tree: tree, e?: fonts): VEl | VFragment {
 		if (x.type === "f") {
 			// 带有括号（参数）的函数
 			if (x.children && (x.kh === "()" || !x.kh)) {
-				const { attr, dic } = f_attr(x);
+				const { attr, dic } = f_attr(x, display);
 
 				if (f[x.value]) {
-					const el = f[x.value](attr as tree[], dic, e);
+					const el = f[x.value](attr as tree[], dic, e, display);
 					fragment.append(el);
 				} else if (ss[x.value]) {
 					const el = createMath("mi", ss[x.value]);
-					fragment.append(el, render(in_kh(x.children), e));
+					fragment.append(el, render(in_kh(x.children), display, e));
 				} else if (ff[x.value]) {
-					const el = ff[x.value](attr as tree[], dic, e);
+					const el = ff[x.value](attr as tree[], dic, e, display);
 					fragment.append(el);
 				}
 			} else {
@@ -911,10 +912,10 @@ function render(tree: tree, e?: fonts): VEl | VFragment {
 					const el = createMath(tag, ss[x.value], space_w);
 					fragment.append(el);
 				} else if (f[x.value]) {
-					const el = f[x.value](null, null, e);
+					const el = f[x.value](null, null, e, display);
 					fragment.append(el);
 				} else if (ff[x.value]) {
-					const el = ff[x.value]([x.children], null, e);
+					const el = ff[x.value]([x.children], null, e, display);
 					fragment.append(el);
 				}
 			}
@@ -954,9 +955,9 @@ function render(tree: tree, e?: fonts): VEl | VFragment {
 			// 比如 mfrac 的分母），开括号也不参与拉伸。
 			if (x.kh && x.kh.length === 1) {
 				fragment.append(createMath("mo", x.kh, { stretchy: "false" }));
-				fragment.append(render(x.children, e));
+				fragment.append(render(x.children, display, e));
 			} else {
-				fragment.append(f.lr([[x]], null, e));
+				fragment.append(f.lr([[x]], null, e, display));
 			}
 		}
 	}
@@ -971,13 +972,14 @@ function init(p: { emoji: boolean }) {
 }
 
 // Build the MathML virtual DOM (no `document`).
+// display 是整条公式的起点：由 inline 推导（!inline），再穿过 render →
+// ast3/f_attr/is_limit；display/inline/script/sscript 局部样式在子树处覆写。
 function toMMLV(str: string, inline?: boolean): VEl {
-	setDisplay(!inline);
 	const obj = ast(str);
 
 	const mathEl = createMath("math");
 	if (!inline) mathEl.setAttribute("display", "block");
-	const f = render(obj);
+	const f = render(obj, !inline);
 	mathEl.append(f);
 	return mathEl;
 }

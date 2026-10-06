@@ -580,18 +580,11 @@ const rel_sy = new Set<string>();
 	for (const c of taken) rel_sy.delete(c);
 }
 
-// display/inline 是整条公式的属性，不是单个节点的：由 toMMLV 在渲染前设置一次，
-// 嵌套子树（如 lr(sum_1^2) 里的 sum）自动继承，无需把标志穿过 40 个 render 调用点。
-let display = true;
-export function setDisplay(d: boolean) {
-	display = d;
-}
-
-export function isDisplay() {
-	return display;
-}
-
-function is_limit(tree: tree) {
+// display（块级/行内）是整条公式的属性：由 toMMLV 起算（`!inline`），作为参数
+// 穿过 render → ast3/f_attr/is_limit；display/inline/script/sscript 这类局部样式
+// 则在渲染子树时换一个值传入 —— 嵌套子树（如 lr(sum_1^2) 里的 sum）自动继承，
+// 不需要全局标志（保存/恢复易漏，也做不了单点测试）。
+function is_limit(tree: tree, display: boolean) {
 	if (tree.length === 1) {
 		const x = tree[0];
 		if (x.type === "f") {
@@ -607,7 +600,7 @@ function is_limit(tree: tree) {
 			if (x.value === "scripts") return false;
 			if (x.value === "limits") return true;
 			if (x.value === "op") {
-				const { dic } = f_attr(x);
+				const { dic } = f_attr(x, display);
 				return is_true(dic.limits) && display;
 			}
 		}
@@ -751,7 +744,7 @@ function ast2(tree: tree) {
 	return tree;
 }
 
-function ast3(tree: tree) {
+function ast3(tree: tree, display: boolean) {
 	// 处理符号简写（shorthand）
 	{
 		const t: tree = [];
@@ -1161,7 +1154,7 @@ function ast3(tree: tree) {
 					let tmp: tree[0] = tree[index[0][1]];
 					for (let i = index[0][1]; i >= index[0][0]; i--) {
 						if (is_sup(tree[i - 1]) && is_sub(tree[i - 3])) {
-							const o = is_limit([tree[i - 4]])
+							const o = is_limit([tree[i - 4]], display)
 								? { t: out_kh(tmp), b: out_kh(tree[i - 2]) }
 								: { tr: out_kh(tmp), br: out_kh(tree[i - 2]) };
 							tmp = {
@@ -1173,7 +1166,7 @@ function ast3(tree: tree) {
 							continue;
 						}
 						if (is_sub(tree[i - 1]) && is_sup(tree[i - 3])) {
-							const o = is_limit([tree[i - 4]])
+							const o = is_limit([tree[i - 4]], display)
 								? { t: out_kh(tree[i - 2]), b: out_kh(tmp) }
 								: { tr: out_kh(tree[i - 2]), br: out_kh(tmp) };
 							tmp = {
@@ -1185,7 +1178,7 @@ function ast3(tree: tree) {
 							continue;
 						}
 						if (is_sup(tree[i - 1])) {
-							const o = is_limit([tree[i - 2]])
+							const o = is_limit([tree[i - 2]], display)
 								? { t: out_kh(tmp) }
 								: { tr: out_kh(tmp) };
 							tmp = {
@@ -1197,7 +1190,7 @@ function ast3(tree: tree) {
 							continue;
 						}
 						if (is_sub(tree[i - 1])) {
-							const o = is_limit([tree[i - 2]])
+							const o = is_limit([tree[i - 2]], display)
 								? { b: out_kh(tmp) }
 								: { br: out_kh(tmp) };
 							tmp = {
@@ -1267,7 +1260,7 @@ function ast3(tree: tree) {
 	return tree;
 }
 
-function f_attr(x: tree[0]) {
+function f_attr(x: tree[0], display: boolean) {
 	const list: (tree | "," | ";")[] = [[]];
 	for (const i of x.children) {
 		if (
@@ -1341,7 +1334,7 @@ function f_attr(x: tree[0]) {
 				t.push(el);
 			}
 		}
-		dic[n] = ast3(ast2(t));
+		dic[n] = ast3(ast2(t), display);
 	}
 	return { attr, dic };
 }
