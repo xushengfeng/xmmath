@@ -23,6 +23,7 @@ import { spawnSync } from "node:child_process";
 import { existsSync, mkdirSync, readFileSync, writeFileSync, chmodSync, rmSync } from "node:fs";
 import { tmpdir, homedir } from "node:os";
 import { join, basename, extname } from "node:path";
+import { applyCase } from "../fixtures/case.mjs";
 
 const CACHE_ROOT = process.env.XMMATH_TYPST_CACHE || join(homedir(), ".cache", "xmmath", "typst");
 
@@ -34,7 +35,9 @@ function parseArgs(argv) {
 		const next = () => argv[++i];
 		switch (a) {
 			case "--expr": o.expr = next(); break;
+			case "--id": o.id = next(); break;
 			case "--inline": o.inline = true; break;
+			case "--block": o.block = true; break;
 			case "--code": o.code = next(); break;
 			case "--file": o.file = next(); break;
 			case "--out": o.out = next(); break;
@@ -58,8 +61,11 @@ function parseArgs(argv) {
 const HELP = `typst render -> PNG (for AI inspection)
 
   --expr <str>    bare math/text expression, auto-wrapped into a standalone doc
-  --inline        with --expr: wrap as $…$ (inline math) instead of $ … $ (block math)
+  --id <cid>      take the expression (and block/inline mode) from the
+                  test/fixtures/math.json corpus case <cid>
+  --inline        with --expr/--id: wrap as $…$ (inline math) instead of $ … $ (block math)
                   (typst picks inline/block by the whitespace next to $, not by line layout)
+  --block         with --id: force block math even for an inline corpus case
   --code <str>    full typst source (used verbatim)
   --file <path>   read typst source from a file
   --out <path>    output PNG path (default: <cache>/render-<n>.png)
@@ -221,8 +227,10 @@ function binaryVersion(bin) {
 export async function render(argv = process.argv.slice(2)) {
 	const opts = parseArgs(argv);
 	if (opts.help) return { ok: true, help: HELP };
+	const applied = applyCase(opts);
+	if (applied && !applied.ok) return applied;
 	const source = buildSource(opts);
-	if (source == null) return { ok: false, error: "need one of --expr / --code / --file" };
+	if (source == null) return { ok: false, error: "need one of --expr / --id / --code / --file" };
 
 	let resolved;
 	try {
@@ -249,6 +257,8 @@ export async function render(argv = process.argv.slice(2)) {
 		binarySource: resolved.source,
 		pinned: resolved.tag || opts.version || null,
 		dpi: opts.dpi,
+		caseId: opts.caseId ?? null,
+		inline: !!opts.inline,
 		command: cmd.join(" "),
 		source,
 		input: inTyp,
@@ -267,7 +277,7 @@ export async function render(argv = process.argv.slice(2)) {
 function printHuman(rep) {
 	if (rep.help) return console.log(rep.help);
 	if (rep.error) return console.error(`ERROR: ${rep.error}`);
-	console.log(`typst: ${rep.version}  (via ${rep.binarySource}${rep.pinned ? ` ${rep.pinned}` : ""})`);
+	console.log(`typst: ${rep.version}  (via ${rep.binarySource}${rep.pinned ? ` ${rep.pinned}` : ""}${rep.caseId ? `, case ${rep.caseId}` : ""}${rep.inline ? ", inline" : ""})`);
 	console.log(`png:   ${rep.png || "NOT PRODUCED"}`);
 	if (rep.png && rep.width) console.log(`size:  ${rep.width}x${rep.height} @${rep.dpi}dpi`);
 	console.log(`exit:  ${rep.exitCode}`);

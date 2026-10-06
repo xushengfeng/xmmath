@@ -4,8 +4,9 @@ import { ast2, ast3 } from "../src/normalize.js";
 import { allCases } from "./corpus/_shared.js";
 
 // 无 DOM 环境（node）即可运行：证明 ast2/ast3 归一化阶段不依赖 document
-function normalize(str: string) {
-	return ast3(ast2(ast(str)));
+// display = 块级/行内（旧全局标志，现为显式参数）；默认 true 与历史行为一致
+function normalize(str: string, display: boolean = true) {
+	return ast3(ast2(ast(str)), display);
 }
 
 describe("ast2() - number assembly", () => {
@@ -143,7 +144,7 @@ describe("ast3() - prime and factorial", () => {
 
 	it("factorial groups preceding token", () => {
 		const result = ast2(ast("n!"));
-		const after = ast3(result);
+		const after = ast3(result, true);
 		// ! bound tightly; result should be non-empty and not throw
 		expect(after.length).toBeGreaterThan(0);
 	});

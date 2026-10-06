@@ -101,6 +101,9 @@ async function renderTypst(text, block, dpi, ver) {
 	const cfg = config();
 	const label = typstVer(ver) || typstLabel(cfg);
 	const source = typstSource(text, block);
+	// hash 由 typst 版本 + dpi + source 三者决定；source 已是 typstSource()
+	// 包好的完整源码（含 #set page(margin:…) / #set text(size:…) 等 wrapper 参数），
+	// 故改 wrapper 里的尺寸会自然换 key、使缓存失效，无需单独把它们接进 hash。
 	const hash = sha256(`${label}|${dpi}|${source}`);
 	const dir = join(CACHE, "typst", slug(label));
 	const file = join(dir, `${hash}.png`);

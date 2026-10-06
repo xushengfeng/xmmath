@@ -23,6 +23,8 @@
 		"sync:symbols": "node test/symbols/gen.mjs",
 		"render:typst": "node test/typst/render.mjs",
 		"render:xmmath": "node test/xmmath/render.mjs",
+		"diff": "node script/diff.mjs",
+		"cmp": "node script/cmp.mjs",
 		"dev": "vite --host 0.0.0.0",
 		"build": "tsc && vite build",
 		"preview": "vite preview"

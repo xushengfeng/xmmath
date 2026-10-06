@@ -50,6 +50,7 @@ import { createServer } from "node:http";
 import { homedir, tmpdir } from "node:os";
 import { dirname, extname, join, resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
+import { applyCase } from "../fixtures/case.mjs";
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "../..");
 const CACHE_ROOT =
@@ -70,8 +71,14 @@ function parseArgs(argv) {
 			case "--expr":
 				o.expr = next();
 				break;
+			case "--id":
+				o.id = next();
+				break;
 			case "--inline":
 				o.inline = true;
+				break;
+			case "--block":
+				o.block = true;
 				break;
 			case "--format":
 				o.format = next();
@@ -111,8 +118,12 @@ function parseArgs(argv) {
 const HELP = `xmmath render -> PNG / HTML (for AI inspection)
 
   --expr <str>    xmmath (typst math) source to render; required
+                  (unless --id gives it)
+  --id <cid>      take the source from test/fixtures/math.json corpus case <cid>,
+                  including its block/inline mode (explicit --inline/--block wins)
   --inline        render as inline math; default is block (display) math,
                   which is what render:typst's default wrapper produces
+  --block         render as block math (overrides an inline corpus case's mode)
   --format <f>    png (default) | html; the --out extension also picks it
   --out <path>    output path (default: <cache>/render-<n>.png|.html)
   --dpi <n>       png scale: image px = layout px * n/96 (default 150, same
@@ -156,7 +167,7 @@ async function loadXmmath() {
 	};
 }
 
-async function closeXmmath() {
+export async function closeXmmath() {
 	if (!serverPromise) return;
 	const server = await serverPromise;
 	serverPromise = null;
@@ -476,8 +487,10 @@ function parseSize(text) {
 export async function render(argv = process.argv.slice(2)) {
 	const opts = parseArgs(argv);
 	if (opts.help) return { ok: true, help: HELP };
+	const applied = applyCase(opts);
+	if (applied && !applied.ok) return applied;
 	if (opts.expr == null)
-		return { ok: false, error: "need --expr <math source>" };
+		return { ok: false, error: "need --expr <math source> or --id <corpus id>" };
 
 	const format = String(
 		opts.format ||
@@ -528,6 +541,7 @@ export async function render(argv = process.argv.slice(2)) {
 		format,
 		mode,
 		inline,
+		caseId: opts.caseId ?? null,
 		source: opts.expr,
 		mathml,
 		xmmath: { ...lib.main.version },
@@ -673,7 +687,7 @@ function printHuman(rep) {
 	if (rep.help) return console.log(rep.help);
 	if (!rep.ok) return console.error(`ERROR: ${rep.error}`);
 	console.log(
-		`xmmath: syntax ${rep.xmmath?.lan} / symbols ${rep.xmmath?.symbol}  (${rep.mode} math)`,
+		`xmmath: syntax ${rep.xmmath?.lan} / symbols ${rep.xmmath?.symbol}  (${rep.mode} math${rep.caseId ? `, case ${rep.caseId}` : ""})`,
 	);
 	if (rep.format === "html") {
 		console.log(`html:   ${rep.html}`);

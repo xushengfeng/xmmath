@@ -30,4 +30,10 @@ render:typst可以自定typst版本，查看官方标准渲染结果的图片，
 
 render:xmmath用本库渲染同一表达式做对照：`pnpm render:xmmath --expr 'sum_(i=1)^n i' [--inline]`，默认出 PNG（`--out` 扩展名或 `--format` 可换 html，html 只写 MathML+CSS 不需要浏览器）；PNG 默认走无头 firefox（`--bin`/`$XMMATH_BROWSER` 可换）
 
+或者更简单，直接`pnpm cmp --expr 'sum^x_y gcd^x_y'`可同时输出两个引擎图片以及合并对照
+
+`render:typst` `render:xmmath` `cmp` 都支持`--id`从json取数据
+
+`pnpm diff`和前面review的变更类似，方便ai读
+
 版本升级任务（动 version.lan 之前）先读 docs/math-syntax-typst-diff.md 第 8 节：`_`/`^` 上下位置规则的源码坐标（0.11.1 vs 0.15.1）、帧宽差探针脚本与判据、0.11→0.15 的 11 个字符漂移清单；升级后先重跑探针、再改 src/normalize.ts 的 rel_names 及其注释

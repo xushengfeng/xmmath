@@ -1,7 +1,9 @@
 // 手工维护的针对性用例：调试某个语法/渲染问题时写在这里，用普通断言，不进快照。
 // 整份语料在 test/corpus/math.test.ts，阶段单测在 test/{ast,normalize,vdom,render}.test.ts。
 import { describe, expect, it } from "vitest";
+import { ast, type tree } from "../src/ast.js";
 import { toMMLHTML, toMMLV } from "../src/main.js";
+import { is_limit } from "../src/normalize.js";
 import { toHtml, type VEl } from "../src/vdom.js";
 
 // 某个标签在树里的直接子元素个数（MathML 对多数结构有固定元数要求）
@@ -115,7 +117,7 @@ describe("custom - display/inline 上下文", () => {
 		expect(html("display(sqrt(sum_1^2))", true)).toContain("<munderover>");
 	});
 
-	// 未验证、保持现状：x_table 读的是同一个 display 标志，故嵌套在
+	// 未验证、保持现状：x_table 与 limits 走同一个 display 参数，故嵌套在
 	// display()/inline() 里的多行（\\）对齐会跟着局部模式走；官方只核对过
 	// 块级公式里的 inline() 仍居中（≠ 行内贴左），嵌套行内/块级的行对齐
 	// 未逐例核过，语料也无覆盖 —— 不动它，等有官方图再定。
@@ -160,5 +162,53 @@ describe("custom - 关系/箭头类的上下判定（语料无覆盖，靠这里
 
 	it("同族符号的脚本仍可被 scripts() 强制回角标", () => {
 		expect(html("a scripts(tack.r)^b c")).toContain("<msup>");
+	});
+});
+
+// display 改为显式参数后的单点测试（原先要先 setDisplay 才能测，测不了）。
+// 四条分支：Relation 恒上下、大算符随 display、limits/scripts 强制覆盖、多节点不是 limits。
+describe("is_limit() - display 参数的四种判定", () => {
+	// 裸符号：无 children 才走 rel/opl 分支
+	const f = (value: string): tree => [{ type: "f", value }];
+	const v = (value: string): tree => [{ type: "v", value }];
+
+	it("Relation 类底座恒走上下，与 display 无关（typst Limits::Always）", () => {
+		for (const name of ["approx", "eq", "eq.not", "tack.r"]) {
+			expect(is_limit(f(name), true), `${name} block`).toBe(true);
+			expect(is_limit(f(name), false), `${name} inline`).toBe(true);
+		}
+		// typst 把箭头前缀单列成一条规则，同样与 display 无关
+		expect(is_limit(f("arrow.r"), false)).toBe(true);
+	});
+
+	it("大算符随 display：block 走上下、inline 走角标", () => {
+		expect(is_limit(v("∑"), true)).toBe(true);
+		expect(is_limit(v("∑"), false)).toBe(false);
+		expect(is_limit(v("∏"), true)).toBe(true);
+		expect(is_limit(v("∏"), false)).toBe(false);
+		// 普通字母既不是 Relation 也不是大算符（源码隐式返回 undefined）
+		expect(is_limit(v("a"), true)).toBeFalsy();
+		expect(is_limit(v("a"), false)).toBeFalsy();
+	});
+
+	it("limits()/scripts() 显式指定，压过 display", () => {
+		// 单独的 f 节点（children 为空），is_limit 按 value 判定
+		expect(is_limit(f("limits"), false)).toBe(true);
+		expect(is_limit(f("scripts"), true)).toBe(false);
+	});
+
+	it("op(.., limits: #true) 随 display；多节点底座不是 limits", () => {
+		// op 的 limits 是字典参数，仍受 display 门控
+		const opTree: tree = [
+			{
+				type: "f",
+				value: "op",
+				children: ast("limits: #true") as tree,
+			},
+		];
+		expect(is_limit(opTree, true)).toBe(true);
+		expect(is_limit(opTree, false)).toBe(false);
+		// 底座带参数（多节点）时不走 limits
+		expect(is_limit([...f("approx"), ...v("x")], true)).toBe(false);
 	});
 });
